@@ -1,0 +1,300 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <com.dog.manage.app.view.TitleView
+            android:id="@+id/itemVipView"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_48"
+            app:tv_content=""
+            app:tv_content_size="@dimen/sp_14"
+            app:tv_title="注销记录详情"
+            app:tv_title_bold="true"
+            app:tv_title_size="@dimen/sp_16" />
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_0"
+            android:layout_weight="1"
+            android:overScrollMode="never">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+
+                <androidx.cardview.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/dp_12"
+                    android:layout_marginTop="@dimen/dp_8"
+                    android:layout_marginRight="@dimen/dp_12"
+                    android:layout_marginBottom="@dimen/dp_8"
+                    android:background="@color/white"
+                    app:cardCornerRadius="@dimen/dp_8"
+                    app:cardElevation="@dimen/dp_2"
+                    app:cardPreventCornerOverlap="false">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:orientation="vertical"
+                        android:paddingLeft="@dimen/dp_8"
+                        android:paddingRight="@dimen/dp_8">
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="@dimen/dp_8"
+                            android:layout_weight="1"
+                            android:gravity="center_vertical"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:id="@+id/titleView"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:gravity="center"
+                                android:singleLine="true"
+                                android:text="TextView"
+                                android:textColor="#333333"
+                                android:textSize="@dimen/sp_14"
+                                android:textStyle="bold" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:background="@drawable/button_theme"
+                                android:gravity="center_vertical"
+                                android:text="TextView"
+                                android:textColor="#999999"
+                                android:textSize="@dimen/sp_12" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="@dimen/dp_8"
+                                android:gravity="center_vertical"
+                                android:text="TextView"
+                                android:textColor="#999999"
+                                android:textSize="@dimen/sp_12" />
+
+
+                        </LinearLayout>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center_vertical"
+                            android:textColor="#999999"
+                            android:textSize="@dimen/sp_12"
+                            tools:text="TextView" />
+
+
+                    </LinearLayout>
+
+                </androidx.cardview.widget.CardView>
+
+                <com.dog.manage.app.view.ViewItemLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="@dimen/dp_16"
+                    android:paddingRight="@dimen/dp_16"
+                    app:item_container_height="@dimen/dp_48"
+                    app:item_content="柴犬"
+                    app:item_content_size="@dimen/sp_12"
+                    app:item_title="选择犬只"
+                    app:item_title_size="@dimen/sp_14" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dividerHeight"
+                    android:background="@color/colorDivider" />
+
+                <com.dog.manage.app.view.ViewItemLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="@dimen/dp_16"
+                    android:paddingRight="@dimen/dp_16"
+                    app:item_container_height="@dimen/dp_48"
+                    app:item_content="丢失"
+                    app:item_content_size="@dimen/sp_12"
+                    app:item_title="注销原因"
+                    app:item_title_size="@dimen/sp_14" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dividerHeight"
+                    android:background="@color/colorDivider" />
+
+                <LinearLayout
+                    android:id="@+id/item_container"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dp_12"
+                    android:gravity="center_vertical"
+                    android:orientation="vertical"
+                    android:paddingLeft="@dimen/dp_16"
+                    android:paddingRight="@dimen/dp_16">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="无害化处理过程图片"
+                        android:textColor="#333333"
+                        android:textSize="@dimen/sp_16"
+                        android:textStyle="normal" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/dp_12"
+                        android:layout_marginBottom="@dimen/dp_12"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
+
+                        <ImageView
+                            android:layout_width="@dimen/dp_20"
+                            android:layout_height="@dimen/dp_20"
+                            android:src="@drawable/image" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="@dimen/dp_8"
+                            android:gravity="center_vertical"
+                            android:textColor="#999999"
+                            android:textSize="@dimen/sp_12"
+                            tools:text="TextView" />
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dividerHeight"
+                    android:background="@color/colorDivider" />
+
+                <com.dog.manage.app.view.ViewItemLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="@dimen/dp_16"
+                    android:paddingRight="@dimen/dp_16"
+                    app:item_container_height="@dimen/dp_48"
+                    app:item_content=""
+                    app:item_content_size="@dimen/sp_12"
+                    app:item_desc="暂无内容"
+                    app:item_desc_size="@dimen/sp_12"
+                    app:item_desc_visible="true"
+                    app:item_title="简要说明"
+                    app:item_title_size="@dimen/sp_14" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dividerHeight"
+                    android:background="@color/colorDivider" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dp_12"
+                    android:gravity="center_vertical"
+                    android:orientation="vertical"
+                    android:paddingLeft="@dimen/dp_16"
+                    android:paddingRight="@dimen/dp_16">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="受理单位"
+                        android:textColor="#333333"
+                        android:textSize="@dimen/sp_16"
+                        android:textStyle="normal" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/dp_12"
+                        android:layout_marginBottom="@dimen/dp_12"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
+
+                        <ImageView
+                            android:layout_width="@dimen/dp_20"
+                            android:layout_height="@dimen/dp_20"
+                            android:src="@drawable/image" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="@dimen/dp_8"
+                            android:gravity="center_vertical"
+                            android:text="TextView"
+                            android:textColor="#999999"
+                            android:textSize="@dimen/sp_12" />
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dividerHeight"
+                    android:background="@color/colorDivider" />
+
+                <com.dog.manage.app.view.ViewItemLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="@dimen/dp_16"
+                    android:paddingRight="@dimen/dp_16"
+                    app:item_container_height="@dimen/dp_48"
+                    app:item_content=""
+                    app:item_content_size="@dimen/sp_12"
+                    app:item_desc="犬只"
+                    app:item_desc_size="@dimen/sp_12"
+                    app:item_desc_visible="true"
+                    app:item_title="审核拒接理由"
+                    app:item_title_size="@dimen/sp_14" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dividerHeight"
+                    android:background="@color/colorDivider" />
+
+            </LinearLayout>
+
+        </ScrollView>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:orientation="vertical"
+            android:padding="@dimen/dp_16">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_48"
+                android:background="@drawable/button_theme"
+                android:gravity="center"
+                android:text="重新提交"
+                android:textColor="@color/white"
+                android:textSize="@dimen/sp_16" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+</layout>

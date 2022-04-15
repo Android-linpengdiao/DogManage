@@ -1,13 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorAppTheme">#fdfdfd</color>
-    <color name="colorAppThemeDark">#d2d2d2</color>
+    <color name="colorAppTheme">#1B2945</color>
+    <color name="colorAppThemeDark">#1B2945</color>
     <color name="media_color">#fdfdfd</color>
     <color name="transparentDark">#1D000000</color>
     <color name="transparent">#00000000</color>
 
     <color name="white">@android:color/white</color>
     <color name="black">@android:color/black</color>
+    <color name="gray">#EDEDED</color>
     <color name="blue">#3A72F8</color>
     <color name="red">#F44C30</color>
     <color name="yellow">#F9E100</color>

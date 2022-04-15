@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <com.dog.manage.app.view.TitleView
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_48"
+            android:background="@color/colorAppTheme"
+            app:tv_content=""
+            app:tv_content_size="@dimen/sp_14"
+            app:tv_title="犬只信息"
+            app:tv_title_bold="true"
+            app:tv_title_size="@dimen/sp_16" />
+
+        <com.dog.manage.app.view.ViewItemLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingLeft="@dimen/dp_16"
+            android:paddingRight="@dimen/dp_16"
+            app:item_container_height="@dimen/dp_48"
+            app:item_content="名称"
+            app:item_content_size="@dimen/sp_12"
+            app:item_title="名称"
+            app:item_title_size="@dimen/sp_14" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dividerHeight"
+            android:background="@color/colorDivider" />
+
+        <com.dog.manage.app.view.ViewItemLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingLeft="@dimen/dp_16"
+            android:paddingRight="@dimen/dp_16"
+            app:item_container_height="@dimen/dp_48"
+            app:item_content="毛色"
+            app:item_content_size="@dimen/sp_12"
+            app:item_title="金色"
+            app:item_title_size="@dimen/sp_14" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dividerHeight"
+            android:background="@color/colorDivider" />
+
+        <com.dog.manage.app.view.ViewItemLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingLeft="@dimen/dp_16"
+            android:paddingRight="@dimen/dp_16"
+            app:item_container_height="@dimen/dp_48"
+            app:item_info="雄性"
+            app:item_info_size="@dimen/sp_12"
+            app:item_info_visible="true"
+            app:item_title="犬只性别"
+            app:item_title_size="@dimen/sp_14" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dividerHeight"
+            android:background="@color/colorDivider" />
+
+        <com.dog.manage.app.view.ViewItemLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingLeft="@dimen/dp_16"
+            android:paddingRight="@dimen/dp_16"
+            app:item_container_height="@dimen/dp_48"
+            app:item_content=""
+            app:item_content_size="@dimen/sp_12"
+            app:item_desc="温馨：已绝育犬只，办理犬证费用减半"
+            app:item_desc_color="@color/red"
+            app:item_desc_size="@dimen/sp_12"
+            app:item_desc_visible="true"
+            app:item_info="已绝育"
+            app:item_info_size="@dimen/sp_12"
+            app:item_info_visible="true"
+            app:item_title="是否绝育"
+            app:item_title_size="@dimen/sp_14" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dividerHeight"
+            android:background="@color/colorDivider" />
+
+        <com.dog.manage.app.view.ViewItemLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingLeft="@dimen/dp_16"
+            android:paddingRight="@dimen/dp_16"
+            app:item_container_height="@dimen/dp_48"
+            app:item_content="1年2个月"
+            app:item_content_size="@dimen/sp_12"
+            app:item_title="犬只年龄"
+            app:item_title_size="@dimen/sp_14" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dividerHeight"
+            android:background="@color/colorDivider" />
+
+        <com.dog.manage.app.view.ViewItemLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingLeft="@dimen/dp_16"
+            android:paddingRight="@dimen/dp_16"
+            app:item_container_height="@dimen/dp_48"
+            app:item_desc="该犬只暂未办理免疫证"
+            app:item_desc_color="@color/red"
+            app:item_desc_size="@dimen/sp_12"
+            app:item_desc_visible="true"
+            app:item_title="犬只免疫证"
+            app:item_title_size="@dimen/sp_14" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dividerHeight"
+            android:background="@color/colorDivider" />
+
+        <com.dog.manage.app.view.ViewItemLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingLeft="@dimen/dp_16"
+            android:paddingRight="@dimen/dp_16"
+            app:item_container_height="@dimen/dp_48"
+            app:item_content="柴犬"
+            app:item_content_size="@dimen/sp_12"
+            app:item_title="犬只品种"
+            app:item_title_size="@dimen/sp_14" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dividerHeight"
+            android:background="@color/colorDivider" />
+
+        <com.dog.manage.app.view.ViewItemLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingLeft="@dimen/dp_16"
+            android:paddingRight="@dimen/dp_16"
+            app:item_container_height="@dimen/dp_48"
+            app:item_content="已采集完"
+            app:item_content_size="@dimen/sp_12"
+            app:item_title="鼻纹信息"
+            app:item_title_size="@dimen/sp_14" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dividerHeight"
+            android:background="@color/colorDivider" />
+
+    </LinearLayout>
+</layout>

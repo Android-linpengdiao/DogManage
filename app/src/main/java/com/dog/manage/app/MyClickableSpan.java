@@ -1,0 +1,41 @@
+package com.dog.manage.app;
+
+import android.app.Activity;
+import android.content.Intent;
+import android.net.Uri;
+import android.text.TextPaint;
+import android.text.style.ClickableSpan;
+import android.view.View;
+
+import com.okhttp.utils.APIUrls;
+
+public class MyClickableSpan extends ClickableSpan {
+
+    private Activity activity;
+    private String msg;
+
+    public MyClickableSpan(Activity activity, String msg) {
+        this.activity = activity;
+        this.msg = msg;
+    }
+
+    @Override
+    public void updateDrawState(TextPaint ds) {
+        ds.setUnderlineText(false);
+    }
+
+    @Override
+    public void onClick(View view) {
+        if (msg.equals("隐私条款")) {
+            Intent intent = new Intent();
+            intent.setData(Uri.parse(APIUrls.user_agreement));
+            intent.setAction(Intent.ACTION_VIEW);
+//            activity.startActivity(intent);
+        } else if (msg.equals("隐私协议")) {
+            Intent intent = new Intent();
+            intent.setData(Uri.parse(APIUrls.privacy_policy));
+            intent.setAction(Intent.ACTION_VIEW);
+//            activity.startActivity(intent);
+        }
+    }
+}

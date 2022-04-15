@@ -4,6 +4,7 @@ import android.app.Application;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
@@ -29,6 +30,20 @@ public class BaseApplication extends Application {
 
     public static Handler getHandler() {
         return handler;
+    }
+
+    private Typeface typeface;
+
+    public Typeface getTypeface() {
+        if (typeface==null) {
+            return Typeface.createFromAsset(getAssets(), "fonts/pingfangscbold.ttf");
+        }else {
+            return typeface;
+        }
+    }
+
+    private void initAssets() {
+        typeface = Typeface.createFromAsset(getAssets(), "fonts/pingfangscbold.ttf");
     }
 
     public void setUserInfo(UserInfo userInfo) {
