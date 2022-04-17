@@ -89,17 +89,34 @@
                         android:layout_height="@dimen/dividerHeight"
                         android:background="@color/colorDivider" />
 
-                    <com.dog.manage.app.view.ViewItemLayout
+                    <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/dp_12"
+                        android:layout_marginBottom="@dimen/dp_12"
+                        android:orientation="horizontal"
                         android:paddingLeft="@dimen/dp_16"
-                        android:paddingRight="@dimen/dp_16"
-                        app:item_arrow_visible="true"
-                        app:item_container_height="@dimen/dp_48"
-                        app:item_content="请选择省市区"
-                        app:item_content_size="@dimen/sp_12"
-                        app:item_title="居住地址"
-                        app:item_title_size="@dimen/sp_14" />
+                        android:paddingRight="@dimen/dp_16">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="详细地址"
+                            android:textColor="#333333"
+                            android:textSize="@dimen/sp_16"
+                            android:textStyle="normal" />
+
+                        <EditText
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@null"
+                            android:gravity="top|right"
+                            android:hint="请输入详细地址"
+                            android:minHeight="@dimen/dp_60"
+                            android:textColor="#999999"
+                            android:textSize="@dimen/sp_14" />
+
+                    </LinearLayout>
 
                     <View
                         android:layout_width="match_parent"
@@ -111,29 +128,12 @@
                         android:layout_height="wrap_content"
                         android:paddingLeft="@dimen/dp_16"
                         android:paddingRight="@dimen/dp_16"
-                        app:item_arrow_visible="true"
-                        app:item_container_height="@dimen/dp_48"
-                        app:item_content="请输入详细地址"
-                        app:item_content_size="@dimen/sp_12"
-                        app:item_title="详细地址"
-                        app:item_title_size="@dimen/sp_14" />
-
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="@dimen/dividerHeight"
-                        android:background="@color/colorDivider" />
-
-                    <com.dog.manage.app.view.ViewItemLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:paddingLeft="@dimen/dp_16"
-                        android:paddingRight="@dimen/dp_16"
-                        app:item_arrow_visible="true"
-                        app:item_container_height="@dimen/dp_48"
-                        app:item_content="请输入房本编号"
-                        app:item_content_size="@dimen/sp_12"
+                        app:item_container_height="@dimen/viewItemHeight"
+                        app:item_edit="请输入房本编号"
+                        app:item_edit_size="@dimen/sp_12"
+                        app:item_edit_visible="true"
                         app:item_title="房本编号"
-                        app:item_title_size="@dimen/sp_14" />
+                        app:item_title_size="@dimen/viewItemTitleSize" />
 
                     <View
                         android:layout_width="match_parent"
@@ -153,7 +153,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="房产"
+                            android:text="房产证或房屋租货合同 "
                             android:textColor="#333333"
                             android:textSize="@dimen/sp_16"
                             android:textStyle="normal" />
@@ -162,7 +162,7 @@
                             android:layout_width="@dimen/dp_120"
                             android:layout_height="@dimen/dp_80"
                             android:layout_marginTop="@dimen/dp_10"
-                            android:src="@drawable/image" />
+                            android:background="@drawable/image" />
 
                     </LinearLayout>
 

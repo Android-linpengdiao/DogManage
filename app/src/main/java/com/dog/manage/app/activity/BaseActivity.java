@@ -145,9 +145,9 @@ public class BaseActivity extends AppCompatActivity {
 
     public <T extends ViewDataBinding> T getViewData(int layoutId) {
         T binding = DataBindingUtil.setContentView(this, layoutId);
-        if (findViewById(R.id.titleView) != null) {
-            setTypeface(findViewById(R.id.titleView));
-        }
+//        if (findViewById(R.id.titleView) != null) {
+//            setTypeface(findViewById(R.id.titleView));
+//        }
         return binding;
     }
 

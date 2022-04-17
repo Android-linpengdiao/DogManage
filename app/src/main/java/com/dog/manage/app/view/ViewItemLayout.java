@@ -50,10 +50,11 @@ public class ViewItemLayout extends FrameLayout {
         setItemContentSize(typedArray.getDimensionPixelSize(R.styleable.ViewItemLayout_item_content_size, R.dimen.dp_12));
         setItemContentColor(typedArray.getColor(R.styleable.ViewItemLayout_item_title_color, 0));
 
-        setItemInfo(typedArray.getString(R.styleable.ViewItemLayout_item_info));
-        setItemInfoSize(typedArray.getDimensionPixelSize(R.styleable.ViewItemLayout_item_info_size, R.dimen.dp_12));
-        setItemInfoColor(typedArray.getColor(R.styleable.ViewItemLayout_item_info_color, 0));
-        setItemInfoVisible(typedArray.getBoolean(R.styleable.ViewItemLayout_item_info_visible, false));
+        setItemEdit(typedArray.getString(R.styleable.ViewItemLayout_item_edit));
+        setItemEditHint(typedArray.getString(R.styleable.ViewItemLayout_item_edit_hint));
+        setItemEditSize(typedArray.getDimensionPixelSize(R.styleable.ViewItemLayout_item_edit_size, R.dimen.dp_12));
+        setItemEditColor(typedArray.getColor(R.styleable.ViewItemLayout_item_edit_color, 0));
+        setItemEditVisible(typedArray.getBoolean(R.styleable.ViewItemLayout_item_edit_visible, false));
 
         setItemInfo(typedArray.getString(R.styleable.ViewItemLayout_item_info));
         setItemInfoSize(typedArray.getDimensionPixelSize(R.styleable.ViewItemLayout_item_info_size, R.dimen.dp_12));
@@ -125,6 +126,37 @@ public class ViewItemLayout extends FrameLayout {
     public void setItemContent(String content) {
         if (content != null) {
             binding.itemContent.setText(content);
+        }
+    }
+
+    public void setItemEditSize(int size) {
+        binding.itemEdit.setTextSize(TypedValue.COMPLEX_UNIT_PX, size);
+
+    }
+
+    public void setItemEditColor(int resourceId) {
+        if (resourceId != 0) {
+            binding.itemEdit.setTextColor(resourceId);
+        }
+
+    }
+
+    public void setItemEditVisible(boolean visible) {
+        if (visible) {
+            binding.itemEdit.setVisibility(VISIBLE);
+            binding.itemContent.setVisibility(GONE);
+        }
+    }
+
+    public void setItemEdit(String edit) {
+        if (edit != null) {
+            binding.itemEdit.setText(edit);
+        }
+    }
+
+    public void setItemEditHint(String hint) {
+        if (hint != null) {
+            binding.itemEdit.setHint(hint);
         }
     }
 

@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <com.dog.manage.app.view.TitleView
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_48"
+            android:background="@color/colorAppTheme"
+            app:tv_content=""
+            app:tv_content_size="@dimen/sp_14"
+            app:tv_title="犬只领养"
+            app:tv_title_bold="true"
+            app:tv_title_size="@dimen/sp_16" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_80"
+            android:background="@color/white"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/dogOwnerInfoView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/button_theme"
+                android:gravity="center"
+                android:padding="@dimen/dp_10"
+                android:text="选择犬只"
+                android:textColor="#ffffff"
+                android:textSize="@dimen/sp_12" />
+
+            <View
+                android:layout_width="@dimen/dp_60"
+                android:layout_height="@dimen/dividerHeight"
+                android:background="@color/colorAppTheme" />
+
+            <TextView
+                android:id="@+id/dogInfoView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:padding="@dimen/dp_10"
+                android:text="犬主信息"
+                android:textColor="@color/colorAppTheme"
+                android:textSize="@dimen/sp_12" />
+
+            <View
+                android:layout_width="@dimen/dp_60"
+                android:layout_height="@dimen/dividerHeight"
+                android:background="@color/colorAppTheme" />
+
+            <TextView
+                android:id="@+id/submitView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:padding="@dimen/dp_10"
+                android:text="提交信息"
+                android:textColor="@color/colorAppTheme"
+                android:textSize="@dimen/sp_12" />
+
+        </LinearLayout>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:overScrollMode="never"
+            android:paddingLeft="@dimen/dp_16"
+            android:paddingTop="@dimen/dp_10"
+            android:paddingRight="@dimen/dp_16" />
+
+    </LinearLayout>
+</layout>

@@ -8,6 +8,26 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+    <style name="WindowDialog" parent="@style/Theme.AppCompat.Light.Dialog.Alert">
+        <!--是否去除标题 -->
+        <item name="windowNoTitle">true</item>
+        <!--是否去除边框-->
+        <item name="android:windowFrame">@null</item>
+        <!--是否浮现在activity之上-->
+        <item name="android:windowIsFloating">true</item>
+        <!--是否模糊-->
+        <item name="android:backgroundDimEnabled">true</item>
+        <!-- 背景透明 -->
+        <item name="android:background">#00000000</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <!-- 没有windowActionBar-->
+        <item name="windowActionBar">false</item>
+        <item name="android:windowContentOverlay">@null</item>
+        <!-- <item name="android:windowAnimationStyle">@android:style/Animation.Translucent</item> -->
+
+        <!-- <item name="android:backgroundDimEnabled">false</item> -->
+    </style>
+
     <declare-styleable name="TitleView">
         <attr name="tv_title" format="string" />
         <attr name="tv_title_size" format="dimension" />
@@ -26,6 +46,11 @@
         <attr name="item_content" format="string" />
         <attr name="item_content_size" format="dimension" />
         <attr name="item_content_color" format="color" />
+        <attr name="item_edit" format="string" />
+        <attr name="item_edit_hint" format="string" />
+        <attr name="item_edit_size" format="dimension" />
+        <attr name="item_edit_color" format="color" />
+        <attr name="item_edit_visible" format="boolean" />
         <attr name="item_info" format="string" />
         <attr name="item_info_size" format="dimension" />
         <attr name="item_info_color" format="color" />

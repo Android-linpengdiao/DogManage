@@ -8,7 +8,6 @@ import android.view.ViewGroup;
 
 import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
-import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.base.BaseData;
@@ -16,10 +15,11 @@ import com.base.utils.CommonUtil;
 import com.base.view.OnClickListener;
 import com.base.view.RecycleViewDivider;
 import com.dog.manage.app.R;
-import com.dog.manage.app.activity.AdoptionDetailsActivity;
+import com.dog.manage.app.activity.record.AdoptionDetailsActivity;
 import com.dog.manage.app.adapter.AdoptionRecordAdapter;
+import com.dog.manage.app.adapter.CertificateRecordAdapter;
+import com.dog.manage.app.adapter.PunishRecordAdapter;
 import com.dog.manage.app.databinding.FragmentAdoptionRecordBinding;
-import com.dog.manage.app.view.GridItemDecoration;
 import com.okhttp.Pager;
 import com.okhttp.SendRequest;
 import com.okhttp.callbacks.GenericsCallback;
@@ -38,14 +38,25 @@ import okhttp3.Call;
 public class AdoptionRecordFragment extends BaseFragment {
 
     private FragmentAdoptionRecordBinding binding;
+
+    public static final int type_certificate = 1;//犬证办理记录
+    public static final int type_immune = 2;//免疫证办理记录
+    public static final int type_transfer = 3;//处罚记录
+    public static final int type_adoption = 4;//领养记录
+    public static final int type_logout = 5;//注销记录
+    public static final int type_punish = 6;//处罚记录
+    private int type;
+
     private Pager<BaseData> creationPager = new Pager<>();
+    private AdoptionRecordAdapter adoptionRecordAdapter;
+    private CertificateRecordAdapter certificateRecordAdapter;
+    private PunishRecordAdapter punishRecordAdapter;
 
-    private AdoptionRecordAdapter adapter;
-
-    public static AdoptionRecordFragment getInstance(int type) {
+    public static AdoptionRecordFragment getInstance(int type, int id) {
         AdoptionRecordFragment fragment = new AdoptionRecordFragment();
         Bundle bundle = new Bundle();
         bundle.putInt("type", type);
+        bundle.putInt("id", id);
         fragment.setArguments(bundle);
         return fragment;
 
@@ -57,6 +68,8 @@ public class AdoptionRecordFragment extends BaseFragment {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_adoption_record, container, false);
 
         if (getArguments() != null) {
+
+            type = getArguments().getInt("type");
 
 //            GridItemDecoration.Builder builder = new GridItemDecoration.Builder(getActivity());
 //            builder.color(R.color.transparent);
@@ -73,20 +86,112 @@ public class AdoptionRecordFragment extends BaseFragment {
             binding.recyclerView.addItemDecoration(divider);
 
             binding.recyclerView.setNestedScrollingEnabled(false);
-            adapter = new AdoptionRecordAdapter(getActivity());
-            binding.recyclerView.setAdapter(adapter);
-            adapter.setOnClickListener(new OnClickListener() {
-                @Override
-                public void onClick(View view, Object object) {
-                    openActivity(AdoptionDetailsActivity.class);
 
-                }
+            if (type == type_certificate) {
+                certificateRecordAdapter = new CertificateRecordAdapter(getActivity());
+                binding.recyclerView.setAdapter(certificateRecordAdapter);
+                certificateRecordAdapter.setOnClickListener(new OnClickListener() {
+                    @Override
+                    public void onClick(View view, Object object) {
+                        openActivity(AdoptionDetailsActivity.class);
 
-                @Override
-                public void onLongClick(View view, Object object) {
+                    }
 
-                }
-            });
+                    @Override
+                    public void onLongClick(View view, Object object) {
+
+                    }
+                });
+                certificateRecordAdapter.refreshData(Arrays.asList("", "", "", "", "", "", "", "", ""));
+
+            } else if (type == type_immune) {
+                certificateRecordAdapter = new CertificateRecordAdapter(getActivity());
+                binding.recyclerView.setAdapter(certificateRecordAdapter);
+                certificateRecordAdapter.setOnClickListener(new OnClickListener() {
+                    @Override
+                    public void onClick(View view, Object object) {
+                        openActivity(AdoptionDetailsActivity.class);
+
+                    }
+
+                    @Override
+                    public void onLongClick(View view, Object object) {
+
+                    }
+                });
+                certificateRecordAdapter.refreshData(Arrays.asList("", "", "", "", "", "", "", "", ""));
+
+            } else if (type == type_transfer) {
+                certificateRecordAdapter = new CertificateRecordAdapter(getActivity());
+                binding.recyclerView.setAdapter(certificateRecordAdapter);
+                certificateRecordAdapter.setOnClickListener(new OnClickListener() {
+                    @Override
+                    public void onClick(View view, Object object) {
+                        openActivity(AdoptionDetailsActivity.class);
+
+                    }
+
+                    @Override
+                    public void onLongClick(View view, Object object) {
+
+                    }
+                });
+                certificateRecordAdapter.refreshData(Arrays.asList("", "", "", "", "", "", "", "", ""));
+
+            } else if (type == type_adoption) {
+                adoptionRecordAdapter = new AdoptionRecordAdapter(getActivity());
+                binding.recyclerView.setAdapter(adoptionRecordAdapter);
+                adoptionRecordAdapter.setOnClickListener(new OnClickListener() {
+                    @Override
+                    public void onClick(View view, Object object) {
+                        openActivity(AdoptionDetailsActivity.class);
+
+                    }
+
+                    @Override
+                    public void onLongClick(View view, Object object) {
+
+                    }
+                });
+                adoptionRecordAdapter.refreshData(Arrays.asList("", "", "", "", "", "", "", "", ""));
+
+            } else if (type == type_logout) {
+                certificateRecordAdapter = new CertificateRecordAdapter(getActivity());
+                binding.recyclerView.setAdapter(certificateRecordAdapter);
+                certificateRecordAdapter.setOnClickListener(new OnClickListener() {
+                    @Override
+                    public void onClick(View view, Object object) {
+                        openActivity(AdoptionDetailsActivity.class);
+
+                    }
+
+                    @Override
+                    public void onLongClick(View view, Object object) {
+
+                    }
+                });
+                certificateRecordAdapter.refreshData(Arrays.asList("", "", "", "", "", "", "", "", ""));
+
+            } else if (type == type_punish) {
+                punishRecordAdapter = new PunishRecordAdapter(getActivity());
+                binding.recyclerView.setAdapter(punishRecordAdapter);
+                punishRecordAdapter.setOnClickListener(new OnClickListener() {
+                    @Override
+                    public void onClick(View view, Object object) {
+                        openActivity(AdoptionDetailsActivity.class);
+
+                    }
+
+                    @Override
+                    public void onLongClick(View view, Object object) {
+
+                    }
+                });
+                punishRecordAdapter.refreshData(Arrays.asList("", "", "", "", "", "", "", "", ""));
+
+            }
+
+
         }
 
         setRefresh();
@@ -100,24 +205,21 @@ public class AdoptionRecordFragment extends BaseFragment {
             @Override
             public void onRefresh(RefreshLayout refreshlayout) {
                 creationPager = new Pager<>();
-                loadData(true);
+//                loadData(true);
             }
         });
         binding.refreshLayout.setOnLoadMoreListener(new OnLoadMoreListener() {
             @Override
             public void onLoadMore(RefreshLayout refreshlayout) {
-                loadData(false);
+//                loadData(false);
 
             }
         });
-        binding.refreshLayout.autoRefresh();
+//        binding.refreshLayout.autoRefresh();
 
     }
 
     public void loadData(boolean isRefresh) {
-        adapter.refreshData(Arrays.asList("", "", "", "", "", "", "", "", ""));
-        if (true)
-            return;
         SendRequest.favorite_getPager(getUserInfo().getToken(), 11, creationPager.getNextCursor(),
                 new GenericsCallback<Pager<BaseData>>(new JsonGenericsSerializator()) {
 

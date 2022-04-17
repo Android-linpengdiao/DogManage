@@ -2,6 +2,13 @@
 <resources>
 
     <dimen name="dividerHeight">1dp</dimen>
+    <dimen name="viewItemHeight">48dp</dimen>
+
+    <dimen name="viewItemTitleSize">16sp</dimen>
+    <dimen name="viewItemContentSize">14sp</dimen>
+    <dimen name="viewItemInfoSize">14sp</dimen>
+    <dimen name="viewItemDescSize">14sp</dimen>
+
     <!-- dp and sp values, must be defined in this file! -->
     <!-- view size,you can add if there is no one -->
     <dimen name="dp_m_60">-60dp</dimen>

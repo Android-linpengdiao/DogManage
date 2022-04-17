@@ -37,7 +37,7 @@ public class LoginActivity extends BaseActivity {
 
         String userText = "隐私条款";
         String yinsiText = "隐私协议";
-        String content = "同意隐私条款和隐私协议";
+        String content = "登录代表同意隐私条款和隐私协议";
         SpannableString spannableString = new SpannableString(content);
         // 设置字体颜色
         spannableString.setSpan(new ForegroundColorSpan(Color.parseColor("#489DFA")), content.indexOf(userText), content.indexOf(userText) + userText.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
@@ -53,17 +53,17 @@ public class LoginActivity extends BaseActivity {
     }
 
     public void onClickLogin(View view) {
-        String phone = binding.phoneEditText.getText().toString().trim();
-        if (!CommonUtil.isPhone(getApplicationContext(), phone)) {
-            return;
-        }
-        if (!binding.checkView.isSelected()) {
-            ToastUtils.showShort(getApplicationContext(), "请同意服务条款");
-            return;
-        }
+//        String phone = binding.phoneEditText.getText().toString().trim();
+//        if (!CommonUtil.isPhone(getApplicationContext(), phone)) {
+//            return;
+//        }
+//        if (!binding.checkView.isSelected()) {
+//            ToastUtils.showShort(getApplicationContext(), "请同意服务条款");
+//            return;
+//        }
         Bundle bundle = new Bundle();
-        bundle.putString("phone", phone);
-//        openActivity(LoginCodeActivity.class, bundle);
+//        bundle.putString("phone", phone);
+        openActivity(MainActivity.class, bundle);
 
     }
 }

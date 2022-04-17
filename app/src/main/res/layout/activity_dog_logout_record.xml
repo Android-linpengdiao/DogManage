@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <com.dog.manage.app.view.TitleView
+            android:id="@+id/itemVipView"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_48"
+            app:tv_content=""
+            app:tv_content_size="@dimen/sp_14"
+            app:tv_title="我的会员"
+            app:tv_title_bold="true"
+            app:tv_title_size="@dimen/sp_16" />
+
+        <com.dog.manage.app.tab.TopTabLayout
+            android:id="@+id/tabLayout"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/dp_32"
+            android:layout_below="@+id/topView"
+            android:layout_centerHorizontal="true"
+            android:background="@android:color/transparent"
+            android:overScrollMode="never"
+            android:scrollbars="none"
+            app:yj_tabBackground="@null"
+            app:yj_tabIndicatorDrawable="@drawable/tab_indicator"
+            app:yj_tabIndicatorPaddingBottom="0dp"
+            app:yj_tabMaxWidth="@dimen/dp_64"
+            app:yj_tabMinWidth="@dimen/dp_64"
+            app:yj_tabPaddingBottom="0dp"
+            app:yj_tabSelectTextSize="@dimen/sp_16"
+            app:yj_tabSelectedTextColor="#333333"
+            app:yj_tabTextColor="#999999"
+            app:yj_tabTextSize="@dimen/sp_16" />
+
+        <androidx.viewpager.widget.ViewPager
+            android:id="@+id/viewPager"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/tabLayout"
+            android:overScrollMode="never"
+            android:scrollbars="none" />
+
+    </LinearLayout>
+</layout>

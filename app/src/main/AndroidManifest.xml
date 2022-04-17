@@ -2,6 +2,10 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.dog.manage.app">
 
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+
     <application
         android:name=".MyApplication"
         android:allowBackup="true"
@@ -12,16 +16,99 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".activity.UpdateDogOwnerInfoActivity"></activity>
-        <activity android:name=".activity.PunishDetailsActivity" />
-        <activity android:name=".activity.DogLogoutDetailsActivity" />
-        <activity android:name=".activity.AdoptionDetailsActivity" />
-        <activity android:name=".activity.DogOwnerInfoActivity" />
-        <activity android:name=".activity.AdoptionRecordActivity" />
-        <activity android:name=".activity.LoginActivity" />
+        <activity android:name=".activity.AdvertiseActivity"></activity>
+        <activity
+            android:name=".activity.MyDogCertificateOrImmuneActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.DogCertificateExaminedActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.DogDetailsActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/WindowDialog" />
+        <activity
+            android:name=".activity.DogAdoptionActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.DogTransferActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.record.MessageDetailsActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.MessageActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.SettingsActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.record.PunishRecordActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.UserHomeActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.PoliciesDetailsActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.PoliciesActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.MainDogManageWorkflowActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.UpdateDogCertificateActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.SubmitSuccessActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.DogLogoutRecordActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.DogImmuneEditDogOwnerActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.DogImmuneActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.DogCertificateEditSubmitActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.DogCertificateEditDogActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.DogCertificateEditDogOwnerActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.DogManageWorkflowActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.UpdateDogOwnerInfoActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.record.PunishDetailsActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.DogLogoutDetailsActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.record.AdoptionDetailsActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.DogOwnerInfoActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.record.AdoptionRecordActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.LoginActivity"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".activity.WelcomeActivity"
-            android:configChanges="orientation|screenSize|keyboardHidden">
+            android:configChanges="orientation|screenSize|keyboardHidden"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

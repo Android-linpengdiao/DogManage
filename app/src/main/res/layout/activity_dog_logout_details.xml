@@ -108,31 +108,17 @@
                 </androidx.cardview.widget.CardView>
 
                 <com.dog.manage.app.view.ViewItemLayout
+                    android:id="@+id/dogInfoView"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:paddingLeft="@dimen/dp_16"
                     android:paddingRight="@dimen/dp_16"
-                    app:item_container_height="@dimen/dp_48"
+                    app:item_container_height="@dimen/viewItemHeight"
                     app:item_content="柴犬"
-                    app:item_content_size="@dimen/sp_12"
-                    app:item_title="选择犬只"
-                    app:item_title_size="@dimen/sp_14" />
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/dividerHeight"
-                    android:background="@color/colorDivider" />
-
-                <com.dog.manage.app.view.ViewItemLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:paddingLeft="@dimen/dp_16"
-                    android:paddingRight="@dimen/dp_16"
-                    app:item_container_height="@dimen/dp_48"
-                    app:item_content="丢失"
-                    app:item_content_size="@dimen/sp_12"
-                    app:item_title="注销原因"
-                    app:item_title_size="@dimen/sp_14" />
+                    app:item_content_color="#999999"
+                    app:item_content_size="@dimen/viewItemContentSize"
+                    app:item_title="选择我的犬只"
+                    app:item_title_size="@dimen/viewItemTitleSize" />
 
                 <View
                     android:layout_width="match_parent"
@@ -140,7 +126,69 @@
                     android:background="@color/colorDivider" />
 
                 <LinearLayout
-                    android:id="@+id/item_container"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dp_48"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:paddingLeft="@dimen/dp_16"
+                    android:paddingRight="@dimen/dp_16">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="center_vertical"
+                        android:singleLine="true"
+                        android:text="注销原因"
+                        android:textColor="#333333"
+                        android:textSize="@dimen/sp_16" />
+
+                    <RadioGroup
+                        android:id="@id/radioGroupView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <RadioButton
+                            android:id="@+id/radioButton1"
+                            android:layout_width="wrap_content"
+                            android:layout_height="@dimen/dp_28"
+                            android:background="@drawable/radio_bg"
+                            android:button="@null"
+                            android:checked="false"
+                            android:gravity="center"
+                            android:paddingLeft="@dimen/dp_10"
+                            android:paddingRight="@dimen/dp_10"
+                            android:text="犬只丢失"
+                            android:textColor="@drawable/text_color"
+                            android:textSize="@dimen/sp_14" />
+
+                        <RadioButton
+                            android:id="@+id/radioButton2"
+                            android:layout_width="wrap_content"
+                            android:layout_height="@dimen/dp_28"
+                            android:layout_marginLeft="@dimen/dp_10"
+                            android:background="@drawable/radio_bg"
+                            android:button="@null"
+                            android:checked="true"
+                            android:gravity="center"
+                            android:paddingLeft="@dimen/dp_10"
+                            android:paddingRight="@dimen/dp_10"
+                            android:text="犬只死亡"
+                            android:textColor="@drawable/text_color"
+                            android:textSize="@dimen/sp_14" />
+
+
+                    </RadioGroup>
+
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dividerHeight"
+                    android:background="@color/colorDivider" />
+
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/dp_12"
@@ -150,6 +198,7 @@
                     android:paddingRight="@dimen/dp_16">
 
                     <TextView
+                        android:id="@+id/pictureHintView"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="无害化处理过程图片"
@@ -160,47 +209,76 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/dp_12"
+                        android:layout_marginTop="@dimen/dp_8"
                         android:layout_marginBottom="@dimen/dp_12"
-                        android:gravity="center_vertical"
+                        android:gravity="center"
                         android:orientation="horizontal">
 
                         <ImageView
-                            android:layout_width="@dimen/dp_20"
-                            android:layout_height="@dimen/dp_20"
-                            android:src="@drawable/image" />
+                            android:id="@+id/pictureImageView1"
+                            android:layout_width="0dp"
+                            android:layout_height="@dimen/dp_80"
+                            android:layout_weight="1"
+                            android:background="@drawable/image" />
 
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginLeft="@dimen/dp_8"
-                            android:gravity="center_vertical"
-                            android:textColor="#999999"
-                            android:textSize="@dimen/sp_12"
-                            tools:text="TextView" />
+                        <ImageView
+                            android:id="@+id/pictureImageView2"
+                            android:layout_width="0dp"
+                            android:layout_height="@dimen/dp_80"
+                            android:layout_marginLeft="@dimen/dp_20"
+                            android:layout_marginRight="@dimen/dp_20"
+                            android:layout_weight="1"
+                            android:background="@drawable/image" />
 
+                        <ImageView
+                            android:id="@+id/pictureImageView3"
+                            android:layout_width="0dp"
+                            android:layout_height="@dimen/dp_80"
+                            android:layout_weight="1"
+                            android:background="@drawable/image" />
                     </LinearLayout>
 
                 </LinearLayout>
+
+
+
 
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/dividerHeight"
                     android:background="@color/colorDivider" />
 
-                <com.dog.manage.app.view.ViewItemLayout
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dp_12"
+                    android:gravity="center_vertical"
+                    android:orientation="vertical"
                     android:paddingLeft="@dimen/dp_16"
-                    android:paddingRight="@dimen/dp_16"
-                    app:item_container_height="@dimen/dp_48"
-                    app:item_content=""
-                    app:item_content_size="@dimen/sp_12"
-                    app:item_desc="暂无内容"
-                    app:item_desc_size="@dimen/sp_12"
-                    app:item_desc_visible="true"
-                    app:item_title="简要说明"
-                    app:item_title_size="@dimen/sp_14" />
+                    android:paddingRight="@dimen/dp_16">
+
+                    <TextView
+                        android:id="@+id/descriptionHintView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="简要说明(非必填)"
+                        android:textColor="#333333"
+                        android:textSize="@dimen/sp_16"
+                        android:textStyle="normal" />
+
+                    <EditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:minHeight="@dimen/dp_60"
+                        android:layout_marginTop="@dimen/dp_8"
+                        android:layout_marginBottom="@dimen/dp_12"
+                        android:gravity="top"
+                        android:background="@null"
+                        android:textColor="#999999"
+                        android:textSize="@dimen/sp_14"
+                        android:hint="请对情况简要描述" />
+
+                </LinearLayout>
 
                 <View
                     android:layout_width="match_parent"
@@ -278,23 +356,16 @@
 
         </ScrollView>
 
-        <LinearLayout
+        <TextView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/white"
-            android:orientation="vertical"
-            android:padding="@dimen/dp_16">
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/dp_48"
-                android:background="@drawable/button_theme"
-                android:gravity="center"
-                android:text="重新提交"
-                android:textColor="@color/white"
-                android:textSize="@dimen/sp_16" />
-
-        </LinearLayout>
+            android:layout_height="@dimen/dp_48"
+            android:background="@drawable/button_theme"
+            android:gravity="center"
+            android:text="重新提交"
+            android:onClick="onClickConfirm"
+            android:textColor="@color/white"
+            android:textSize="@dimen/sp_16"
+            android:layout_margin="@dimen/dp_16"/>
 
     </LinearLayout>
 </layout>

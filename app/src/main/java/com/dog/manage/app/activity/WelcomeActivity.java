@@ -68,7 +68,7 @@ public class WelcomeActivity extends BaseActivity {
 
     private void init() {
 
-        openActivity(UpdateDogOwnerInfoActivity.class);
+        openActivity(MainActivity.class);
         finish();
 
 //        if (CommonUtil.isBlank(getUserInfo()) || CommonUtil.isBlank(getUserInfo().getToken())) {

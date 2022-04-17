@@ -10,6 +10,8 @@ import com.dog.manage.app.databinding.ActivityUpdateDogOwnerInfoBinding;
 public class UpdateDogOwnerInfoActivity extends BaseActivity {
 
     private ActivityUpdateDogOwnerInfoBinding binding;
+    public static final int type_details = 0;//犬主信息
+    public static final int type_submit = 1;//提交
 
     private int type = 0;
 
@@ -20,7 +22,10 @@ public class UpdateDogOwnerInfoActivity extends BaseActivity {
         addActivity(this);
         type = getIntent().getIntExtra("type", 0);
 
-        if (type == 1) {
+        if (type == type_details) {
+
+
+        } else if (type == type_submit) {
 
             binding.dogOwnerView.setBackgroundColor(getResources().getColor(R.color.transparent));
             binding.dogOwnerView.setTextColor(getResources().getColor(R.color.colorAppTheme));
@@ -40,7 +45,9 @@ public class UpdateDogOwnerInfoActivity extends BaseActivity {
             bundle.putInt("type", 1);
             openActivity(UpdateDogOwnerInfoActivity.class, bundle);
         } else {
-
+            Bundle bundle = new Bundle();
+            bundle.putInt("type", SubmitSuccessActivity.type_update);
+            openActivity(SubmitSuccessActivity.class, bundle);
         }
     }
 }

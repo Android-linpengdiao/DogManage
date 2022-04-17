@@ -1,8 +1,9 @@
-package com.dog.manage.app.activity;
+package com.dog.manage.app.activity.record;
 
 import android.os.Bundle;
 
 import com.dog.manage.app.R;
+import com.dog.manage.app.activity.BaseActivity;
 import com.dog.manage.app.databinding.ActivityAdoptionDetailsBinding;
 
 /**

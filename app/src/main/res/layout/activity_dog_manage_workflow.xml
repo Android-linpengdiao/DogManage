@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <com.dog.manage.app.view.TitleView
+            android:id="@+id/titleView"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_48"
+            app:tv_content=""
+            app:tv_content_size="@dimen/sp_14"
+            app:tv_title="犬证办理"
+            app:tv_title_bold="true"
+            app:tv_title_size="@dimen/sp_16" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/dp_38"
+            android:layout_marginTop="@dimen/dp_16"
+            android:layout_marginRight="@dimen/dp_38"
+            android:background="@drawable/first_step_bg"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:padding="@dimen/dp_16">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal|top"
+                android:text="第一步"
+                android:textColor="@color/white"
+                android:textSize="@dimen/sp_24" />
+
+            <TextView
+                android:id="@+id/firstStepView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dp_16"
+                android:gravity="center_horizontal|top"
+                android:text="填写犬主身份信息、地址信息上传证件照片等"
+                android:textColor="@color/white"
+                android:textSize="@dimen/sp_16" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/dp_38"
+            android:layout_marginTop="@dimen/dp_16"
+            android:layout_marginRight="@dimen/dp_38"
+            android:background="@drawable/second_step_bg"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:padding="@dimen/dp_16">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal|top"
+                android:text="第二步"
+                android:textColor="@color/white"
+                android:textSize="@dimen/sp_24" />
+
+            <TextView
+                android:id="@+id/secondStepView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dp_16"
+                android:gravity="center_horizontal|top"
+                android:text="填写犬只相关信息、犬只照片进行鼻纹识别等操作"
+                android:textColor="@color/white"
+                android:textSize="@dimen/sp_16" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/dp_38"
+            android:layout_marginTop="@dimen/dp_16"
+            android:layout_marginRight="@dimen/dp_38"
+            android:background="@drawable/third_step_bg"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:padding="@dimen/dp_16">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal|top"
+                android:text="第三步"
+                android:textColor="@color/white"
+                android:textSize="@dimen/sp_24" />
+
+            <TextView
+                android:id="@+id/thirdStepView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dp_16"
+                android:gravity="center_horizontal|top"
+                android:text="确认操作结果,查看业务归属地派出所,完成提交审核"
+                android:textColor="@color/white"
+                android:textSize="@dimen/sp_16" />
+
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_48"
+            android:layout_marginLeft="@dimen/dp_28"
+            android:layout_marginTop="@dimen/dp_30"
+            android:layout_marginRight="@dimen/dp_28"
+            android:background="@drawable/button_theme"
+            android:onClick="onClickConfirm"
+            android:gravity="center"
+            android:text="现在办理"
+            android:textColor="@color/white"
+            android:textSize="@dimen/sp_16" />
+
+    </LinearLayout>
+</layout>

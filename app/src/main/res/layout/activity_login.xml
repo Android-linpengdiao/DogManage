@@ -36,9 +36,9 @@
             android:id="@+id/phoneEditText"
             android:layout_width="match_parent"
             android:layout_height="@dimen/dp_48"
-            android:layout_marginLeft="@dimen/dp_16"
-            android:layout_marginTop="@dimen/dp_8"
-            android:layout_marginRight="@dimen/dp_16"
+            android:layout_marginLeft="@dimen/dp_38"
+            android:layout_marginTop="@dimen/dp_80"
+            android:layout_marginRight="@dimen/dp_38"
             android:background="@drawable/button_gray"
             android:gravity="center_vertical"
             android:hint="手机号"
@@ -53,9 +53,9 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="@dimen/dp_48"
-            android:layout_marginLeft="@dimen/dp_16"
+            android:layout_marginLeft="@dimen/dp_38"
             android:layout_marginTop="@dimen/dp_12"
-            android:layout_marginRight="@dimen/dp_16"
+            android:layout_marginRight="@dimen/dp_38"
             android:background="@drawable/button_gray"
             android:gravity="center_vertical"
             android:orientation="horizontal">
@@ -94,9 +94,11 @@
         </LinearLayout>
 
         <TextView
-            android:layout_width="@dimen/dp_240"
+            android:layout_width="match_parent"
             android:layout_height="@dimen/dp_40"
             android:layout_marginTop="@dimen/dp_32"
+            android:layout_marginLeft="@dimen/dp_38"
+            android:layout_marginRight="@dimen/dp_38"
             android:background="@drawable/button_theme"
             android:gravity="center"
             android:onClick="onClickLogin"
@@ -115,7 +117,6 @@
                 android:id="@+id/checkView"
                 android:layout_width="@dimen/dp_36"
                 android:layout_height="@dimen/dp_36"
-                android:layout_marginRight="@dimen/dp_m_8"
                 android:padding="@dimen/dp_10"
                 android:src="@drawable/selected" />
 

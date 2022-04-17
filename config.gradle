@@ -43,6 +43,8 @@ ext{
 
     //加载动画
     lottie = 'com.airbnb.android:lottie:3.4.0'
+    cardview = 'com.zyp.cardview:cardview:1.0.1'
+
     //刷新
     smartrefresh = 'com.scwang.smart:refresh-layout-kernel:2.0.3'
     smartrefreshHeaderClassics =  'com.scwang.smart:refresh-header-classics:2.0.3'    //经典刷新头

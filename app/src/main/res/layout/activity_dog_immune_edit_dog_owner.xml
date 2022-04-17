@@ -1,0 +1,570 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <com.dog.manage.app.view.TitleView
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_48"
+            android:background="@color/colorAppTheme"
+            app:tv_content=""
+            app:tv_content_size="@dimen/sp_14"
+            app:tv_title="免疫证办理"
+            app:tv_title_bold="true"
+            app:tv_title_size="@dimen/sp_16" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_80"
+            android:background="@color/white"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/dogOwnerInfoView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/button_theme"
+                android:gravity="center"
+                android:padding="@dimen/dp_10"
+                android:text="犬主信息"
+                android:textColor="#ffffff"
+                android:textSize="@dimen/sp_12" />
+
+            <View
+                android:layout_width="@dimen/dp_60"
+                android:layout_height="@dimen/dividerHeight"
+                android:background="@color/colorAppTheme" />
+
+            <TextView
+                android:id="@+id/dogInfoView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:padding="@dimen/dp_10"
+                android:text="犬只信息"
+                android:textColor="@color/colorAppTheme"
+                android:textSize="@dimen/sp_12" />
+
+            <View
+                android:layout_width="@dimen/dp_60"
+                android:layout_height="@dimen/dividerHeight"
+                android:background="@color/colorAppTheme" />
+
+            <TextView
+                android:id="@+id/submitView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:padding="@dimen/dp_10"
+                android:text="提交信息"
+                android:textColor="@color/colorAppTheme"
+                android:textSize="@dimen/sp_12" />
+
+        </LinearLayout>
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_0"
+            android:layout_weight="1"
+            android:overScrollMode="never">
+
+            <LinearLayout
+                android:id="@+id/dogOwnerContainer"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dp_48"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:paddingLeft="@dimen/dp_16"
+                    android:paddingRight="@dimen/dp_16">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="center_vertical"
+                        android:singleLine="true"
+                        android:text="犬主类型"
+                        android:textColor="#333333"
+                        android:textSize="@dimen/sp_16" />
+
+                    <RadioGroup
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <RadioButton
+                            android:id="@+id/radioButtonOrgan"
+                            android:layout_width="wrap_content"
+                            android:layout_height="@dimen/dp_28"
+                            android:background="@drawable/radio_bg"
+                            android:button="@null"
+                            android:checked="false"
+                            android:gravity="center"
+                            android:paddingLeft="@dimen/dp_10"
+                            android:paddingRight="@dimen/dp_10"
+                            android:text="单位办理"
+                            android:textColor="@drawable/text_color"
+                            android:textSize="@dimen/sp_14" />
+
+                        <RadioButton
+                            android:id="@+id/radioButtonPersonal"
+                            android:layout_width="wrap_content"
+                            android:layout_height="@dimen/dp_28"
+                            android:layout_marginLeft="@dimen/dp_10"
+                            android:background="@drawable/radio_bg"
+                            android:button="@null"
+                            android:checked="true"
+                            android:gravity="center"
+                            android:paddingLeft="@dimen/dp_10"
+                            android:paddingRight="@dimen/dp_10"
+                            android:text="个人办理"
+                            android:textColor="@drawable/text_color"
+                            android:textSize="@dimen/sp_14" />
+
+
+                    </RadioGroup>
+
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dividerHeight"
+                    android:background="@color/colorDivider" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dp_48"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:paddingLeft="@dimen/dp_16"
+                    android:paddingRight="@dimen/dp_16">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="center_vertical"
+                        android:singleLine="true"
+                        android:text="证件类型"
+                        android:textColor="#333333"
+                        android:textSize="@dimen/sp_16" />
+
+                    <RadioGroup
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <RadioButton
+                            android:id="@+id/radioButtonHaiWai"
+                            android:layout_width="wrap_content"
+                            android:layout_height="@dimen/dp_28"
+                            android:background="@drawable/radio_bg"
+                            android:button="@null"
+                            android:checked="false"
+                            android:gravity="center"
+                            android:paddingLeft="@dimen/dp_10"
+                            android:paddingRight="@dimen/dp_10"
+                            android:text="外国护照"
+                            android:textColor="@drawable/text_color"
+                            android:textSize="@dimen/sp_14" />
+
+                        <RadioButton
+                            android:id="@+id/radioButtonGanGao"
+                            android:layout_width="wrap_content"
+                            android:layout_height="@dimen/dp_28"
+                            android:layout_marginLeft="@dimen/dp_10"
+                            android:background="@drawable/radio_bg"
+                            android:button="@null"
+                            android:checked="false"
+                            android:gravity="center"
+                            android:paddingLeft="@dimen/dp_10"
+                            android:paddingRight="@dimen/dp_10"
+                            android:text="港澳通信证"
+                            android:textColor="@drawable/text_color"
+                            android:textSize="@dimen/sp_14" />
+
+                        <RadioButton
+                            android:id="@+id/radioButtonIDCard"
+                            android:layout_width="wrap_content"
+                            android:layout_height="@dimen/dp_28"
+                            android:layout_marginLeft="@dimen/dp_10"
+                            android:background="@drawable/radio_bg"
+                            android:button="@null"
+                            android:checked="true"
+                            android:gravity="center"
+                            android:paddingLeft="@dimen/dp_10"
+                            android:paddingRight="@dimen/dp_10"
+                            android:text="身份证"
+                            android:textColor="@drawable/text_color"
+                            android:textSize="@dimen/sp_14" />
+
+
+                    </RadioGroup>
+
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dividerHeight"
+                    android:background="@color/colorDivider" />
+
+
+                <com.dog.manage.app.view.ViewItemLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="@dimen/dp_16"
+                    android:paddingRight="@dimen/dp_16"
+                    app:item_container_height="@dimen/dp_48"
+                    app:item_edit_hint="请输入犬主姓名"
+                    app:item_edit_size="@dimen/sp_12"
+                    app:item_edit_visible="true"
+                    app:item_title="犬主姓名"
+                    app:item_title_size="@dimen/sp_16" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dividerHeight"
+                    android:background="@color/colorDivider" />
+
+
+                <com.dog.manage.app.view.ViewItemLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="@dimen/dp_16"
+                    android:paddingRight="@dimen/dp_16"
+                    app:item_container_height="@dimen/dp_48"
+                    app:item_edit_hint="请输入身份证号码"
+                    app:item_edit_size="@dimen/sp_12"
+                    app:item_edit_visible="true"
+                    app:item_title="身份证号码"
+                    app:item_title_size="@dimen/sp_14" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dividerHeight"
+                    android:background="@color/colorDivider" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dp_48"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:paddingLeft="@dimen/dp_16"
+                    android:paddingRight="@dimen/dp_16">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="center_vertical"
+                        android:singleLine="true"
+                        android:text="养犬类型"
+                        android:textColor="#333333"
+                        android:textSize="@dimen/sp_16" />
+
+                    <RadioGroup
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <RadioButton
+                            android:layout_width="wrap_content"
+                            android:layout_height="@dimen/dp_28"
+                            android:background="@drawable/radio_bg"
+                            android:button="@null"
+                            android:checked="false"
+                            android:gravity="center"
+                            android:paddingLeft="@dimen/dp_10"
+                            android:paddingRight="@dimen/dp_10"
+                            android:text="陪伴犬"
+                            android:textColor="@drawable/text_color"
+                            android:textSize="@dimen/sp_14" />
+
+                        <RadioButton
+                            android:layout_width="wrap_content"
+                            android:layout_height="@dimen/dp_28"
+                            android:layout_marginLeft="@dimen/dp_10"
+                            android:background="@drawable/radio_bg"
+                            android:button="@null"
+                            android:checked="true"
+                            android:gravity="center"
+                            android:paddingLeft="@dimen/dp_10"
+                            android:paddingRight="@dimen/dp_10"
+                            android:text="导盲犬/扶助犬"
+                            android:textColor="@drawable/text_color"
+                            android:textSize="@dimen/sp_14" />
+
+                    </RadioGroup>
+
+                </LinearLayout>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="@dimen/dp_10"
+                    android:layout_marginBottom="@dimen/dp_16"
+                    android:gravity="center_vertical"
+                    android:paddingLeft="@dimen/dp_16"
+                    android:paddingRight="@dimen/dp_16"
+                    android:singleLine="true"
+                    android:text="温馨提示:残疾人士办理导盲犬/扶助犬,免收费用。"
+                    android:textColor="@color/red"
+                    android:textSize="@dimen/sp_14" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dividerHeight"
+                    android:background="@color/colorDivider" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dp_48"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:paddingLeft="@dimen/dp_16"
+                    android:paddingRight="@dimen/dp_16">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="center_vertical"
+                        android:singleLine="true"
+                        android:text="是否为螺寡老人"
+                        android:textColor="#333333"
+                        android:textSize="@dimen/sp_16" />
+
+                    <RadioGroup
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <RadioButton
+                            android:layout_width="@dimen/dp_52"
+                            android:layout_height="@dimen/dp_28"
+                            android:background="@drawable/radio_bg"
+                            android:button="@null"
+                            android:checked="false"
+                            android:gravity="center"
+                            android:text="否"
+                            android:textColor="@drawable/text_color"
+                            android:textSize="@dimen/sp_14" />
+
+                        <RadioButton
+                            android:layout_width="@dimen/dp_52"
+                            android:layout_height="@dimen/dp_28"
+                            android:layout_marginLeft="@dimen/dp_10"
+                            android:background="@drawable/radio_bg"
+                            android:button="@null"
+                            android:checked="true"
+                            android:gravity="center"
+                            android:text="是"
+                            android:textColor="@drawable/text_color"
+                            android:textSize="@dimen/sp_14" />
+
+                    </RadioGroup>
+
+                </LinearLayout>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="@dimen/dp_10"
+                    android:layout_marginBottom="@dimen/dp_16"
+                    android:gravity="center_vertical"
+                    android:paddingLeft="@dimen/dp_16"
+                    android:paddingRight="@dimen/dp_16"
+                    android:singleLine="true"
+                    android:text="否是温馨提示:解寡老人办理犬证,费用减半。 "
+                    android:textColor="@color/red"
+                    android:textSize="@dimen/sp_14" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dividerHeight"
+                    android:background="@color/colorDivider" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dp_12"
+                    android:layout_marginBottom="@dimen/dp_16"
+                    android:gravity="center_vertical"
+                    android:orientation="vertical"
+                    android:paddingLeft="@dimen/dp_16"
+                    android:paddingRight="@dimen/dp_16">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="螺寡老人"
+                        android:textColor="#333333"
+                        android:textSize="@dimen/sp_16"
+                        android:textStyle="normal" />
+
+                    <ImageView
+                        android:layout_width="@dimen/dp_120"
+                        android:layout_height="@dimen/dp_80"
+                        android:layout_marginTop="@dimen/dp_10"
+                        android:background="@drawable/image" />
+
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dividerHeight"
+                    android:background="@color/colorDivider" />
+
+                <com.dog.manage.app.view.ViewItemLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="@dimen/dp_16"
+                    android:paddingRight="@dimen/dp_16"
+                    app:item_arrow_visible="true"
+                    app:item_container_height="@dimen/dp_48"
+                    app:item_content="请选择省市区"
+                    app:item_content_size="@dimen/sp_14"
+                    app:item_title="居住地址"
+                    app:item_title_size="@dimen/sp_16" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dividerHeight"
+                    android:background="@color/colorDivider" />
+
+                <com.dog.manage.app.view.ViewItemLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="@dimen/dp_16"
+                    android:paddingRight="@dimen/dp_16"
+                    app:item_container_height="@dimen/dp_48"
+                    app:item_edit_hint="请输入详细地址"
+                    app:item_edit_size="@dimen/sp_14"
+                    app:item_edit_visible="true"
+                    app:item_title="详细地址"
+                    app:item_title_size="@dimen/sp_16" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dividerHeight"
+                    android:background="@color/colorDivider" />
+
+                <com.dog.manage.app.view.ViewItemLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="@dimen/dp_16"
+                    android:paddingRight="@dimen/dp_16"
+                    app:item_container_height="@dimen/dp_48"
+                    app:item_edit_hint="请输入房本编号"
+                    app:item_edit_size="@dimen/sp_14"
+                    app:item_edit_visible="true"
+                    app:item_title="房本编号"
+                    app:item_title_size="@dimen/sp_16" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dividerHeight"
+                    android:background="@color/colorDivider" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dp_12"
+                    android:layout_marginBottom="@dimen/dp_16"
+                    android:gravity="center_vertical"
+                    android:orientation="vertical"
+                    android:paddingLeft="@dimen/dp_16"
+                    android:paddingRight="@dimen/dp_16">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="房产证或房屋租赁合同 "
+                        android:textColor="#333333"
+                        android:textSize="@dimen/sp_16"
+                        android:textStyle="normal" />
+
+                    <ImageView
+                        android:layout_width="@dimen/dp_120"
+                        android:layout_height="@dimen/dp_80"
+                        android:layout_marginTop="@dimen/dp_10"
+                        android:background="@drawable/image" />
+
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dividerHeight"
+                    android:background="@color/colorDivider" />
+
+                <com.dog.manage.app.view.ViewItemLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="@dimen/dp_16"
+                    android:paddingRight="@dimen/dp_16"
+                    app:item_container_height="@dimen/dp_48"
+                    app:item_edit_hint="请输入手机号"
+                    app:item_edit_size="@dimen/sp_14"
+                    app:item_edit_visible="true"
+                    app:item_title="手机号"
+                    app:item_title_size="@dimen/sp_16" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dividerHeight"
+                    android:background="@color/colorDivider" />
+
+                <com.dog.manage.app.view.ViewItemLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="@dimen/dp_16"
+                    android:paddingRight="@dimen/dp_16"
+                    app:item_container_height="@dimen/dp_48"
+                    app:item_edit_hint="请输入验证码"
+                    app:item_edit_size="@dimen/sp_14"
+                    app:item_edit_visible="true"
+                    app:item_info="发送验证码"
+                    app:item_info_size="@dimen/sp_14"
+                    app:item_info_visible="true"
+                    app:item_info_width="@dimen/dp_80"
+                    app:item_title="验证码"
+                    app:item_title_size="@dimen/sp_16" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dividerHeight"
+                    android:background="@color/colorDivider" />
+
+            </LinearLayout>
+
+        </ScrollView>
+
+        <TextView
+            android:id="@+id/confirmView"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_48"
+            android:layout_margin="@dimen/dp_16"
+            android:background="@drawable/button_theme"
+            android:gravity="center"
+            android:onClick="onClickConfirm"
+            android:text="下一步"
+            android:textColor="@color/white"
+            android:textSize="@dimen/sp_16" />
+
+    </LinearLayout>
+</layout>

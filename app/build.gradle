@@ -47,9 +47,11 @@ dependencies {
 
     implementation project(':base')
     implementation project(':okhttp')
+    implementation project(':banner')
 
     implementation smartrefresh
     implementation smartrefreshHeaderClassics
     implementation smartrefreshFooterClassics
+    implementation cardview
 
 }
