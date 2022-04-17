@@ -105,6 +105,14 @@
             tools:text="标题文字"
             tools:visibility="gone" />
 
+        <View
+            android:id="@+id/item_divider"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dividerHeight"
+            android:background="@color/colorDivider"
+            android:visibility="gone"
+            tools:visibility="visible"/>
+
     </LinearLayout>
 
 </layout>

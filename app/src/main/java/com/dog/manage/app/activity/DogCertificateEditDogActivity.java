@@ -10,7 +10,11 @@ import com.dog.manage.app.databinding.ActivityDogCertificateEditDogBinding;
 public class DogCertificateEditDogActivity extends BaseActivity {
 
     private ActivityDogCertificateEditDogBinding binding;
-    private int type = 0;//0-犬主信息 ；1-犬只信息 ；2-提交信息 ；
+
+    public static final int type_userInfo = 0;//我的信息
+    public static final int type_certificate = 1;//犬证办理
+    public static final int type_immune = 2;//免疫证办理
+    private int type = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -18,6 +22,17 @@ public class DogCertificateEditDogActivity extends BaseActivity {
         binding = getViewData(R.layout.activity_dog_certificate_edit_dog);
         addActivity(this);
         type = getIntent().getIntExtra("type", 0);
+
+        if (type == type_userInfo) {
+            binding.titleView.binding.itemTitle.setText("我的信息");
+
+        } else if (type == type_certificate) {
+            binding.titleView.binding.itemTitle.setText("犬证办理");
+
+        } else if (type == type_immune) {
+            binding.titleView.binding.itemTitle.setText("免疫证办理");
+
+        }
 
     }
 

@@ -68,6 +68,8 @@ public class ViewItemLayout extends FrameLayout {
         setItemDescVisible(typedArray.getBoolean(R.styleable.ViewItemLayout_item_desc_visible, false));
 
         setItemContainerHeight(typedArray.getDimensionPixelSize(R.styleable.ViewItemLayout_item_container_height, 0));
+        setItemContainerMarginLeft(typedArray.getDimensionPixelSize(R.styleable.ViewItemLayout_item_container_margin_left, 0));
+        setItemContainerMarginRight(typedArray.getDimensionPixelSize(R.styleable.ViewItemLayout_item_container_margin_right, 0));
 
         setItemIconLeft(typedArray.getResourceId(R.styleable.ViewItemLayout_item_icon_left, 0));
         setItemIconLeftWidth(typedArray.getInt(R.styleable.ViewItemLayout_item_icon_left_width, 0));
@@ -80,6 +82,7 @@ public class ViewItemLayout extends FrameLayout {
         setItemSwitchVisible(typedArray.getBoolean(R.styleable.ViewItemLayout_item_switch_visible, false));
 
         setItemArrowVisible(typedArray.getBoolean(R.styleable.ViewItemLayout_item_arrow_visible, false));
+        setItemDividerVisible(typedArray.getBoolean(R.styleable.ViewItemLayout_item_divider_visible, false));
 
     }
 
@@ -183,8 +186,9 @@ public class ViewItemLayout extends FrameLayout {
             binding.itemInfo.setText(info);
         }
     }
+
     public void setItemInfoWidth(int width) {
-        Log.i(TAG, "setItemInfoWidth: "+width);
+        Log.i(TAG, "setItemInfoWidth: " + width);
         if (width > 0) {
             binding.itemInfo.getLayoutParams().width = width;
         }
@@ -221,11 +225,33 @@ public class ViewItemLayout extends FrameLayout {
         }
     }
 
+    public void setItemContainerMarginLeft(int left) {
+        if (left > 0) {
+            LinearLayout.LayoutParams layoutParams = (LinearLayout.LayoutParams) binding.itemContainer.getLayoutParams();
+            layoutParams.leftMargin = left;
+        }
+    }
+
+    public void setItemContainerMarginRight(int right) {
+        if (right > 0) {
+            LinearLayout.LayoutParams layoutParams = (LinearLayout.LayoutParams) binding.itemContainer.getLayoutParams();
+            layoutParams.rightMargin = right;
+        }
+    }
+
     public void setItemArrowVisible(boolean visible) {
         if (visible) {
             binding.itemArrow.setVisibility(VISIBLE);
         } else {
             binding.itemArrow.setVisibility(GONE);
+        }
+    }
+
+    public void setItemDividerVisible(boolean visible) {
+        if (visible) {
+            binding.itemDivider.setVisibility(VISIBLE);
+        } else {
+            binding.itemDivider.setVisibility(GONE);
         }
     }
 

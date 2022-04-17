@@ -59,6 +59,8 @@
         <attr name="item_desc" format="string" />
         <attr name="item_desc_size" format="dimension" />
         <attr name="item_container_height" format="dimension" />
+        <attr name="item_container_margin_left" format="dimension" />
+        <attr name="item_container_margin_right" format="dimension" />
         <attr name="item_desc_color" format="color" />
         <attr name="item_desc_visible" format="boolean" />
         <attr name="item_icon_left" format="reference" />
@@ -69,6 +71,7 @@
         <attr name="item_switch" format="reference" />
         <attr name="item_switch_visible" format="boolean" />
         <attr name="item_arrow_visible" format="boolean" />
+        <attr name="item_divider_visible" format="boolean" />
     </declare-styleable>
 
     <declare-styleable name="TopTabLayout">

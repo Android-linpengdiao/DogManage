@@ -13,6 +13,7 @@
         android:orientation="vertical">
 
         <com.dog.manage.app.view.TitleView
+            android:id="@+id/titleView"
             android:layout_width="match_parent"
             android:layout_height="@dimen/dp_48"
             android:background="@color/colorAppTheme"
@@ -89,19 +90,15 @@
                 <com.dog.manage.app.view.ViewItemLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:paddingLeft="@dimen/dp_16"
-                    android:paddingRight="@dimen/dp_16"
                     app:item_container_height="@dimen/dp_48"
+                    app:item_container_margin_left="@dimen/dp_16"
+                    app:item_container_margin_right="@dimen/dp_16"
                     app:item_edit_hint="请输入犬只昵称"
                     app:item_edit_size="@dimen/sp_12"
                     app:item_edit_visible="true"
                     app:item_title="犬只昵称"
+                    app:item_divider_visible="true"
                     app:item_title_size="@dimen/sp_16" />
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/dividerHeight"
-                    android:background="@color/colorDivider" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -272,19 +269,15 @@
                 <com.dog.manage.app.view.ViewItemLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:paddingLeft="@dimen/dp_16"
-                    android:paddingRight="@dimen/dp_16"
+                    app:item_container_margin_left="@dimen/dp_16"
+                    app:item_container_margin_right="@dimen/dp_16"
                     app:item_container_height="@dimen/dp_48"
                     app:item_edit_hint=""
                     app:item_edit_size="@dimen/sp_12"
                     app:item_edit_visible="true"
                     app:item_title="犬只年龄"
+                    app:item_divider_visible="true"
                     app:item_title_size="@dimen/sp_14" />
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/dividerHeight"
-                    android:background="@color/colorDivider" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
