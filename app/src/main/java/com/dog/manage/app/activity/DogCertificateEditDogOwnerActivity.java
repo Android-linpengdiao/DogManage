@@ -44,7 +44,7 @@ public class DogCertificateEditDogOwnerActivity extends BaseActivity {
             binding.firstStepView.setSelected(true);
             binding.firstStepView.setText("犬主信息");
             binding.secondStepView.setText("犬只信息");
-            binding.thirdStepView.setText("提交信息");
+            binding.thirdStepView.setText("选择医院");
 
         }
 

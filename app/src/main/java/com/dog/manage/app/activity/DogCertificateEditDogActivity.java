@@ -31,14 +31,24 @@ public class DogCertificateEditDogActivity extends BaseActivity {
 
         } else if (type == type_immune) {
             binding.titleView.binding.itemTitle.setText("免疫证办理");
+            binding.thirdStepView.setText("选择医院");
 
         }
 
     }
 
     public void onClickConfirm(View view) {
-        Bundle bundle = new Bundle();
-        bundle.putInt("type", 1);
-        openActivity(DogCertificateEditSubmitActivity.class, bundle);
+        if (type == type_userInfo) {
+
+
+        } else if (type == type_certificate) {
+            Bundle bundle = new Bundle();
+            bundle.putInt("type", 1);
+            openActivity(DogCertificateEditSubmitActivity.class, bundle);
+
+        } else if (type == type_immune) {
+            openActivity(DogImmuneHospitalActivity.class);
+
+        }
     }
 }

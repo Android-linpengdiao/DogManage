@@ -5,20 +5,17 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-    <!-- 闪验 -->
-    <!--     <uses-permission android:name="android.permission.INTERNET"/> -->
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" /> <!-- 闪验 -->
+    <!-- <uses-permission android:name="android.permission.INTERNET"/> -->
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE" />
-    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
-
-    <!--华为云存储-->
-    <!--    <uses-permission android:name="android.permission.INTERNET" />-->
-    <!--    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />-->
-    <!--    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />-->
-    <!--    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />-->
-    <!--    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />-->
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" /> <!-- 华为云存储 -->
+    <!-- <uses-permission android:name="android.permission.INTERNET" /> -->
+    <!-- <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" /> -->
+    <!-- <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" /> -->
+    <!-- <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" /> -->
+    <!-- <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" /> -->
     <uses-permission
         android:name="android.permission.GET_TOP_ACTIVITY_INFO"
         tools:ignore="ProtectedPermissions" />
@@ -33,7 +30,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".activity.UpdatePhoneActivity"></activity>
+        <activity android:name=".activity.DogImmuneHospitalActivity"></activity>
+        <activity android:name=".activity.UpdatePhoneActivity" />
         <activity android:name=".activity.AccountActivity" />
         <activity android:name=".activity.AboutActivity" />
         <activity android:name=".activity.AdvertiseActivity" />
@@ -147,8 +145,7 @@
 
             <!-- <category android:name="android.intent.category.LAUNCHER" /> -->
             <!-- </intent-filter> -->
-        </activity>
-        <!-- 闪验 -->
+        </activity> <!-- 闪验 -->
         <activity
             android:name="com.chuanglan.shanyan_sdk.view.CmccLoginActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
