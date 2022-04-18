@@ -60,6 +60,10 @@ ext{
     annotation =  'org.glassfish:javax.annotation:10.0-b28'
 
 
+    //华为云存储
+    huaweicloud = 'com.huaweicloud:esdk-obs-android:3.21.12';
+
+
     externalGlide = 'com.github.bumptech.glide:glide:4.9.0'
     externalTransformations = 'jp.wasabeef:glide-transformations:2.0.2'
     externalEventBus = 'org.greenrobot:eventbus:3.1.1'
