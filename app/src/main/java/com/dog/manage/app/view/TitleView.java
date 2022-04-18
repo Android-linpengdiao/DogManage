@@ -71,9 +71,9 @@ public class TitleView extends FrameLayout {
         if (bold) {
 //            Typeface typeface = Typeface.createFromAsset(getContext().getAssets(), "fonts/pingfangscbold.ttf");
 //            binding.itemTitle.setTypeface(typeface);
-            binding.itemTitle.setTypeface(Typeface.defaultFromStyle(Typeface.BOLD));
+//            binding.itemTitle.setTypeface(Typeface.defaultFromStyle(Typeface.BOLD));
         } else {
-            binding.itemTitle.setTypeface(Typeface.defaultFromStyle(Typeface.NORMAL));
+//            binding.itemTitle.setTypeface(Typeface.defaultFromStyle(Typeface.NORMAL));
         }
     }
 

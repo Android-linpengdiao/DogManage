@@ -22,7 +22,7 @@
             app:tv_content_size="@dimen/sp_14"
             app:tv_title="更换手机号"
             app:tv_title_bold="true"
-            app:tv_title_size="@dimen/sp_16" />
+            app:tv_title_size="@dimen/titleViewSize" />
 
 
         <TextView

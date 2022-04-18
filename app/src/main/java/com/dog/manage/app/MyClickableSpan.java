@@ -26,12 +26,12 @@ public class MyClickableSpan extends ClickableSpan {
 
     @Override
     public void onClick(View view) {
-        if (msg.equals("隐私条款")) {
+        if (msg.equals("《用户协议》")) {
             Intent intent = new Intent();
             intent.setData(Uri.parse(APIUrls.user_agreement));
             intent.setAction(Intent.ACTION_VIEW);
 //            activity.startActivity(intent);
-        } else if (msg.equals("隐私协议")) {
+        } else if (msg.equals("《隐私政策》")) {
             Intent intent = new Intent();
             intent.setData(Uri.parse(APIUrls.privacy_policy));
             intent.setAction(Intent.ACTION_VIEW);

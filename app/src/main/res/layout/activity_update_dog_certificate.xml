@@ -20,7 +20,7 @@
             app:tv_content_size="@dimen/sp_14"
             app:tv_title="信息変更"
             app:tv_title_bold="true"
-            app:tv_title_size="@dimen/sp_16" />
+            app:tv_title_size="@dimen/titleViewSize" />
 
         <TextView
             android:layout_width="wrap_content"

@@ -35,9 +35,9 @@ public class LoginActivity extends BaseActivity {
             }
         });
 
-        String userText = "隐私条款";
-        String yinsiText = "隐私协议";
-        String content = "登录代表同意隐私条款和隐私协议";
+        String userText = "《用户协议》";
+        String yinsiText = "《隐私政策》";
+        String content = "登录代表同意《用户协议》《隐私政策》";
         SpannableString spannableString = new SpannableString(content);
         // 设置字体颜色
         spannableString.setSpan(new ForegroundColorSpan(Color.parseColor("#489DFA")), content.indexOf(userText), content.indexOf(userText) + userText.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);

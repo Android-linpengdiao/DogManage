@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.View;
 
 import com.base.manager.DialogManager;
@@ -21,6 +22,7 @@ public class WelcomeActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = getViewData(R.layout.activity_welcome);
+        setStatusBarHeight();
 
         sharedPreferences = getSharedPreferences("sp_data", Context.MODE_PRIVATE);
         if (!sharedPreferences.getBoolean("appService", false)) {
@@ -68,8 +70,13 @@ public class WelcomeActivity extends BaseActivity {
 
     private void init() {
 
-        openActivity(MainActivity.class);
-        finish();
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                openActivity(MainActivity.class);
+                finish();
+            }
+        }, 1000);
 
 //        if (CommonUtil.isBlank(getUserInfo()) || CommonUtil.isBlank(getUserInfo().getToken())) {
 //            SendRequest.getVisitor(new GenericsCallback<ResultClient<UserInfo>>(new JsonGenericsSerializator()) {

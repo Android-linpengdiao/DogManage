@@ -35,15 +35,15 @@ public class DogCertificateEditDogOwnerActivity extends BaseActivity {
         } else if (type == type_certificate) {
             binding.titleView.binding.itemTitle.setText("犬证办理");
             binding.firstStepView.setSelected(true);
-            binding.firstStepView.setText("犬主信息");
-            binding.secondStepView.setText("犬只信息");
-            binding.thirdStepView.setText("提交信息");
+            binding.firstStepView.setText("①犬主信息");
+            binding.secondStepView.setText("②犬只信息");
+            binding.thirdStepView.setText("③提交审核");
 
         } else if (type == type_immune) {
             binding.titleView.binding.itemTitle.setText("免疫证办理");
             binding.firstStepView.setSelected(true);
-            binding.firstStepView.setText("犬主信息");
-            binding.secondStepView.setText("犬只信息");
+            binding.firstStepView.setText("①犬主信息");
+            binding.secondStepView.setText("②犬只信息");
             binding.thirdStepView.setText("选择医院");
 
         }
