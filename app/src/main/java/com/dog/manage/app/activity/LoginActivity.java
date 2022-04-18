@@ -66,4 +66,7 @@ public class LoginActivity extends BaseActivity {
         openActivity(MainActivity.class, bundle);
 
     }
+
+    public void onClickSendCode(View view) {
+    }
 }

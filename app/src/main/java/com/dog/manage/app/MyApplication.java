@@ -31,8 +31,6 @@ import okhttp3.logging.HttpLoggingInterceptor;
 
 public class MyApplication extends BaseApplication {
 
-    private static final String TAG = "MyApplication";
-
     @Override
     public void onCreate() {
         super.onCreate();
@@ -48,8 +46,7 @@ public class MyApplication extends BaseApplication {
         OneKeyLoginManager.getInstance().init(this, "bCACikkm", new InitListener() {
             @Override
             public void getInitStatus(int code, String result) {
-                LogUtil.i(TAG, "getInitStatus: code "+code);
-                LogUtil.i(TAG, "getInitStatus: result "+result);
+
             }
         });
     }
