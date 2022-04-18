@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white"
+        android:gravity="center_horizontal"
+        android:orientation="vertical">
+
+        <com.dog.manage.app.view.TitleView
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_48"
+            android:background="@color/colorAppTheme"
+            app:tv_content=""
+            app:tv_content_size="@dimen/sp_14"
+            app:tv_title="绑定手机号"
+            app:tv_title_bold="true"
+            app:tv_title_size="@dimen/sp_16" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_48"
+            android:layout_marginTop="@dimen/dp_12"
+            android:background="@drawable/button_radius_white_8"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_alignParentRight="true"
+                android:gravity="center"
+                android:paddingLeft="@dimen/dp_16"
+                android:paddingRight="@dimen/dp_16"
+                android:text="手机号"
+                android:textColor="#333333"
+                android:textSize="@dimen/sp_16" />
+
+            <EditText
+                android:id="@+id/phoneEditView"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_48"
+                android:background="@drawable/button_radius_white_8"
+                android:gravity="center_vertical"
+                android:hint="请输入旧手机号"
+                android:maxLength="16"
+                android:minHeight="@dimen/dp_56"
+                android:paddingLeft="@dimen/dp_16"
+                android:paddingRight="@dimen/dp_16"
+                android:textColor="#333333"
+                android:textColorHint="#999999"
+                android:textSize="@dimen/sp_16" />
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_48"
+            android:layout_marginTop="@dimen/dp_12"
+            android:background="@drawable/button_radius_white_8"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_alignParentRight="true"
+                android:gravity="center"
+                android:paddingLeft="@dimen/dp_16"
+                android:paddingRight="@dimen/dp_16"
+                android:text="验证码"
+                android:textColor="#333333"
+                android:textSize="@dimen/sp_16" />
+
+            <EditText
+                android:id="@+id/codeEditText"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@null"
+                android:gravity="center_vertical"
+                android:hint="请输入验证码"
+                android:maxLength="16"
+                android:minHeight="@dimen/dp_56"
+                android:paddingLeft="@dimen/dp_16"
+                android:paddingRight="@dimen/dp_16"
+                android:textColor="#333333"
+                android:textColorHint="#999999"
+                android:textSize="@dimen/sp_16" />
+
+            <TextView
+                android:id="@+id/sendCodeView"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="@dimen/dp_12"
+                android:gravity="center"
+                android:onClick="onClickSendCode"
+                android:paddingLeft="@dimen/dp_10"
+                android:paddingRight="@dimen/dp_10"
+                android:text="获取验证码"
+                android:textColor="#333333"
+                android:textSize="@dimen/sp_14" />
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/confirmView"
+            android:layout_width="@dimen/dp_160"
+            android:layout_height="@dimen/dp_40"
+            android:layout_alignParentRight="true"
+            android:layout_marginTop="@dimen/dp_32"
+            android:background="@drawable/button_theme"
+            android:gravity="center"
+            android:onClick="onClickConfirm"
+            android:paddingLeft="@dimen/dp_16"
+            android:paddingRight="@dimen/dp_16"
+            android:text="确定绑定"
+            android:textColor="#ffffff"
+            android:textSize="@dimen/sp_14" />
+
+    </LinearLayout>
+</layout>

@@ -62,7 +62,7 @@
                     android:layout_marginLeft="@dimen/dp_6"
                     android:onClick="onClickSetting"
                     android:padding="@dimen/dp_10"
-                    android:src="@drawable/arrow_right_right_m"
+                    android:src="@drawable/setting"
                     app:tint="@color/white" />
             </RelativeLayout>
 
@@ -97,8 +97,8 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:onClick="onClickUserInfo"
                     android:gravity="center"
+                    android:onClick="onClickUserInfo"
                     android:orientation="vertical">
 
                     <ImageView
@@ -143,8 +143,8 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:onClick="onClickMyDogImmune"
                     android:gravity="center"
+                    android:onClick="onClickMyDogImmune"
                     android:orientation="vertical">
 
                     <ImageView
@@ -157,7 +157,8 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/dp_2"
                         android:gravity="center"
-                        android:text="免疫证明"                     android:textColor="#333333"
+                        android:text="免疫证明"
+                        android:textColor="#333333"
                         android:textSize="@dimen/sp_14" />
                 </LinearLayout>
 

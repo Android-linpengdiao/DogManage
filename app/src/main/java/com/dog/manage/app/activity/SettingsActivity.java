@@ -58,4 +58,12 @@ public class SettingsActivity extends BaseActivity {
             }
         });
     }
+
+    public void onClickAbout(View view) {
+        openActivity(AboutActivity.class);
+    }
+
+    public void onClickAccount(View view) {
+        openActivity(AccountActivity.class);
+    }
 }

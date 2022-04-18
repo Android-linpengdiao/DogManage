@@ -5,6 +5,8 @@ import android.content.Context;
 
 import com.base.BaseApplication;
 import com.base.utils.LogUtil;
+import com.chuanglan.shanyan_sdk.OneKeyLoginManager;
+import com.chuanglan.shanyan_sdk.listener.InitListener;
 import com.okhttp.utils.HttpsUtils;
 import com.okhttp.utils.OkHttpUtils;
 import com.scwang.smart.refresh.footer.ClassicsFooter;
@@ -38,7 +40,18 @@ public class MyApplication extends BaseApplication {
         initSmartRefresh();
         rxJava();
         initOkHttp();
+        initShanyanSDK();
 
+    }
+
+    private void initShanyanSDK() {
+        OneKeyLoginManager.getInstance().init(this, "bCACikkm", new InitListener() {
+            @Override
+            public void getInitStatus(int code, String result) {
+                LogUtil.i(TAG, "getInitStatus: code "+code);
+                LogUtil.i(TAG, "getInitStatus: result "+result);
+            }
+        });
     }
 
     private void initOkHttp() {
