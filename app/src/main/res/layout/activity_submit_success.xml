@@ -10,6 +10,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:gravity="center_horizontal"
         android:orientation="vertical">
 
         <com.dog.manage.app.view.TitleView
@@ -21,6 +22,56 @@
             app:tv_title="犬证办理"
             app:tv_title_bold="true"
             app:tv_title_size="@dimen/titleViewSize" />
+
+        <ImageView
+            android:layout_width="@dimen/dp_105"
+            android:layout_height="@dimen/dp_105"
+            android:layout_marginTop="@dimen/dp_67"
+            android:src="@drawable/btn_bk" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dp_17"
+            android:text="提交成功"
+            android:textColor="#273154"
+            android:textSize="@dimen/sp_24"
+            android:textStyle="bold" />
+
+        <TextView
+            android:layout_width="238dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dp_28"
+            android:gravity="center"
+            android:text="系统将在10工作日内完成审核，请您请耐心等待。"
+            android:textColor="#ff666666"
+            android:textSize="18sp" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dp_57"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="@dimen/dp_152"
+                android:layout_height="@dimen/dp_48"
+                android:text="返回首页"
+                android:textColor="#ffffff"
+                android:layout_marginRight="@dimen/dp_10"
+                android:gravity="center"
+                android:background="@drawable/button_theme"
+                android:textSize="@dimen/sp_15" />
+            <TextView
+                android:layout_width="@dimen/dp_152"
+                android:layout_height="@dimen/dp_48"
+                android:layout_marginLeft="@dimen/dp_10"
+                android:text="查看办理记录"
+                android:textColor="#ffffff"
+                android:gravity="center"
+                android:background="@drawable/button_green"
+                android:textSize="@dimen/sp_15" />
+        </LinearLayout>
 
     </LinearLayout>
 </layout>

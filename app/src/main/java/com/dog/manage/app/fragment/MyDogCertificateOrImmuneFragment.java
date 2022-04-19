@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
 
+import com.base.utils.GlideLoader;
 import com.dog.manage.app.R;
 import com.dog.manage.app.databinding.FragmentMyDogCertificateOrImmuneBinding;
 
@@ -43,6 +44,15 @@ public class MyDogCertificateOrImmuneFragment extends BaseFragment {
 
             binding.certificateContainer.setVisibility(type == type_certificate ? View.VISIBLE : View.GONE);
             binding.immuneContainer.setVisibility(type == type_immune ? View.VISIBLE : View.GONE);
+
+            if (type == type_certificate) {
+                GlideLoader.LoderImage(getActivity(), "https://pics7.baidu.com/feed/6c224f4a20a446236fb6db0ac3bf5d040df3d785.jpeg", binding.certificateCoverView, 5);
+
+            } else if (type == type_immune) {
+                GlideLoader.LoderImage(getActivity(), "https://pics7.baidu.com/feed/6c224f4a20a446236fb6db0ac3bf5d040df3d785.jpeg", binding.coverView, 5);
+
+
+            }
 
         }
         return binding.getRoot();

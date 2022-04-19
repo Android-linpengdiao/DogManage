@@ -11,6 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:gravity="center_horizontal"
+        android:background="@color/white"
         android:orientation="vertical">
 
         <com.dog.manage.app.view.TitleView
@@ -38,7 +39,8 @@
             app:yj_tabPaddingBottom="0dp"
             app:yj_tabSelectTextSize="@dimen/sp_16"
             app:yj_tabSelectedTextColor="@color/colorAppTheme"
-            app:yj_tabTextColor="#999999"
+            app:yj_tabTextColor="@color/colorAppTheme"
+            app:yj_tabTextAppearance="@style/YueTabLayoutTextStyle"
             app:yj_tabTextSize="@dimen/sp_16" />
 
         <androidx.viewpager.widget.ViewPager

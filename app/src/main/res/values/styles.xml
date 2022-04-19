@@ -122,4 +122,8 @@
         <item name="yj_tabMode">scrollable</item>
     </style>
 
+    <style name="YueTabLayoutTextStyle" parent="TextAppearance.AppCompat.Widget.ActionBar.Title">
+        <item name="android:textStyle">bold</item>
+    </style>
+
 </resources>

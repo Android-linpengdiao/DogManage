@@ -48,7 +48,7 @@ public class ViewItemLayout extends FrameLayout {
 
         setItemContent(typedArray.getString(R.styleable.ViewItemLayout_item_content));
         setItemContentSize(typedArray.getDimensionPixelSize(R.styleable.ViewItemLayout_item_content_size, R.dimen.dp_12));
-        setItemContentColor(typedArray.getColor(R.styleable.ViewItemLayout_item_title_color, 0));
+        setItemContentColor(typedArray.getColor(R.styleable.ViewItemLayout_item_content_color, 0));
 
         setItemEdit(typedArray.getString(R.styleable.ViewItemLayout_item_edit));
         setItemEditHint(typedArray.getString(R.styleable.ViewItemLayout_item_edit_hint));

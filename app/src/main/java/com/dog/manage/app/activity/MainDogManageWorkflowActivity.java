@@ -28,13 +28,11 @@ public class MainDogManageWorkflowActivity extends BaseActivity {
 
         binding.recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
         binding.recyclerView.setNestedScrollingEnabled(false);
-        RecycleViewDivider divider = new RecycleViewDivider(getApplicationContext(),
-                LinearLayoutManager.VERTICAL,
-                CommonUtil.dip2px(getApplicationContext(), 8),
-                Color.parseColor("#FAFAFA"));
-        binding.recyclerView.addItemDecoration(divider);
-
-        binding.recyclerView.setNestedScrollingEnabled(false);
+//        RecycleViewDivider divider = new RecycleViewDivider(getApplicationContext(),
+//                LinearLayoutManager.VERTICAL,
+//                CommonUtil.dip2px(getApplicationContext(), 8),
+//                Color.parseColor("#FAFAFA"));
+//        binding.recyclerView.addItemDecoration(divider);
         adapter = new DogManageWorkflowAdapter(getApplicationContext());
         binding.recyclerView.setAdapter(adapter);
         adapter.refreshData(Arrays.asList(
