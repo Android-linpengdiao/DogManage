@@ -16,6 +16,7 @@ public class DogCertificateEditSubmitActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         binding = getViewData(R.layout.activity_dog_certificate_edit_submit);
         addActivity(this);
+        binding.thirdStepView.setSelected(true);
 
     }
 

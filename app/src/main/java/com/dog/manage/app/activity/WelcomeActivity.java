@@ -9,6 +9,7 @@ import android.os.Handler;
 import android.view.View;
 
 import com.base.manager.DialogManager;
+import com.base.utils.StatusBarUtil;
 import com.dog.manage.app.R;
 import com.dog.manage.app.databinding.ActivityWelcomeBinding;
 import com.okhttp.utils.APIUrls;
@@ -22,6 +23,7 @@ public class WelcomeActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = getViewData(R.layout.activity_welcome);
+        StatusBarUtil.setStatusBarColor(this, R.color.black);
         setStatusBarHeight();
 
         sharedPreferences = getSharedPreferences("sp_data", Context.MODE_PRIVATE);

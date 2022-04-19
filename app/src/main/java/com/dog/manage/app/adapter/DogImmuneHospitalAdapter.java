@@ -41,6 +41,19 @@ public class DogImmuneHospitalAdapter extends BaseRecyclerAdapter<String, ItemDo
     @Override
     protected void onBindItem(ItemDogImmuneHospitalBinding binding, String dataBean, int position) {
 
+        binding.selectedView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                binding.selectedView.setSelected(!binding.selectedView.isSelected());
+            }
+        });
+        binding.navigateView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (onClickListener != null)
+                    onClickListener.onClick(view, dataBean);
+            }
+        });
         binding.getRoot().setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

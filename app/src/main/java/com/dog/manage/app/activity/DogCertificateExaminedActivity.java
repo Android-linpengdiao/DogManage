@@ -41,4 +41,8 @@ public class DogCertificateExaminedActivity extends BaseActivity {
                     }
                 });
     }
+
+    public void onClickConfirm(View view) {
+        openActivity(DogCertificateExaminedSubmitActivity.class);
+    }
 }

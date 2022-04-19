@@ -10,6 +10,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="@color/app_background"
         android:orientation="vertical">
 
         <com.dog.manage.app.view.TitleView
@@ -20,62 +21,67 @@
             app:tv_content=""
             app:tv_content_size="@dimen/sp_14"
             app:tv_title="犬证办理"
-            app:tv_title_bold="true"
+            app:tv_title_bold="false"
             app:tv_title_size="@dimen/titleViewSize" />
 
         <LinearLayout
+            android:id="@+id/stepContainer"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/dp_80"
+            android:layout_height="@dimen/dp_68"
             android:background="@color/white"
             android:gravity="center"
             android:orientation="horizontal">
 
             <TextView
-                android:id="@+id/dogOwnerInfoView"
+                android:id="@+id/firstStepView"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="@dimen/dp_38"
+                android:background="@drawable/step_bg"
                 android:gravity="center"
-                android:padding="@dimen/dp_10"
                 android:text="犬主信息"
-                android:textColor="@color/colorAppTheme"
-                android:textSize="@dimen/sp_12" />
+                android:textColor="@drawable/step_text_color"
+                android:textSize="@dimen/sp_14" />
 
             <View
-                android:layout_width="@dimen/dp_60"
-                android:layout_height="@dimen/dividerHeight"
+                android:layout_width="@dimen/dp_40"
+                android:layout_height="1.5dp"
+                android:layout_margin="@dimen/dp_5"
                 android:background="@color/colorAppTheme" />
 
             <TextView
-                android:id="@+id/dogInfoView"
+                android:id="@+id/secondStepView"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@drawable/button_theme"
+                android:layout_height="@dimen/dp_38"
+                android:background="@drawable/step_bg"
                 android:gravity="center"
-                android:padding="@dimen/dp_10"
+                android:paddingLeft="@dimen/dp_10"
+                android:paddingRight="@dimen/dp_10"
                 android:text="犬只信息"
-                android:textColor="#ffffff"
-                android:textSize="@dimen/sp_12" />
+                android:textColor="@drawable/step_text_color"
+                android:textSize="@dimen/sp_14" />
 
             <View
-                android:layout_width="@dimen/dp_60"
-                android:layout_height="@dimen/dividerHeight"
+                android:layout_width="@dimen/dp_40"
+                android:layout_height="1.5dp"
+                android:layout_margin="@dimen/dp_5"
                 android:background="@color/colorAppTheme" />
 
             <TextView
                 android:id="@+id/thirdStepView"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="@dimen/dp_38"
+                android:background="@drawable/step_bg"
                 android:gravity="center"
-                android:padding="@dimen/dp_10"
                 android:text="提交信息"
-                android:textColor="@color/colorAppTheme"
-                android:textSize="@dimen/sp_12" />
+                android:textColor="@drawable/step_text_color"
+                android:textSize="@dimen/sp_14" />
 
         </LinearLayout>
 
         <ScrollView
             android:layout_width="match_parent"
             android:layout_height="@dimen/dp_0"
+            android:layout_marginTop="@dimen/dp_8"
             android:layout_weight="1"
             android:overScrollMode="never">
 
@@ -83,30 +89,58 @@
                 android:id="@+id/dogOwnerContainer"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginBottom="@dimen/dp_30"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
                 android:orientation="vertical">
-
 
                 <com.dog.manage.app.view.ViewItemLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    app:item_container_height="@dimen/dp_48"
-                    app:item_container_margin_left="@dimen/dp_16"
-                    app:item_container_margin_right="@dimen/dp_16"
-                    app:item_edit_hint="请输入犬只昵称"
-                    app:item_edit_size="@dimen/sp_12"
+                    app:item_arrow_visible="true"
+                    app:item_container_height="@dimen/dp_50"
+                    app:item_container_margin_left="@dimen/viewPadding"
+                    app:item_container_margin_right="@dimen/viewPadding"
+                    app:item_content="添加新犬只"
+                    app:item_content_color="@color/colorAppTheme"
+                    app:item_content_size="@dimen/sp_14"
+                    app:item_divider_visible="true"
+                    app:item_title="选择犬只"
+                    app:item_title_size="@dimen/sp_14" />
+
+                <com.dog.manage.app.view.ViewItemLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:item_container_height="@dimen/dp_50"
+                    app:item_container_margin_left="@dimen/viewPadding"
+                    app:item_container_margin_right="@dimen/viewPadding"
+                    app:item_divider_visible="true"
+                    app:item_edit_hint="请输入犬昵称"
+                    app:item_edit_size="@dimen/sp_14"
                     app:item_edit_visible="true"
                     app:item_title="犬只昵称"
+                    app:item_title_size="@dimen/sp_14" />
+
+                <com.dog.manage.app.view.ViewItemLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:item_arrow_visible="true"
+                    app:item_container_height="@dimen/dp_50"
+                    app:item_container_margin_left="@dimen/viewPadding"
+                    app:item_container_margin_right="@dimen/viewPadding"
+                    app:item_content="选择犬只毛色"
+                    app:item_content_color="@color/colorAppTheme"
+                    app:item_content_size="@dimen/sp_14"
                     app:item_divider_visible="true"
-                    app:item_title_size="@dimen/sp_16" />
+                    app:item_title="犬只毛色"
+                    app:item_title_size="@dimen/sp_14" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/dp_48"
+                    android:layout_height="@dimen/dp_50"
                     android:gravity="center_vertical"
                     android:orientation="horizontal"
-                    android:paddingLeft="@dimen/dp_16"
-                    android:paddingRight="@dimen/dp_16">
+                    android:paddingLeft="@dimen/viewPadding"
+                    android:paddingRight="@dimen/viewPadding">
 
                     <TextView
                         android:layout_width="0dp"
@@ -116,7 +150,7 @@
                         android:singleLine="true"
                         android:text="犬只性别"
                         android:textColor="#333333"
-                        android:textSize="@dimen/sp_16" />
+                        android:textSize="@dimen/sp_14" />
 
                     <RadioGroup
                         android:layout_width="wrap_content"
@@ -125,29 +159,25 @@
 
                         <RadioButton
                             android:id="@+id/radioButtonOrgan"
-                            android:layout_width="wrap_content"
-                            android:layout_height="@dimen/dp_28"
+                            android:layout_width="@dimen/dp_84"
+                            android:layout_height="@dimen/dp_32"
                             android:background="@drawable/radio_bg"
                             android:button="@null"
                             android:checked="false"
                             android:gravity="center"
-                            android:paddingLeft="@dimen/dp_10"
-                            android:paddingRight="@dimen/dp_10"
                             android:text="雄性"
                             android:textColor="@drawable/text_color"
                             android:textSize="@dimen/sp_14" />
 
                         <RadioButton
                             android:id="@+id/radioButtonPersonal"
-                            android:layout_width="wrap_content"
-                            android:layout_height="@dimen/dp_28"
+                            android:layout_width="@dimen/dp_84"
+                            android:layout_height="@dimen/dp_32"
                             android:layout_marginLeft="@dimen/dp_10"
                             android:background="@drawable/radio_bg"
                             android:button="@null"
                             android:checked="true"
                             android:gravity="center"
-                            android:paddingLeft="@dimen/dp_10"
-                            android:paddingRight="@dimen/dp_10"
                             android:text="雌性"
                             android:textColor="@drawable/text_color"
                             android:textSize="@dimen/sp_14" />
@@ -164,11 +194,11 @@
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/dp_48"
+                    android:layout_height="@dimen/dp_50"
                     android:gravity="center_vertical"
                     android:orientation="horizontal"
-                    android:paddingLeft="@dimen/dp_16"
-                    android:paddingRight="@dimen/dp_16">
+                    android:paddingLeft="@dimen/viewPadding"
+                    android:paddingRight="@dimen/viewPadding">
 
                     <TextView
                         android:layout_width="0dp"
@@ -178,7 +208,7 @@
                         android:singleLine="true"
                         android:text="是否绝育"
                         android:textColor="#333333"
-                        android:textSize="@dimen/sp_16" />
+                        android:textSize="@dimen/sp_14" />
 
                     <RadioGroup
                         android:layout_width="wrap_content"
@@ -187,29 +217,25 @@
 
                         <RadioButton
                             android:id="@+id/radioButtonHaiWai"
-                            android:layout_width="wrap_content"
-                            android:layout_height="@dimen/dp_28"
+                            android:layout_width="@dimen/dp_84"
+                            android:layout_height="@dimen/dp_32"
                             android:background="@drawable/radio_bg"
                             android:button="@null"
                             android:checked="false"
                             android:gravity="center"
-                            android:paddingLeft="@dimen/dp_10"
-                            android:paddingRight="@dimen/dp_10"
                             android:text="已绝育"
                             android:textColor="@drawable/text_color"
                             android:textSize="@dimen/sp_14" />
 
                         <RadioButton
                             android:id="@+id/radioButtonGanGao"
-                            android:layout_width="wrap_content"
-                            android:layout_height="@dimen/dp_28"
+                            android:layout_width="@dimen/dp_84"
+                            android:layout_height="@dimen/dp_32"
                             android:layout_marginLeft="@dimen/dp_10"
                             android:background="@drawable/radio_bg"
                             android:button="@null"
                             android:checked="true"
                             android:gravity="center"
-                            android:paddingLeft="@dimen/dp_10"
-                            android:paddingRight="@dimen/dp_10"
                             android:text="未绝育"
                             android:textColor="@drawable/text_color"
                             android:textSize="@dimen/sp_14" />
@@ -221,12 +247,12 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_marginTop="@dimen/dp_10"
-                    android:layout_marginBottom="@dimen/dp_16"
+                    android:layout_marginTop="@dimen/dp_7"
+                    android:layout_marginBottom="@dimen/dp_12"
                     android:gravity="center_vertical"
-                    android:paddingLeft="@dimen/dp_16"
-                    android:paddingRight="@dimen/dp_16"
-                    android:text="温馨提示:已绝育犬只,办理犬证费用减半。"
+                    android:paddingLeft="@dimen/viewPadding"
+                    android:paddingRight="@dimen/viewPadding"
+                    android:text="温馨提示：已绝育犬只，办理犬证费用减半。"
                     android:textColor="@color/red"
                     android:textSize="@dimen/sp_14" />
 
@@ -238,26 +264,42 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/dp_12"
-                    android:layout_marginBottom="@dimen/dp_16"
                     android:gravity="center_vertical"
                     android:orientation="vertical"
-                    android:paddingLeft="@dimen/dp_16"
-                    android:paddingRight="@dimen/dp_16">
+                    android:paddingLeft="@dimen/viewPadding"
+                    android:paddingRight="@dimen/viewPadding">
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/dp_20"
+                        android:layout_marginBottom="@dimen/dp_17"
                         android:text="犬只绝育证明"
                         android:textColor="#333333"
-                        android:textSize="@dimen/sp_16"
+                        android:textSize="@dimen/sp_14"
                         android:textStyle="normal" />
 
-                    <ImageView
-                        android:layout_width="@dimen/dp_120"
-                        android:layout_height="@dimen/dp_80"
-                        android:layout_marginTop="@dimen/dp_10"
-                        android:background="@drawable/image" />
+                    <RelativeLayout
+                        android:layout_width="@dimen/dp_168"
+                        android:layout_height="@dimen/dp_108"
+                        android:layout_marginBottom="@dimen/dp_22"
+                        android:background="@drawable/upload">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/dp_68"
+                            android:gravity="center"
+                            android:text="上传绝育证明"
+                            android:textColor="#4669ED"
+                            android:textSize="@dimen/sp_14"
+                            android:textStyle="normal" />
+
+                        <ImageView
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent" />
+
+                    </RelativeLayout>
 
                 </LinearLayout>
 
@@ -269,80 +311,37 @@
                 <com.dog.manage.app.view.ViewItemLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    app:item_container_margin_left="@dimen/dp_16"
-                    app:item_container_margin_right="@dimen/dp_16"
-                    app:item_container_height="@dimen/dp_48"
-                    app:item_edit_hint=""
-                    app:item_edit_size="@dimen/sp_12"
-                    app:item_edit_visible="true"
-                    app:item_title="犬只年龄"
+                    app:item_arrow_visible="true"
+                    app:item_container_height="@dimen/dp_50"
+                    app:item_container_margin_left="@dimen/viewPadding"
+                    app:item_container_margin_right="@dimen/viewPadding"
+                    app:item_content="选择犬只年龄"
+                    app:item_content_color="@color/colorAppTheme"
+                    app:item_content_size="@dimen/sp_14"
                     app:item_divider_visible="true"
+                    app:item_title="犬只年龄"
                     app:item_title_size="@dimen/sp_14" />
 
-                <LinearLayout
+                <TextView
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/dp_48"
+                    android:layout_height="@dimen/dp_50"
                     android:gravity="center_vertical"
-                    android:orientation="horizontal"
-                    android:paddingLeft="@dimen/dp_16"
-                    android:paddingRight="@dimen/dp_16">
-
-                    <TextView
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:gravity="center_vertical"
-                        android:singleLine="true"
-                        android:text="犬只免疫证"
-                        android:textColor="#333333"
-                        android:textSize="@dimen/sp_16" />
-
-                    <RadioGroup
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:visibility="gone">
-
-                        <RadioButton
-                            android:layout_width="wrap_content"
-                            android:layout_height="@dimen/dp_28"
-                            android:background="@drawable/radio_bg"
-                            android:button="@null"
-                            android:checked="false"
-                            android:gravity="center"
-                            android:paddingLeft="@dimen/dp_10"
-                            android:paddingRight="@dimen/dp_10"
-                            android:text="陪伴犬"
-                            android:textColor="@drawable/text_color"
-                            android:textSize="@dimen/sp_14" />
-
-                        <RadioButton
-                            android:layout_width="wrap_content"
-                            android:layout_height="@dimen/dp_28"
-                            android:layout_marginLeft="@dimen/dp_10"
-                            android:background="@drawable/radio_bg"
-                            android:button="@null"
-                            android:checked="true"
-                            android:gravity="center"
-                            android:paddingLeft="@dimen/dp_10"
-                            android:paddingRight="@dimen/dp_10"
-                            android:text="导盲犬/扶助犬"
-                            android:textColor="@drawable/text_color"
-                            android:textSize="@dimen/sp_14" />
-
-                    </RadioGroup>
-
-                </LinearLayout>
+                    android:paddingLeft="@dimen/viewPadding"
+                    android:paddingRight="@dimen/viewPadding"
+                    android:singleLine="true"
+                    android:text="犬只免疫证"
+                    android:textColor="#333333"
+                    android:textSize="@dimen/sp_14" />
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_marginTop="@dimen/dp_10"
-                    android:layout_marginBottom="@dimen/dp_16"
+                    android:layout_marginTop="@dimen/dp_4"
+                    android:layout_marginBottom="@dimen/dp_23"
                     android:gravity="center_vertical"
-                    android:paddingLeft="@dimen/dp_16"
-                    android:paddingRight="@dimen/dp_16"
-                    android:text="该犬只暂未办理免疫证,请在办完犬证后,依据电子犬证去动物医院或防疫站接种,完成免疫证办理。"
+                    android:paddingLeft="@dimen/viewPadding"
+                    android:paddingRight="@dimen/viewPadding"
+                    android:text="该犬只暂未办理免疫证，请在办完犬证后，依据电子犬证去动物医院或防疫站接种，完成免疫证办理。"
                     android:textColor="@color/red"
                     android:textSize="@dimen/sp_14" />
 
@@ -354,7 +353,6 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/dp_12"
                     android:gravity="center_vertical"
                     android:orientation="vertical"
                     android:paddingLeft="@dimen/dp_16"
@@ -363,37 +361,89 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/dp_20"
+                        android:layout_marginBottom="@dimen/dp_17"
                         android:text="犬只照片"
                         android:textColor="#333333"
-                        android:textSize="@dimen/sp_16"
+                        android:textSize="@dimen/sp_14"
                         android:textStyle="normal" />
 
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/dp_8"
-                        android:gravity="center"
+                        android:layout_marginBottom="@dimen/dp_20"
                         android:orientation="horizontal">
 
-                        <ImageView
-                            android:layout_width="0dp"
-                            android:layout_height="@dimen/dp_80"
+                        <RelativeLayout
+                            android:layout_width="@dimen/dp_0"
+                            android:layout_height="@dimen/dp_108"
+                            android:layout_marginRight="@dimen/dp_5"
                             android:layout_weight="1"
-                            android:background="@drawable/image" />
+                            android:background="@drawable/upload">
 
-                        <ImageView
-                            android:layout_width="0dp"
-                            android:layout_height="@dimen/dp_80"
-                            android:layout_marginLeft="@dimen/dp_20"
-                            android:layout_marginRight="@dimen/dp_20"
-                            android:layout_weight="1"
-                            android:background="@drawable/image" />
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/dp_68"
+                                android:gravity="center"
+                                android:text="上传左侧面照片"
+                                android:textColor="#4669ED"
+                                android:textSize="@dimen/sp_14"
+                                android:textStyle="normal" />
 
-                        <ImageView
-                            android:layout_width="0dp"
-                            android:layout_height="@dimen/dp_80"
+                            <ImageView
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent" />
+
+                        </RelativeLayout>
+
+                        <RelativeLayout
+                            android:layout_width="@dimen/dp_0"
+                            android:layout_height="@dimen/dp_108"
+                            android:layout_marginLeft="@dimen/dp_5"
+                            android:layout_marginRight="@dimen/dp_5"
                             android:layout_weight="1"
-                            android:background="@drawable/image" />
+                            android:background="@drawable/upload">
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/dp_68"
+                                android:gravity="center"
+                                android:text="上传正面照片"
+                                android:textColor="#4669ED"
+                                android:textSize="@dimen/sp_14"
+                                android:textStyle="normal" />
+
+                            <ImageView
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent" />
+
+                        </RelativeLayout>
+
+                        <RelativeLayout
+                            android:layout_width="@dimen/dp_0"
+                            android:layout_height="@dimen/dp_108"
+                            android:layout_marginLeft="@dimen/dp_5"
+                            android:layout_weight="1"
+                            android:background="@drawable/upload">
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/dp_68"
+                                android:gravity="center"
+                                android:text="上右侧面照片"
+                                android:textColor="#4669ED"
+                                android:textSize="@dimen/sp_14"
+                                android:textStyle="normal" />
+
+                            <ImageView
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent" />
+
+                        </RelativeLayout>
+
                     </LinearLayout>
 
                 </LinearLayout>
@@ -401,25 +451,23 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/dp_8"
-                    android:layout_marginBottom="@dimen/dp_16"
                     android:gravity="center_vertical"
                     android:orientation="vertical"
-                    android:paddingLeft="@dimen/dp_16"
-                    android:paddingRight="@dimen/dp_16">
+                    android:paddingLeft="@dimen/viewPadding"
+                    android:paddingRight="@dimen/viewPadding">
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="示例如下："
-                        android:textColor="#999999"
-                        android:textSize="@dimen/sp_16"
-                        android:textStyle="normal" />
+                        android:textColor="#666666"
+                        android:textSize="@dimen/sp_14" />
 
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/dp_8"
+                        android:layout_marginTop="@dimen/dp_16"
+                        android:layout_marginBottom="@dimen/dp_30"
                         android:gravity="center"
                         android:orientation="horizontal">
 
@@ -431,14 +479,14 @@
 
                             <ImageView
                                 android:layout_width="match_parent"
-                                android:layout_height="@dimen/dp_80"
+                                android:layout_height="@dimen/dp_108"
                                 android:layout_weight="1"
                                 android:background="@drawable/image" />
 
                             <TextView
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:layout_marginTop="@dimen/dp_6"
+                                android:layout_marginTop="@dimen/dp_12"
                                 android:gravity="center"
                                 android:text="左侧面照片"
                                 android:textColor="#999999"
@@ -449,21 +497,21 @@
                         <LinearLayout
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:layout_marginLeft="@dimen/dp_20"
-                            android:layout_marginRight="@dimen/dp_20"
+                            android:layout_marginLeft="@dimen/dp_10"
+                            android:layout_marginRight="@dimen/dp_10"
                             android:layout_weight="1"
                             android:orientation="vertical">
 
                             <ImageView
                                 android:layout_width="match_parent"
-                                android:layout_height="@dimen/dp_80"
+                                android:layout_height="@dimen/dp_108"
                                 android:layout_weight="1"
                                 android:background="@drawable/image" />
 
                             <TextView
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:layout_marginTop="@dimen/dp_6"
+                                android:layout_marginTop="@dimen/dp_12"
                                 android:gravity="center"
                                 android:text="正面照片"
                                 android:textColor="#999999"
@@ -479,14 +527,14 @@
 
                             <ImageView
                                 android:layout_width="match_parent"
-                                android:layout_height="@dimen/dp_80"
+                                android:layout_height="@dimen/dp_108"
                                 android:layout_weight="1"
                                 android:background="@drawable/image" />
 
                             <TextView
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:layout_marginTop="@dimen/dp_6"
+                                android:layout_marginTop="@dimen/dp_12"
                                 android:gravity="center"
                                 android:text="右侧面照片"
                                 android:textColor="#999999"
@@ -506,18 +554,18 @@
                 <com.dog.manage.app.view.ViewItemLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:paddingLeft="@dimen/dp_16"
-                    android:paddingRight="@dimen/dp_16"
-                    app:item_container_height="@dimen/dp_48"
+                    android:paddingLeft="@dimen/viewPadding"
+                    android:paddingRight="@dimen/viewPadding"
+                    app:item_container_height="@dimen/dp_50"
                     app:item_content="柴犬"
                     app:item_content_color="#333333"
                     app:item_content_size="@dimen/sp_14"
                     app:item_info="开始识别"
                     app:item_info_size="@dimen/sp_14"
                     app:item_info_visible="true"
-                    app:item_info_width="@dimen/dp_80"
+                    app:item_info_width="@dimen/dp_94"
                     app:item_title="犬只品种"
-                    app:item_title_size="@dimen/sp_16" />
+                    app:item_title_size="@dimen/sp_14" />
 
                 <View
                     android:layout_width="match_parent"
@@ -527,18 +575,18 @@
                 <com.dog.manage.app.view.ViewItemLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:paddingLeft="@dimen/dp_16"
-                    android:paddingRight="@dimen/dp_16"
-                    app:item_container_height="@dimen/dp_48"
+                    android:paddingLeft="@dimen/viewPadding"
+                    android:paddingRight="@dimen/viewPadding"
+                    app:item_container_height="@dimen/dp_50"
                     app:item_content="已完成采集"
                     app:item_content_color="#333333"
                     app:item_content_size="@dimen/sp_14"
                     app:item_info="开始采集"
                     app:item_info_size="@dimen/sp_14"
                     app:item_info_visible="true"
-                    app:item_info_width="@dimen/dp_80"
+                    app:item_info_width="@dimen/dp_94"
                     app:item_title="鼻纹信息"
-                    app:item_title_size="@dimen/sp_16" />
+                    app:item_title_size="@dimen/sp_14" />
 
 
                 <View
@@ -553,14 +601,14 @@
         <TextView
             android:id="@+id/confirmView"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/dp_48"
+            android:layout_height="@dimen/dp_50"
             android:layout_margin="@dimen/dp_16"
             android:background="@drawable/button_theme"
             android:gravity="center"
             android:onClick="onClickConfirm"
             android:text="下一步"
             android:textColor="@color/white"
-            android:textSize="@dimen/sp_16" />
+            android:textSize="@dimen/sp_14" />
 
     </LinearLayout>
 </layout>

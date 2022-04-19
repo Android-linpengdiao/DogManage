@@ -44,7 +44,7 @@ public class DogCertificateEditDogOwnerActivity extends BaseActivity {
             binding.firstStepView.setSelected(true);
             binding.firstStepView.setText("①犬主信息");
             binding.secondStepView.setText("②犬只信息");
-            binding.thirdStepView.setText("选择医院");
+            binding.thirdStepView.setText("③选择医院");
 
         }
 
@@ -146,11 +146,11 @@ public class DogCertificateEditDogOwnerActivity extends BaseActivity {
             public void onCheckedChanged(RadioGroup radioGroup, int i) {
                 switch (i) {
                     case R.id.radioButtonOldMan0:
-                        binding.oldManHintView.setVisibility(View.GONE);
+//                        binding.oldManHintView.setVisibility(View.GONE);
 
                         break;
                     case R.id.radioButtonOldMan1:
-                        binding.oldManHintView.setVisibility(View.VISIBLE);
+//                        binding.oldManHintView.setVisibility(View.VISIBLE);
 
                         break;
                     default:

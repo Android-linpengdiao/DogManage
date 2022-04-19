@@ -10,7 +10,7 @@
     <color name="black">@android:color/black</color>
     <color name="gray">#EEEDED</color>
     <color name="blue">#4E68E5</color>
-    <color name="red">#F44C30</color>
+    <color name="red">#FF2020</color>
     <color name="yellow">#F9E100</color>
     <color name="textColor">#111111</color>
     <color name="textColorHint">#5C5C5C</color>

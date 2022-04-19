@@ -116,7 +116,7 @@ public class MainActivity extends BaseActivity {
         images.add("https://pics7.baidu.com/feed/6c224f4a20a446236fb6db0ac3bf5d040df3d785.jpeg");
         images.add("https://pics7.baidu.com/feed/6c224f4a20a446236fb6db0ac3bf5d040df3d785.jpeg");
 
-        binding.mainBanner.setImages(images).start();
+        binding.mainBanner.setImages(Arrays.asList("")).start();
         binding.banner.setImages(images).start();
     }
 

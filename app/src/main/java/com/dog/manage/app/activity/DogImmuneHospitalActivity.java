@@ -61,7 +61,12 @@ public class DogImmuneHospitalActivity extends BaseActivity {
         adapter.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view, Object object) {
-                openMapNavigate();
+                switch (view.getId()) {
+                    case R.id.navigateView:
+                        openMapNavigate();
+
+                        break;
+                }
             }
 
             @Override

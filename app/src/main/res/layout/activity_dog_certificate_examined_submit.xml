@@ -19,63 +19,9 @@
             android:background="@color/colorAppTheme"
             app:tv_content=""
             app:tv_content_size="@dimen/sp_14"
-            app:tv_title="犬证办理"
+            app:tv_title="犬证年审"
             app:tv_title_bold="true"
             app:tv_title_size="@dimen/titleViewSize" />
-
-        <LinearLayout
-            android:id="@+id/stepContainer"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/dp_68"
-            android:background="@color/white"
-            android:gravity="center"
-            android:orientation="horizontal">
-
-            <TextView
-                android:id="@+id/firstStepView"
-                android:layout_width="wrap_content"
-                android:layout_height="@dimen/dp_38"
-                android:background="@drawable/step_bg"
-                android:gravity="center"
-                android:text="①犬主信息"
-                android:textColor="@drawable/step_text_color"
-                android:textSize="@dimen/sp_14" />
-
-            <View
-                android:layout_width="@dimen/dp_40"
-                android:layout_height="1.5dp"
-                android:layout_margin="@dimen/dp_5"
-                android:background="@color/colorAppTheme" />
-
-            <TextView
-                android:id="@+id/secondStepView"
-                android:layout_width="wrap_content"
-                android:layout_height="@dimen/dp_38"
-                android:background="@drawable/step_bg"
-                android:gravity="center"
-                android:text="②犬只信息"
-                android:textColor="@drawable/step_text_color"
-                android:textSize="@dimen/sp_14" />
-
-            <View
-                android:layout_width="@dimen/dp_40"
-                android:layout_height="1.5dp"
-                android:layout_margin="@dimen/dp_5"
-                android:background="@color/colorAppTheme" />
-
-            <TextView
-                android:id="@+id/thirdStepView"
-                android:layout_width="wrap_content"
-                android:layout_height="@dimen/dp_38"
-                android:background="@drawable/step_bg"
-                android:gravity="center"
-                android:paddingLeft="@dimen/dp_10"
-                android:paddingRight="@dimen/dp_10"
-                android:text="③提交审核"
-                android:textColor="@drawable/step_text_color"
-                android:textSize="@dimen/sp_14" />
-
-        </LinearLayout>
 
         <ScrollView
             android:layout_width="match_parent"
