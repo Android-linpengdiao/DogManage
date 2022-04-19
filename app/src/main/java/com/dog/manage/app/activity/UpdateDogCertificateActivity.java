@@ -15,6 +15,9 @@ import com.dog.manage.app.databinding.ActivityUpdateDogCertificateBinding;
 
 import java.util.Arrays;
 
+/**
+ * 信息変更
+ */
 public class UpdateDogCertificateActivity extends BaseActivity {
 
     private ActivityUpdateDogCertificateBinding binding;

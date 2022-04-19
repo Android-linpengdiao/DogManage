@@ -13,6 +13,7 @@ public class SubmitSuccessActivity extends BaseActivity {
     public static final int type_transfer = 2;//信息更变
     public static final int type_immune = 3;//免疫证办理
     public static final int type_examined = 4;//犬证年审
+    public static final int type_adoption = 5;//犬只领养
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,6 +38,9 @@ public class SubmitSuccessActivity extends BaseActivity {
 
         } else if (type == type_examined) {
             binding.titleView.binding.itemTitle.setText("犬证年审");
+
+        } else if (type == type_adoption) {
+            binding.titleView.binding.itemTitle.setText("犬只领养");
 
         }
 

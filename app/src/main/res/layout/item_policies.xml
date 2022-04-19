@@ -12,20 +12,19 @@
         android:layout_height="@dimen/dp_100"
         android:gravity="center_vertical"
         android:orientation="horizontal"
-        android:paddingLeft="@dimen/dp_16"
-        android:paddingTop="@dimen/dp_12"
-        android:paddingRight="@dimen/dp_16"
-        android:paddingBottom="@dimen/dp_12">
+        android:paddingLeft="@dimen/viewPadding"
+        android:paddingRight="@dimen/viewPadding">
 
         <ImageView
-            android:layout_width="@dimen/dp_80"
-            android:layout_height="match_parent"
+            android:id="@+id/coverView"
+            android:layout_width="@dimen/dp_122"
+            android:layout_height="@dimen/dp_80"
             android:background="@drawable/image_8" />
 
         <LinearLayout
             android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_marginLeft="@dimen/dp_8"
+            android:layout_height="@dimen/dp_80"
+            android:layout_marginLeft="@dimen/dp_13"
             android:layout_weight="1"
             android:gravity="center_vertical"
             android:orientation="vertical">
@@ -37,9 +36,9 @@
                 android:layout_weight="1"
                 android:ellipsize="end"
                 android:maxLines="2"
-                android:text="网民留言:建议国家出台相关政策法规,规范养犬文明养犬的."
+                android:text="网民留言：建议国家出台相关政策法规，规范养犬文明养犬的.."
                 android:textColor="#333333"
-                android:textSize="@dimen/sp_14"
+                android:textSize="@dimen/sp_15"
                 android:textStyle="bold" />
 
             <TextView
@@ -48,7 +47,7 @@
                 android:gravity="center_vertical"
                 android:text="2022.03.09"
                 android:textColor="#999999"
-                android:textSize="@dimen/sp_14" />
+                android:textSize="@dimen/sp_15" />
 
 
         </LinearLayout>

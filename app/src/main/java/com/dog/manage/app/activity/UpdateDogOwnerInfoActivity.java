@@ -23,15 +23,11 @@ public class UpdateDogOwnerInfoActivity extends BaseActivity {
         type = getIntent().getIntExtra("type", 0);
 
         if (type == type_details) {
-
+            binding.firstStepView.setSelected(true);
 
         } else if (type == type_submit) {
+            binding.secondStepView.setSelected(true);
 
-            binding.dogOwnerView.setBackgroundColor(getResources().getColor(R.color.transparent));
-            binding.dogOwnerView.setTextColor(getResources().getColor(R.color.colorAppTheme));
-
-            binding.submitView.setBackgroundResource(R.drawable.button_theme);
-            binding.submitView.setTextColor(getResources().getColor(R.color.white));
             binding.confirmView.setText("提交审核");
             binding.submitContainer.setVisibility(View.VISIBLE);
             binding.dogOwnerContainer.setVisibility(View.GONE);

@@ -31,7 +31,7 @@ public class PunishRecordActivity extends BaseActivity {
         binding.recyclerView.setNestedScrollingEnabled(false);
         RecycleViewDivider divider = new RecycleViewDivider(getApplicationContext(),
                 LinearLayoutManager.VERTICAL,
-                CommonUtil.dip2px(getApplicationContext(), 12),
+                CommonUtil.dip2px(getApplicationContext(), 14),
                 Color.parseColor("#FAFAFA"));
         binding.recyclerView.addItemDecoration(divider);
 

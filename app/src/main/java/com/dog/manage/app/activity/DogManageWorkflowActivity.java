@@ -62,12 +62,6 @@ public class DogManageWorkflowActivity extends BaseActivity {
             binding.thirdStepView.setText("等待审核通过后,将会为您生成新的犬证 ");
 
 
-        } else if (type == 7) {
-
-
-        } else if (type == 8) {
-
-
         }
     }
 
@@ -100,13 +94,6 @@ public class DogManageWorkflowActivity extends BaseActivity {
 
         } else if (type == 6) {
             openActivity(UpdateDogCertificateActivity.class);
-
-        } else if (type == 7) {
-            openActivity(MainDogManageWorkflowActivity.class);
-
-
-        } else if (type == 8) {
-
 
         }
     }

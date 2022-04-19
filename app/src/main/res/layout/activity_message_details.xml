@@ -27,22 +27,24 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/dp_30"
+            android:layout_marginTop="@dimen/dp_24"
             android:text="2021.08.09 "
-            android:textColor="#999999"
+            android:textColor="#666666"
             android:textSize="@dimen/sp_12"
             android:textStyle="normal" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="@dimen/dp_16"
-            android:layout_marginTop="@dimen/dp_16"
+            android:layout_marginLeft="@dimen/dp_22"
+            android:layout_marginTop="@dimen/dp_17"
+            android:layout_marginRight="@dimen/dp_22"
+            android:layout_marginBottom="@dimen/dp_17"
             android:background="@drawable/button_radius_gray_8"
             android:padding="@dimen/dp_16"
-            android:text="本市各级人民政府负责本规定的组织实施。市和区、县、乡、镇人民政府以及街道办事处,应当建立由公安、工商行政管理、畜牧兽医、卫生等行政部门和城市管理综合执法组织组成的养犬管理协调工作机制。公安机关是养犬管理工作的主管机关,全面负责养犬管理工作,并具体负责养犬登记和年检,查处无证养犬、违法携犬外出等行为。有关行政部门和城市管理综合执法组织按照职责分工,各负其责:(一)畜牧兽医行政部门负责犬类的免疫、检疫和其他相关管理工作;(二)城市管理综合执法组织负责对街面流动无照售犬行为和因养犬而破坏市容环境卫生行为的查处;协助公安机关查处无证养犬、违法携犬外出等行  "
-            android:textColor="#333333"
-            android:textSize="@dimen/sp_16"
+            android:text="尊敬的用户您好，您的犬证即将到期，请及时参加年审，请进入首页点击“犬证年审”来进行办理！"
+            android:textColor="#666666"
+            android:textSize="@dimen/sp_14"
             android:textStyle="normal" />
 
     </LinearLayout>

@@ -25,7 +25,7 @@
         <com.dog.manage.app.tab.TopTabLayout
             android:id="@+id/tabLayout"
             android:layout_width="wrap_content"
-            android:layout_height="@dimen/dp_42"
+            android:layout_height="@dimen/dp_56"
             android:layout_below="@+id/topView"
             android:layout_centerHorizontal="true"
             android:background="@android:color/transparent"
@@ -36,8 +36,8 @@
             app:yj_tabIndicatorPaddingBottom="0dp"
             app:yj_tabPaddingBottom="0dp"
             app:yj_tabSelectTextSize="@dimen/sp_16"
-            app:yj_tabSelectedTextColor="#333333"
-            app:yj_tabTextColor="#999999"
+            app:yj_tabSelectedTextColor="@color/colorAppTheme"
+            app:yj_tabTextColor="@color/colorAppTheme"
             app:yj_tabTextSize="@dimen/sp_16" />
 
         <androidx.viewpager.widget.ViewPager

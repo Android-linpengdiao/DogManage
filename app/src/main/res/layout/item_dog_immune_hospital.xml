@@ -52,7 +52,7 @@
                 android:layout_width="@dimen/dp_20"
                 android:layout_height="@dimen/dp_20"
                 android:layout_marginRight="@dimen/dp_8"
-                android:background="@drawable/dingwei_s" />
+                android:src="@drawable/dingwei_s" />
 
             <TextView
                 android:layout_width="@dimen/dp_0"

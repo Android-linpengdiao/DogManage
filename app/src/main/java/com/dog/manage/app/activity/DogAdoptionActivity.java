@@ -26,9 +26,14 @@ public class DogAdoptionActivity extends BaseActivity {
         binding = getViewData(R.layout.activity_dog_adoption);
         addActivity(this);
 
+        binding.firstStepView.setSelected(true);
+        binding.firstStepView.setText("①选择犬只");
+        binding.secondStepView.setText("②犬主信息");
+        binding.thirdStepView.setText("③提交审核");
+
         GridItemDecoration.Builder builder = new GridItemDecoration.Builder(this);
         builder.color(R.color.transparent);
-        builder.size(CommonUtil.dip2px(this, 8));
+        builder.size(CommonUtil.dip2px(this, 12));
         binding.recyclerView.addItemDecoration(new GridItemDecoration(builder));
         binding.recyclerView.setLayoutManager(new GridLayoutManager(this, 2));
         binding.recyclerView.setNestedScrollingEnabled(false);

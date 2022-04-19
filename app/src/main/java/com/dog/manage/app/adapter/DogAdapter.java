@@ -37,7 +37,7 @@ public class DogAdapter extends BaseRecyclerAdapter<String, ItemDogBinding> {
 
         binding.titleView.setVisibility(type == 0 ? View.VISIBLE : View.GONE);
         binding.contentView.setVisibility(type == 0 ? View.GONE : View.VISIBLE);
-        GlideLoader.LoderLoadImage(mContext, "", binding.iconView);
+        GlideLoader.LoderImage(mContext, "https://pics7.baidu.com/feed/6c224f4a20a446236fb6db0ac3bf5d040df3d785.jpeg", binding.iconView);
         binding.titleView.setText(dataBean);
         binding.contentView.setText(dataBean);
 

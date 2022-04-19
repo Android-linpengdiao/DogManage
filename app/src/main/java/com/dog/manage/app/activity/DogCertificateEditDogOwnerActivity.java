@@ -19,6 +19,7 @@ public class DogCertificateEditDogOwnerActivity extends BaseActivity {
     public static final int type_userInfo = 0;//我的信息
     public static final int type_certificate = 1;//犬证办理
     public static final int type_immune = 2;//免疫证办理
+    public static final int type_adoption = 3;//犬只领养
     private int type = 0;
 
     @Override
@@ -45,6 +46,15 @@ public class DogCertificateEditDogOwnerActivity extends BaseActivity {
             binding.firstStepView.setText("①犬主信息");
             binding.secondStepView.setText("②犬只信息");
             binding.thirdStepView.setText("③选择医院");
+
+        } else if (type == type_adoption) {
+            binding.titleView.binding.itemTitle.setText("犬只领养");
+            binding.firstStepView.setSelected(true);
+            binding.secondStepView.setSelected(true);
+            binding.firstStepView.setText("①选择犬只");
+            binding.secondStepView.setText("②犬主信息");
+            binding.thirdStepView.setText("③提交审核");
+            binding.secondStepView.setPadding(getResources().getDimensionPixelOffset(R.dimen.dp_10),0,getResources().getDimensionPixelOffset(R.dimen.dp_10),0);
 
         }
 
@@ -189,8 +199,14 @@ public class DogCertificateEditDogOwnerActivity extends BaseActivity {
     }
 
     public void onClickConfirm(View view) {
-        Bundle bundle = new Bundle();
-        bundle.putInt("type", type);
-        openActivity(DogCertificateEditDogActivity.class, bundle);
+        if (type == type_adoption) {
+            openActivity(DogAdoptionSubmitActivity.class);
+
+        }else {
+            Bundle bundle = new Bundle();
+            bundle.putInt("type", type);
+            openActivity(DogCertificateEditDogActivity.class, bundle);
+
+        }
     }
 }
