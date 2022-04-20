@@ -22,6 +22,7 @@ public class BaseApplication extends Application {
         super.onCreate();
         myApplication = this;
         handler = new Handler(Looper.getMainLooper());
+        initAssets();
     }
 
     public static BaseApplication getInstance() {

@@ -22,7 +22,7 @@ public class DogCertificateEditSubmitActivity extends BaseActivity {
 
     public void onClickConfirm(View view) {
         Bundle bundle = new Bundle();
-        bundle.putInt("type", 1);
-        openActivity(UpdateDogOwnerInfoActivity.class, bundle);
+        bundle.putInt("type", SubmitSuccessActivity.type_certificate);
+        openActivity(SubmitSuccessActivity.class, bundle);
     }
 }

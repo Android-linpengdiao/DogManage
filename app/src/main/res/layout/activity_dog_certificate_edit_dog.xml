@@ -286,7 +286,14 @@
                         android:layout_width="@dimen/dp_168"
                         android:layout_height="@dimen/dp_108"
                         android:layout_marginBottom="@dimen/dp_22"
-                        android:background="@drawable/upload">
+                        android:background="@drawable/upload_bg">
+
+                        <ImageView
+                            android:layout_width="@dimen/dp_36"
+                            android:layout_height="@dimen/dp_28"
+                            android:layout_centerHorizontal="true"
+                            android:layout_marginTop="@dimen/dp_30"
+                            android:background="@drawable/camera"/>
 
                         <TextView
                             android:layout_width="match_parent"
@@ -383,7 +390,14 @@
                             android:layout_height="@dimen/dp_108"
                             android:layout_marginRight="@dimen/dp_5"
                             android:layout_weight="1"
-                            android:background="@drawable/upload">
+                            android:background="@drawable/upload_bg">
+
+                            <ImageView
+                                android:layout_width="@dimen/dp_36"
+                                android:layout_height="@dimen/dp_28"
+                                android:layout_centerHorizontal="true"
+                                android:layout_marginTop="@dimen/dp_30"
+                                android:background="@drawable/camera"/>
 
                             <TextView
                                 android:layout_width="match_parent"
@@ -407,7 +421,14 @@
                             android:layout_marginLeft="@dimen/dp_5"
                             android:layout_marginRight="@dimen/dp_5"
                             android:layout_weight="1"
-                            android:background="@drawable/upload">
+                            android:background="@drawable/upload_bg">
+
+                            <ImageView
+                                android:layout_width="@dimen/dp_36"
+                                android:layout_height="@dimen/dp_28"
+                                android:layout_centerHorizontal="true"
+                                android:layout_marginTop="@dimen/dp_30"
+                                android:background="@drawable/camera"/>
 
                             <TextView
                                 android:layout_width="match_parent"
@@ -430,7 +451,14 @@
                             android:layout_height="@dimen/dp_108"
                             android:layout_marginLeft="@dimen/dp_5"
                             android:layout_weight="1"
-                            android:background="@drawable/upload">
+                            android:background="@drawable/upload_bg">
+
+                            <ImageView
+                                android:layout_width="@dimen/dp_36"
+                                android:layout_height="@dimen/dp_28"
+                                android:layout_centerHorizontal="true"
+                                android:layout_marginTop="@dimen/dp_30"
+                                android:background="@drawable/camera"/>
 
                             <TextView
                                 android:layout_width="match_parent"

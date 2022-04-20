@@ -23,8 +23,8 @@ public class WelcomeActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = getViewData(R.layout.activity_welcome);
-        StatusBarUtil.setStatusBarColor(this, R.color.black);
         setStatusBarHeight();
+        setStatusBarDarkTheme(true);
 
         sharedPreferences = getSharedPreferences("sp_data", Context.MODE_PRIVATE);
         if (!sharedPreferences.getBoolean("appService", false)) {

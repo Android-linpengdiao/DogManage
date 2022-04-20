@@ -69,7 +69,7 @@ public class TitleView extends FrameLayout {
 
     public void setItemTitleBold(boolean bold) {
         if (bold) {
-//            Typeface typeface = Typeface.createFromAsset(getContext().getAssets(), "fonts/pingfangscbold.ttf");
+//            Typeface typeface = BaseApplication.getInstance().getTypeface();
 //            binding.itemTitle.setTypeface(typeface);
 //            binding.itemTitle.setTypeface(Typeface.defaultFromStyle(Typeface.BOLD));
         } else {

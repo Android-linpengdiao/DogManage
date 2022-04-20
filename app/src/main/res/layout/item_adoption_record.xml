@@ -26,7 +26,7 @@
                 android:id="@+id/coverView"
                 android:layout_width="@dimen/dp_125"
                 android:layout_height="@dimen/dp_107"
-                android:background="@color/gray" />
+                android:background="@drawable/image_8" />
 
             <LinearLayout
                 android:layout_width="match_parent"

@@ -15,6 +15,10 @@ import com.base.utils.CommonUtil;
 import com.base.view.OnClickListener;
 import com.base.view.RecycleViewDivider;
 import com.dog.manage.app.R;
+import com.dog.manage.app.activity.CertificateDetailsActivity;
+import com.dog.manage.app.activity.DogLogoutDetailsActivity;
+import com.dog.manage.app.activity.ImmuneDetailsActivity;
+import com.dog.manage.app.activity.TransferDetailsActivity;
 import com.dog.manage.app.activity.record.AdoptionDetailsActivity;
 import com.dog.manage.app.adapter.AdoptionRecordAdapter;
 import com.dog.manage.app.adapter.CertificateRecordAdapter;
@@ -93,7 +97,7 @@ public class AdoptionRecordFragment extends BaseFragment {
                 certificateRecordAdapter.setOnClickListener(new OnClickListener() {
                     @Override
                     public void onClick(View view, Object object) {
-                        openActivity(AdoptionDetailsActivity.class);
+                        openActivity(CertificateDetailsActivity.class);
 
                     }
 
@@ -110,7 +114,7 @@ public class AdoptionRecordFragment extends BaseFragment {
                 certificateRecordAdapter.setOnClickListener(new OnClickListener() {
                     @Override
                     public void onClick(View view, Object object) {
-                        openActivity(AdoptionDetailsActivity.class);
+                        openActivity(ImmuneDetailsActivity.class);
 
                     }
 
@@ -127,7 +131,7 @@ public class AdoptionRecordFragment extends BaseFragment {
                 certificateRecordAdapter.setOnClickListener(new OnClickListener() {
                     @Override
                     public void onClick(View view, Object object) {
-                        openActivity(AdoptionDetailsActivity.class);
+                        openActivity(TransferDetailsActivity.class);
 
                     }
 
@@ -161,7 +165,9 @@ public class AdoptionRecordFragment extends BaseFragment {
                 certificateRecordAdapter.setOnClickListener(new OnClickListener() {
                     @Override
                     public void onClick(View view, Object object) {
-                        openActivity(AdoptionDetailsActivity.class);
+                        Bundle bundle = new Bundle();
+                        bundle.putInt("type", DogLogoutDetailsActivity.type_details);
+                        openActivity(DogLogoutDetailsActivity.class, bundle);
 
                     }
 

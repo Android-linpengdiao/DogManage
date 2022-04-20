@@ -20,7 +20,7 @@ public class AdoptionRecordActivity extends BaseActivity {
 
     public static final int type_certificate = 1;//犬证办理记录
     public static final int type_immune = 2;//免疫证办理记录
-    public static final int type_transfer = 3;//处罚记录
+    public static final int type_transfer = 3;//过户记录
     public static final int type_adoption = 4;//领养记录
     public static final int type_logout = 5;//注销记录
     public static final int type_punish = 6;//处罚记录
@@ -41,7 +41,7 @@ public class AdoptionRecordActivity extends BaseActivity {
             binding.titleView.binding.itemTitle.setText("免疫证办理记录");
 
         } else if (type == type_transfer) {
-            binding.titleView.binding.itemTitle.setText("处罚记录");
+            binding.titleView.binding.itemTitle.setText("过户记录");
 
         } else if (type == type_adoption) {
             binding.titleView.binding.itemTitle.setText("领养记录");

@@ -60,12 +60,14 @@
                 android:textColor="#ffffff"
                 android:layout_marginRight="@dimen/dp_10"
                 android:gravity="center"
+                android:onClick="onClickMain"
                 android:background="@drawable/button_theme"
                 android:textSize="@dimen/sp_15" />
             <TextView
                 android:layout_width="@dimen/dp_152"
                 android:layout_height="@dimen/dp_48"
                 android:layout_marginLeft="@dimen/dp_10"
+                android:onClick="onClickRecord"
                 android:text="查看办理记录"
                 android:textColor="#ffffff"
                 android:gravity="center"

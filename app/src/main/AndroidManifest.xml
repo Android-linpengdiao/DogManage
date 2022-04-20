@@ -30,7 +30,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".activity.DogAdoptionSubmitActivity"></activity>
+        <activity android:name=".activity.ImmuneDetailsActivity"></activity>
+        <activity android:name=".activity.CertificateDetailsActivity" />
+        <activity android:name=".activity.TransferDetailsActivity" />
+        <activity android:name=".activity.DogAdoptionSubmitActivity" />
         <activity android:name=".activity.DogCertificateExaminedSubmitActivity" />
         <activity android:name=".activity.DogImmuneHospitalActivity" />
         <activity android:name=".activity.UpdatePhoneActivity" />

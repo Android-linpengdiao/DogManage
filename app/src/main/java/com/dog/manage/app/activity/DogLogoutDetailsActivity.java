@@ -40,15 +40,15 @@ public class DogLogoutDetailsActivity extends BaseActivity {
                     case R.id.radioButton1:
                         binding.pictureHintView.setText("上传照片(非必填)");
                         binding.descriptionHintView.setText("简要说明");
-                        binding.pictureImageView2.setVisibility(View.INVISIBLE);
-                        binding.pictureImageView3.setVisibility(View.INVISIBLE);
+                        binding.pictureContainer2.setVisibility(View.INVISIBLE);
+                        binding.pictureContainer3.setVisibility(View.INVISIBLE);
 
                         break;
                     case R.id.radioButton2:
                         binding.pictureHintView.setText("上传无害化处理过程图片3张");
                         binding.descriptionHintView.setText("简要说明(非必填)");
-                        binding.pictureImageView2.setVisibility(View.VISIBLE);
-                        binding.pictureImageView3.setVisibility(View.VISIBLE);
+                        binding.pictureContainer2.setVisibility(View.VISIBLE);
+                        binding.pictureContainer3.setVisibility(View.VISIBLE);
 
                         break;
                     default:

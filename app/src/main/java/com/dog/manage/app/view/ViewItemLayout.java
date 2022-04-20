@@ -13,6 +13,7 @@ import android.widget.LinearLayout;
 
 import androidx.databinding.DataBindingUtil;
 
+import com.base.BaseApplication;
 import com.base.utils.CommonUtil;
 import com.dog.manage.app.R;
 import com.dog.manage.app.databinding.ViewItemLayoutBinding;
@@ -106,7 +107,7 @@ public class ViewItemLayout extends FrameLayout {
 
     public void setItemTitleBold(boolean bold) {
         if (bold) {
-            Typeface typeface = Typeface.createFromAsset(getContext().getAssets(), "fonts/pingfangscbold.ttf");
+            Typeface typeface = BaseApplication.getInstance().getTypeface();
             binding.itemTitle.setTypeface(typeface);
 //            binding.itemTitle.setTypeface(Typeface.defaultFromStyle(Typeface.BOLD));
         } else {
