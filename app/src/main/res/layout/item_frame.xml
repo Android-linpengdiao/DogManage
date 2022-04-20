@@ -18,7 +18,7 @@
             android:layout_height="@dimen/dp_86"
             android:src="@drawable/image_8" />
 
-        <TextView
+        <com.dog.manage.app.view.TextBoldView
             android:id="@+id/titleView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

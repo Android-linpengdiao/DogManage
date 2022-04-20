@@ -113,8 +113,7 @@
 \n1.新犬主的手机号码要求必须是在本平台已经注册，并完善过个人信息，方可作为新犬主信息过户。
 \n2.犬只过户成功后，您的相关“犬证”“免疫证”也会同步过户到新犬主名下，同时您的“犬证”“免疫证”将会失效。"
                     android:textColor="#999999"
-                    android:textSize="@dimen/sp_14"
-                    android:textStyle="normal" />
+                    android:textSize="@dimen/sp_14"/>
 
 
             </LinearLayout>

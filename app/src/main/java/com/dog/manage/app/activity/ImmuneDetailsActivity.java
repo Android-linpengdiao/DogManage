@@ -15,6 +15,5 @@ public class ImmuneDetailsActivity extends BaseActivity {
         binding = getViewData(R.layout.activity_immune_details);
         addActivity(this);
 
-        setTypeface(binding.dogNameView);
     }
 }

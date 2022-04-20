@@ -55,7 +55,7 @@
                             android:gravity="center_vertical"
                             android:orientation="horizontal">
 
-                            <TextView
+                            <com.dog.manage.app.view.TextBoldView
                                 android:id="@+id/dogNameView"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
@@ -176,8 +176,7 @@
                     android:paddingRight="@dimen/viewPadding"
                     android:paddingBottom="@dimen/dp_24">
 
-                    <TextView
-                        android:id="@+id/acceptUnitsHintView"
+                    <com.dog.manage.app.view.TextBoldView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="@dimen/dp_30"

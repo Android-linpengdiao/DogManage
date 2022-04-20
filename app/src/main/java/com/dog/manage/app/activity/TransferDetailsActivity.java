@@ -14,6 +14,5 @@ public class TransferDetailsActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         binding = getViewData(R.layout.activity_transfer_details);
         addActivity(this);
-        setTypeface(binding.dogNameView);
     }
 }

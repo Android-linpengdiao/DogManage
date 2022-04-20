@@ -54,7 +54,7 @@ public class DogManageWorkflowActivity extends BaseActivity {
         } else if (type == 5) {
             binding.firstStepView.setText("选择犬只的注销方式并填写信息资料");
             binding.secondStepView.setText("提交申请等待审核结果完成注销 ");
-            binding.thirdStepView.setVisibility(View.GONE);
+            binding.thirdStepContainer.setVisibility(View.GONE);
 
         } else if (type == 6) {
             binding.firstStepView.setText("选择您要变更的犬证,确认后点击开始变更");

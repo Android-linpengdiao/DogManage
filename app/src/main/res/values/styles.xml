@@ -86,6 +86,10 @@
         <attr name="item_divider_visible" format="boolean" />
     </declare-styleable>
 
+    <declare-styleable name="TextBoldView">
+        <attr name="text_bold" format="boolean" />
+    </declare-styleable>
+
     <declare-styleable name="TopTabLayout">
         <attr name="yj_tabIndicatorColor" format="color" />
         <attr name="yj_tabIndicatorHeight" format="dimension" />

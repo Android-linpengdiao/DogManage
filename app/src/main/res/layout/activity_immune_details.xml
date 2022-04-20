@@ -57,7 +57,7 @@
                             android:gravity="center_vertical"
                             android:orientation="horizontal">
 
-                            <TextView
+                            <com.dog.manage.app.view.TextBoldView
                                 android:id="@+id/dogNameView"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
@@ -222,15 +222,14 @@
             android:paddingBottom="@dimen/dp_20">
 
 
-            <TextView
+            <com.dog.manage.app.view.TextBoldView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:gravity="center_vertical"
                 android:text="北京爱牧家动物医院(西直门店)"
                 android:textColor="@color/colorAppTheme"
-                android:textSize="@dimen/sp_18"
-                android:textStyle="bold" />
+                android:textSize="@dimen/sp_18"/>
 
             <LinearLayout
                 android:layout_width="match_parent"

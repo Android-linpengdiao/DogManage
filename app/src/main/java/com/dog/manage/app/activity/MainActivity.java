@@ -121,8 +121,7 @@ public class MainActivity extends BaseActivity {
     }
 
     public void onClickMessage(View view) {
-//        openActivity(MessageActivity.class);
-        openActivity(DogImmuneHospitalActivity.class);
+        openActivity(MessageActivity.class);
     }
 
     public void onClickUser(View view) {

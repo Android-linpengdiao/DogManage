@@ -22,7 +22,7 @@
             android:gravity="center_vertical"
             android:orientation="vertical">
 
-            <TextView
+            <com.dog.manage.app.view.TextBoldView
                 android:id="@+id/titleView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -30,8 +30,7 @@
                 android:singleLine="true"
                 android:text="1.犬证办理流程"
                 android:textColor="#ffffff"
-                android:textSize="@dimen/sp_24"
-                android:textStyle="bold" />
+                android:textSize="@dimen/sp_24"/>
 
             <TextView
                 android:layout_width="wrap_content"

@@ -15,7 +15,5 @@ public class CertificateDetailsActivity extends BaseActivity {
         binding = getViewData(R.layout.activity_certificate_details);
         addActivity(this);
 
-        setTypeface(binding.dogNameView);
-        setTypeface(binding.acceptUnitsHintView);
     }
 }

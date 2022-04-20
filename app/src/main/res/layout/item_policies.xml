@@ -29,7 +29,7 @@
             android:gravity="center_vertical"
             android:orientation="vertical">
 
-            <TextView
+            <com.dog.manage.app.view.TextBoldView
                 android:id="@+id/titleView"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
@@ -38,8 +38,7 @@
                 android:maxLines="2"
                 android:text="网民留言：建议国家出台相关政策法规，规范养犬文明养犬的.."
                 android:textColor="#333333"
-                android:textSize="@dimen/sp_15"
-                android:textStyle="bold" />
+                android:textSize="@dimen/sp_15" />
 
             <TextView
                 android:layout_width="wrap_content"

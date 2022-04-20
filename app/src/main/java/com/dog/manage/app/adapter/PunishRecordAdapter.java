@@ -39,7 +39,6 @@ public class PunishRecordAdapter extends BaseRecyclerAdapter<String, ItemPunishR
 
     @Override
     protected void onBindItem(ItemPunishRecordBinding binding, String dataBean, int position) {
-        setTypeface(binding.titleView);
         binding.getRoot().setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

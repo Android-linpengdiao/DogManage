@@ -20,6 +20,7 @@ import com.dog.manage.app.activity.DogLogoutDetailsActivity;
 import com.dog.manage.app.activity.ImmuneDetailsActivity;
 import com.dog.manage.app.activity.TransferDetailsActivity;
 import com.dog.manage.app.activity.record.AdoptionDetailsActivity;
+import com.dog.manage.app.activity.record.PunishDetailsActivity;
 import com.dog.manage.app.adapter.AdoptionRecordAdapter;
 import com.dog.manage.app.adapter.CertificateRecordAdapter;
 import com.dog.manage.app.adapter.PunishRecordAdapter;
@@ -184,7 +185,7 @@ public class AdoptionRecordFragment extends BaseFragment {
                 punishRecordAdapter.setOnClickListener(new OnClickListener() {
                     @Override
                     public void onClick(View view, Object object) {
-                        openActivity(AdoptionDetailsActivity.class);
+                        openActivity(PunishDetailsActivity.class);
 
                     }
 

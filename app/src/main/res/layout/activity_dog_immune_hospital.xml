@@ -114,7 +114,7 @@
                 android:layout_marginBottom="@dimen/dp_28"
                 android:orientation="horizontal">
 
-                <TextView
+                <com.dog.manage.app.view.TextBoldView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
@@ -123,7 +123,7 @@
                     android:textColor="@color/blue"
                     android:textSize="@dimen/sp_18" />
 
-                <TextView
+                <com.dog.manage.app.view.TextBoldView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"

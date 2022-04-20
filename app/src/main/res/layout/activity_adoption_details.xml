@@ -64,14 +64,13 @@
                             android:gravity="center_vertical"
                             android:orientation="vertical">
 
-                            <TextView
+                            <com.dog.manage.app.view.TextBoldView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:gravity="center"
                                 android:text="柯基犬|白色|1岁2个月"
                                 android:textColor="@color/black"
-                                android:textSize="@dimen/sp_15"
-                                android:textStyle="bold" />
+                                android:textSize="@dimen/sp_15"/>
 
                             <LinearLayout
                                 android:layout_width="match_parent"
@@ -195,15 +194,14 @@
                     android:paddingRight="@dimen/viewPadding"
                     android:paddingBottom="@dimen/dp_24">
 
-                    <TextView
+                    <com.dog.manage.app.view.TextBoldView
                         android:id="@+id/acceptUnitsHintView"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="@dimen/dp_30"
                         android:text="受理单位"
                         android:textColor="#333333"
-                        android:textSize="@dimen/sp_14"
-                        android:textStyle="normal" />
+                        android:textSize="@dimen/sp_14" />
 
                     <LinearLayout
                         android:layout_width="match_parent"

@@ -19,6 +19,5 @@ public class AdoptionDetailsActivity extends BaseActivity {
         binding = getViewData(R.layout.activity_adoption_details);
         addActivity(this);
 
-        setTypeface(binding.acceptUnitsHintView);
     }
 }
