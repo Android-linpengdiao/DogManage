@@ -40,7 +40,7 @@ public class CertificateRecordAdapter extends BaseRecyclerAdapter<String, ItemCe
 
     @Override
     protected void onBindItem(ItemCertificateRecordBinding binding, String dataBean, int position) {
-
+        setTypeface(binding.titleView);
         binding.getRoot().setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

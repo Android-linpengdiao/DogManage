@@ -14,5 +14,7 @@ public class ImmuneDetailsActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         binding = getViewData(R.layout.activity_immune_details);
         addActivity(this);
+
+        setTypeface(binding.dogNameView);
     }
 }

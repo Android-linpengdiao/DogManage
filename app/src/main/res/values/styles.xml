@@ -57,6 +57,7 @@
         <attr name="item_content" format="string" />
         <attr name="item_content_size" format="dimension" />
         <attr name="item_content_color" format="color" />
+        <attr name="item_content_bold" format="boolean" />
         <attr name="item_edit" format="string" />
         <attr name="item_edit_hint" format="string" />
         <attr name="item_edit_size" format="dimension" />

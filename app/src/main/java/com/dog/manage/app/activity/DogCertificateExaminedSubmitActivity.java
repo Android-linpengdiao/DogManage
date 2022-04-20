@@ -15,6 +15,8 @@ public class DogCertificateExaminedSubmitActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         binding = getViewData(R.layout.activity_dog_certificate_examined_submit);
         addActivity(this);
+
+        setTypeface(binding.acceptUnitsHintView);
     }
 
     public void onClickConfirm(View view) {

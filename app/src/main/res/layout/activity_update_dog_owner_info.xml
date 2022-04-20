@@ -89,6 +89,7 @@
                         app:item_content_size="@dimen/sp_14"
                         app:item_divider_visible="true"
                         app:item_title="居住地址"
+                        app:item_title_bold="true"
                         app:item_title_size="@dimen/sp_14" />
 
                     <LinearLayout
@@ -102,6 +103,7 @@
                         android:paddingRight="@dimen/viewPadding">
 
                         <TextView
+                            android:id="@+id/detailedAddressHintView"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="详细地址"
@@ -138,6 +140,7 @@
                         app:item_edit_size="@dimen/sp_14"
                         app:item_edit_visible="true"
                         app:item_title="房本编号"
+                        app:item_title_bold="true"
                         app:item_title_size="@dimen/sp_14" />
 
                     <LinearLayout
@@ -208,6 +211,7 @@
                         app:item_content_color="#333333"
                         app:item_content_size="@dimen/sp_14"
                         app:item_title="犬只品种"
+                        app:item_title_bold="true"
                         app:item_title_size="@dimen/sp_14" />
 
                     <View
@@ -227,6 +231,7 @@
                         android:paddingBottom="@dimen/dp_24">
 
                         <TextView
+                            android:id="@+id/acceptUnitsHintView"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginBottom="@dimen/dp_30"

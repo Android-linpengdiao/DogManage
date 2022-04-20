@@ -138,6 +138,7 @@
                     android:padding="@dimen/dp_10"
                     android:text="—— 新犬主信息 ——"
                     android:textColor="@color/colorAppTheme"
+                    android:textStyle="bold"
                     android:textSize="@dimen/sp_16" />
 
                 <com.dog.manage.app.view.ViewItemLayout

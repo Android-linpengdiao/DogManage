@@ -23,7 +23,7 @@ public class DogCertificateExaminedActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         binding = getViewData(R.layout.activity_dog_certificate_examined);
         addActivity(this);
-        binding.dogCertificateTextView.setText(list.get(0));
+        binding.dogCertificateView.binding.itemContent.setText(list.get(0));
     }
 
     private List<String> list = Arrays.asList(
@@ -32,12 +32,12 @@ public class DogCertificateExaminedActivity extends BaseActivity {
 
     public void onClickDogCertificate(View view) {
         DialogManager.getInstance().showRankDialog(DogCertificateExaminedActivity.this,
-                list, list.indexOf(binding.dogCertificateTextView.getText().toString()),
+                list, list.indexOf(binding.dogCertificateView.binding.itemContent.getText().toString()),
                 new DialogManager.OnClickListener() {
                     @Override
                     public void onClick(View view, Object object) {
                         String content = (String) object;
-                        binding.dogCertificateTextView.setText(content);
+                        binding.dogCertificateView.binding.itemContent.setText(content);
                     }
                 });
     }

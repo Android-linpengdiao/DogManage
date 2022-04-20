@@ -80,7 +80,6 @@ public class DogManageWorkflowActivity extends BaseActivity {
         } else if (type == 2) {
             openActivity(DogCertificateExaminedActivity.class);
 
-
         } else if (type == 3) {
             openActivity(DogTransferActivity.class);
 

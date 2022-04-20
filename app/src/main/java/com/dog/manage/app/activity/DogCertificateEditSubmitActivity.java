@@ -21,6 +21,8 @@ public class DogCertificateEditSubmitActivity extends BaseActivity implements AM
         super.onCreate(savedInstanceState);
         binding = getViewData(R.layout.activity_dog_certificate_edit_submit);
         addActivity(this);
+
+        setTypeface(binding.acceptUnitsHintView);
         binding.thirdStepView.setSelected(true);
 
         initMapView();

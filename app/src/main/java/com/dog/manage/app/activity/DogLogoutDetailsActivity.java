@@ -23,6 +23,8 @@ public class DogLogoutDetailsActivity extends BaseActivity {
         binding = getViewData(R.layout.activity_dog_logout_details);
         addActivity(this);
 
+        setTypeface(binding.acceptUnitsHintView);
+
         type = getIntent().getIntExtra("type", 0);
 
         if (type == type_submit) {

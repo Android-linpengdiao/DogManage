@@ -196,6 +196,7 @@
                     android:paddingBottom="@dimen/dp_24">
 
                     <TextView
+                        android:id="@+id/acceptUnitsHintView"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="@dimen/dp_30"
@@ -246,6 +247,7 @@
                     app:item_content_size="@dimen/sp_18"
                     app:item_title_bold="true"
                     app:item_title="办理费用"
+                    app:item_content_bold="true"
                     app:item_title_size="@dimen/sp_14" />
 
                 <View

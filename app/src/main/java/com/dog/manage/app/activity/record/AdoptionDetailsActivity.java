@@ -18,5 +18,7 @@ public class AdoptionDetailsActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         binding = getViewData(R.layout.activity_adoption_details);
         addActivity(this);
+
+        setTypeface(binding.acceptUnitsHintView);
     }
 }

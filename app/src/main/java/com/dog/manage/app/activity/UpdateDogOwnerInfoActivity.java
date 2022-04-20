@@ -20,6 +20,11 @@ public class UpdateDogOwnerInfoActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         binding = getViewData(R.layout.activity_update_dog_owner_info);
         addActivity(this);
+
+        setTypeface(binding.acceptUnitsHintView);
+        setTypeface(binding.detailedAddressHintView);
+        setTypeface(binding.houseHintView);
+
         type = getIntent().getIntExtra("type", 0);
 
         if (type == type_details) {

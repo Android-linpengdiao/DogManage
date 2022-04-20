@@ -34,51 +34,21 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
 
-                <LinearLayout
+                <com.dog.manage.app.view.ViewItemLayout
+                    android:id="@+id/dogCertificateView"
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/dp_50"
+                    android:layout_height="wrap_content"
                     android:background="@color/app_background"
-                    android:gravity="center_vertical"
-                    android:orientation="horizontal">
-
-                    <TextView
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="@dimen/viewPadding"
-                        android:layout_weight="1"
-                        android:gravity="center_vertical"
-                        android:text="选择我的犬只"
-                        android:textColor="@color/colorAppTheme"
-                        android:textSize="@dimen/sp_14" />
-
-                    <LinearLayout
-                        android:id="@+id/dogCertificateView"
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:gravity="center_vertical"
-                        android:onClick="onClickDogCertificate">
-
-                        <TextView
-                            android:id="@+id/dogCertificateTextView"
-                            android:layout_width="0dp"
-                            android:layout_height="match_parent"
-                            android:layout_weight="1"
-                            android:gravity="center_vertical"
-                            android:text="选择犬只"
-                            android:textColor="@color/colorAppTheme"
-                            android:textSize="@dimen/sp_14" />
-
-                        <ImageView
-                            android:layout_width="@dimen/dp_26"
-                            android:layout_height="@dimen/dp_26"
-                            android:layout_marginLeft="@dimen/dp_10"
-                            android:layout_marginRight="@dimen/dp_6"
-                            android:src="@drawable/arrow_right_bold" />
-
-                    </LinearLayout>
-
-
-                </LinearLayout>
+                    android:paddingLeft="@dimen/viewPadding"
+                    android:paddingRight="@dimen/viewPadding"
+                    app:item_arrow_visible="true"
+                    app:item_container_height="@dimen/dp_50"
+                    app:item_content="选择犬只"
+                    app:item_content_color="@color/colorAppTheme"
+                    app:item_content_size="@dimen/sp_14"
+                    app:item_title="选择我的犬只"
+                    app:item_title_bold="true"
+                    app:item_title_size="@dimen/sp_14" />
 
                 <View
                     android:layout_width="match_parent"
@@ -93,7 +63,8 @@
                     android:padding="@dimen/dp_10"
                     android:text="—— 新犬主信息 ——"
                     android:textColor="@color/colorAppTheme"
-                    android:textSize="@dimen/sp_16" />
+                    android:textSize="@dimen/sp_16"
+                    android:textStyle="bold" />
 
                 <com.dog.manage.app.view.ViewItemLayout
                     android:layout_width="match_parent"
@@ -106,6 +77,7 @@
                     app:item_edit_size="@dimen/viewItemTitleSize"
                     app:item_edit_visible="true"
                     app:item_title="新犬主姓名"
+                    app:item_title_bold="true"
                     app:item_title_size="@dimen/viewItemTitleSize" />
 
                 <View
@@ -124,6 +96,7 @@
                     app:item_edit_size="@dimen/viewItemTitleSize"
                     app:item_edit_visible="true"
                     app:item_title="手机号码"
+                    app:item_title_bold="true"
                     app:item_title_size="@dimen/viewItemTitleSize" />
 
                 <View

@@ -50,6 +50,7 @@ public class ViewItemLayout extends FrameLayout {
         setItemContent(typedArray.getString(R.styleable.ViewItemLayout_item_content));
         setItemContentSize(typedArray.getDimensionPixelSize(R.styleable.ViewItemLayout_item_content_size, R.dimen.dp_12));
         setItemContentColor(typedArray.getColor(R.styleable.ViewItemLayout_item_content_color, 0));
+        setItemContentBold(typedArray.getBoolean(R.styleable.ViewItemLayout_item_content_bold, false));
 
         setItemEdit(typedArray.getString(R.styleable.ViewItemLayout_item_edit));
         setItemEditHint(typedArray.getString(R.styleable.ViewItemLayout_item_edit_hint));
@@ -126,6 +127,16 @@ public class ViewItemLayout extends FrameLayout {
         }
 
     }
+    public void setItemContentBold(boolean bold) {
+        if (bold) {
+            Typeface typeface = BaseApplication.getInstance().getTypeface();
+            binding.itemContent.setTypeface(typeface);
+//            binding.itemTitle.setTypeface(Typeface.defaultFromStyle(Typeface.BOLD));
+        } else {
+            binding.itemContent.setTypeface(Typeface.defaultFromStyle(Typeface.NORMAL));
+        }
+    }
+
 
     public void setItemContent(String content) {
         if (content != null) {

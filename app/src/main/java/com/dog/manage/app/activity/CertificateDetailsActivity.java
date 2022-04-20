@@ -14,5 +14,8 @@ public class CertificateDetailsActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         binding = getViewData(R.layout.activity_certificate_details);
         addActivity(this);
+
+        setTypeface(binding.dogNameView);
+        setTypeface(binding.acceptUnitsHintView);
     }
 }

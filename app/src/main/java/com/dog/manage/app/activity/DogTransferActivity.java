@@ -30,12 +30,12 @@ public class DogTransferActivity extends BaseActivity {
 
     public void onClickDogCertificate(View view) {
         DialogManager.getInstance().showRankDialog(DogTransferActivity.this,
-                list, list.indexOf(binding.dogCertificateTextView.getText().toString()),
+                list, list.indexOf(binding.dogCertificateView.binding.itemContent.getText().toString()),
                 new DialogManager.OnClickListener() {
                     @Override
                     public void onClick(View view, Object object) {
                         String content = (String) object;
-                        binding.dogCertificateTextView.setText(content);
+                        binding.dogCertificateView.binding.itemContent.setText(content);
                     }
                 });
     }

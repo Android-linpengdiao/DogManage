@@ -492,6 +492,7 @@
                     android:paddingRight="@dimen/dp_16">
 
                     <TextView
+                        android:id="@+id/houseHintView"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="房产证或房屋租赁合同 "

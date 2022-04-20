@@ -208,6 +208,8 @@
                     app:item_content_color="@color/blue"
                     app:item_content_size="@dimen/sp_18"
                     app:item_title="办理费用"
+                    app:item_title_bold="true"
+                    app:item_content_bold="true"
                     app:item_title_size="@dimen/sp_15" />
 
 

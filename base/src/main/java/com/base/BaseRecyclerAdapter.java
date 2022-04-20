@@ -2,10 +2,12 @@ package com.base;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import androidx.annotation.LayoutRes;
 import androidx.annotation.NonNull;
@@ -88,6 +90,11 @@ public abstract class BaseRecyclerAdapter<T, B extends ViewDataBinding> extends 
         public RecyclerHolder(View itemView) {
             super(itemView);
         }
+    }
+
+    public void setTypeface(TextView textView) {
+        Typeface typeface = BaseApplication.getInstance().getTypeface();
+        textView.setTypeface(typeface);
     }
 
     public void openActivity(Class<?> mClass) {
