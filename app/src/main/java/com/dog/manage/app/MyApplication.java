@@ -18,12 +18,14 @@ import com.scwang.smart.refresh.layout.api.RefreshLayout;
 import com.scwang.smart.refresh.layout.constant.SpinnerStyle;
 import com.scwang.smart.refresh.layout.listener.DefaultRefreshFooterCreator;
 import com.scwang.smart.refresh.layout.listener.DefaultRefreshHeaderCreator;
+import com.tencent.bugly.crashreport.CrashReport;
 
 import java.util.concurrent.TimeUnit;
 
 import javax.net.ssl.HostnameVerifier;
 import javax.net.ssl.SSLSession;
 
+import cn.jpush.android.api.JPushInterface;
 import io.reactivex.rxjava3.functions.Consumer;
 import io.reactivex.rxjava3.plugins.RxJavaPlugins;
 import okhttp3.OkHttpClient;
@@ -38,12 +40,18 @@ public class MyApplication extends BaseApplication {
         initSmartRefresh();
         rxJava();
         initOkHttp();
-        initShanyanSDK();
+
+        if (getSharedPreferences("sp_data", Context.MODE_PRIVATE).getBoolean("appService", false)) {
+            initShanyanSDK();
+            JPushInterface.setDebugMode(false);
+            JPushInterface.init(this);
+            CrashReport.initCrashReport(getApplicationContext(), Config.BuglyAppID, false);
+        }
 
     }
 
     private void initShanyanSDK() {
-        OneKeyLoginManager.getInstance().init(this, "bCACikkm", new InitListener() {
+        OneKeyLoginManager.getInstance().init(this, Config.ShanyanAppID, new InitListener() {
             @Override
             public void getInitStatus(int code, String result) {
 

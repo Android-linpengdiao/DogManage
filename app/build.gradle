@@ -87,9 +87,13 @@ dependencies {
     implementation smartrefreshHeaderClassics
     implementation smartrefreshFooterClassics
     implementation cardview
+    implementation externalBuglyCrashreport
+    implementation externalBuglyNativecrashreport
 
-    api files('libs/shanyan_sdk_v2.3.4.1.aar')
-    api files('libs/AMap3DMap_8.0.1_AMapSearch_7.9.0_AMapLocation_5.5.1_20211008.jar')
+    implementation files('libs/shanyan_sdk_v2.3.4.1.aar')
+    implementation files('libs/AMap3DMap_8.0.1_AMapSearch_7.9.0_AMapLocation_5.5.1_20211008.jar')
+    implementation files('libs\\jcore-android-2.9.0.jar')
+    implementation files('libs\\jpush-android-4.3.0.jar')
 
 }
 

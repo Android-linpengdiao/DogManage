@@ -11,7 +11,7 @@ import com.dog.manage.app.databinding.ItemMessageBinding;
 
 public class DogImmuneHospitalAdapter extends BaseRecyclerAdapter<String, ItemDogImmuneHospitalBinding> {
 
-
+    private int mPosition = -1;
     private OnClickListener onClickListener;
 
     public void setOnClickListener(OnClickListener onClickListener) {
@@ -41,24 +41,28 @@ public class DogImmuneHospitalAdapter extends BaseRecyclerAdapter<String, ItemDo
     @Override
     protected void onBindItem(ItemDogImmuneHospitalBinding binding, String dataBean, int position) {
 
+        binding.selectedView.setSelected(mPosition == position ? true : false);
         binding.selectedView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                binding.selectedView.setSelected(!binding.selectedView.isSelected());
+                mPosition = position;
+                notifyDataSetChanged();
+                if (onClickListener != null)
+                    onClickListener.onClick(view, position);
             }
         });
         binding.navigateView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (onClickListener != null)
-                    onClickListener.onClick(view, dataBean);
+                    onClickListener.onClick(view, position);
             }
         });
         binding.getRoot().setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (onClickListener != null)
-                    onClickListener.onClick(view, dataBean);
+                    onClickListener.onClick(view, position);
             }
         });
     }

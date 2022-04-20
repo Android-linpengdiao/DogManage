@@ -30,6 +30,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import cn.jpush.android.api.JPushInterface;
 import pub.devrel.easypermissions.AfterPermissionGranted;
 import pub.devrel.easypermissions.EasyPermissions;
 
@@ -43,8 +44,17 @@ public class MainActivity extends BaseActivity {
         binding = getViewData(R.layout.activity_main);
         addActivity(this);
 
-        intBanner();
 
+        String registrationID = JPushInterface.getRegistrationID(this);
+        JPushInterface.setAlias(this, getUserInfo().getId(), String.valueOf(getUserInfo().getId()));
+
+        initView();
+
+    }
+
+    private void initView() {
+
+        intBanner();
 
         binding.frameItemRecyclerView.setLayoutManager(new GridLayoutManager(getApplicationContext(), 3));
         binding.frameItemRecyclerView.setNestedScrollingEnabled(false);
@@ -82,7 +92,6 @@ public class MainActivity extends BaseActivity {
 
             }
         });
-
     }
 
     private void intBanner() {
@@ -121,7 +130,8 @@ public class MainActivity extends BaseActivity {
     }
 
     public void onClickMessage(View view) {
-        openActivity(MessageActivity.class);
+//        openActivity(MessageActivity.class);
+        openActivity(DogImmuneHospitalActivity.class);
     }
 
     public void onClickUser(View view) {
