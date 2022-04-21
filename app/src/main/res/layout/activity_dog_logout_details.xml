@@ -250,8 +250,10 @@
                                 android:textStyle="normal" />
 
                             <ImageView
+                                android:id="@+id/image1View"
                                 android:layout_width="match_parent"
-                                android:layout_height="match_parent" />
+                                android:layout_height="match_parent"
+                                android:onClick="onClickImage1"/>
 
                         </RelativeLayout>
 
@@ -282,8 +284,10 @@
                                 android:textStyle="normal" />
 
                             <ImageView
+                                android:id="@+id/image2View"
                                 android:layout_width="match_parent"
-                                android:layout_height="match_parent" />
+                                android:layout_height="match_parent"
+                                android:onClick="onClickImage2"/>
 
                         </RelativeLayout>
 
@@ -313,8 +317,10 @@
                                 android:textStyle="normal" />
 
                             <ImageView
+                                android:id="@+id/image3View"
                                 android:layout_width="match_parent"
-                                android:layout_height="match_parent" />
+                                android:layout_height="match_parent"
+                                android:onClick="onClickImage3"/>
 
                         </RelativeLayout>
 

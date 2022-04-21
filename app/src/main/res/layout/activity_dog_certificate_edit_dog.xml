@@ -305,8 +305,10 @@
                             android:textStyle="normal" />
 
                         <ImageView
+                            android:id="@+id/testifyView"
                             android:layout_width="match_parent"
-                            android:layout_height="match_parent" />
+                            android:layout_height="match_parent"
+                            android:onClick="onClickTestify"/>
 
                     </RelativeLayout>
 
@@ -409,8 +411,10 @@
                                 android:textStyle="normal" />
 
                             <ImageView
+                                android:id="@+id/leftFaceView"
                                 android:layout_width="match_parent"
-                                android:layout_height="match_parent" />
+                                android:layout_height="match_parent"
+                                android:onClick="onClickLeftFace"/>
 
                         </RelativeLayout>
 
@@ -440,8 +444,10 @@
                                 android:textStyle="normal" />
 
                             <ImageView
+                                android:id="@+id/centerFaceView"
                                 android:layout_width="match_parent"
-                                android:layout_height="match_parent" />
+                                android:layout_height="match_parent"
+                                android:onClick="onClickCenterFace"/>
 
                         </RelativeLayout>
 
@@ -470,8 +476,10 @@
                                 android:textStyle="normal" />
 
                             <ImageView
+                                android:id="@+id/rightFaceView"
                                 android:layout_width="match_parent"
-                                android:layout_height="match_parent" />
+                                android:layout_height="match_parent"
+                                android:onClick="onClickRightFace"/>
 
                         </RelativeLayout>
 

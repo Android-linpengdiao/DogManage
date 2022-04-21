@@ -4,8 +4,8 @@ public class APIUrls {
 
 //    public final static String URL_DOMAIN = "http://39.107.247.82:19000/";
 
-    public final static String URL_DOMAIN = "http://39.107.247.82:19000/";
-    public final static String URL_DOMAIN_WEB = "http://39.107.247.82:19000";
+    public final static String URL_DOMAIN = "http://39.107.247.82:10000/";
+    public final static String URL_DOMAIN_WEB = "http://39.107.247.82:10000";
 
     public final static String user_agreement = URL_DOMAIN + "user_agreement.html";
     public final static String privacy_policy = URL_DOMAIN + "privacy_policy.html";

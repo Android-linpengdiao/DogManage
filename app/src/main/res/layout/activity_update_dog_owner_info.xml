@@ -166,21 +166,30 @@
                             android:layout_width="@dimen/dp_168"
                             android:layout_height="@dimen/dp_108"
                             android:layout_marginBottom="@dimen/dp_22"
-                            android:background="@drawable/upload">
+                            android:background="@drawable/upload_bg">
+
+                            <ImageView
+                                android:layout_width="@dimen/dp_36"
+                                android:layout_height="@dimen/dp_28"
+                                android:layout_centerHorizontal="true"
+                                android:layout_marginTop="@dimen/dp_30"
+                                android:background="@drawable/camera" />
 
                             <TextView
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="@dimen/dp_68"
                                 android:gravity="center"
-                                android:text="上传身份证国徽面"
+                                android:text="上传照片"
                                 android:textColor="#4669ED"
                                 android:textSize="@dimen/sp_14"
                                 android:textStyle="normal" />
 
                             <ImageView
+                                android:id="@+id/houseProprietaryCertificateView"
                                 android:layout_width="match_parent"
-                                android:layout_height="match_parent" />
+                                android:layout_height="match_parent"
+                                android:onClick="onClickHouseProprietaryCertificate" />
 
                         </RelativeLayout>
 

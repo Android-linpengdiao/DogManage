@@ -39,15 +39,7 @@ public class PunishRecordActivity extends BaseActivity {
         adapter = new PunishRecordAdapter(getApplicationContext());
         binding.recyclerView.setAdapter(adapter);
         adapter.refreshData(Arrays.asList(
-                "犬证办理",
-                "免疫证办理",
-                "犬证年审",
-                "犬只过户",
-                "犬只领养",
-                "犬只注销",
-                "信息変更",
-                "办理流程",
-                "政策法规"));
+                "", "", "", "", "", "", "", "", ""));
         adapter.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view, Object object) {

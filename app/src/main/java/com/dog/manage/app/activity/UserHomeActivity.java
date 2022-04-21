@@ -17,6 +17,7 @@ import com.dog.manage.app.activity.record.PunishRecordActivity;
 import com.dog.manage.app.databinding.ActivityUserHomeBinding;
 import com.dog.manage.app.media.MediaFile;
 import com.dog.manage.app.media.MediaSelectActivity;
+import com.dog.manage.app.media.MediaUtils;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
@@ -60,7 +61,10 @@ public class UserHomeActivity extends BaseActivity {
     @AfterPermissionGranted(requestCode)
     private void permissionsManager() {
         if (EasyPermissions.hasPermissions(UserHomeActivity.this, permissions)) {
-            openActivity(MediaSelectActivity.class, REQUEST_IMAGE);
+            Bundle bundle = new Bundle();
+            bundle.putInt("mediaType", MediaUtils.MEDIA_TYPE_PHOTO);
+            bundle.putInt("maxNumber", 1);
+            openActivity(MediaSelectActivity.class, bundle, REQUEST_IMAGE);
 
         } else {
             EasyPermissions.requestPermissions(this, "请同意下面的权限", requestCode, permissions);
