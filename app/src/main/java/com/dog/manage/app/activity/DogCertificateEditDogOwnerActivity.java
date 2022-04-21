@@ -1,13 +1,29 @@
 package com.dog.manage.app.activity;
 
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.RadioGroup;
 
+import com.base.utils.FileUtils;
+import com.base.utils.GlideLoader;
+import com.base.utils.PermissionUtils;
 import com.dog.manage.app.R;
 import com.dog.manage.app.databinding.ActivityDogCertificateEditDogOwnerBinding;
+import com.dog.manage.app.media.MediaFile;
+import com.dog.manage.app.media.MediaSelectActivity;
+import com.dog.manage.app.media.MediaUtils;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+
+import java.io.File;
+import java.util.List;
+
+import top.zibin.luban.Luban;
+import top.zibin.luban.OnCompressListener;
 
 /**
  * 犬证办理
@@ -54,7 +70,7 @@ public class DogCertificateEditDogOwnerActivity extends BaseActivity {
             binding.firstStepView.setText("①选择犬只");
             binding.secondStepView.setText("②犬主信息");
             binding.thirdStepView.setText("③提交审核");
-            binding.secondStepView.setPadding(getResources().getDimensionPixelOffset(R.dimen.dp_10),0,getResources().getDimensionPixelOffset(R.dimen.dp_10),0);
+            binding.secondStepView.setPadding(getResources().getDimensionPixelOffset(R.dimen.dp_10), 0, getResources().getDimensionPixelOffset(R.dimen.dp_10), 0);
 
         }
 
@@ -202,11 +218,91 @@ public class DogCertificateEditDogOwnerActivity extends BaseActivity {
         if (type == type_adoption) {
             openActivity(DogAdoptionSubmitActivity.class);
 
-        }else {
+        } else {
             Bundle bundle = new Bundle();
             bundle.putInt("type", type);
             openActivity(DogCertificateEditDogActivity.class, bundle);
 
+        }
+    }
+
+    private final int request_IDCardFront = 100;
+    private final int request_IDCardBack = 200;
+
+    public void onClickIDCardFront(View view) {
+        if (checkPermissions(PermissionUtils.STORAGE, request_IDCardFront)) {
+            Bundle bundle = new Bundle();
+            bundle.putInt("mediaType", MediaUtils.MEDIA_TYPE_PHOTO);
+            bundle.putInt("maxNumber", 1);
+            openActivity(MediaSelectActivity.class, bundle, request_IDCardFront);
+        }
+    }
+
+    public void onClickIDCardBack(View view) {
+        if (checkPermissions(PermissionUtils.STORAGE, request_IDCardBack)) {
+            Bundle bundle = new Bundle();
+            bundle.putInt("mediaType", MediaUtils.MEDIA_TYPE_PHOTO);
+            bundle.putInt("maxNumber", 1);
+            openActivity(MediaSelectActivity.class, bundle, request_IDCardBack);
+        }
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == RESULT_OK) {
+            switch (requestCode) {
+                case request_IDCardFront:
+                    compressImage(data, request_IDCardFront);
+
+                    break;
+                case request_IDCardBack:
+                    compressImage(data, request_IDCardBack);
+
+                    break;
+            }
+        }
+    }
+
+    private void compressImage(Intent data, int requestCode) {
+        try {
+            if (data != null) {
+                String imageJson = data.getStringExtra("imageJson");
+                if (!TextUtils.isEmpty(imageJson)) {
+                    Gson gson = new Gson();
+                    List<MediaFile> imageList = gson.fromJson(imageJson, new TypeToken<List<MediaFile>>() {
+                    }.getType());
+                    if (imageList != null && imageList.size() > 0) {
+                        String path = imageList.get(0).getPath();
+                        Luban.with(this)
+                                .load(path)// 传人要压缩的图片列表
+                                .ignoreBy(100)// 忽略不压缩图片的大小
+                                .setTargetDir(FileUtils.getMediaPath())// 设置压缩后文件存储位置
+                                .setCompressListener(new OnCompressListener() { //设置回调
+                                    @Override
+                                    public void onStart() {
+                                    }
+
+                                    @Override
+                                    public void onSuccess(File file) {
+                                        if (requestCode == request_IDCardFront) {
+                                            GlideLoader.LoderImage(DogCertificateEditDogOwnerActivity.this, file.getAbsolutePath(), binding.IDCardFrontView, 8);
+
+                                        } else if (requestCode == request_IDCardBack) {
+                                            GlideLoader.LoderImage(DogCertificateEditDogOwnerActivity.this, file.getAbsolutePath(), binding.IDCardBackView, 8);
+
+                                        }
+                                    }
+
+                                    @Override
+                                    public void onError(Throwable e) {
+                                    }
+                                }).launch();//启动压缩
+                    }
+                }
+            }
+        } catch (Exception e) {
+            e.getMessage();
         }
     }
 }

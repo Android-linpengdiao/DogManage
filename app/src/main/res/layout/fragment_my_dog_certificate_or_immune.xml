@@ -30,15 +30,14 @@
                 android:paddingRight="@dimen/dp_11"
                 android:paddingBottom="@dimen/dp_16">
 
-                <TextView
+                <com.dog.manage.app.view.TextBoldView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center"
                     android:singleLine="true"
                     android:text="北京市养犬登记证"
                     android:textColor="#333333"
-                    android:textSize="@dimen/sp_18"
-                    android:textStyle="bold" />
+                    android:textSize="@dimen/sp_18"/>
 
                 <RelativeLayout
                     android:layout_width="match_parent"
@@ -253,7 +252,7 @@
                         android:layout_marginRight="@dimen/dp_35"
                         android:background="@drawable/image_8" />
 
-                    <TextView
+                    <com.dog.manage.app.view.TextBoldView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_below="@+id/certificateCoverView"
@@ -262,8 +261,7 @@
                         android:gravity="center"
                         android:text="免疫证状态:有效"
                         android:textColor="#333333"
-                        android:textSize="@dimen/sp_14"
-                        android:textStyle="bold" />
+                        android:textSize="@dimen/sp_14" />
 
                     <ImageView
                         android:layout_width="@dimen/dp_70"
@@ -327,7 +325,7 @@
                 android:layout_height="@dimen/dividerHeight"
                 android:background="@color/colorDivider" />
 
-            <TextView
+            <com.dog.manage.app.view.TextBoldView
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="1"
@@ -335,8 +333,7 @@
                 android:singleLine="true"
                 android:text="距离年审还有300天"
                 android:textColor="@color/colorAppTheme"
-                android:textSize="@dimen/sp_15"
-                android:textStyle="bold" />
+                android:textSize="@dimen/sp_15" />
 
             <TextView
                 android:layout_width="match_parent"
@@ -375,15 +372,14 @@
                 android:paddingRight="@dimen/dp_35"
                 android:paddingBottom="@dimen/dp_40">
 
-                <TextView
+                <com.dog.manage.app.view.TextBoldView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center"
                     android:singleLine="true"
                     android:text="北京市动物健康免疫证"
                     android:textColor="@color/black"
-                    android:textSize="@dimen/sp_18"
-                    android:textStyle="bold" />
+                    android:textSize="@dimen/sp_18"/>
 
                 <TextView
                     android:layout_width="match_parent"

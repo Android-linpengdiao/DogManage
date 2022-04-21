@@ -109,7 +109,7 @@
                         android:singleLine="true"
                         android:text="犬主类型"
                         android:textColor="#333333"
-                        android:textSize="@dimen/sp_14"/>
+                        android:textSize="@dimen/sp_14" />
 
                     <RadioGroup
                         android:id="@+id/radioGroupDogOwner"
@@ -174,7 +174,7 @@
                             android:singleLine="true"
                             android:text="证件类型"
                             android:textColor="#333333"
-                            android:textSize="@dimen/sp_14"/>
+                            android:textSize="@dimen/sp_14" />
 
                         <RadioGroup
                             android:id="@+id/radioGroupIDCard"
@@ -254,7 +254,7 @@
                             android:layout_height="wrap_content"
                             android:text="证件照片"
                             android:textColor="#333333"
-                            android:textSize="@dimen/sp_14"/>
+                            android:textSize="@dimen/sp_14" />
 
                         <LinearLayout
                             android:layout_width="match_parent"
@@ -274,7 +274,7 @@
                                     android:layout_height="@dimen/dp_28"
                                     android:layout_centerHorizontal="true"
                                     android:layout_marginTop="@dimen/dp_30"
-                                    android:background="@drawable/camera"/>
+                                    android:background="@drawable/camera" />
 
                                 <TextView
                                     android:layout_width="match_parent"
@@ -283,12 +283,13 @@
                                     android:gravity="center"
                                     android:text="上传身份证人像面"
                                     android:textColor="#4669ED"
-                                    android:textSize="@dimen/sp_14"
-                                    android:textStyle="normal" />
+                                    android:textSize="@dimen/sp_14" />
 
                                 <ImageView
+                                    android:id="@+id/IDCardFrontView"
                                     android:layout_width="match_parent"
-                                    android:layout_height="match_parent" />
+                                    android:layout_height="match_parent"
+                                    android:onClick="onClickIDCardFront"/>
 
                             </RelativeLayout>
 
@@ -304,7 +305,7 @@
                                     android:layout_height="@dimen/dp_28"
                                     android:layout_centerHorizontal="true"
                                     android:layout_marginTop="@dimen/dp_30"
-                                    android:background="@drawable/camera"/>
+                                    android:background="@drawable/camera" />
 
                                 <TextView
                                     android:layout_width="match_parent"
@@ -317,8 +318,10 @@
                                     android:textStyle="normal" />
 
                                 <ImageView
+                                    android:id="@+id/IDCardBackView"
                                     android:layout_width="match_parent"
-                                    android:layout_height="match_parent" />
+                                    android:layout_height="match_parent"
+                                    android:onClick="onClickIDCardBack"/>
 
                             </RelativeLayout>
 
@@ -385,7 +388,7 @@
                                 android:layout_height="@dimen/dp_28"
                                 android:layout_centerHorizontal="true"
                                 android:layout_marginTop="@dimen/dp_30"
-                                android:background="@drawable/camera"/>
+                                android:background="@drawable/camera" />
 
                             <TextView
                                 android:layout_width="match_parent"
@@ -398,6 +401,7 @@
                                 android:textStyle="normal" />
 
                             <ImageView
+                                android:id="@+id/organPhotoView"
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent" />
 
@@ -465,7 +469,7 @@
                             android:layout_marginBottom="@dimen/dp_17"
                             android:text="法人证件"
                             android:textColor="#333333"
-                            android:textSize="@dimen/sp_14"/>
+                            android:textSize="@dimen/sp_14" />
 
                         <LinearLayout
                             android:layout_width="match_parent"
@@ -485,7 +489,7 @@
                                     android:layout_height="@dimen/dp_28"
                                     android:layout_centerHorizontal="true"
                                     android:layout_marginTop="@dimen/dp_30"
-                                    android:background="@drawable/camera"/>
+                                    android:background="@drawable/camera" />
 
                                 <TextView
                                     android:layout_width="match_parent"
@@ -515,7 +519,7 @@
                                     android:layout_height="@dimen/dp_28"
                                     android:layout_centerHorizontal="true"
                                     android:layout_marginTop="@dimen/dp_30"
-                                    android:background="@drawable/camera"/>
+                                    android:background="@drawable/camera" />
 
                                 <TextView
                                     android:layout_width="match_parent"
@@ -738,7 +742,7 @@
                                 android:layout_height="@dimen/dp_28"
                                 android:layout_centerHorizontal="true"
                                 android:layout_marginTop="@dimen/dp_30"
-                                android:background="@drawable/camera"/>
+                                android:background="@drawable/camera" />
 
                             <TextView
                                 android:layout_width="match_parent"
@@ -826,7 +830,7 @@
                         android:layout_marginBottom="@dimen/dp_17"
                         android:text="房产证或房屋租赁合同 "
                         android:textColor="#333333"
-                        android:textSize="@dimen/sp_14"/>
+                        android:textSize="@dimen/sp_14" />
 
                     <RelativeLayout
                         android:layout_width="@dimen/dp_168"
@@ -839,7 +843,7 @@
                             android:layout_height="@dimen/dp_28"
                             android:layout_centerHorizontal="true"
                             android:layout_marginTop="@dimen/dp_30"
-                            android:background="@drawable/camera"/>
+                            android:background="@drawable/camera" />
 
                         <TextView
                             android:layout_width="match_parent"
@@ -887,8 +891,7 @@
                             android:layout_marginBottom="@dimen/dp_17"
                             android:text="养犬设施图片"
                             android:textColor="#333333"
-                            android:textSize="@dimen/sp_14"
-                             />
+                            android:textSize="@dimen/sp_14" />
 
                         <LinearLayout
                             android:layout_width="match_parent"
@@ -908,7 +911,7 @@
                                     android:layout_height="@dimen/dp_28"
                                     android:layout_centerHorizontal="true"
                                     android:layout_marginTop="@dimen/dp_30"
-                                    android:background="@drawable/camera"/>
+                                    android:background="@drawable/camera" />
 
                                 <TextView
                                     android:layout_width="match_parent"
@@ -938,7 +941,7 @@
                                     android:layout_height="@dimen/dp_28"
                                     android:layout_centerHorizontal="true"
                                     android:layout_marginTop="@dimen/dp_30"
-                                    android:background="@drawable/camera"/>
+                                    android:background="@drawable/camera" />
 
                                 <TextView
                                     android:layout_width="match_parent"

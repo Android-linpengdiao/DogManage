@@ -130,7 +130,7 @@
 
                 </androidx.cardview.widget.CardView>
 
-                <TextView
+                <com.dog.manage.app.view.TextBoldView
                     android:id="@+id/dogInfoView"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/dp_46"
@@ -138,7 +138,6 @@
                     android:padding="@dimen/dp_10"
                     android:text="—— 新犬主信息 ——"
                     android:textColor="@color/colorAppTheme"
-                    android:textStyle="bold"
                     android:textSize="@dimen/sp_16" />
 
                 <com.dog.manage.app.view.ViewItemLayout

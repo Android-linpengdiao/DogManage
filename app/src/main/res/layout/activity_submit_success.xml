@@ -29,14 +29,13 @@
             android:layout_marginTop="@dimen/dp_67"
             android:src="@drawable/btn_bk" />
 
-        <TextView
+        <com.dog.manage.app.view.TextBoldView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/dp_17"
             android:text="提交成功"
             android:textColor="#273154"
-            android:textSize="@dimen/sp_24"
-            android:textStyle="bold" />
+            android:textSize="@dimen/sp_24"/>
 
         <TextView
             android:layout_width="238dp"

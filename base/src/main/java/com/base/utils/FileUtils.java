@@ -44,18 +44,17 @@ public class FileUtils {
     }
 
     public static String getChatPath() {
+        new File(getPath() + "chat").mkdirs();
         return getPath() + "chat" + File.separator;
     }
 
     public static String getTempPath() {
+        new File(getPath() + "temp").mkdirs();
         return getPath() + "temp" + File.separator;
     }
 
-    public static String getWidgetPath() {
-        return getPath() + "widget" + File.separator + BaseApplication.getInstance().getMetaData("version") + File.separator;
-    }
-
     public static String getMediaPath() {
+        new File(getPath() + "media").mkdirs();
         return getPath() + "media" + File.separator;
     }
 
@@ -78,26 +77,6 @@ public class FileUtils {
                 mediaFile.createNewFile();
             }
             return mediaFile;
-        } catch (Exception e) {
-            e.printStackTrace();
-            return null;
-        }
-    }
-
-    // 创建一个H5代码文件
-    public static File createWidgetFile(String fileName) {
-        File mediaoFile = new File(getWidgetPath() + fileName);
-        File directory = mediaoFile.getParentFile();
-        if (!directory.exists() && !directory.mkdirs()) {
-        }
-        try {
-            if (!mediaoFile.exists()) {
-                mediaoFile.createNewFile();
-            } else {
-                mediaoFile.delete();
-                mediaoFile.createNewFile();
-            }
-            return mediaoFile;
         } catch (Exception e) {
             e.printStackTrace();
             return null;

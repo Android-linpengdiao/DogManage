@@ -181,8 +181,14 @@ public class GlideLoader {
                 .into(view);
     }
 
-    public static void LoderLoadImage(Context context, String url, ImageView view) {
-        LoderLoadImage(context, url, view, 0);
+    public static void LoderMediaImage(Context context, String url, ImageView view) {
+        Glide.with(context)
+                .load("file://" + url)
+                .centerCrop()
+                .placeholder(R.color.gray)
+                .error(R.color.gray)
+                .diskCacheStrategy(DiskCacheStrategy.ALL)
+                .into(view);
     }
 
     public static void LoderLoadImage(Context context, String url, ImageView view, int round) {

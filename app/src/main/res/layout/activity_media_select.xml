@@ -15,40 +15,21 @@
         android:orientation="vertical">
 
         <com.dog.manage.app.view.TitleView
+            android:id="@+id/titleView"
             android:layout_width="match_parent"
             android:layout_height="@dimen/dp_48"
             android:background="@color/colorAppTheme"
-            app:tv_content=""
+            app:tv_content="发送"
             app:tv_content_size="@dimen/sp_14"
-            app:tv_title="禁养犬宣传"
+            app:tv_title="相册"
             app:tv_title_size="@dimen/titleViewSize" />
-
-        <com.dog.manage.app.view.TextBoldView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/dp_16"
-            android:gravity="center"
-            android:text="北京市养犬管理局"
-            android:textColor="#333333"
-            android:textSize="@dimen/sp_16" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="2021.08.09 "
-            android:textColor="#999999"
-            android:textSize="@dimen/sp_12"
-            android:textStyle="normal" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginTop="@dimen/dp_10"
             android:overScrollMode="never"
-            android:paddingLeft="@dimen/dp_16"
-            android:paddingTop="@dimen/dp_10"
-            android:paddingRight="@dimen/dp_16" />
+            android:padding="@dimen/dp_2" />
 
     </LinearLayout>
 </layout>

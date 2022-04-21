@@ -5,32 +5,24 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-
-    <!-- 闪验 -->
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" /> <!-- 闪验 -->
     <!-- <uses-permission android:name="android.permission.INTERNET"/> -->
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE" />
-    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
-
-    <!-- 华为云存储 -->
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" /> <!-- 华为云存储 -->
     <!-- <uses-permission android:name="android.permission.INTERNET" /> -->
     <!-- <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" /> -->
     <!-- <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" /> -->
     <!-- <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" /> -->
     <!-- <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" /> -->
-
     <!-- 高德定位 -->
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-
-    <!-- 极光推送 -->
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" /> <!-- 极光推送 -->
     <!-- Required -->
     <permission
         android:name="${applicationId}.permission.JPUSH_MESSAGE"
-        android:protectionLevel="signature" />
-    <!-- Required -->
+        android:protectionLevel="signature" /> <!-- Required -->
     <uses-permission android:name="${applicationId}.permission.JPUSH_MESSAGE" />
     <uses-permission android:name="android.permission.RECEIVE_USER_PRESENT" /> <!-- <uses-permission android:name="android.permission.INTERNET" /> -->
     <uses-permission android:name="android.permission.READ_PHONE_STATE" /> <!-- <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" /> -->
@@ -48,8 +40,6 @@
     <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE" />
     <uses-permission android:name="android.permission.GET_TASKS" />
     <uses-permission android:name="android.permission.VIBRATE" />
-
-
     <uses-permission
         android:name="android.permission.GET_TOP_ACTIVITY_INFO"
         tools:ignore="ProtectedPermissions" />
@@ -64,9 +54,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name=".media.MediaSelectActivity"></activity>
         <activity
             android:name=".activity.ImmuneDetailsActivity"
-            android:screenOrientation="portrait"></activity>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".activity.CertificateDetailsActivity"
             android:screenOrientation="portrait" />
@@ -204,28 +195,21 @@
 
             <!-- <category android:name="android.intent.category.LAUNCHER" /> -->
             <!-- </intent-filter> -->
-        </activity>
-
-
-        <!--        <provider-->
-        <!--            android:name="android.support.v4.content.FileProvider"-->
-        <!--            android:authorities="${applicationId}.FileProvider"-->
-        <!--            android:exported="false"-->
-        <!--            android:grantUriPermissions="true">-->
-        <!--            <meta-data-->
-        <!--                android:name="android.support.FILE_PROVIDER_PATHS"-->
-        <!--                android:resource="@xml/provider_paths" />-->
-        <!--        </provider>-->
-
-
+        </activity> <!-- <provider -->
+        <!-- android:name="android.support.v4.content.FileProvider" -->
+        <!-- android:authorities="${applicationId}.FileProvider" -->
+        <!-- android:exported="false" -->
+        <!-- android:grantUriPermissions="true"> -->
+        <!-- <meta-data -->
+        <!-- android:name="android.support.FILE_PROVIDER_PATHS" -->
+        <!-- android:resource="@xml/provider_paths" /> -->
+        <!-- </provider> -->
         <!-- 高德 -->
         <service android:name="com.amap.api.location.APSService" />
+
         <meta-data
             android:name="com.amap.api.v2.apikey"
-            android:value="fa9a7de3c68d0ea7645e32f13c924506" />
-
-
-        <!-- 闪验 -->
+            android:value="fa9a7de3c68d0ea7645e32f13c924506" /> <!-- 闪验 -->
         <activity
             android:name="com.chuanglan.shanyan_sdk.view.CmccLoginActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
@@ -248,10 +232,7 @@
             android:name="com.chuanglan.shanyan_sdk.view.CTCCPrivacyProtocolActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:launchMode="singleTop"
-            android:screenOrientation="behind" />
-
-
-        <!-- 极光推送 -->
+            android:screenOrientation="behind" /> <!-- 极光推送 -->
         <!-- Required SDK 核心功能 -->
         <!-- 可配置 android:process 参数将 PushService 放在其他进程中 -->
         <service
@@ -408,10 +389,6 @@
         <meta-data
             android:name="JPUSH_APPKEY"
             android:value="f050d535f073778a23ccace8" />
-
-        <!--        <meta-data-->
-        <!--            android:name="CHANNEL"-->
-        <!--            android:value="${CHANNEL_VALUE}" />-->
     </application>
 
 </manifest>

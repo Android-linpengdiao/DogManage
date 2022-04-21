@@ -49,8 +49,7 @@
                         android:gravity="center_horizontal|top"
                         android:text="第一步"
                         android:textColor="@color/white"
-                        android:textSize="@dimen/sp_24"
-                        android:textStyle="bold" />
+                        android:textSize="@dimen/sp_24"/>
 
                     <com.dog.manage.app.view.TextBoldView
                         android:id="@+id/firstStepView"
@@ -82,8 +81,7 @@
                         android:gravity="center_horizontal|top"
                         android:text="第二步"
                         android:textColor="@color/white"
-                        android:textSize="@dimen/sp_24"
-                        android:textStyle="bold" />
+                        android:textSize="@dimen/sp_24"/>
 
                     <com.dog.manage.app.view.TextBoldView
                         android:id="@+id/secondStepView"
@@ -116,8 +114,7 @@
                         android:gravity="center_horizontal|top"
                         android:text="第三步"
                         android:textColor="@color/white"
-                        android:textSize="@dimen/sp_24"
-                        android:textStyle="bold" />
+                        android:textSize="@dimen/sp_24"/>
 
                     <com.dog.manage.app.view.TextBoldView
                         android:id="@+id/thirdStepView"

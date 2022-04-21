@@ -33,15 +33,14 @@
             android:paddingRight="@dimen/dp_11"
             android:paddingBottom="@dimen/dp_16">
 
-            <TextView
+            <com.dog.manage.app.view.TextBoldView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:singleLine="true"
                 android:text="北京市养犬登记证"
                 android:textColor="#333333"
-                android:textSize="@dimen/sp_18"
-                android:textStyle="bold" />
+                android:textSize="@dimen/sp_18"/>
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -256,7 +255,7 @@
                     android:layout_marginRight="@dimen/dp_35"
                     android:background="@drawable/image_8" />
 
-                <TextView
+                <com.dog.manage.app.view.TextBoldView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/certificateCoverView"
@@ -265,8 +264,7 @@
                     android:gravity="center"
                     android:text="免疫证状态:有效"
                     android:textColor="#333333"
-                    android:textSize="@dimen/sp_14"
-                    android:textStyle="bold" />
+                    android:textSize="@dimen/sp_14"/>
 
                 <ImageView
                     android:layout_width="@dimen/dp_70"
