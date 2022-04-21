@@ -57,7 +57,8 @@ public class MediaSelectActivity extends BaseActivity {
                 } else {
                     selects.remove(mediaFile);
                 }
-                binding.titleView.binding.itemContent.setText("发送" + (selects.size() > 0 ? "(" + selects.size() + ")" : ""));
+                binding.titleView.binding.itemContent.setText("发送" + (selects.size() > 0 ? "(" + selects.size() + "/" + maxNumber + ")" : "发送"));
+                adapter.setMaxNumber(maxNumber > selects.size() ? false : true);
             }
 
             @Override

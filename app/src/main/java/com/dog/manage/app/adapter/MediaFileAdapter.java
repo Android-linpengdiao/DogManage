@@ -7,6 +7,7 @@ import android.view.View;
 import com.base.BaseRecyclerAdapter;
 import com.base.utils.CommonUtil;
 import com.base.utils.GlideLoader;
+import com.base.utils.ToastUtils;
 import com.base.view.OnClickListener;
 import com.dog.manage.app.R;
 import com.dog.manage.app.databinding.ItemMediaFileBinding;
@@ -15,7 +16,12 @@ import com.dog.manage.app.media.MediaUtils;
 
 public class MediaFileAdapter extends BaseRecyclerAdapter<MediaFile, ItemMediaFileBinding> {
 
+    private boolean isMaxNumber = false;
     private OnClickListener onClickListener;
+
+    public void setMaxNumber(boolean isMaxNumber) {
+        this.isMaxNumber = isMaxNumber;
+    }
 
     public void setOnClickListener(OnClickListener onClickListener) {
         this.onClickListener = onClickListener;
@@ -35,11 +41,15 @@ public class MediaFileAdapter extends BaseRecyclerAdapter<MediaFile, ItemMediaFi
     protected void onBindItem(ItemMediaFileBinding binding, MediaFile dataBean, int position) {
         GlideLoader.LoderMediaImage(mContext, dataBean.getPath(), binding.coverView);
         binding.selectView.setSelected(dataBean.getStatus() == 0 ? false : true);
-        binding.durationView.setText(CommonUtil.FormatMiss(dataBean.getDuration()/1000));
+        binding.durationView.setText(CommonUtil.FormatMiss(dataBean.getDuration() / 1000));
         binding.durationView.setVisibility(dataBean.getType() == MediaFile.VIDEO ? View.VISIBLE : View.GONE);
         binding.selectView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                if (isMaxNumber && dataBean.getStatus() == 0) {
+                    ToastUtils.showShort(mContext, "你已选满图片了");
+                    return;
+                }
                 dataBean.setStatus(dataBean.getStatus() == 0 ? 1 : 0);
                 binding.selectView.setSelected(dataBean.getStatus() == 0 ? false : true);
                 if (onClickListener != null)
