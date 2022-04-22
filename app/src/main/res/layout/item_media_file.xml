@@ -15,10 +15,11 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
 
-        <View
+        <com.base.view.MyImageView
+            android:id="@+id/backgroundView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="#1A000000" />
+            android:background="#00000000" />
 
         <ImageView
             android:id="@+id/selectView"
@@ -29,7 +30,7 @@
             android:paddingTop="@dimen/dp_5"
             android:paddingLeft="@dimen/dp_20"
             android:paddingBottom="@dimen/dp_20"
-            android:src="@drawable/selected" />
+            android:src="@drawable/media_selected" />
 
         <TextView
             android:id="@+id/durationView"

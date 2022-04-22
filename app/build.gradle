@@ -109,6 +109,7 @@ dependencies {
     implementation files('libs/AMap3DMap_8.0.1_AMapSearch_7.9.0_AMapLocation_5.5.1_20211008.jar')
     implementation files('libs\\jcore-android-2.9.0.jar')
     implementation files('libs\\jpush-android-4.3.0.jar')
+    implementation files('libs\\photoimageview.jar')
 
 }
 

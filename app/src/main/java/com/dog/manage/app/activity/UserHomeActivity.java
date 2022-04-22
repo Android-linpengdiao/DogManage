@@ -47,7 +47,7 @@ public class UserHomeActivity extends BaseActivity {
     }
 
     public void onClickHead(View view) {
-        permissionsManager();
+//        permissionsManager();
     }
 
     private final int REQUEST_IMAGE = 100;

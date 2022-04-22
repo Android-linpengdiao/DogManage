@@ -45,7 +45,38 @@ public class AdoptionRecordAdapter extends BaseRecyclerAdapter<String, ItemAdopt
 
     @Override
     protected void onBindItem(ItemAdoptionRecordBinding binding, String dataBean, int position) {
+        binding.bottomView.setVisibility(position == 0 ? View.GONE : View.VISIBLE);
+        if (position == 1) {
+            binding.statusView.setBackgroundResource(R.drawable.tag_l);
+            binding.statusView.setText("待支付");
+            binding.detailsStatusView.setText("支付费用");
+            binding.bottomView.setVisibility(View.VISIBLE);
 
+        } else if (position == 2) {
+            binding.statusView.setBackgroundResource(R.drawable.tag_y);
+            binding.statusView.setText("完成领养");
+            binding.detailsStatusView.setText("查看信息");
+            binding.bottomView.setVisibility(View.VISIBLE);
+
+        } else if (position == 3) {
+            binding.statusView.setBackgroundResource(R.drawable.tag_r);
+            binding.statusView.setText("审核拒绝");
+            binding.detailsStatusView.setText("查看信息");
+            binding.bottomView.setVisibility(View.VISIBLE);
+
+        } else {
+            binding.statusView.setBackgroundResource(R.drawable.tag_b);
+            binding.statusView.setText("待审核");
+            binding.bottomView.setVisibility(View.GONE);
+
+        }
+        binding.detailsStatusView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (onClickListener != null)
+                    onClickListener.onClick(view, dataBean);
+            }
+        });
         binding.getRoot().setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

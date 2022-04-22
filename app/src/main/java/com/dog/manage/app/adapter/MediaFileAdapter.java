@@ -1,6 +1,7 @@
 package com.dog.manage.app.adapter;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.util.Log;
 import android.view.View;
 
@@ -16,11 +17,16 @@ import com.dog.manage.app.media.MediaUtils;
 
 public class MediaFileAdapter extends BaseRecyclerAdapter<MediaFile, ItemMediaFileBinding> {
 
-    private boolean isMaxNumber = false;
+    private int maxNumber = 1;
+    private boolean complete = false;
     private OnClickListener onClickListener;
 
-    public void setMaxNumber(boolean isMaxNumber) {
-        this.isMaxNumber = isMaxNumber;
+    public void setMaxNumber(int maxNumber) {
+        this.maxNumber = maxNumber;
+    }
+
+    public void setComplete(boolean complete) {
+        this.complete = complete;
     }
 
     public void setOnClickListener(OnClickListener onClickListener) {
@@ -43,20 +49,22 @@ public class MediaFileAdapter extends BaseRecyclerAdapter<MediaFile, ItemMediaFi
         binding.selectView.setSelected(dataBean.getStatus() == 0 ? false : true);
         binding.durationView.setText(CommonUtil.FormatMiss(dataBean.getDuration() / 1000));
         binding.durationView.setVisibility(dataBean.getType() == MediaFile.VIDEO ? View.VISIBLE : View.GONE);
+        binding.backgroundView.setBackgroundColor(dataBean.getStatus() == 0 ? Color.parseColor("#0D000000") : Color.parseColor("#80000000"));
         binding.selectView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (isMaxNumber && dataBean.getStatus() == 0) {
-                    ToastUtils.showShort(mContext, "你已选满图片了");
+                if (complete && dataBean.getStatus() == 0) {
+                    ToastUtils.showShort(mContext, "你最多只能选择" + maxNumber + "个图片");
                     return;
                 }
                 dataBean.setStatus(dataBean.getStatus() == 0 ? 1 : 0);
                 binding.selectView.setSelected(dataBean.getStatus() == 0 ? false : true);
+                binding.backgroundView.setBackgroundColor(dataBean.getStatus() == 0 ? Color.parseColor("#0D000000") : Color.parseColor("#80000000"));
                 if (onClickListener != null)
                     onClickListener.onClick(view, dataBean);
             }
         });
-        binding.getRoot().setOnClickListener(new View.OnClickListener() {
+        binding.coverView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (onClickListener != null)

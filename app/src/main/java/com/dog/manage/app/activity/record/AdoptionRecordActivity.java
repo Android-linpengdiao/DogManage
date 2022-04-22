@@ -1,6 +1,7 @@
 package com.dog.manage.app.activity.record;
 
 
+import android.graphics.Color;
 import android.os.Bundle;
 
 import androidx.viewpager.widget.ViewPager;
@@ -45,6 +46,7 @@ public class AdoptionRecordActivity extends BaseActivity {
 
         } else if (type == type_adoption) {
             binding.titleView.binding.itemTitle.setText("领养记录");
+            binding.tabLayout.changedTableUI(R.drawable.tab_indicator_l, Color.parseColor("#4DACEF"), Color.parseColor("#999999"));
 
         } else if (type == type_logout) {
             binding.titleView.binding.itemTitle.setText("注销记录");

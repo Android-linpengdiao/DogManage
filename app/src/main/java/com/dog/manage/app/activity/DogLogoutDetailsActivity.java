@@ -4,7 +4,9 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.RadioGroup;
+import android.widget.RelativeLayout;
 
 import com.base.utils.FileUtils;
 import com.base.utils.GlideLoader;
@@ -43,12 +45,34 @@ public class DogLogoutDetailsActivity extends BaseActivity {
 
         if (type == type_submit) {
             initSubmitView();
+
+        } else if (type == type_details) {
+            initDetailsView();
+
         }
 
     }
 
+    private void initDetailsView() {
+        binding.dogInfoView.setVisibility(View.VISIBLE);
+        binding.acceptUnitsHintView.setVisibility(View.VISIBLE);
+        binding.reasonView.setVisibility(View.VISIBLE);
+        binding.radioButton1.setTextColor(getResources().getColor(R.color.black));
+        binding.radioButton1.getLayoutParams().width = ViewGroup.LayoutParams.WRAP_CONTENT;
+        binding.radioButton1.setPadding(0, 0, 0, 0);
+        binding.radioButton1.setBackgroundColor(getResources().getColor(R.color.transparent));
+        binding.radioButton2.setVisibility(View.GONE);
+
+    }
+
     private void initSubmitView() {
-        binding.dogInfoView.setItemArrowVisible(true);
+        binding.selectView.setItemArrowVisible(true);
+        binding.selectView.binding.itemContent.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+            }
+        });
         binding.radioGroupView.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup radioGroup, int checkedId) {

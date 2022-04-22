@@ -4,6 +4,7 @@ import androidx.recyclerview.widget.GridLayoutManager;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 
 import com.base.utils.CommonUtil;
@@ -14,9 +15,11 @@ import com.dog.manage.app.R;
 import com.dog.manage.app.activity.BaseActivity;
 import com.dog.manage.app.adapter.MediaFileAdapter;
 import com.dog.manage.app.databinding.ActivityMediaSelectBinding;
+import com.dog.manage.app.utils.DialogUtil;
 import com.dog.manage.app.view.GridItemDecoration;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class MediaSelectActivity extends BaseActivity {
@@ -29,6 +32,7 @@ public class MediaSelectActivity extends BaseActivity {
     public static final int MEDIA_TYPE_ALL = 2;
 
     private int maxNumber = 1;
+    private int mediaType = 1;
 
     private List<MediaFile> selects = new ArrayList<>();
 
@@ -39,6 +43,7 @@ public class MediaSelectActivity extends BaseActivity {
         addActivity(this);
 
         maxNumber = getIntent().getIntExtra("maxNumber", 1);
+        mediaType = getIntent().getIntExtra("mediaType", MediaUtils.MEDIA_TYPE_PHOTO);
 
         GridItemDecoration.Builder builder = new GridItemDecoration.Builder(this);
         builder.color(R.color.transparent);
@@ -48,17 +53,29 @@ public class MediaSelectActivity extends BaseActivity {
         binding.recyclerView.setNestedScrollingEnabled(false);
         adapter = new MediaFileAdapter(getApplication());
         binding.recyclerView.setAdapter(adapter);
+        adapter.setMaxNumber(maxNumber);
         adapter.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view, Object object) {
                 MediaFile mediaFile = (MediaFile) object;
-                if (mediaFile.getStatus() == 1) {
-                    selects.add(mediaFile);
-                } else {
-                    selects.remove(mediaFile);
+                switch (view.getId()) {
+                    case R.id.selectView:
+                        if (mediaFile.getStatus() == 1) {
+                            selects.add(mediaFile);
+                        } else {
+                            selects.remove(mediaFile);
+                        }
+                        binding.titleView.binding.itemContent.setText("发送" + (selects.size() > 0 ? "(" + selects.size() + "/" + maxNumber + ")" : ""));
+                        adapter.setComplete(maxNumber > selects.size() ? false : true);
+
+                        break;
+                    case R.id.coverView:
+                        DialogUtil.getInstance().showMoreImageView(MediaSelectActivity.this, Arrays.asList(mediaFile), 0, null);
+
+                        break;
                 }
-                binding.titleView.binding.itemContent.setText("发送" + (selects.size() > 0 ? "(" + selects.size() + "/" + maxNumber + ")" : "发送"));
-                adapter.setMaxNumber(maxNumber > selects.size() ? false : true);
+
+
             }
 
             @Override
@@ -67,14 +84,16 @@ public class MediaSelectActivity extends BaseActivity {
             }
         });
 
-        MediaUtils.getLocalMedia(getApplicationContext(), MediaUtils.MEDIA_TYPE_ALL,
+        MediaUtils.getLocalMedia(getApplicationContext(), mediaType,
                 new MediaUtils.LocalMediaCallback() {
                     @Override
                     public void onLocalMediaFileUpdate(final List<MediaFile> mediaFiles) {
                         runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
-                                adapter.loadMoreData(mediaFiles);
+                                if (adapter != null) {
+                                    adapter.loadMoreData(mediaFiles);
+                                }
                             }
                         });
                     }
@@ -93,5 +112,33 @@ public class MediaSelectActivity extends BaseActivity {
                 }
             }
         });
+    }
+
+    public void onClickPreview(View view) {
+        DialogUtil.getInstance().showMoreImageView(MediaSelectActivity.this, selects, 0, new OnClickListener() {
+            @Override
+            public void onClick(View view, Object object) {
+                if (object instanceof MediaFile) {
+                    MediaFile mediaFile = (MediaFile) object;
+                    switch (view.getId()) {
+                        case R.id.selectView:
+                            if (adapter.getList().indexOf(mediaFile) != -1) {
+                                adapter.notifyItemInserted(adapter.getList().indexOf(mediaFile));
+                                selects.remove(mediaFile);
+                                adapter.setComplete(maxNumber > selects.size() ? false : true);
+                            }
+                            break;
+                        default:
+                            break;
+                    }
+                }
+            }
+
+            @Override
+            public void onLongClick(View view, Object object) {
+
+            }
+        });
+
     }
 }

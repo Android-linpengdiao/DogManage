@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import android.content.DialogInterface;
 import android.graphics.Bitmap;
 import android.graphics.Color;
+import android.graphics.Typeface;
 import android.os.Handler;
 import android.text.Editable;
 import android.text.SpannableString;
@@ -651,6 +652,7 @@ public class DialogManager {
         Window window = dialog.getWindow();
         window.getDecorView().setBackgroundColor(act.getResources().getColor(R.color.transparent));
         window.setContentView(R.layout.view_service_dialog_alert);
+        TextView titleView = window.findViewById(R.id.titleView);
         TextView tvDesc = window.findViewById(R.id.tv_desc);
         TextView tvConfirm = window.findViewById(R.id.tv_confirm);
         TextView tvCancel = window.findViewById(R.id.tv_cancel);
@@ -668,6 +670,7 @@ public class DialogManager {
                 onClickListener.onClick(v, null);
             }
         });
+        setTypeface(act,titleView);
 
         String userText = "《服务协议》";
         String yinsiText = "《隐私政策》";
@@ -711,6 +714,11 @@ public class DialogManager {
                 listener.onItemRight();
             }
         }
+    }
+
+    public static void setTypeface(Activity activity, TextView textView) {
+        Typeface typeface = BaseApplication.getInstance().getTypeface();
+        textView.setTypeface(typeface);
     }
 
 }

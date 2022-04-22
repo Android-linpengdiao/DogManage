@@ -67,6 +67,7 @@
                                 android:textSize="@dimen/sp_17" />
 
                             <TextView
+                                android:id="@+id/auditStatusView"
                                 android:layout_width="wrap_content"
                                 android:layout_height="@dimen/dp_22"
                                 android:layout_marginLeft="@dimen/dp_16"
@@ -102,22 +103,13 @@
                                 android:layout_height="wrap_content"
                                 android:gravity="center_vertical"
                                 android:text="萨摩耶-2岁3个月"
-                                android:textColor="#333333"
-                                android:textSize="@dimen/sp_14" />
-
-                            <TextView
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_marginLeft="@dimen/dp_8"
-                                android:layout_weight="1"
-                                android:gravity="right"
-                                android:text="犬证:0103345663900000"
                                 android:textColor="#999999"
                                 android:textSize="@dimen/sp_14" />
 
                         </LinearLayout>
 
                         <TextView
+                            android:id="@+id/hintView"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="@dimen/dp_16"
@@ -186,23 +178,20 @@
                     android:layout_height="@dimen/dividerHeight"
                     android:background="@color/colorDivider" />
 
-                <LinearLayout
+                <TextView
+                    android:id="@+id/confirmView"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:padding="@dimen/dp_35">
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="@dimen/dp_48"
-                        android:background="@drawable/button_theme"
-                        android:gravity="center"
-                        android:onClick="onClickConfirm"
-                        android:text="立即办理"
-                        android:textColor="@color/white"
-                        android:textSize="@dimen/sp_15" />
-
-                </LinearLayout>
+                    android:layout_height="@dimen/dp_48"
+                    android:layout_marginTop="@dimen/dp_35"
+                    android:layout_marginBottom="@dimen/dp_35"
+                    android:background="@drawable/button_theme"
+                    android:gravity="center"
+                    android:onClick="onClickConfirm"
+                    android:layout_marginRight="@dimen/dp_16"
+                    android:layout_marginLeft="@dimen/dp_16"
+                    android:text="立即办理"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/sp_15" />
 
             </LinearLayout>
 
@@ -228,7 +217,7 @@
                 android:gravity="center_vertical"
                 android:text="北京爱牧家动物医院(西直门店)"
                 android:textColor="@color/colorAppTheme"
-                android:textSize="@dimen/sp_18"/>
+                android:textSize="@dimen/sp_18" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -301,7 +290,6 @@
                         android:background="@drawable/daohang" />
 
                     <TextView
-                        android:id="@+id/confirmView"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:gravity="center"
