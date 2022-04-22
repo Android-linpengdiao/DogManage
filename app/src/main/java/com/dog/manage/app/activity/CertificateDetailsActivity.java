@@ -207,4 +207,8 @@ public class CertificateDetailsActivity extends BaseActivity {
     private void payFail(String content) {
         ToastUtils.showShort(CertificateDetailsActivity.this, content);
     }
+
+    public void onClickConfirm(View view) {
+        openActivity(PayActivity.class);
+    }
 }

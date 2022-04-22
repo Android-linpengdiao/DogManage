@@ -60,6 +60,7 @@
                             android:layout_width="@dimen/dp_20"
                             android:layout_height="@dimen/dp_20"
                             android:layout_marginRight="@dimen/dp_2"
+                            android:padding="@dimen/dp_3"
                             android:src="@drawable/daohang"
                             app:tint="@color/blue" />
 
@@ -83,6 +84,7 @@
                             android:layout_width="@dimen/dp_20"
                             android:layout_height="@dimen/dp_20"
                             android:layout_marginRight="@dimen/dp_2"
+                            android:padding="@dimen/dp_3"
                             android:src="@drawable/dingwei_s"
                             app:tint="@color/blue" />
 

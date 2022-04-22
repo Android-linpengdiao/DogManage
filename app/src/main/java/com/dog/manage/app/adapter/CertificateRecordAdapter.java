@@ -42,6 +42,7 @@ public class CertificateRecordAdapter extends BaseRecyclerAdapter<String, ItemCe
     protected void onBindItem(ItemCertificateRecordBinding binding, String dataBean, int position) {
 
         if (type == AdoptionRecordActivity.type_certificate) {
+            binding.titleView.setText("犬证办理");
             binding.bottomView.setVisibility(View.VISIBLE);
             binding.dogOwnerContainer.setVisibility(View.INVISIBLE);
             binding.contentView.setText("萨摩耶-2岁3个月");
@@ -68,6 +69,7 @@ public class CertificateRecordAdapter extends BaseRecyclerAdapter<String, ItemCe
             }
 
         } else if (type == AdoptionRecordActivity.type_immune) {
+            binding.titleView.setText("免疫证办理");
             binding.dogOwnerContainer.setVisibility(View.INVISIBLE);
             binding.contentView.setText("萨摩耶-2岁3个月");
             binding.contentView.setTextColor(Color.parseColor("#999999"));
@@ -93,6 +95,7 @@ public class CertificateRecordAdapter extends BaseRecyclerAdapter<String, ItemCe
             }
 
         } else if (type == AdoptionRecordActivity.type_transfer) {
+            binding.titleView.setText("犬只过户");
             if (position == 1) {
                 binding.checkStatusView.setText("过户成功");
                 binding.checkStatusView.setBackgroundResource(R.drawable.tag_g);
@@ -110,7 +113,25 @@ public class CertificateRecordAdapter extends BaseRecyclerAdapter<String, ItemCe
             }
 
         } else if (type == AdoptionRecordActivity.type_logout) {
+            binding.titleView.setText("犬只注销");
+            binding.bottomView.setVisibility(View.GONE);
+            binding.contentView.setText("萨摩耶-2岁3个月");
+            binding.contentView.setTextColor(Color.parseColor("#999999"));
+            if (position == 1) {
+                binding.checkStatusView.setText("审核通过");
+                binding.checkStatusView.setBackgroundResource(R.drawable.tag_g);
+                binding.detailsStatusView.setVisibility(View.GONE);
 
+            } else if (position == 2) {
+                binding.checkStatusView.setText("审核拒绝");
+                binding.checkStatusView.setBackgroundResource(R.drawable.tag_r);
+                binding.detailsStatusView.setVisibility(View.VISIBLE);
+
+            } else {
+                binding.checkStatusView.setText("审核中");
+                binding.detailsStatusView.setVisibility(View.GONE);
+
+            }
 
         }
 

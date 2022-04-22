@@ -34,6 +34,7 @@ public class DogLogoutDetailsActivity extends BaseActivity {
     public static final int type_submit = 0;//0-提交注销
     public static final int type_details = 1;//1-注销详情
     private int type = 0;
+    private int auditType = 0;//1-审核通过 2-审核拒绝
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,6 +43,8 @@ public class DogLogoutDetailsActivity extends BaseActivity {
         addActivity(this);
 
         type = getIntent().getIntExtra("type", 0);
+        auditType = getIntent().getIntExtra("auditType", 0);
+        binding.auditStatusView.setText(auditType == 1 ? "审核通过" : auditType == 2 ? "审核拒绝" : "审核中");
 
         if (type == type_submit) {
             initSubmitView();
@@ -56,7 +59,9 @@ public class DogLogoutDetailsActivity extends BaseActivity {
     private void initDetailsView() {
         binding.dogInfoView.setVisibility(View.VISIBLE);
         binding.acceptUnitsHintView.setVisibility(View.VISIBLE);
-        binding.reasonView.setVisibility(View.VISIBLE);
+        binding.auditReasonView.setVisibility(auditType == 2 ? View.VISIBLE : View.GONE);
+        binding.confirmView.setVisibility(auditType == 2 ? View.VISIBLE : View.GONE);
+
         binding.radioButton1.setTextColor(getResources().getColor(R.color.black));
         binding.radioButton1.getLayoutParams().width = ViewGroup.LayoutParams.WRAP_CONTENT;
         binding.radioButton1.setPadding(0, 0, 0, 0);

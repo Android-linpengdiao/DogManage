@@ -10,6 +10,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="@color/app_background"
         android:orientation="vertical">
 
         <com.dog.manage.app.view.TitleView
@@ -71,6 +72,7 @@
                                 android:textSize="@dimen/sp_17" />
 
                             <TextView
+                                android:id="@+id/auditStatusView"
                                 android:layout_width="wrap_content"
                                 android:layout_height="@dimen/dp_22"
                                 android:layout_marginLeft="@dimen/dp_16"
@@ -129,6 +131,7 @@
                     android:id="@+id/selectView"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:background="@color/white"
                     android:paddingLeft="@dimen/viewPadding"
                     android:paddingRight="@dimen/viewPadding"
                     app:item_container_height="@dimen/viewItemHeight"
@@ -144,6 +147,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/dp_50"
                     android:gravity="center_vertical"
+                    android:background="@color/white"
                     android:orientation="horizontal"
                     android:paddingLeft="@dimen/viewPadding"
                     android:paddingRight="@dimen/viewPadding">
@@ -202,6 +206,7 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:background="@color/white"
                     android:gravity="center_vertical"
                     android:orientation="vertical"
                     android:paddingLeft="@dimen/viewPadding"
@@ -335,6 +340,7 @@
 
                 <LinearLayout
                     android:layout_width="match_parent"
+                    android:background="@color/white"
                     android:layout_height="wrap_content"
                     android:minHeight="@dimen/dp_121"
                     android:orientation="vertical"
@@ -370,7 +376,7 @@
                     android:id="@+id/acceptUnitsHintView"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@color/app_background"
+                    android:background="@color/white"
                     android:gravity="center_vertical"
                     android:orientation="vertical"
                     android:visibility="gone"
@@ -422,10 +428,10 @@
 
 
                 <com.dog.manage.app.view.ViewItemLayout
-                    android:id="@+id/reasonView"
+                    android:id="@+id/auditReasonView"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@color/app_background"
+                    android:background="@color/white"
                     android:paddingLeft="@dimen/viewPadding"
                     android:paddingRight="@dimen/viewPadding"
                     android:visibility="gone"
@@ -445,6 +451,7 @@
         </ScrollView>
 
         <TextView
+            android:id="@+id/confirmView"
             android:layout_width="match_parent"
             android:layout_height="@dimen/dp_48"
             android:layout_margin="@dimen/dp_16"

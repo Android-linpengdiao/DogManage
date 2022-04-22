@@ -108,8 +108,8 @@ public class ViewItemLayout extends FrameLayout {
 
     public void setItemTitleBold(boolean bold) {
         if (bold) {
-            Typeface typeface = BaseApplication.getInstance().getTypeface();
-            binding.itemTitle.setTypeface(typeface);
+//            Typeface typeface = BaseApplication.getInstance().getTypeface();
+//            binding.itemTitle.setTypeface(typeface);
 //            binding.itemTitle.setTypeface(Typeface.defaultFromStyle(Typeface.BOLD));
         } else {
             binding.itemTitle.setTypeface(Typeface.defaultFromStyle(Typeface.NORMAL));
@@ -129,8 +129,8 @@ public class ViewItemLayout extends FrameLayout {
     }
     public void setItemContentBold(boolean bold) {
         if (bold) {
-            Typeface typeface = BaseApplication.getInstance().getTypeface();
-            binding.itemContent.setTypeface(typeface);
+//            Typeface typeface = BaseApplication.getInstance().getTypeface();
+//            binding.itemContent.setTypeface(typeface);
 //            binding.itemTitle.setTypeface(Typeface.defaultFromStyle(Typeface.BOLD));
         } else {
             binding.itemContent.setTypeface(Typeface.defaultFromStyle(Typeface.NORMAL));

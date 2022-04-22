@@ -54,7 +54,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".media.MediaSelectActivity"></activity>
+        <activity android:name=".activity.PayActivity"></activity>
+        <activity android:name=".media.MediaSelectActivity" />
         <activity
             android:name=".activity.ImmuneDetailsActivity"
             android:screenOrientation="portrait" />

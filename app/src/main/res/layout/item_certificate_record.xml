@@ -34,7 +34,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:gravity="center_vertical"
-                    android:text="犬只过户"
+                    tools:text="犬只过户"
                     android:textColor="#333333"
                     android:textSize="@dimen/sp_17" />
 
@@ -114,6 +114,8 @@
                     <LinearLayout
                         android:id="@+id/dogOwnerContainer"
                         android:layout_width="0dp"
+                        android:minHeight="@dimen/dp_28"
+                        android:gravity="center_vertical"
                         android:layout_weight="1"
                         android:layout_height="match_parent"
                         android:orientation="horizontal">

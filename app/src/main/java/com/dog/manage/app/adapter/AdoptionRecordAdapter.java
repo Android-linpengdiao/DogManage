@@ -45,6 +45,7 @@ public class AdoptionRecordAdapter extends BaseRecyclerAdapter<String, ItemAdopt
 
     @Override
     protected void onBindItem(ItemAdoptionRecordBinding binding, String dataBean, int position) {
+        GlideLoader.LoderImage(mContext, "https://pics7.baidu.com/feed/6c224f4a20a446236fb6db0ac3bf5d040df3d785.jpeg", binding.coverView,8);
         binding.bottomView.setVisibility(position == 0 ? View.GONE : View.VISIBLE);
         if (position == 1) {
             binding.statusView.setBackgroundResource(R.drawable.tag_l);
@@ -74,14 +75,14 @@ public class AdoptionRecordAdapter extends BaseRecyclerAdapter<String, ItemAdopt
             @Override
             public void onClick(View view) {
                 if (onClickListener != null)
-                    onClickListener.onClick(view, dataBean);
+                    onClickListener.onClick(view, position);
             }
         });
         binding.getRoot().setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (onClickListener != null)
-                    onClickListener.onClick(view, dataBean);
+                    onClickListener.onClick(view, position);
             }
         });
     }

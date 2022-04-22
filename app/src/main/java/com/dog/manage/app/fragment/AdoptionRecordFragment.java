@@ -153,7 +153,9 @@ public class AdoptionRecordFragment extends BaseFragment {
                 adoptionRecordAdapter.setOnClickListener(new OnClickListener() {
                     @Override
                     public void onClick(View view, Object object) {
-                        openActivity(AdoptionDetailsActivity.class);
+                        Bundle bundle = new Bundle();
+                        bundle.putInt("type", (Integer) object);
+                        openActivity(AdoptionDetailsActivity.class,bundle);
 
                     }
 
@@ -167,11 +169,13 @@ public class AdoptionRecordFragment extends BaseFragment {
             } else if (type == AdoptionRecordActivity.type_logout) {
                 certificateRecordAdapter = new CertificateRecordAdapter(getActivity());
                 binding.recyclerView.setAdapter(certificateRecordAdapter);
+                certificateRecordAdapter.setType(type);
                 certificateRecordAdapter.setOnClickListener(new OnClickListener() {
                     @Override
                     public void onClick(View view, Object object) {
                         Bundle bundle = new Bundle();
                         bundle.putInt("type", DogLogoutDetailsActivity.type_details);
+                        bundle.putInt("auditType", (Integer) object);
                         openActivity(DogLogoutDetailsActivity.class, bundle);
 
                     }
