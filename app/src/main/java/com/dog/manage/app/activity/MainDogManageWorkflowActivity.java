@@ -36,15 +36,13 @@ public class MainDogManageWorkflowActivity extends BaseActivity {
         adapter = new DogManageWorkflowAdapter(getApplicationContext());
         binding.recyclerView.setAdapter(adapter);
         adapter.refreshData(Arrays.asList(
-                "犬证办理",
-                "免疫证办理",
-                "犬证年审",
-                "犬只过户",
-                "犬只领养",
-                "犬只注销",
-                "信息変更",
-                "办理流程",
-                "政策法规"));
+                "犬证办理流程",
+                "免疫证办理流程",
+                "犬证年审流程",
+                "犬只过户流程",
+                "犬只领养流程",
+                "犬只注销流程",
+                "信息变更流程"));
         adapter.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view, Object object) {

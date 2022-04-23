@@ -39,7 +39,7 @@ public class DogManageWorkflowAdapter extends BaseRecyclerAdapter<String, ItemDo
 
     @Override
     protected void onBindItem(ItemDongManageWorkflowBinding binding, String dataBean, int position) {
-        binding.titleView.setText((position + 1) + "." + dataBean + "流程");
+        binding.titleView.setText((position + 1) + "." + dataBean);
         binding.getRoot().setBackgroundResource(position % 3 == 0 ? R.drawable.bk_03 : position % 3 == 1 ? R.drawable.bk_02 : R.drawable.bk_01);
         binding.getRoot().setOnClickListener(new View.OnClickListener() {
             @Override

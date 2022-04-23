@@ -12,8 +12,8 @@ public class SubmitSuccessActivity extends BaseActivity {
 
     public static final int type_certificate = 0;//犬证办理
     public static final int type_logout = 1;//犬只注销
-    public static final int type_update = 2;//信息更变
-    public static final int type_transfer = 3;//信息更变
+    public static final int type_update = 2;//信息变更
+    public static final int type_transfer = 3;//信息变更
     public static final int type_immune = 4;//免疫证办理
     public static final int type_examined = 5;//犬证年审
     public static final int type_adoption = 6;//犬只领养
@@ -35,7 +35,7 @@ public class SubmitSuccessActivity extends BaseActivity {
             binding.titleView.binding.itemTitle.setText("犬只注销");
 
         } else if (type == type_update) {
-            binding.titleView.binding.itemTitle.setText("信息更变");
+            binding.titleView.binding.itemTitle.setText("信息变更");
 
         } else if (type == type_transfer) {
             binding.titleView.binding.itemTitle.setText("犬只过户");
@@ -73,7 +73,7 @@ public class SubmitSuccessActivity extends BaseActivity {
             openActivity(AdoptionRecordActivity.class, bundle);
 
         } else if (type == type_update) {
-            binding.titleView.binding.itemTitle.setText("信息更变");
+            binding.titleView.binding.itemTitle.setText("信息变更");
 
         } else if (type == type_transfer) {
             bundle.putInt("type", AdoptionRecordActivity.type_transfer);

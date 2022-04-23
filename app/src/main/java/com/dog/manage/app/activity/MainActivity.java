@@ -71,7 +71,7 @@ public class MainActivity extends BaseActivity {
         binding.frameItemRecyclerView.setNestedScrollingEnabled(false);
         FrameItemAdapter frameItemAdapter = new FrameItemAdapter(getApplicationContext());
         binding.frameItemRecyclerView.setAdapter(frameItemAdapter);
-        frameItemAdapter.refreshData(Arrays.asList("犬证办理", "免疫证办理", "犬证年审", "犬只过户", "犬只领养", "犬只注销", "信息変更", "办理流程", "政策法规"));
+        frameItemAdapter.refreshData(Arrays.asList("犬证办理", "免疫证办理", "犬证年审", "犬只过户", "犬只领养", "犬只注销", "信息变更", "办理流程", "政策法规"));
         frameItemAdapter.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view, Object object) {

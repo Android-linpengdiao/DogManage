@@ -57,7 +57,7 @@ public class PoliciesActivity extends BaseActivity {
                 "犬只过户",
                 "犬只领养",
                 "犬只注销",
-                "信息変更",
+                "信息变更",
                 "办理流程",
                 "政策法规"));
         adapter.setOnClickListener(new OnClickListener() {
