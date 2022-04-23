@@ -48,6 +48,7 @@ public class DogCertificateEditDogOwnerActivity extends BaseActivity {
         if (type == type_userInfo) {
             binding.titleView.binding.itemTitle.setText("我的信息");
             binding.stepContainer.setVisibility(View.GONE);
+            binding.confirmView.setText("保存信息");
 
         } else if (type == type_certificate) {
             binding.titleView.binding.itemTitle.setText("犬证办理");
@@ -131,15 +132,18 @@ public class DogCertificateEditDogOwnerActivity extends BaseActivity {
             public void onCheckedChanged(RadioGroup radioGroup, int i) {
                 switch (i) {
                     case R.id.radioButtonHaiWai:
-
+                        binding.IDCardBackContainer.setVisibility(View.INVISIBLE);
+                        binding.IDCardFrontHintView.setText("上传外国护照");
 
                         break;
                     case R.id.radioButtonGanGao:
-
+                        binding.IDCardBackContainer.setVisibility(View.INVISIBLE);
+                        binding.IDCardFrontHintView.setText("上传港澳通信证");
 
                         break;
                     case R.id.radioButtonIDCard:
-
+                        binding.IDCardBackContainer.setVisibility(View.VISIBLE);
+                        binding.IDCardFrontHintView.setText("上传身份证人像面");
 
                         break;
                     default:
@@ -219,6 +223,9 @@ public class DogCertificateEditDogOwnerActivity extends BaseActivity {
     public void onClickConfirm(View view) {
         if (type == type_adoption) {
             openActivity(DogAdoptionSubmitActivity.class);
+
+        }else if (type == type_userInfo) {
+            finish();
 
         } else {
             Bundle bundle = new Bundle();

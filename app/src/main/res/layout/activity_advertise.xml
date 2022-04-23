@@ -28,7 +28,7 @@
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/dp_16"
             android:gravity="center"
-            android:text="北京市养犬管理局"
+            android:text="禁养犬宣传-北京市公安局"
             android:textColor="#333333"
             android:textSize="@dimen/sp_16" />
 

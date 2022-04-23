@@ -10,6 +10,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="@color/white"
         android:orientation="vertical">
 
         <com.dog.manage.app.view.TitleView
@@ -24,7 +25,7 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="@dimen/dp_80"
+            android:layout_height="@dimen/dp_66"
             android:background="@color/white"
             android:gravity="center"
             android:orientation="horizontal">
@@ -81,12 +82,15 @@
                         android:id="@+id/addressView"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/dp_17"
+                        android:background="@color/app_background"
                         app:item_arrow_visible="true"
                         app:item_container_height="@dimen/viewItemHeight"
                         app:item_container_margin_left="@dimen/viewPadding"
                         app:item_container_margin_right="@dimen/viewPadding"
                         app:item_content="请选择省市区"
                         app:item_content_size="@dimen/sp_14"
+                        app:item_content_color="@color/colorAppTheme"
                         app:item_divider_visible="true"
                         app:item_title="居住地址"
                         app:item_title_bold="true"
@@ -95,8 +99,9 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/dp_12"
-                        android:layout_marginBottom="@dimen/dp_12"
+                        android:paddingTop="@dimen/dp_12"
+                        android:paddingBottom="@dimen/dp_12"
+                        android:background="@color/app_background"
                         android:minHeight="@dimen/dp_121"
                         android:orientation="horizontal"
                         android:paddingLeft="@dimen/viewPadding"
@@ -132,6 +137,7 @@
                         android:id="@+id/houseNumberView"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:background="@color/app_background"
                         app:item_container_height="@dimen/viewItemHeight"
                         app:item_container_margin_left="@dimen/viewPadding"
                         app:item_container_margin_right="@dimen/viewPadding"
@@ -146,6 +152,7 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:background="@color/app_background"
                         android:gravity="center_vertical"
                         android:orientation="vertical"
                         android:paddingLeft="@dimen/viewPadding"

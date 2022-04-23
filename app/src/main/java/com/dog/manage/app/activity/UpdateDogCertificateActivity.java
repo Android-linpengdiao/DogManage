@@ -16,7 +16,7 @@ import com.dog.manage.app.databinding.ActivityUpdateDogCertificateBinding;
 import java.util.Arrays;
 
 /**
- * 信息変更
+ * 信息变更
  */
 public class UpdateDogCertificateActivity extends BaseActivity {
 
@@ -34,7 +34,7 @@ public class UpdateDogCertificateActivity extends BaseActivity {
         RecycleViewDivider divider = new RecycleViewDivider(getApplicationContext(),
                 LinearLayoutManager.VERTICAL,
                 CommonUtil.dip2px(getApplicationContext(), 8),
-                Color.parseColor("#FAFAFA"));
+                Color.parseColor("#FFFFFF"));
         binding.recyclerView.addItemDecoration(divider);
 
         binding.recyclerView.setNestedScrollingEnabled(false);

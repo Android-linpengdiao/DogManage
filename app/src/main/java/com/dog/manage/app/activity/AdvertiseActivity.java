@@ -38,7 +38,7 @@ public class AdvertiseActivity extends BaseActivity {
         adapter.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view, Object object) {
-                openActivity(DogDetailsActivity.class);
+
 
             }
 

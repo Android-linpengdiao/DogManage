@@ -13,6 +13,9 @@
 
     <dimen name="viewPadding">15dp</dimen>
 
+    <dimen name="certificateSize">10sp</dimen>
+    <dimen name="certificateMarginTop">4dp</dimen>
+
     <!-- dp and sp values, must be defined in this file! -->
     <!-- view size,you can add if there is no one -->
     <dimen name="dp_m_60">-60dp</dimen>

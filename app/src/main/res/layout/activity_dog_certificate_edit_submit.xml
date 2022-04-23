@@ -88,6 +88,11 @@
                 android:layout_height="match_parent"
                 android:orientation="vertical">
 
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dp_7"
+                    android:background="#F6F6F6" />
+
                 <com.dog.manage.app.view.ViewItemLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"

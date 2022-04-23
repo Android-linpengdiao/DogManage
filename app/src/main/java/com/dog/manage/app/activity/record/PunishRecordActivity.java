@@ -6,6 +6,7 @@ import android.view.View;
 
 import androidx.recyclerview.widget.LinearLayoutManager;
 
+import com.base.BaseData;
 import com.base.utils.CommonUtil;
 import com.base.view.OnClickListener;
 import com.base.view.RecycleViewDivider;
@@ -13,9 +14,21 @@ import com.dog.manage.app.R;
 import com.dog.manage.app.activity.BaseActivity;
 import com.dog.manage.app.adapter.PunishRecordAdapter;
 import com.dog.manage.app.databinding.ActivityPunishRecordBinding;
+import com.okhttp.Pager;
+import com.okhttp.SendRequest;
+import com.okhttp.callbacks.GenericsCallback;
+import com.okhttp.sample_okhttp.JsonGenericsSerializator;
+import com.scwang.smart.refresh.layout.api.RefreshLayout;
+import com.scwang.smart.refresh.layout.listener.OnLoadMoreListener;
+import com.scwang.smart.refresh.layout.listener.OnRefreshListener;
 
 import java.util.Arrays;
 
+import okhttp3.Call;
+
+/**
+ * 处罚记录
+ */
 public class PunishRecordActivity extends BaseActivity {
 
     private ActivityPunishRecordBinding binding;
@@ -34,12 +47,9 @@ public class PunishRecordActivity extends BaseActivity {
                 CommonUtil.dip2px(getApplicationContext(), 14),
                 Color.parseColor("#FAFAFA"));
         binding.recyclerView.addItemDecoration(divider);
-
-        binding.recyclerView.setNestedScrollingEnabled(false);
         adapter = new PunishRecordAdapter(getApplicationContext());
         binding.recyclerView.setAdapter(adapter);
-        adapter.refreshData(Arrays.asList(
-                "", "", "", "", "", "", "", "", ""));
+        adapter.refreshData(Arrays.asList("", "", "", "", "", "", "", "", ""));
         adapter.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view, Object object) {
@@ -51,5 +61,65 @@ public class PunishRecordActivity extends BaseActivity {
 
             }
         });
+
+        setRefresh();
+    }
+
+    private Pager<BaseData> creationPager = new Pager<>();
+
+    private void setRefresh() {
+        binding.refreshLayout.setOnRefreshListener(new OnRefreshListener() {
+            @Override
+            public void onRefresh(RefreshLayout refreshlayout) {
+                creationPager = new Pager<>();
+//                loadData(true);
+            }
+        });
+        binding.refreshLayout.setEnableLoadMore(false);
+//        binding.refreshLayout.autoRefresh();
+
+    }
+
+    public void loadData(boolean isRefresh) {
+        SendRequest.favorite_getPager(getUserInfo().getToken(), 11, creationPager.getNextCursor(),
+                new GenericsCallback<Pager<BaseData>>(new JsonGenericsSerializator()) {
+
+                    @Override
+                    public void onAfter(int id) {
+                        super.onAfter(id);
+                        if (isRefresh) {
+                            binding.refreshLayout.finishRefresh();
+                        } else {
+                            binding.refreshLayout.finishLoadMore();
+                        }
+                    }
+
+                    @Override
+                    public void onError(Call call, Exception e, int id) {
+                        if (isRefresh) {
+                            binding.refreshLayout.finishRefresh(false);
+                        } else {
+                            binding.refreshLayout.finishLoadMore(false);
+                        }
+                    }
+
+                    @Override
+                    public void onResponse(Pager<BaseData> response, int id) {
+                        creationPager = response;
+                        if (response != null && response.getData() != null) {
+//                            if (isRefresh) {
+//                                adapter.refreshData(response.getData());
+//                            } else {
+//                                adapter.loadMoreData(response.getData());
+//                            }
+//                            if (!response.isHasnext()) {
+//                                binding.refreshLayout.setNoMoreData(true);
+//                            }
+                            binding.emptyView.setVisibility(adapter.getList().size() > 0 ? View.GONE : View.VISIBLE);
+                            binding.emptyView.setText("暂无内容～");
+                        }
+                    }
+                });
+
     }
 }

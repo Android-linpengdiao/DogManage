@@ -173,7 +173,8 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".activity.LoginActivity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:theme="@style/LoginTheme"/>
         <activity
             android:name=".activity.WelcomeActivity"
             android:configChanges="orientation|screenSize|keyboardHidden"

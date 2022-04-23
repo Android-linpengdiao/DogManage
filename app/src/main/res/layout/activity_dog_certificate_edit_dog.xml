@@ -336,8 +336,9 @@
 
                 <com.dog.manage.app.view.TextBoldView
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/dp_50"
+                    android:layout_height="wrap_content"
                     android:gravity="center_vertical"
+                    android:layout_marginTop="@dimen/dp_20"
                     android:paddingLeft="@dimen/viewPadding"
                     android:paddingRight="@dimen/viewPadding"
                     android:singleLine="true"
@@ -348,7 +349,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_marginTop="@dimen/dp_4"
+                    android:layout_marginTop="@dimen/dp_20"
                     android:layout_marginBottom="@dimen/dp_23"
                     android:gravity="center_vertical"
                     android:paddingLeft="@dimen/viewPadding"

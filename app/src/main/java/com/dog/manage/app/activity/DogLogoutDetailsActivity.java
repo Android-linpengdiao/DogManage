@@ -71,6 +71,7 @@ public class DogLogoutDetailsActivity extends BaseActivity {
     }
 
     private void initSubmitView() {
+        binding.descriptionHintView.setText("简要说明(非必填)");
         binding.selectView.setItemArrowVisible(true);
         binding.selectView.binding.itemContent.setOnClickListener(new View.OnClickListener() {
             @Override

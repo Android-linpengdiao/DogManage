@@ -1,6 +1,7 @@
 package com.dog.manage.app.activity;
 
 import android.Manifest;
+import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -52,6 +53,16 @@ public class MainActivity extends BaseActivity {
 
     }
 
+    @Override
+    protected void onResume() {
+        if (checkUserRank(getApplicationContext())) {
+            binding.topView.setVisibility(View.VISIBLE);
+        } else {
+            binding.topView.setVisibility(View.GONE);
+        }
+        super.onResume();
+    }
+
     private void initView() {
 
         intBanner();
@@ -70,10 +81,12 @@ public class MainActivity extends BaseActivity {
                 } else if (position == 8) {
                     openActivity(PoliciesActivity.class);
                 } else {
-                    Bundle bundle = new Bundle();
-                    bundle.putInt("type", position);
-                    bundle.putString("title", frameItemAdapter.getList().get(position));
-                    openActivity(DogManageWorkflowActivity.class, bundle);
+                    if (checkUserRank(getApplicationContext(), true)) {
+                        Bundle bundle = new Bundle();
+                        bundle.putInt("type", position);
+                        bundle.putString("title", frameItemAdapter.getList().get(position));
+                        openActivity(DogManageWorkflowActivity.class, bundle);
+                    }
                 }
 
             }
@@ -121,14 +134,18 @@ public class MainActivity extends BaseActivity {
     }
 
     public void onClickMessage(View view) {
-        openActivity(MessageActivity.class);
+        if (checkUserRank(getApplicationContext(), true)) {
+            openActivity(MessageActivity.class);
+        }
     }
 
     public void onClickUser(View view) {
-        openActivity(UserHomeActivity.class);
+        if (checkUserRank(getApplicationContext(), true)) {
+            openActivity(UserHomeActivity.class);
 //        permissionsManager();
 //        OneKeyLoginManager.getInstance().setAuthThemeConfig(ConfigUtils.getCJSConfig(MainActivity.this), ConfigUtils.getCJSConfig(MainActivity.this));
 //        openLoginActivity(true);
+        }
 
     }
 
@@ -167,7 +184,7 @@ public class MainActivity extends BaseActivity {
         OneKeyLoginManager.getInstance().openLoginAuth(false, new OpenLoginAuthListener() {
             @Override
             public void getOpenLoginAuthStatus(int code, String result) {
-                Log.i(TAG, "getOpenLoginAuthStatus: "+result);
+                Log.i(TAG, "getOpenLoginAuthStatus: " + result);
                 if (1000 == code) {
                     //拉起授权页成功
                 } else {

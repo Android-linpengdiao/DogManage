@@ -16,7 +16,7 @@
             android:layout_height="match_parent"
             android:background="@color/white"
             android:orientation="vertical"
-            android:visibility="visible">
+            android:visibility="gone">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -36,13 +36,13 @@
                     android:gravity="center"
                     android:singleLine="true"
                     android:text="北京市养犬登记证"
-                    android:textColor="#333333"
-                    android:textSize="@dimen/sp_18"/>
+                    android:textColor="#000000"
+                    android:textSize="@dimen/sp_12" />
 
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/dp_16">
+                    android:layout_marginTop="@dimen/dp_14">
 
                     <LinearLayout
                         android:id="@+id/certificateInfoContainer"
@@ -61,24 +61,24 @@
                                 android:layout_height="wrap_content"
                                 android:gravity="center_vertical"
                                 android:text="犬证编号:"
-                                android:textColor="#333333"
-                                android:textSize="@dimen/sp_12" />
+                                android:textColor="#000000"
+                                android:textSize="@dimen/certificateSize" />
 
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginLeft="@dimen/dp_8"
                                 android:gravity="center_vertical"
-                                android:text="202203050987612"
-                                android:textColor="#333333"
-                                android:textSize="@dimen/sp_12" />
+                                android:text="0100000 "
+                                android:textColor="#000000"
+                                android:textSize="@dimen/certificateSize" />
 
                         </LinearLayout>
 
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="@dimen/dp_4"
+                            android:layout_marginTop="@dimen/certificateMarginTop"
                             android:gravity="center_vertical"
                             android:orientation="horizontal">
 
@@ -87,8 +87,8 @@
                                 android:layout_height="wrap_content"
                                 android:gravity="center_vertical"
                                 android:text="犬只品种:"
-                                android:textColor="#333333"
-                                android:textSize="@dimen/sp_12" />
+                                android:textColor="#000000"
+                                android:textSize="@dimen/certificateSize" />
 
                             <TextView
                                 android:layout_width="wrap_content"
@@ -96,15 +96,15 @@
                                 android:layout_marginLeft="@dimen/dp_8"
                                 android:gravity="center_vertical"
                                 android:text="萨摩耶"
-                                android:textColor="#333333"
-                                android:textSize="@dimen/sp_12" />
+                                android:textColor="#000000"
+                                android:textSize="@dimen/certificateSize" />
 
                         </LinearLayout>
 
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="@dimen/dp_4"
+                            android:layout_marginTop="@dimen/certificateMarginTop"
                             android:gravity="center_vertical"
                             android:orientation="horizontal">
 
@@ -113,8 +113,8 @@
                                 android:layout_height="wrap_content"
                                 android:gravity="center_vertical"
                                 android:text="犬只毛色:"
-                                android:textColor="#333333"
-                                android:textSize="@dimen/sp_12" />
+                                android:textColor="#000000"
+                                android:textSize="@dimen/certificateSize" />
 
                             <TextView
                                 android:layout_width="wrap_content"
@@ -122,15 +122,15 @@
                                 android:layout_marginLeft="@dimen/dp_8"
                                 android:gravity="center_vertical"
                                 android:text="白色"
-                                android:textColor="#333333"
-                                android:textSize="@dimen/sp_12" />
+                                android:textColor="#000000"
+                                android:textSize="@dimen/certificateSize" />
 
                         </LinearLayout>
 
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="@dimen/dp_4"
+                            android:layout_marginTop="@dimen/certificateMarginTop"
                             android:gravity="center_vertical"
                             android:orientation="horizontal">
 
@@ -139,8 +139,8 @@
                                 android:layout_height="wrap_content"
                                 android:gravity="center_vertical"
                                 android:text="犬只性别:"
-                                android:textColor="#333333"
-                                android:textSize="@dimen/sp_12" />
+                                android:textColor="#000000"
+                                android:textSize="@dimen/certificateSize" />
 
                             <TextView
                                 android:layout_width="wrap_content"
@@ -148,15 +148,15 @@
                                 android:layout_marginLeft="@dimen/dp_8"
                                 android:gravity="center_vertical"
                                 android:text="雄性"
-                                android:textColor="#333333"
-                                android:textSize="@dimen/sp_12" />
+                                android:textColor="#000000"
+                                android:textSize="@dimen/certificateSize" />
 
                         </LinearLayout>
 
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="@dimen/dp_4"
+                            android:layout_marginTop="@dimen/certificateMarginTop"
                             android:gravity="center_vertical"
                             android:orientation="horizontal">
 
@@ -165,8 +165,8 @@
                                 android:layout_height="wrap_content"
                                 android:gravity="center_vertical"
                                 android:text="犬主姓名:"
-                                android:textColor="#333333"
-                                android:textSize="@dimen/sp_12" />
+                                android:textColor="#000000"
+                                android:textSize="@dimen/certificateSize" />
 
                             <TextView
                                 android:layout_width="wrap_content"
@@ -174,15 +174,15 @@
                                 android:layout_marginLeft="@dimen/dp_8"
                                 android:gravity="center_vertical"
                                 android:text="张三"
-                                android:textColor="#333333"
-                                android:textSize="@dimen/sp_12" />
+                                android:textColor="#000000"
+                                android:textSize="@dimen/certificateSize" />
 
                         </LinearLayout>
 
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="@dimen/dp_4"
+                            android:layout_marginTop="@dimen/certificateMarginTop"
                             android:gravity="center_vertical"
                             android:orientation="horizontal">
 
@@ -191,8 +191,8 @@
                                 android:layout_height="wrap_content"
                                 android:gravity="center_vertical"
                                 android:text="发证日期:"
-                                android:textColor="#333333"
-                                android:textSize="@dimen/sp_12" />
+                                android:textColor="#000000"
+                                android:textSize="@dimen/certificateSize" />
 
                             <TextView
                                 android:layout_width="wrap_content"
@@ -200,15 +200,15 @@
                                 android:layout_marginLeft="@dimen/dp_8"
                                 android:gravity="center_vertical"
                                 android:text="2021年3月31日"
-                                android:textColor="#333333"
-                                android:textSize="@dimen/sp_12" />
+                                android:textColor="#000000"
+                                android:textSize="@dimen/certificateSize" />
 
                         </LinearLayout>
 
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="@dimen/dp_4"
+                            android:layout_marginTop="@dimen/certificateMarginTop"
                             android:gravity="center_vertical"
                             android:orientation="horizontal">
 
@@ -217,8 +217,8 @@
                                 android:layout_height="wrap_content"
                                 android:gravity="center_vertical"
                                 android:text="居住住址:"
-                                android:textColor="#333333"
-                                android:textSize="@dimen/sp_12" />
+                                android:textColor="#000000"
+                                android:textSize="@dimen/certificateSize" />
 
                             <TextView
                                 android:layout_width="wrap_content"
@@ -226,21 +226,19 @@
                                 android:layout_marginLeft="@dimen/dp_8"
                                 android:gravity="center_vertical"
                                 android:text="北京市西城区天桥街道"
-                                android:textColor="#333333"
-                                android:textSize="@dimen/sp_12" />
+                                android:textColor="#000000"
+                                android:textSize="@dimen/certificateSize" />
 
                         </LinearLayout>
 
-                        <TextView
+                        <com.dog.manage.app.view.TextBoldView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="@dimen/dp_15"
-                            android:layout_marginBottom="@dimen/dp_8"
                             android:gravity="center"
                             android:text="北京市公安局统一监制"
-                            android:textColor="#333333"
-                            android:textSize="@dimen/sp_14"
-                            android:textStyle="bold" />
+                            android:textColor="#000000"
+                            android:textSize="@dimen/sp_11"/>
 
                     </LinearLayout>
 
@@ -249,10 +247,10 @@
                         android:layout_width="@dimen/dp_84"
                         android:layout_height="@dimen/dp_78"
                         android:layout_alignParentRight="true"
-                        android:layout_marginRight="@dimen/dp_35"
+                        android:layout_marginRight="@dimen/dp_40"
                         android:background="@drawable/image_8" />
 
-                    <com.dog.manage.app.view.TextBoldView
+                    <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_below="@+id/certificateCoverView"
@@ -260,15 +258,14 @@
                         android:layout_marginTop="@dimen/dp_8"
                         android:gravity="center"
                         android:text="免疫证状态:有效"
-                        android:textColor="#333333"
-                        android:textSize="@dimen/sp_14" />
+                        android:textColor="#000000"
+                        android:textSize="@dimen/certificateSize" />
 
                     <ImageView
                         android:layout_width="@dimen/dp_70"
                         android:layout_height="@dimen/dp_70"
                         android:layout_alignBottom="@+id/certificateInfoContainer"
                         android:layout_alignParentRight="true"
-                        android:layout_margin="@dimen/dp_8"
                         android:background="@drawable/gongzhang" />
                 </RelativeLayout>
 
@@ -356,7 +353,7 @@
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/dp_16"
             android:background="@color/white"
-            android:visibility="gone"
+            android:visibility="visible"
             app:cardCornerRadius="@dimen/dp_8"
             app:cardElevation="@dimen/dp_6"
             app:cardPreventCornerOverlap="false">
@@ -379,23 +376,22 @@
                     android:singleLine="true"
                     android:text="北京市动物健康免疫证"
                     android:textColor="@color/black"
-                    android:textSize="@dimen/sp_18"/>
+                    android:textSize="@dimen/sp_20"/>
 
-                <TextView
+                <com.dog.manage.app.view.TextBoldView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/dp_13"
                     android:gravity="center"
                     android:singleLine="true"
-                    android:text="免疫证明编号: 2022030509870987612"
+                    android:text="免疫证明编号：2022030509870987612"
                     android:textColor="@color/black"
-                    android:textSize="@dimen/sp_14"
-                    android:textStyle="bold" />
+                    android:textSize="@dimen/sp_13"/>
 
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/dp_16">
+                    android:layout_marginTop="@dimen/dp_22">
 
                     <LinearLayout
                         android:id="@+id/infoContainer"
@@ -466,7 +462,7 @@
                                 android:layout_height="wrap_content"
                                 android:gravity="center_vertical"
                                 android:text="犬只毛色:"
-                                android:textColor="#333333"
+                                android:textColor="@color/black"
                                 android:textSize="@dimen/sp_12" />
 
                             <TextView
@@ -492,7 +488,7 @@
                                 android:layout_height="wrap_content"
                                 android:gravity="center_vertical"
                                 android:text="犬只品种:"
-                                android:textColor="#333333"
+                                android:textColor="@color/black"
                                 android:textSize="@dimen/sp_12" />
 
                             <TextView
@@ -501,7 +497,7 @@
                                 android:layout_marginLeft="@dimen/dp_8"
                                 android:gravity="center_vertical"
                                 android:text="严摩耶"
-                                android:textColor="#333333"
+                                android:textColor="@color/black"
                                 android:textSize="@dimen/sp_12" />
 
                         </LinearLayout>
@@ -518,7 +514,7 @@
                                 android:layout_height="wrap_content"
                                 android:gravity="center_vertical"
                                 android:text="街道(乡镇):"
-                                android:textColor="#333333"
+                                android:textColor="@color/black"
                                 android:textSize="@dimen/sp_12" />
 
                             <TextView
@@ -527,7 +523,7 @@
                                 android:layout_marginLeft="@dimen/dp_8"
                                 android:gravity="center_vertical"
                                 android:text="大红门街道"
-                                android:textColor="#333333"
+                                android:textColor="@color/black"
                                 android:textSize="@dimen/sp_12" />
 
                         </LinearLayout>
@@ -544,7 +540,7 @@
                                 android:layout_height="wrap_content"
                                 android:gravity="center_vertical"
                                 android:text="详细地址:"
-                                android:textColor="#333333"
+                                android:textColor="@color/black"
                                 android:textSize="@dimen/sp_12" />
 
                             <TextView
@@ -553,7 +549,7 @@
                                 android:layout_marginLeft="@dimen/dp_8"
                                 android:gravity="center_vertical"
                                 android:text="XXXXX地址"
-                                android:textColor="#333333"
+                                android:textColor="@color/black"
                                 android:textSize="@dimen/sp_12" />
 
                         </LinearLayout>
@@ -570,7 +566,7 @@
                                 android:layout_height="wrap_content"
                                 android:gravity="center_vertical"
                                 android:text="免疫状态:"
-                                android:textColor="#333333"
+                                android:textColor="@color/black"
                                 android:textSize="@dimen/sp_12" />
 
                             <TextView
@@ -579,7 +575,7 @@
                                 android:layout_marginLeft="@dimen/dp_8"
                                 android:gravity="center_vertical"
                                 android:text="已免疫"
-                                android:textColor="#333333"
+                                android:textColor="@color/black"
                                 android:textSize="@dimen/sp_12" />
 
                         </LinearLayout>
@@ -596,7 +592,7 @@
                                 android:layout_height="wrap_content"
                                 android:gravity="center_vertical"
                                 android:text="免疫点名称:"
-                                android:textColor="#333333"
+                                android:textColor="@color/black"
                                 android:textSize="@dimen/sp_12" />
 
                             <TextView
@@ -605,7 +601,7 @@
                                 android:layout_marginLeft="@dimen/dp_8"
                                 android:gravity="center_vertical"
                                 android:text="北京友好动物医院"
-                                android:textColor="#333333"
+                                android:textColor="@color/black"
                                 android:textSize="@dimen/sp_12" />
 
                         </LinearLayout>
@@ -622,7 +618,7 @@
                                 android:layout_height="wrap_content"
                                 android:gravity="center_vertical"
                                 android:text="疫苗名称:"
-                                android:textColor="#333333"
+                                android:textColor="@color/black"
                                 android:textSize="@dimen/sp_12" />
 
                             <TextView
@@ -631,7 +627,7 @@
                                 android:layout_marginLeft="@dimen/dp_8"
                                 android:gravity="center_vertical"
                                 android:text="狂犬病疫苗"
-                                android:textColor="#333333"
+                                android:textColor="@color/black"
                                 android:textSize="@dimen/sp_12" />
 
                         </LinearLayout>
@@ -648,7 +644,7 @@
                                 android:layout_height="wrap_content"
                                 android:gravity="center_vertical"
                                 android:text="疫苗批号:"
-                                android:textColor="#333333"
+                                android:textColor="@color/black"
                                 android:textSize="@dimen/sp_12" />
 
                             <TextView
@@ -657,7 +653,7 @@
                                 android:layout_marginLeft="@dimen/dp_8"
                                 android:gravity="center_vertical"
                                 android:text="CEWERWERW"
-                                android:textColor="#333333"
+                                android:textColor="@color/black"
                                 android:textSize="@dimen/sp_12" />
 
                         </LinearLayout>
@@ -674,7 +670,7 @@
                                 android:layout_height="wrap_content"
                                 android:gravity="center_vertical"
                                 android:text="疫苗厂家:"
-                                android:textColor="#333333"
+                                android:textColor="@color/black"
                                 android:textSize="@dimen/sp_12" />
 
                             <TextView
@@ -683,7 +679,7 @@
                                 android:layout_marginLeft="@dimen/dp_8"
                                 android:gravity="center_vertical"
                                 android:text="XXXXX厂家"
-                                android:textColor="#333333"
+                                android:textColor="@color/black"
                                 android:textSize="@dimen/sp_12" />
 
                         </LinearLayout>
@@ -700,7 +696,7 @@
                                 android:layout_height="wrap_content"
                                 android:gravity="center_vertical"
                                 android:text="免疫日期:"
-                                android:textColor="#333333"
+                                android:textColor="@color/black"
                                 android:textSize="@dimen/sp_12" />
 
                             <TextView
@@ -709,7 +705,7 @@
                                 android:layout_marginLeft="@dimen/dp_8"
                                 android:gravity="center_vertical"
                                 android:text="2022-03-05"
-                                android:textColor="#333333"
+                                android:textColor="@color/black"
                                 android:textSize="@dimen/sp_12" />
 
                         </LinearLayout>
@@ -726,7 +722,7 @@
                                 android:layout_height="wrap_content"
                                 android:gravity="center_vertical"
                                 android:text="免疫标识号:"
-                                android:textColor="#333333"
+                                android:textColor="@color/black"
                                 android:textSize="@dimen/sp_12" />
 
                             <TextView
@@ -735,7 +731,7 @@
                                 android:layout_marginLeft="@dimen/dp_8"
                                 android:gravity="center_vertical"
                                 android:text="02798"
-                                android:textColor="#333333"
+                                android:textColor="@color/black"
                                 android:textSize="@dimen/sp_12" />
 
                         </LinearLayout>
@@ -752,7 +748,7 @@
                                 android:layout_height="wrap_content"
                                 android:gravity="center_vertical"
                                 android:text="免疫人员:"
-                                android:textColor="#333333"
+                                android:textColor="@color/black"
                                 android:textSize="@dimen/sp_12" />
 
                             <TextView
@@ -761,7 +757,7 @@
                                 android:layout_marginLeft="@dimen/dp_8"
                                 android:gravity="center_vertical"
                                 android:text="张三"
-                                android:textColor="#333333"
+                                android:textColor="@color/black"
                                 android:textSize="@dimen/sp_12" />
 
                         </LinearLayout>
@@ -779,7 +775,7 @@
                                 android:layout_height="wrap_content"
                                 android:gravity="center_vertical"
                                 android:text="下次免疫时间:"
-                                android:textColor="#333333"
+                                android:textColor="@color/black"
                                 android:textSize="@dimen/sp_12" />
 
                             <TextView
@@ -788,7 +784,7 @@
                                 android:layout_marginLeft="@dimen/dp_8"
                                 android:gravity="center_vertical"
                                 android:text="2023-03-05"
-                                android:textColor="#333333"
+                                android:textColor="@color/black"
                                 android:textSize="@dimen/sp_12" />
 
                         </LinearLayout>

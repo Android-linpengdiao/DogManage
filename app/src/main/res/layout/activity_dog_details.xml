@@ -51,6 +51,7 @@
                         android:layout_width="@dimen/dp_20"
                         android:layout_height="@dimen/dp_20"
                         android:layout_marginRight="@dimen/dp_8"
+                        android:padding="@dimen/dp_2"
                         android:src="@drawable/daohang"
                         app:tint="@color/colorAppTheme"/>
 
@@ -75,6 +76,7 @@
                         android:layout_width="@dimen/dp_20"
                         android:layout_height="@dimen/dp_20"
                         android:layout_marginRight="@dimen/dp_8"
+                        android:padding="@dimen/dp_2"
                         android:src="@drawable/dingwei_s" />
 
                     <TextView
@@ -98,7 +100,8 @@
                         android:layout_width="@dimen/dp_20"
                         android:layout_height="@dimen/dp_20"
                         android:layout_marginRight="@dimen/dp_8"
-                        android:background="@drawable/dianhua" />
+                        android:padding="@dimen/dp_2"
+                        android:src="@drawable/dianhua" />
 
                     <TextView
                         android:layout_width="wrap_content"

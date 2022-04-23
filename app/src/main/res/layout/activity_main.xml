@@ -85,8 +85,11 @@
         </ScrollView>
 
         <RelativeLayout
+            android:id="@+id/topView"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            tools:visibility="visible">
 
             <ImageView
                 android:id="@+id/userView"
@@ -100,9 +103,9 @@
             <com.dog.manage.app.view.TextBoldView
                 android:layout_width="wrap_content"
                 android:layout_height="@dimen/dp_46"
-                android:text="北京市犬只管理服务平台"
-                android:gravity="center"
                 android:layout_centerInParent="true"
+                android:gravity="center"
+                android:text="北京市犬只管理服务平台"
                 android:textColor="@color/white"
                 android:textSize="@dimen/sp_18" />
 
@@ -124,9 +127,10 @@
 
                 <TextView
                     android:id="@+id/unreadMessageView"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="@dimen/dp_8"
+                    android:layout_height="@dimen/dp_8"
                     android:layout_alignParentRight="true"
+                    android:layout_margin="@dimen/dp_5"
                     android:background="@drawable/unread"
                     android:gravity="center"
                     android:paddingLeft="@dimen/dp_5"
