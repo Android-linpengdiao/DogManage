@@ -12,7 +12,7 @@ import com.dog.manage.app.databinding.ItemDongCertificateBinding;
 
 public class DogCertificateAdapter extends BaseRecyclerAdapter<String, ItemDongCertificateBinding> {
 
-
+    private int mPosition = -1;
     private OnClickListener onClickListener;
 
     public void setOnClickListener(OnClickListener onClickListener) {
@@ -42,6 +42,16 @@ public class DogCertificateAdapter extends BaseRecyclerAdapter<String, ItemDongC
     @Override
     protected void onBindItem(ItemDongCertificateBinding binding, String dataBean, int position) {
         GlideLoader.LoderImage(mContext, "https://pics7.baidu.com/feed/6c224f4a20a446236fb6db0ac3bf5d040df3d785.jpeg", binding.certificateCoverView,8);
+        binding.selectedView.setSelected(mPosition == position ? true : false);
+        binding.selectedView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mPosition = position;
+                notifyDataSetChanged();
+                if (onClickListener != null)
+                    onClickListener.onClick(view, dataBean);
+            }
+        });
         binding.getRoot().setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

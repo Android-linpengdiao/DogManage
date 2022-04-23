@@ -55,6 +55,12 @@ public class UpdateDogOwnerInfoActivity extends BaseActivity {
 
         if (type == type_details) {
             binding.firstStepView.setSelected(true);
+            binding.addressView.binding.itemContent.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    openActivity(AreaSelectActivity.class,request_City);
+                }
+            });
 
         } else if (type == type_submit) {
             binding.secondStepView.setSelected(true);
@@ -79,6 +85,7 @@ public class UpdateDogOwnerInfoActivity extends BaseActivity {
     }
 
     private final int request_HouseProprietaryCertificate = 100;
+    private final int request_City = 200;
 
     /**
      * 上传房产证或房屋租赁合同
@@ -102,6 +109,12 @@ public class UpdateDogOwnerInfoActivity extends BaseActivity {
                 case request_HouseProprietaryCertificate:
                     compressImage(data, request_HouseProprietaryCertificate);
 
+                    break;
+                case request_City:
+                    if (data != null) {
+                        String cityName = data.getStringExtra("cityName");
+                        binding.addressView.binding.itemContent.setText(cityName);
+                    }
                     break;
             }
         }

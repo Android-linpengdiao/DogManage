@@ -93,6 +93,12 @@ public class DogCertificateEditDogOwnerActivity extends BaseActivity {
                 }
             }
         });
+        binding.addressView.binding.itemContent.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                openActivity(AreaSelectActivity.class, request_City);
+            }
+        });
 
 
     }
@@ -224,7 +230,7 @@ public class DogCertificateEditDogOwnerActivity extends BaseActivity {
         if (type == type_adoption) {
             openActivity(DogAdoptionSubmitActivity.class);
 
-        }else if (type == type_userInfo) {
+        } else if (type == type_userInfo) {
             finish();
 
         } else {
@@ -245,6 +251,7 @@ public class DogCertificateEditDogOwnerActivity extends BaseActivity {
     private final int request_ManagementSystem = 800;
     private final int request_Facility1 = 900;
     private final int request_Facility2 = 1000;
+    private final int request_City = 1100;
 
     /**
      * 个人证件 上传身份证人像面
@@ -431,6 +438,12 @@ public class DogCertificateEditDogOwnerActivity extends BaseActivity {
                 case request_Facility2:
                     compressImage(data, request_Facility2);
 
+                    break;
+                case request_City:
+                    if (data != null) {
+                        String cityName = data.getStringExtra("cityName");
+                        binding.addressView.binding.itemContent.setText(cityName);
+                    }
                     break;
             }
         }

@@ -54,7 +54,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".activity.PayActivity"></activity>
+        <activity android:name=".activity.AreaSelectActivity"></activity>
+        <activity android:name=".activity.PayActivity" />
         <activity android:name=".media.MediaSelectActivity" />
         <activity
             android:name=".activity.ImmuneDetailsActivity"
@@ -174,7 +175,7 @@
         <activity
             android:name=".activity.LoginActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/LoginTheme"/>
+            android:theme="@style/LoginTheme" />
         <activity
             android:name=".activity.WelcomeActivity"
             android:configChanges="orientation|screenSize|keyboardHidden"

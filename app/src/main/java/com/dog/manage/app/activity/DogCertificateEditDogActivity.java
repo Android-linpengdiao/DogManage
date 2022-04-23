@@ -9,6 +9,7 @@ import android.view.View;
 import com.base.utils.FileUtils;
 import com.base.utils.GlideLoader;
 import com.base.utils.PermissionUtils;
+import com.base.view.OnClickListener;
 import com.dog.manage.app.R;
 import com.dog.manage.app.databinding.ActivityDogCertificateEditDogBinding;
 import com.dog.manage.app.media.MediaFile;
@@ -18,6 +19,7 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
 import java.io.File;
+import java.util.Arrays;
 import java.util.List;
 
 import top.zibin.luban.Luban;
@@ -31,6 +33,8 @@ public class DogCertificateEditDogActivity extends BaseActivity {
     public static final int type_certificate = 1;//犬证办理
     public static final int type_immune = 2;//免疫证办理
     private int type = 0;
+
+    private List<String> dogList = Arrays.asList("添加新犬只","萨摩耶", "柯基", "泰迪", "哈士奇");
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,6 +61,24 @@ public class DogCertificateEditDogActivity extends BaseActivity {
             binding.thirdStepView.setText("③选择医院");
 
         }
+
+        binding.dogCertificateView.binding.itemContent.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onClickDogCertificate(DogCertificateEditDogActivity.this, dogList, dogList.indexOf(binding.dogCertificateView.binding.itemContent.getText().toString()), new OnClickListener() {
+                    @Override
+                    public void onClick(View view, Object object) {
+                        String content = (String) object;
+                        binding.dogCertificateView.binding.itemContent.setText(content);
+                    }
+
+                    @Override
+                    public void onLongClick(View view, Object object) {
+
+                    }
+                });
+            }
+        });
 
     }
 

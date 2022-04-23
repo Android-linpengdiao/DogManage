@@ -28,6 +28,7 @@ import com.base.BaseData;
 import com.base.Constants;
 import com.base.MessageBus;
 import com.base.UserInfo;
+import com.base.manager.DialogManager;
 import com.base.manager.LoadingManager;
 import com.base.utils.CommonUtil;
 import com.base.utils.FileUtils;
@@ -35,6 +36,7 @@ import com.base.utils.MsgCache;
 import com.base.utils.PermissionUtils;
 import com.base.utils.StatusBarUtil;
 import com.base.utils.ToastUtils;
+import com.base.view.OnClickListener;
 import com.dog.manage.app.Callback;
 import com.dog.manage.app.R;
 //import com.lianqinbang.Callback;
@@ -268,6 +270,16 @@ public class BaseActivity extends AppCompatActivity {
         });
     }
 
+    public void onClickDogCertificate(Activity activity, List<String> list, int index, OnClickListener listener) {
+        DialogManager.getInstance().showRankDialog(activity, list, index,
+                new DialogManager.OnClickListener() {
+                    @Override
+                    public void onClick(View view, Object object) {
+                        if (listener!=null)
+                        listener.onClick(view,object);
+                    }
+                });
+    }
 
     public void openActivity(Class<?> mClass) {
         openActivity(mClass, null);

@@ -7,6 +7,7 @@ import com.base.BaseApplication;
 import com.base.utils.LogUtil;
 import com.chuanglan.shanyan_sdk.OneKeyLoginManager;
 import com.chuanglan.shanyan_sdk.listener.InitListener;
+import com.dog.manage.app.area.CityManager;
 import com.okhttp.utils.HttpsUtils;
 import com.okhttp.utils.OkHttpUtils;
 import com.scwang.smart.refresh.footer.ClassicsFooter;
@@ -40,6 +41,8 @@ public class MyApplication extends BaseApplication {
         initSmartRefresh();
         rxJava();
         initOkHttp();
+        //初始化城市
+        CityManager.getInstance().setMapData();
 
         if (getSharedPreferences("sp_data", Context.MODE_PRIVATE).getBoolean("appService", false)) {
             initShanyanSDK();
