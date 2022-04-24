@@ -74,6 +74,13 @@ public class DogLogoutDetailsActivity extends BaseActivity {
         binding.radioButton1.setBackgroundColor(getResources().getColor(R.color.transparent));
         binding.radioButton0.setVisibility(View.GONE);
 
+        binding.descriptionView.setEnabled(false);
+        binding.descriptionView.setText("丢失了");
+        GlideLoader.LoderImage(DogLogoutDetailsActivity.this, "https://pics7.baidu.com/feed/6c224f4a20a446236fb6db0ac3bf5d040df3d785.jpeg", binding.pictureView1, 6);
+        GlideLoader.LoderImage(DogLogoutDetailsActivity.this, "https://pics7.baidu.com/feed/6c224f4a20a446236fb6db0ac3bf5d040df3d785.jpeg", binding.pictureView2, 6);
+        GlideLoader.LoderImage(DogLogoutDetailsActivity.this, "https://pics7.baidu.com/feed/6c224f4a20a446236fb6db0ac3bf5d040df3d785.jpeg", binding.pictureView3, 6);
+
+
     }
 
     private void initSubmitView() {

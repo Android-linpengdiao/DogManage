@@ -7,8 +7,7 @@ import android.view.View;
 import com.base.BaseRecyclerAdapter;
 import com.base.view.OnClickListener;
 import com.dog.manage.app.R;
-import com.dog.manage.app.activity.record.AdoptionRecordActivity;
-import com.dog.manage.app.databinding.ItemAdoptionRecordBinding;
+import com.dog.manage.app.activity.record.RecordActivity;
 import com.dog.manage.app.databinding.ItemCertificateRecordBinding;
 
 public class CertificateRecordAdapter extends BaseRecyclerAdapter<String, ItemCertificateRecordBinding> {
@@ -41,7 +40,7 @@ public class CertificateRecordAdapter extends BaseRecyclerAdapter<String, ItemCe
     @Override
     protected void onBindItem(ItemCertificateRecordBinding binding, String dataBean, int position) {
 
-        if (type == AdoptionRecordActivity.type_certificate) {
+        if (type == RecordActivity.type_certificate) {
             binding.titleView.setText("犬证办理");
             binding.bottomView.setVisibility(View.VISIBLE);
             binding.dogOwnerContainer.setVisibility(View.INVISIBLE);
@@ -68,7 +67,7 @@ public class CertificateRecordAdapter extends BaseRecyclerAdapter<String, ItemCe
 
             }
 
-        } else if (type == AdoptionRecordActivity.type_immune) {
+        } else if (type == RecordActivity.type_immune) {
             binding.titleView.setText("免疫证办理");
             binding.dogOwnerContainer.setVisibility(View.INVISIBLE);
             binding.contentView.setText("萨摩耶-2岁3个月");
@@ -94,7 +93,7 @@ public class CertificateRecordAdapter extends BaseRecyclerAdapter<String, ItemCe
 
             }
 
-        } else if (type == AdoptionRecordActivity.type_transfer) {
+        } else if (type == RecordActivity.type_transfer) {
             binding.titleView.setText("犬只过户");
             if (position == 1) {
                 binding.checkStatusView.setText("过户成功");
@@ -112,7 +111,7 @@ public class CertificateRecordAdapter extends BaseRecyclerAdapter<String, ItemCe
 
             }
 
-        } else if (type == AdoptionRecordActivity.type_logout) {
+        } else if (type == RecordActivity.type_logout) {
             binding.titleView.setText("犬只注销");
             binding.bottomView.setVisibility(View.GONE);
             binding.contentView.setText("萨摩耶-2岁3个月");

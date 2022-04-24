@@ -54,7 +54,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".activity.AreaSelectActivity"></activity>
+        <activity android:name=".activity.AreaSelectActivity" />
         <activity android:name=".activity.PayActivity" />
         <activity android:name=".media.MediaSelectActivity" />
         <activity
@@ -94,9 +94,12 @@
             android:name=".activity.DogCertificateExaminedActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".activity.DogDetailsActivity"
+            android:name=".activity.DogDetailsThemeActivity"
             android:screenOrientation="portrait"
             android:theme="@style/WindowDialog" />
+        <activity
+            android:name=".activity.DogDetailsActivity"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".activity.DogAdoptionActivity"
             android:screenOrientation="portrait" />
@@ -170,7 +173,7 @@
             android:name=".activity.DogOwnerInfoActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".activity.record.AdoptionRecordActivity"
+            android:name=".activity.record.RecordActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".activity.LoginActivity"

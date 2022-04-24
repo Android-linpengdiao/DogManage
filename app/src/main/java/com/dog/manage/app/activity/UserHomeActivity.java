@@ -5,14 +5,12 @@ import android.Manifest;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 
 import com.base.utils.FileUtils;
 import com.base.utils.GlideLoader;
-import com.base.utils.GsonUtils;
 import com.dog.manage.app.R;
-import com.dog.manage.app.activity.record.AdoptionRecordActivity;
+import com.dog.manage.app.activity.record.RecordActivity;
 import com.dog.manage.app.activity.record.PunishRecordActivity;
 import com.dog.manage.app.databinding.ActivityUserHomeBinding;
 import com.dog.manage.app.media.MediaFile;
@@ -21,14 +19,8 @@ import com.dog.manage.app.media.MediaUtils;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import java.io.File;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import pub.devrel.easypermissions.AfterPermissionGranted;
 import pub.devrel.easypermissions.EasyPermissions;
@@ -150,36 +142,36 @@ public class UserHomeActivity extends BaseActivity {
 
     public void onClickCertificate(View view) {
         Bundle bundle = new Bundle();
-        bundle.putInt("type", AdoptionRecordActivity.type_certificate);
-        openActivity(AdoptionRecordActivity.class, bundle);
+        bundle.putInt("type", RecordActivity.type_certificate);
+        openActivity(RecordActivity.class, bundle);
 
     }
 
     public void onClickImmune(View view) {
         Bundle bundle = new Bundle();
-        bundle.putInt("type", AdoptionRecordActivity.type_immune);
-        openActivity(AdoptionRecordActivity.class, bundle);
+        bundle.putInt("type", RecordActivity.type_immune);
+        openActivity(RecordActivity.class, bundle);
 
     }
 
     public void onClickTransfer(View view) {
         Bundle bundle = new Bundle();
-        bundle.putInt("type", AdoptionRecordActivity.type_transfer);
-        openActivity(AdoptionRecordActivity.class, bundle);
+        bundle.putInt("type", RecordActivity.type_transfer);
+        openActivity(RecordActivity.class, bundle);
 
     }
 
     public void onClickAdoption(View view) {
         Bundle bundle = new Bundle();
-        bundle.putInt("type", AdoptionRecordActivity.type_adoption);
-        openActivity(AdoptionRecordActivity.class, bundle);
+        bundle.putInt("type", RecordActivity.type_adoption);
+        openActivity(RecordActivity.class, bundle);
 
     }
 
     public void onClickLogout(View view) {
         Bundle bundle = new Bundle();
-        bundle.putInt("type", AdoptionRecordActivity.type_logout);
-        openActivity(AdoptionRecordActivity.class, bundle);
+        bundle.putInt("type", RecordActivity.type_logout);
+        openActivity(RecordActivity.class, bundle);
 
     }
 

@@ -9,19 +9,24 @@ import android.view.WindowManager;
 
 import com.base.utils.GlideLoader;
 import com.dog.manage.app.R;
-import com.dog.manage.app.databinding.ActivityDogDetailsBinding;
+import com.dog.manage.app.databinding.ActivityDogDetailsThemeBinding;
 
-public class DogDetailsActivity extends BaseActivity {
+public class DogDetailsThemeActivity extends BaseActivity {
 
-    private ActivityDogDetailsBinding binding;
+    private ActivityDogDetailsThemeBinding binding;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        binding = getViewData(R.layout.activity_dog_details);
+        binding = getViewData(R.layout.activity_dog_details_theme);
         addActivity(this);
 
-        GlideLoader.LoderImage(this, "https://pics7.baidu.com/feed/6c224f4a20a446236fb6db0ac3bf5d040df3d785.jpeg", binding.coverView);
+        WindowManager.LayoutParams layoutParams = getWindow().getAttributes();
+        layoutParams.width = ViewGroup.LayoutParams.FILL_PARENT;
+        layoutParams.gravity = Gravity.BOTTOM;
+        getWindow().setAttributes(layoutParams);
+
+        GlideLoader.LoderRoundedImage(this, "https://pics7.baidu.com/feed/6c224f4a20a446236fb6db0ac3bf5d040df3d785.jpeg", binding.coverView, 16);
 
     }
 

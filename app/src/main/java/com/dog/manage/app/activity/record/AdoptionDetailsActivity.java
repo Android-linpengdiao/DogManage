@@ -7,6 +7,7 @@ import com.base.utils.GlideLoader;
 import com.dog.manage.app.R;
 import com.dog.manage.app.activity.BaseActivity;
 import com.dog.manage.app.activity.DogDetailsActivity;
+import com.dog.manage.app.activity.PayActivity;
 import com.dog.manage.app.databinding.ActivityAdoptionDetailsBinding;
 
 /**
@@ -32,7 +33,7 @@ public class AdoptionDetailsActivity extends BaseActivity {
         binding.confirmView.setText(type == 1 ? "在线支付" : type == 3 ? "重新提交" : "在线支付");
         binding.hintView.setVisibility(type == 1 ? View.VISIBLE : View.GONE);
 
-        GlideLoader.LoderImage(this, "https://pics7.baidu.com/feed/6c224f4a20a446236fb6db0ac3bf5d040df3d785.jpeg", binding.coverView,8);
+        GlideLoader.LoderImage(this, "https://pics7.baidu.com/feed/6c224f4a20a446236fb6db0ac3bf5d040df3d785.jpeg", binding.coverView, 8);
 
         binding.dogDetailsView.binding.itemInfo.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -41,5 +42,11 @@ public class AdoptionDetailsActivity extends BaseActivity {
             }
         });
 
+    }
+
+    public void onClickConfirm(View view) {
+        if (type == 1) {
+            openActivity(PayActivity.class);
+        }
     }
 }

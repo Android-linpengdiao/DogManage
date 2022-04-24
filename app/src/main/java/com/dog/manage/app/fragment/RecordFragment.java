@@ -20,12 +20,11 @@ import com.dog.manage.app.activity.DogLogoutDetailsActivity;
 import com.dog.manage.app.activity.ImmuneDetailsActivity;
 import com.dog.manage.app.activity.TransferDetailsActivity;
 import com.dog.manage.app.activity.record.AdoptionDetailsActivity;
-import com.dog.manage.app.activity.record.AdoptionRecordActivity;
-import com.dog.manage.app.activity.record.PunishDetailsActivity;
+import com.dog.manage.app.activity.record.RecordActivity;
 import com.dog.manage.app.adapter.AdoptionRecordAdapter;
 import com.dog.manage.app.adapter.CertificateRecordAdapter;
 import com.dog.manage.app.adapter.PunishRecordAdapter;
-import com.dog.manage.app.databinding.FragmentAdoptionRecordBinding;
+import com.dog.manage.app.databinding.FragmentRecordBinding;
 import com.okhttp.Pager;
 import com.okhttp.SendRequest;
 import com.okhttp.callbacks.GenericsCallback;
@@ -39,21 +38,20 @@ import java.util.Arrays;
 import okhttp3.Call;
 
 /**
- * 领养记录
+ * 记录
  */
-public class AdoptionRecordFragment extends BaseFragment {
+public class RecordFragment extends BaseFragment {
 
-    private FragmentAdoptionRecordBinding binding;
+    private FragmentRecordBinding binding;
 
     private int type;
 
     private Pager<BaseData> creationPager = new Pager<>();
     private AdoptionRecordAdapter adoptionRecordAdapter;
     private CertificateRecordAdapter certificateRecordAdapter;
-    private PunishRecordAdapter punishRecordAdapter;
 
-    public static AdoptionRecordFragment getInstance(int type, int id) {
-        AdoptionRecordFragment fragment = new AdoptionRecordFragment();
+    public static RecordFragment getInstance(int type, int id) {
+        RecordFragment fragment = new RecordFragment();
         Bundle bundle = new Bundle();
         bundle.putInt("type", type);
         bundle.putInt("id", id);
@@ -65,17 +63,11 @@ public class AdoptionRecordFragment extends BaseFragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_adoption_record, container, false);
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_record, container, false);
 
         if (getArguments() != null) {
 
             type = getArguments().getInt("type");
-
-//            GridItemDecoration.Builder builder = new GridItemDecoration.Builder(getActivity());
-//            builder.color(R.color.transparent);
-//            builder.size(CommonUtil.dip2px(getActivity(), 4));
-//            binding.recyclerView.addItemDecoration(new GridItemDecoration(builder));
-//            binding.recyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 2));
 
             binding.recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
             binding.recyclerView.setNestedScrollingEnabled(false);
@@ -87,7 +79,7 @@ public class AdoptionRecordFragment extends BaseFragment {
 
             binding.recyclerView.setNestedScrollingEnabled(false);
 
-            if (type == AdoptionRecordActivity.type_certificate) {
+            if (type == RecordActivity.type_certificate) {
                 certificateRecordAdapter = new CertificateRecordAdapter(getActivity());
                 binding.recyclerView.setAdapter(certificateRecordAdapter);
                 certificateRecordAdapter.setType(type);
@@ -96,7 +88,7 @@ public class AdoptionRecordFragment extends BaseFragment {
                     public void onClick(View view, Object object) {
                         Bundle bundle = new Bundle();
                         bundle.putInt("type", (Integer) object);
-                        openActivity(CertificateDetailsActivity.class,bundle);
+                        openActivity(CertificateDetailsActivity.class, bundle);
 
                     }
 
@@ -107,7 +99,7 @@ public class AdoptionRecordFragment extends BaseFragment {
                 });
                 certificateRecordAdapter.refreshData(Arrays.asList("", "", "", "", "", "", "", "", ""));
 
-            } else if (type == AdoptionRecordActivity.type_immune) {
+            } else if (type == RecordActivity.type_immune) {
                 certificateRecordAdapter = new CertificateRecordAdapter(getActivity());
                 binding.recyclerView.setAdapter(certificateRecordAdapter);
                 certificateRecordAdapter.setType(type);
@@ -116,7 +108,7 @@ public class AdoptionRecordFragment extends BaseFragment {
                     public void onClick(View view, Object object) {
                         Bundle bundle = new Bundle();
                         bundle.putInt("type", (Integer) object);
-                        openActivity(ImmuneDetailsActivity.class,bundle);
+                        openActivity(ImmuneDetailsActivity.class, bundle);
 
                     }
 
@@ -127,7 +119,7 @@ public class AdoptionRecordFragment extends BaseFragment {
                 });
                 certificateRecordAdapter.refreshData(Arrays.asList("", "", "", "", "", "", "", "", ""));
 
-            } else if (type == AdoptionRecordActivity.type_transfer) {
+            } else if (type == RecordActivity.type_transfer) {
                 certificateRecordAdapter = new CertificateRecordAdapter(getActivity());
                 binding.recyclerView.setAdapter(certificateRecordAdapter);
                 certificateRecordAdapter.setType(type);
@@ -136,7 +128,7 @@ public class AdoptionRecordFragment extends BaseFragment {
                     public void onClick(View view, Object object) {
                         Bundle bundle = new Bundle();
                         bundle.putInt("type", (Integer) object);
-                        openActivity(TransferDetailsActivity.class,bundle);
+                        openActivity(TransferDetailsActivity.class, bundle);
 
                     }
 
@@ -147,7 +139,7 @@ public class AdoptionRecordFragment extends BaseFragment {
                 });
                 certificateRecordAdapter.refreshData(Arrays.asList("", "", "", "", "", "", "", "", ""));
 
-            } else if (type == AdoptionRecordActivity.type_adoption) {
+            } else if (type == RecordActivity.type_adoption) {
                 adoptionRecordAdapter = new AdoptionRecordAdapter(getActivity());
                 binding.recyclerView.setAdapter(adoptionRecordAdapter);
                 adoptionRecordAdapter.setOnClickListener(new OnClickListener() {
@@ -155,7 +147,7 @@ public class AdoptionRecordFragment extends BaseFragment {
                     public void onClick(View view, Object object) {
                         Bundle bundle = new Bundle();
                         bundle.putInt("type", (Integer) object);
-                        openActivity(AdoptionDetailsActivity.class,bundle);
+                        openActivity(AdoptionDetailsActivity.class, bundle);
 
                     }
 
@@ -166,7 +158,7 @@ public class AdoptionRecordFragment extends BaseFragment {
                 });
                 adoptionRecordAdapter.refreshData(Arrays.asList("", "", "", "", "", "", "", "", ""));
 
-            } else if (type == AdoptionRecordActivity.type_logout) {
+            } else if (type == RecordActivity.type_logout) {
                 certificateRecordAdapter = new CertificateRecordAdapter(getActivity());
                 binding.recyclerView.setAdapter(certificateRecordAdapter);
                 certificateRecordAdapter.setType(type);
@@ -186,23 +178,6 @@ public class AdoptionRecordFragment extends BaseFragment {
                     }
                 });
                 certificateRecordAdapter.refreshData(Arrays.asList("", "", "", "", "", "", "", "", ""));
-
-            } else if (type == AdoptionRecordActivity.type_punish) {
-                punishRecordAdapter = new PunishRecordAdapter(getActivity());
-                binding.recyclerView.setAdapter(punishRecordAdapter);
-                punishRecordAdapter.setOnClickListener(new OnClickListener() {
-                    @Override
-                    public void onClick(View view, Object object) {
-                        openActivity(PunishDetailsActivity.class);
-
-                    }
-
-                    @Override
-                    public void onLongClick(View view, Object object) {
-
-                    }
-                });
-                punishRecordAdapter.refreshData(Arrays.asList("", "", "", "", "", "", "", "", ""));
 
             }
 

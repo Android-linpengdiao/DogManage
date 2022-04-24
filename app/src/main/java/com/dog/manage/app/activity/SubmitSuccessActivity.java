@@ -4,7 +4,7 @@ import android.os.Bundle;
 import android.view.View;
 
 import com.dog.manage.app.R;
-import com.dog.manage.app.activity.record.AdoptionRecordActivity;
+import com.dog.manage.app.activity.record.RecordActivity;
 import com.dog.manage.app.databinding.ActivitySubmitSuccessBinding;
 
 public class SubmitSuccessActivity extends BaseActivity {
@@ -65,30 +65,30 @@ public class SubmitSuccessActivity extends BaseActivity {
     public void onClickRecord(View view) {
         Bundle bundle = new Bundle();
         if (type == type_certificate) {
-            bundle.putInt("type", AdoptionRecordActivity.type_certificate);
-            openActivity(AdoptionRecordActivity.class, bundle);
+            bundle.putInt("type", RecordActivity.type_certificate);
+            openActivity(RecordActivity.class, bundle);
 
         } else if (type == type_logout) {
-            bundle.putInt("type", AdoptionRecordActivity.type_logout);
-            openActivity(AdoptionRecordActivity.class, bundle);
+            bundle.putInt("type", RecordActivity.type_logout);
+            openActivity(RecordActivity.class, bundle);
 
         } else if (type == type_update) {
             binding.titleView.binding.itemTitle.setText("信息变更");
 
         } else if (type == type_transfer) {
-            bundle.putInt("type", AdoptionRecordActivity.type_transfer);
-            openActivity(AdoptionRecordActivity.class, bundle);
+            bundle.putInt("type", RecordActivity.type_transfer);
+            openActivity(RecordActivity.class, bundle);
 
         } else if (type == type_immune) {
-            bundle.putInt("type", AdoptionRecordActivity.type_immune);
-            openActivity(AdoptionRecordActivity.class, bundle);
+            bundle.putInt("type", RecordActivity.type_immune);
+            openActivity(RecordActivity.class, bundle);
 
         } else if (type == type_examined) {
             binding.titleView.binding.itemTitle.setText("犬证年审");
 
         } else if (type == type_adoption) {
-            bundle.putInt("type", AdoptionRecordActivity.type_adoption);
-            openActivity(AdoptionRecordActivity.class, bundle);
+            bundle.putInt("type", RecordActivity.type_adoption);
+            openActivity(RecordActivity.class, bundle);
 
         }
     }
