@@ -25,6 +25,21 @@ public class CertificateDetailsActivity extends BaseActivity {
         binding.confirmView.setVisibility(type == 0 ? View.GONE : View.VISIBLE);
         binding.confirmView.setBackgroundResource(type == 2 ? R.drawable.button_red : R.drawable.button_theme);
 
+        binding.dogOwnerInfoView.binding.itemInfo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Bundle bundle = new Bundle();
+                bundle.putInt("type", DogCertificateEditDogOwnerActivity.type_details);
+                openActivity(DogCertificateEditDogOwnerActivity.class, bundle);
+            }
+        });
+        binding.dogDetailsView.binding.itemInfo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                openActivity(DogDetailsActivity.class);
+            }
+        });
+
     }
 
     public void onClickConfirm(View view) {

@@ -277,6 +277,7 @@
                 android:background="@color/colorDivider" />
 
             <com.dog.manage.app.view.ViewItemLayout
+                android:id="@+id/dogOwnerInfoView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/app_background"
@@ -300,6 +301,7 @@
                 android:background="@color/colorDivider" />
 
             <com.dog.manage.app.view.ViewItemLayout
+                android:id="@+id/dogDetailsView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/app_background"
@@ -333,6 +335,7 @@
                 android:textSize="@dimen/sp_15" />
 
             <TextView
+                android:id="@+id/examinedView"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/dp_48"
                 android:layout_marginLeft="@dimen/dp_28"

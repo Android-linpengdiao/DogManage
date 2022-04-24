@@ -133,6 +133,7 @@
                     android:textSize="@dimen/sp_16" />
 
                 <com.dog.manage.app.view.ViewItemLayout
+                    android:id="@+id/dogOwnerInfoView"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@color/white"
@@ -156,6 +157,7 @@
                     android:background="@color/colorDivider" />
 
                 <com.dog.manage.app.view.ViewItemLayout
+                    android:id="@+id/dogDetailsView"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@color/white"

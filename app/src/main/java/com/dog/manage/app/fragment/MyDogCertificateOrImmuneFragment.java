@@ -10,6 +10,9 @@ import androidx.databinding.DataBindingUtil;
 
 import com.base.utils.GlideLoader;
 import com.dog.manage.app.R;
+import com.dog.manage.app.activity.DogCertificateEditDogOwnerActivity;
+import com.dog.manage.app.activity.DogCertificateExaminedActivity;
+import com.dog.manage.app.activity.DogDetailsActivity;
 import com.dog.manage.app.databinding.FragmentMyDogCertificateOrImmuneBinding;
 
 /**
@@ -47,12 +50,33 @@ public class MyDogCertificateOrImmuneFragment extends BaseFragment {
 
             if (type == type_certificate) {
                 GlideLoader.LoderImage(getActivity(), "https://pics7.baidu.com/feed/6c224f4a20a446236fb6db0ac3bf5d040df3d785.jpeg", binding.certificateCoverView, 5);
+                binding.dogOwnerInfoView.binding.itemInfo.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Bundle bundle = new Bundle();
+                        bundle.putInt("type", DogCertificateEditDogOwnerActivity.type_details);
+                        openActivity(DogCertificateEditDogOwnerActivity.class, bundle);
+                    }
+                });
+                binding.dogDetailsView.binding.itemInfo.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        openActivity(DogDetailsActivity.class);
+                    }
+                });
+                binding.examinedView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        openActivity(DogCertificateExaminedActivity.class);
+                    }
+                });
 
             } else if (type == type_immune) {
                 GlideLoader.LoderImage(getActivity(), "https://pics7.baidu.com/feed/6c224f4a20a446236fb6db0ac3bf5d040df3d785.jpeg", binding.coverView, 5);
 
 
             }
+
 
         }
         return binding.getRoot();

@@ -6,6 +6,7 @@ import android.view.View;
 import com.base.utils.GlideLoader;
 import com.dog.manage.app.R;
 import com.dog.manage.app.activity.BaseActivity;
+import com.dog.manage.app.activity.DogCertificateEditDogOwnerActivity;
 import com.dog.manage.app.activity.DogDetailsActivity;
 import com.dog.manage.app.activity.PayActivity;
 import com.dog.manage.app.databinding.ActivityAdoptionDetailsBinding;
@@ -35,6 +36,14 @@ public class AdoptionDetailsActivity extends BaseActivity {
 
         GlideLoader.LoderImage(this, "https://pics7.baidu.com/feed/6c224f4a20a446236fb6db0ac3bf5d040df3d785.jpeg", binding.coverView, 8);
 
+        binding.dogOwnerInfoView.binding.itemInfo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Bundle bundle = new Bundle();
+                bundle.putInt("type", DogCertificateEditDogOwnerActivity.type_details);
+                openActivity(DogCertificateEditDogOwnerActivity.class, bundle);
+            }
+        });
         binding.dogDetailsView.binding.itemInfo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

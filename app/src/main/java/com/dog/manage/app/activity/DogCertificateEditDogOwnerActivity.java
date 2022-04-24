@@ -41,6 +41,7 @@ public class DogCertificateEditDogOwnerActivity extends BaseActivity {
     public static final int type_certificate = 1;//犬证办理
     public static final int type_immune = 2;//免疫证办理
     public static final int type_adoption = 3;//犬只领养
+    public static final int type_details = 4;//犬主信息
     private int type = 0;
 
     @Override
@@ -77,6 +78,11 @@ public class DogCertificateEditDogOwnerActivity extends BaseActivity {
             binding.secondStepView.setText("②犬主信息");
             binding.thirdStepView.setText("③提交审核");
             binding.secondStepView.setPadding(getResources().getDimensionPixelOffset(R.dimen.dp_10), 0, getResources().getDimensionPixelOffset(R.dimen.dp_10), 0);
+
+        } else if (type == type_details) {
+            binding.titleView.binding.itemTitle.setText("犬主信息");
+            binding.stepContainer.setVisibility(View.GONE);
+            binding.confirmView.setVisibility(View.GONE);
 
         }
 

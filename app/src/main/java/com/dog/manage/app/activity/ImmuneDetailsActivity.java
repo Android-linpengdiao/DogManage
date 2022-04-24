@@ -23,5 +23,20 @@ public class ImmuneDetailsActivity extends BaseActivity {
         binding.confirmView.setVisibility(type == 0 ? View.GONE : View.VISIBLE);
         binding.confirmView.setText(type == 1 ? "查看免疫证":"立即办理");
 
+        binding.dogOwnerInfoView.binding.itemInfo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Bundle bundle = new Bundle();
+                bundle.putInt("type", DogCertificateEditDogOwnerActivity.type_details);
+                openActivity(DogCertificateEditDogOwnerActivity.class, bundle);
+            }
+        });
+        binding.dogDetailsView.binding.itemInfo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                openActivity(DogDetailsActivity.class);
+            }
+        });
+
     }
 }
