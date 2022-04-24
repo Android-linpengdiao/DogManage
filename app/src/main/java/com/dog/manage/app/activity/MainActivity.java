@@ -83,7 +83,6 @@ public class MainActivity extends BaseActivity {
                     openActivity(MainDogManageWorkflowActivity.class);
                 } else if (position == 8) {
                     openActivity(PoliciesActivity.class);
-                    openActivity(DogImmuneHospitalActivity.class);
                 } else {
                     if (checkUserRank(getApplicationContext(), true)) {
                         Bundle bundle = new Bundle();

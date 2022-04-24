@@ -83,12 +83,12 @@ public class MapPopupWindow extends BasePopupWindow {
     }
 
     @Override
-    protected int initWidth() {
-        return CommonUtil.getScreenWidth(context);
+    protected int initHeight() {
+        return CommonUtil.getScreenHeight(context);
     }
 
     @Override
-    protected int initHeight() {
-        return -1;
+    protected int initWidth() {
+        return CommonUtil.getScreenWidth(context);
     }
 }

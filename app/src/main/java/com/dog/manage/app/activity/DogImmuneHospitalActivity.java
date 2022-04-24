@@ -156,18 +156,16 @@ public class DogImmuneHospitalActivity extends BaseActivity implements AMap.OnMa
 
     @Override
     public boolean onMarkerClick(Marker marker) {
-        Log.i(TAG, "onMarkerClick: id = " + marker.getTitle());
         return false;
     }
 
-    private String name = "北京";
 
     private void openMapNavigate(LatLng latLng) {
         List<String> hasMap = new MapNavigationUtil().hasMap(DogImmuneHospitalActivity.this);
         if (hasMap.size() > 0) {
-            MapNavigationUtil.showChooseMap(DogImmuneHospitalActivity.this, new LocationBean(name, latLng.latitude, latLng.longitude));
+            MapNavigationUtil.showChooseMap(DogImmuneHospitalActivity.this, new LocationBean(null, latLng.latitude, latLng.longitude));
         } else {
-            ToastUtils.showLong(DogImmuneHospitalActivity.this, "未找到地图APP，请下载安装百度高德或者腾讯的地图APP");
+            ToastUtils.showLong(DogImmuneHospitalActivity.this, "未找到地图APP，请下载安装高德地图APP");
         }
     }
 
