@@ -51,6 +51,9 @@ public class MainActivity extends BaseActivity {
 
         initView();
 
+        Log.i(TAG, "onCreate: dp_16 = "+getResources().getDimensionPixelSize(R.dimen.dp_14));
+        Log.i(TAG, "onCreate: sp_16 = "+getResources().getDimensionPixelSize(R.dimen.dp_14));
+
     }
 
     @Override
@@ -80,6 +83,7 @@ public class MainActivity extends BaseActivity {
                     openActivity(MainDogManageWorkflowActivity.class);
                 } else if (position == 8) {
                     openActivity(PoliciesActivity.class);
+                    openActivity(DogImmuneHospitalActivity.class);
                 } else {
                     if (checkUserRank(getApplicationContext(), true)) {
                         Bundle bundle = new Bundle();

@@ -23,8 +23,15 @@ public class DogAdoptionSubmitActivity extends BaseActivity {
     }
 
     public void onClickConfirm(View view) {
+
         Bundle bundle = new Bundle();
         bundle.putInt("type", SubmitSuccessActivity.type_adoption);
         openActivity(SubmitSuccessActivity.class, bundle);
+
+        finishActivity(DogManageWorkflowActivity.class);
+        finishActivity(DogAdoptionActivity.class);
+        finishActivity(DogDetailsThemeActivity.class);
+        finishActivity(DogCertificateEditDogOwnerActivity.class);
+        finish();
     }
 }

@@ -805,7 +805,7 @@
                     android:paddingLeft="@dimen/viewPadding"
                     android:paddingRight="@dimen/viewPadding">
 
-                    <TextView
+                    <com.dog.manage.app.view.TextBoldView
                         android:id="@+id/detailedAddressHintView"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"

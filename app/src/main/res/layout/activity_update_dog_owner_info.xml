@@ -27,6 +27,8 @@
             android:layout_width="match_parent"
             android:layout_height="@dimen/dp_66"
             android:background="@color/white"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
             android:gravity="center"
             android:orientation="horizontal">
 
@@ -89,8 +91,8 @@
                         app:item_container_margin_left="@dimen/viewPadding"
                         app:item_container_margin_right="@dimen/viewPadding"
                         app:item_content="请选择省市区"
-                        app:item_content_size="@dimen/sp_14"
                         app:item_content_color="@color/colorAppTheme"
+                        app:item_content_size="@dimen/sp_14"
                         app:item_divider_visible="true"
                         app:item_title="居住地址"
                         app:item_title_bold="true"
@@ -99,15 +101,15 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:paddingTop="@dimen/dp_12"
-                        android:paddingBottom="@dimen/dp_12"
                         android:background="@color/app_background"
                         android:minHeight="@dimen/dp_121"
                         android:orientation="horizontal"
                         android:paddingLeft="@dimen/viewPadding"
-                        android:paddingRight="@dimen/viewPadding">
+                        android:paddingTop="@dimen/dp_12"
+                        android:paddingRight="@dimen/viewPadding"
+                        android:paddingBottom="@dimen/dp_12">
 
-                        <TextView
+                        <com.dog.manage.app.view.TextBoldView
                             android:id="@+id/detailedAddressHintView"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"

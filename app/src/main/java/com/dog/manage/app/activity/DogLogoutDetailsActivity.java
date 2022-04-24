@@ -171,6 +171,9 @@ public class DogLogoutDetailsActivity extends BaseActivity {
         Bundle bundle = new Bundle();
         bundle.putInt("type", SubmitSuccessActivity.type_logout);
         openActivity(SubmitSuccessActivity.class, bundle);
+
+        finishActivity(DogManageWorkflowActivity.class);
+        finish();
     }
 
 

@@ -47,7 +47,7 @@ public class MediaSelectActivity extends BaseActivity {
 
         GridItemDecoration.Builder builder = new GridItemDecoration.Builder(this);
         builder.color(R.color.transparent);
-        builder.size(CommonUtil.dip2px(this, 2));
+        builder.size(CommonUtil.dip2px(this, 1));
         binding.recyclerView.addItemDecoration(new GridItemDecoration(builder));
         binding.recyclerView.setLayoutManager(new GridLayoutManager(this, 4));
         binding.recyclerView.setNestedScrollingEnabled(false);

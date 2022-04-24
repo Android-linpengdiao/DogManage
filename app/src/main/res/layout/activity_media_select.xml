@@ -29,8 +29,7 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
-            android:overScrollMode="never"
-            android:padding="@dimen/dp_2" />
+            android:overScrollMode="never" />
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -41,10 +40,10 @@
                 android:layout_width="@dimen/dp_60"
                 android:layout_height="match_parent"
                 android:gravity="center"
+                android:onClick="onClickPreview"
                 android:text="预览"
                 android:textColor="@color/black"
-                android:textSize="@dimen/sp_16"
-                android:onClick="onClickPreview"/>
+                android:textSize="@dimen/sp_16" />
         </RelativeLayout>
 
     </LinearLayout>

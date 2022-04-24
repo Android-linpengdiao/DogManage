@@ -59,10 +59,10 @@
             android:layout_marginLeft="@dimen/viewPadding"
             android:layout_marginTop="@dimen/dp_32"
             android:layout_marginRight="@dimen/viewPadding"
-            android:paddingLeft="@dimen/dp_14"
             android:background="@drawable/button_radius_white_8"
             android:gravity="center_vertical"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:paddingLeft="@dimen/dp_14">
 
             <ImageView
                 android:layout_width="@dimen/dp_26"
@@ -98,10 +98,10 @@
             android:layout_marginLeft="@dimen/viewPadding"
             android:layout_marginTop="@dimen/dp_10"
             android:layout_marginRight="@dimen/viewPadding"
-            android:paddingLeft="@dimen/dp_14"
             android:background="@drawable/button_radius_white_8"
             android:gravity="center_vertical"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:paddingLeft="@dimen/dp_14">
 
             <ImageView
                 android:layout_width="@dimen/dp_26"
@@ -132,8 +132,7 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="@dimen/dp_45"
-            android:layout_marginTop="@dimen/dp_48"
-            android:background="@color/white">
+            android:layout_marginTop="@dimen/dp_48">
 
             <TextView
                 android:id="@+id/confirmView"

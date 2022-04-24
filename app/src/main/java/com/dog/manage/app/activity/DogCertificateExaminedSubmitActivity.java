@@ -34,6 +34,10 @@ public class DogCertificateExaminedSubmitActivity extends BaseActivity implement
         Bundle bundle = new Bundle();
         bundle.putInt("type", SubmitSuccessActivity.type_examined);
         openActivity(SubmitSuccessActivity.class, bundle);
+
+        finishActivity(DogManageWorkflowActivity.class);
+        finishActivity(DogCertificateExaminedActivity.class);
+        finish();
     }
 
     private String[] permissions = {

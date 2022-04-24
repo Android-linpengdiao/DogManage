@@ -94,6 +94,24 @@ public class DogImmuneHospitalActivity extends BaseActivity implements AMap.OnMa
         });
     }
 
+    public void onClickConfirm(View view) {
+
+        if (adapter.getSelect() < 0) {
+            ToastUtils.showShort(getApplicationContext(), "请选择1个医院");
+            return;
+        }
+
+        Bundle bundle = new Bundle();
+        bundle.putInt("type", SubmitSuccessActivity.type_immune);
+        openActivity(SubmitSuccessActivity.class, bundle);
+
+        finishActivity(DogManageWorkflowActivity.class);
+        finishActivity(DogCertificateEditDogOwnerActivity.class);
+        finishActivity(DogCertificateEditDogActivity.class);
+        finish();
+
+    }
+
     private void changeCamera(CameraUpdate update) {
         binding.mapView.getMap().moveCamera(update);
     }
@@ -151,12 +169,6 @@ public class DogImmuneHospitalActivity extends BaseActivity implements AMap.OnMa
         } else {
             ToastUtils.showLong(DogImmuneHospitalActivity.this, "未找到地图APP，请下载安装百度高德或者腾讯的地图APP");
         }
-    }
-
-    public void onClickConfirm(View view) {
-        Bundle bundle = new Bundle();
-        bundle.putInt("type", SubmitSuccessActivity.type_immune);
-        openActivity(SubmitSuccessActivity.class, bundle);
     }
 
 }

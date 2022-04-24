@@ -72,5 +72,8 @@ public class DogTransferActivity extends BaseActivity {
         Bundle bundle = new Bundle();
         bundle.putInt("type", SubmitSuccessActivity.type_transfer);
         openActivity(SubmitSuccessActivity.class, bundle);
+
+        finishActivity(DogManageWorkflowActivity.class);
+        finish();
     }
 }

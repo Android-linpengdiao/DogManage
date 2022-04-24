@@ -11,6 +11,7 @@ import android.widget.RadioGroup;
 import com.base.utils.CommonUtil;
 import com.base.utils.FileUtils;
 import com.base.utils.GlideLoader;
+import com.base.utils.GsonUtils;
 import com.base.utils.PermissionUtils;
 import com.base.utils.ToastUtils;
 import com.dog.manage.app.R;
@@ -22,7 +23,9 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
 import java.io.File;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import top.zibin.luban.Luban;
 import top.zibin.luban.OnCompressListener;
@@ -263,6 +266,8 @@ public class DogCertificateEditDogOwnerActivity extends BaseActivity {
 
         } else if (type == type_certificate || type == type_immune || type == type_adoption) {
 
+            Map<String, Object> map = new HashMap<>();
+
             //犬主类型
             int checkedRadioButtonId = binding.radioGroupDogOwner.getCheckedRadioButtonId();
             if (checkedRadioButtonId == R.id.radioButtonOrgan) {
@@ -416,6 +421,7 @@ public class DogCertificateEditDogOwnerActivity extends BaseActivity {
 
             Bundle bundle = new Bundle();
             bundle.putInt("type", type);
+            bundle.putString("paramsJson", GsonUtils.toJson(map));
             if (type == type_certificate || type == type_immune) {
                 openActivity(DogCertificateEditDogActivity.class, bundle);
 

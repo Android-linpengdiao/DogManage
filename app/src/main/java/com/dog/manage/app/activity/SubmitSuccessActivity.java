@@ -91,5 +91,6 @@ public class SubmitSuccessActivity extends BaseActivity {
             openActivity(RecordActivity.class, bundle);
 
         }
+        finish();
     }
 }

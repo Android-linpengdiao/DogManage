@@ -38,6 +38,12 @@ public class DogCertificateEditSubmitActivity extends BaseActivity implements AM
         Bundle bundle = new Bundle();
         bundle.putInt("type", SubmitSuccessActivity.type_certificate);
         openActivity(SubmitSuccessActivity.class, bundle);
+
+        finishActivity(DogManageWorkflowActivity.class);
+        finishActivity(DogCertificateEditDogOwnerActivity.class);
+        finishActivity(DogCertificateEditDogActivity.class);
+        finish();
+
     }
 
     private String[] permissions = {

@@ -10,6 +10,7 @@ import android.view.View;
 import com.base.utils.CommonUtil;
 import com.base.utils.FileUtils;
 import com.base.utils.GlideLoader;
+import com.base.utils.GsonUtils;
 import com.base.utils.PermissionUtils;
 import com.base.utils.ToastUtils;
 import com.dog.manage.app.Config;
@@ -30,7 +31,9 @@ import com.obs.services.model.PutObjectRequest;
 import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import top.zibin.luban.Luban;
 import top.zibin.luban.OnCompressListener;
@@ -42,6 +45,7 @@ public class UpdateDogOwnerInfoActivity extends BaseActivity {
     public static final int type_submit = 1;//提交
 
     private int type = 0;
+    private Map<String, Object> paramsMap = new HashMap<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,13 +58,20 @@ public class UpdateDogOwnerInfoActivity extends BaseActivity {
         setTypeface(binding.houseHintView);
 
         type = getIntent().getIntExtra("type", 0);
+        String paramsJson = getIntent().getStringExtra("paramsJson");
+        if (!TextUtils.isEmpty(paramsJson)) {
+            Gson gson = new Gson();
+            paramsMap = gson.fromJson(paramsJson, new TypeToken<Map<String, Object>>() {
+            }.getType());
+        }
+
 
         if (type == type_details) {
             binding.firstStepView.setSelected(true);
             binding.addressView.binding.itemContent.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    openActivity(AreaSelectActivity.class,request_City);
+                    openActivity(AreaSelectActivity.class, request_City);
                 }
             });
 
@@ -104,14 +115,24 @@ public class UpdateDogOwnerInfoActivity extends BaseActivity {
                 return;
             }
 
+            Map<String, Object> map = new HashMap<>();
+            map.put("address", address);
+            map.put("detailedAddress", detailedAddress);
+            map.put("personaHouseNumber", personaHouseNumber);
+
             Bundle bundle = new Bundle();
             bundle.putInt("type", type_submit);
+            bundle.putString("paramsJson", GsonUtils.toJson(map));
             openActivity(UpdateDogOwnerInfoActivity.class, bundle);
 
         } else if (type == type_submit) {
             Bundle bundle = new Bundle();
             bundle.putInt("type", SubmitSuccessActivity.type_update);
             openActivity(SubmitSuccessActivity.class, bundle);
+
+            finishActivity(DogManageWorkflowActivity.class);
+            finishActivity(UpdateDogCertificateActivity.class);
+            finish();
 
         }
     }
