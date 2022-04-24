@@ -30,12 +30,12 @@ public class MyClickableSpan extends ClickableSpan {
             Intent intent = new Intent();
             intent.setData(Uri.parse(APIUrls.user_agreement));
             intent.setAction(Intent.ACTION_VIEW);
-//            activity.startActivity(intent);
+            activity.startActivity(intent);
         } else if (msg.equals("《隐私政策》")) {
             Intent intent = new Intent();
             intent.setData(Uri.parse(APIUrls.privacy_policy));
             intent.setAction(Intent.ACTION_VIEW);
-//            activity.startActivity(intent);
+            activity.startActivity(intent);
         }
     }
 }

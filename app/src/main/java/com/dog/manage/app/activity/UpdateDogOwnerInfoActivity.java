@@ -7,9 +7,11 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 
+import com.base.utils.CommonUtil;
 import com.base.utils.FileUtils;
 import com.base.utils.GlideLoader;
 import com.base.utils.PermissionUtils;
+import com.base.utils.ToastUtils;
 import com.dog.manage.app.Config;
 import com.dog.manage.app.R;
 import com.dog.manage.app.databinding.ActivityUpdateDogOwnerInfoBinding;
@@ -72,15 +74,45 @@ public class UpdateDogOwnerInfoActivity extends BaseActivity {
 
     }
 
+    private String address = null;
+    private String detailedAddress = null;
+    private String personaHouseNumber = null;
+    private String personaHouseProprietaryCertificate = null;
+
     public void onClickConfirm(View view) {
-        if (type == 0) {
+        if (type == type_details) {
+
+            if (CommonUtil.isBlank(address)) {
+                ToastUtils.showShort(getApplicationContext(), "请选择居住地址");
+                return;
+            }
+
+            detailedAddress = binding.detailedAddressView.getText().toString();
+            if (CommonUtil.isBlank(detailedAddress)) {
+                ToastUtils.showShort(getApplicationContext(), "请输入详细地址");
+                return;
+            }
+
+            personaHouseNumber = binding.houseNumberView.binding.itemEdit.getText().toString();
+            if (CommonUtil.isBlank(personaHouseNumber)) {
+                ToastUtils.showShort(getApplicationContext(), "请输入房本编号");
+                return;
+            }
+
+            if (CommonUtil.isBlank(personaHouseProprietaryCertificate)) {
+                ToastUtils.showShort(getApplicationContext(), "请上传房产证或房屋租赁合同");
+                return;
+            }
+
             Bundle bundle = new Bundle();
-            bundle.putInt("type", 1);
+            bundle.putInt("type", type_submit);
             openActivity(UpdateDogOwnerInfoActivity.class, bundle);
-        } else {
+
+        } else if (type == type_submit) {
             Bundle bundle = new Bundle();
             bundle.putInt("type", SubmitSuccessActivity.type_update);
             openActivity(SubmitSuccessActivity.class, bundle);
+
         }
     }
 
@@ -112,8 +144,8 @@ public class UpdateDogOwnerInfoActivity extends BaseActivity {
                     break;
                 case request_City:
                     if (data != null) {
-                        String cityName = data.getStringExtra("cityName");
-                        binding.addressView.binding.itemContent.setText(cityName);
+                        address = data.getStringExtra("cityName");
+                        binding.addressView.binding.itemContent.setText(address);
                     }
                     break;
             }
@@ -142,7 +174,8 @@ public class UpdateDogOwnerInfoActivity extends BaseActivity {
                                     @Override
                                     public void onSuccess(File file) {
                                         if (requestCode == request_HouseProprietaryCertificate) {
-                                            GlideLoader.LoderImage(UpdateDogOwnerInfoActivity.this, file.getAbsolutePath(), binding.houseProprietaryCertificateView, 8);
+                                            personaHouseProprietaryCertificate = file.getAbsolutePath();
+                                            GlideLoader.LoderImage(UpdateDogOwnerInfoActivity.this, file.getAbsolutePath(), binding.houseProprietaryCertificateView, 6);
 
                                         }
                                     }

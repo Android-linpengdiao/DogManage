@@ -7,6 +7,7 @@ import android.view.View;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.base.utils.CommonUtil;
+import com.base.utils.ToastUtils;
 import com.base.view.OnClickListener;
 import com.base.view.RecycleViewDivider;
 import com.dog.manage.app.R;
@@ -45,6 +46,12 @@ public class UpdateDogCertificateActivity extends BaseActivity {
     }
 
     public void onClickConfirm(View view) {
-        openActivity(UpdateDogOwnerInfoActivity.class);
+        if (adapter.getSelect() < 0) {
+            ToastUtils.showShort(getApplicationContext(), "选择1个要变更的犬证");
+            return;
+        }
+        Bundle bundle = new Bundle();
+        bundle.putInt("type", UpdateDogOwnerInfoActivity.type_details);
+        openActivity(UpdateDogOwnerInfoActivity.class, bundle);
     }
 }

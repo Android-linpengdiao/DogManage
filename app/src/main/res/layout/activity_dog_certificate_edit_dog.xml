@@ -110,6 +110,7 @@
                     app:item_title_size="@dimen/sp_14" />
 
                 <com.dog.manage.app.view.ViewItemLayout
+                    android:id="@+id/dogNameView"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     app:item_container_height="@dimen/dp_50"
@@ -124,6 +125,7 @@
                     app:item_title_size="@dimen/sp_14" />
 
                 <com.dog.manage.app.view.ViewItemLayout
+                    android:id="@+id/dogHairView"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     app:item_arrow_visible="true"
@@ -215,12 +217,13 @@
                         android:textSize="@dimen/sp_14" />
 
                     <RadioGroup
+                        android:id="@+id/radioGroupBear"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal">
 
                         <RadioButton
-                            android:id="@+id/radioButtonHaiWai"
+                            android:id="@+id/radioButton1"
                             android:layout_width="@dimen/dp_84"
                             android:layout_height="@dimen/dp_32"
                             android:background="@drawable/radio_bg"
@@ -232,7 +235,7 @@
                             android:textSize="@dimen/sp_14" />
 
                         <RadioButton
-                            android:id="@+id/radioButtonGanGao"
+                            android:id="@+id/radioButton0"
                             android:layout_width="@dimen/dp_84"
                             android:layout_height="@dimen/dp_32"
                             android:layout_marginLeft="@dimen/dp_10"

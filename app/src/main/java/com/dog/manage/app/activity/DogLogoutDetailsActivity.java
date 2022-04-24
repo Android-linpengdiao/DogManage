@@ -8,9 +8,12 @@ import android.view.ViewGroup;
 import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
 
+import com.base.utils.CommonUtil;
 import com.base.utils.FileUtils;
 import com.base.utils.GlideLoader;
 import com.base.utils.PermissionUtils;
+import com.base.utils.ToastUtils;
+import com.base.view.OnClickListener;
 import com.dog.manage.app.R;
 import com.dog.manage.app.databinding.ActivityDogLogoutDetailsBinding;
 import com.dog.manage.app.media.MediaFile;
@@ -20,6 +23,7 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
 import java.io.File;
+import java.util.Arrays;
 import java.util.List;
 
 import top.zibin.luban.Luban;
@@ -35,6 +39,8 @@ public class DogLogoutDetailsActivity extends BaseActivity {
     public static final int type_details = 1;//1-注销详情
     private int type = 0;
     private int auditType = 0;//1-审核通过 2-审核拒绝
+
+    private List<String> dogList = Arrays.asList("萨摩耶", "柯基", "泰迪", "哈士奇");
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,17 +72,30 @@ public class DogLogoutDetailsActivity extends BaseActivity {
         binding.radioButton1.getLayoutParams().width = ViewGroup.LayoutParams.WRAP_CONTENT;
         binding.radioButton1.setPadding(0, 0, 0, 0);
         binding.radioButton1.setBackgroundColor(getResources().getColor(R.color.transparent));
-        binding.radioButton2.setVisibility(View.GONE);
+        binding.radioButton0.setVisibility(View.GONE);
 
     }
 
     private void initSubmitView() {
+        binding.titleView.binding.itemTitle.setText("犬只注销");
         binding.descriptionHintView.setText("简要说明(非必填)");
-        binding.selectView.setItemArrowVisible(true);
-        binding.selectView.binding.itemContent.setOnClickListener(new View.OnClickListener() {
+        binding.dogCertificateView.setItemArrowVisible(true);
+        binding.dogCertificateView.binding.itemContent.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                onClickDogCertificate(DogLogoutDetailsActivity.this, dogList, dogList.indexOf(binding.dogCertificateView.binding.itemContent.getText().toString()), new OnClickListener() {
+                    @Override
+                    public void onClick(View view, Object object) {
+                        String content = (String) object;
+                        dogCertificate = dogList.indexOf(content);
+                        binding.dogCertificateView.binding.itemContent.setText(content);
+                    }
 
+                    @Override
+                    public void onLongClick(View view, Object object) {
+
+                    }
+                });
             }
         });
         binding.radioGroupView.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
@@ -89,8 +108,16 @@ public class DogLogoutDetailsActivity extends BaseActivity {
                         binding.pictureContainer2.setVisibility(View.INVISIBLE);
                         binding.pictureContainer3.setVisibility(View.INVISIBLE);
 
+//                        picture1 = null;
+//                        picture2 = null;
+//                        picture3 = null;
+//                        GlideLoader.LoderUploadImage(DogLogoutDetailsActivity.this, null, binding.pictureView1, 6);
+//                        GlideLoader.LoderUploadImage(DogLogoutDetailsActivity.this, null, binding.pictureView2, 6);
+//                        GlideLoader.LoderUploadImage(DogLogoutDetailsActivity.this, null, binding.pictureView3, 6);
+
+
                         break;
-                    case R.id.radioButton2:
+                    case R.id.radioButton0:
                         binding.pictureHintView.setText("上传无害化处理过程图片3张");
                         binding.descriptionHintView.setText("简要说明(非必填)");
                         binding.pictureContainer2.setVisibility(View.VISIBLE);
@@ -105,7 +132,35 @@ public class DogLogoutDetailsActivity extends BaseActivity {
 
     }
 
+    private int dogCertificate = -1;
+    private String picture1 = null;
+    private String picture2 = null;
+    private String picture3 = null;
+    private String description = null;
+
     public void onClickConfirm(View view) {
+
+        if (dogCertificate < 0) {
+            ToastUtils.showShort(getApplicationContext(), "请选择犬只");
+            return;
+        }
+
+        int checkedRadioButtonId = binding.radioGroupView.getCheckedRadioButtonId();
+        if (checkedRadioButtonId == R.id.radioButton0) {//犬只死亡
+            if (CommonUtil.isBlank(picture1) || CommonUtil.isBlank(picture2) || CommonUtil.isBlank(picture3)) {
+                ToastUtils.showShort(getApplicationContext(), "请上传无害化处理过程图片3张");
+                return;
+            }
+
+        } else if (checkedRadioButtonId == R.id.radioButton1) {//犬只丢失
+            description = binding.descriptionView.getText().toString();
+            if (CommonUtil.isBlank(description)) {
+                ToastUtils.showShort(getApplicationContext(), "请输入简要说明");
+                return;
+            }
+
+        }
+
         Bundle bundle = new Bundle();
         bundle.putInt("type", SubmitSuccessActivity.type_logout);
         openActivity(SubmitSuccessActivity.class, bundle);
@@ -202,13 +257,16 @@ public class DogLogoutDetailsActivity extends BaseActivity {
                                     @Override
                                     public void onSuccess(File file) {
                                         if (requestCode == request_Image1) {
-                                            GlideLoader.LoderImage(DogLogoutDetailsActivity.this, file.getAbsolutePath(), binding.image1View, 8);
+                                            picture1 = file.getAbsolutePath();
+                                            GlideLoader.LoderImage(DogLogoutDetailsActivity.this, file.getAbsolutePath(), binding.pictureView1, 6);
 
                                         } else if (requestCode == request_Image2) {
-                                            GlideLoader.LoderImage(DogLogoutDetailsActivity.this, file.getAbsolutePath(), binding.image2View, 8);
+                                            picture2 = file.getAbsolutePath();
+                                            GlideLoader.LoderImage(DogLogoutDetailsActivity.this, file.getAbsolutePath(), binding.pictureView2, 6);
 
                                         } else if (requestCode == request_Image3) {
-                                            GlideLoader.LoderImage(DogLogoutDetailsActivity.this, file.getAbsolutePath(), binding.image3View, 8);
+                                            picture3 = file.getAbsolutePath();
+                                            GlideLoader.LoderImage(DogLogoutDetailsActivity.this, file.getAbsolutePath(), binding.pictureView3, 6);
 
                                         }
                                     }

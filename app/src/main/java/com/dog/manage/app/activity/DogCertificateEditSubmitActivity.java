@@ -1,6 +1,8 @@
 package com.dog.manage.app.activity;
 
 
+import android.Manifest;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -11,6 +13,9 @@ import com.amap.api.location.AMapLocationClientOption;
 import com.amap.api.location.AMapLocationListener;
 import com.dog.manage.app.R;
 import com.dog.manage.app.databinding.ActivityDogCertificateEditSubmitBinding;
+
+import pub.devrel.easypermissions.AfterPermissionGranted;
+import pub.devrel.easypermissions.EasyPermissions;
 
 public class DogCertificateEditSubmitActivity extends BaseActivity implements AMapLocationListener {
 
@@ -25,7 +30,7 @@ public class DogCertificateEditSubmitActivity extends BaseActivity implements AM
         setTypeface(binding.acceptUnitsHintView);
         binding.thirdStepView.setSelected(true);
 
-        initMapView();
+        permissionsManager();
 
     }
 
@@ -34,6 +39,29 @@ public class DogCertificateEditSubmitActivity extends BaseActivity implements AM
         bundle.putInt("type", SubmitSuccessActivity.type_certificate);
         openActivity(SubmitSuccessActivity.class, bundle);
     }
+
+    private String[] permissions = {
+            Manifest.permission.ACCESS_COARSE_LOCATION,
+            Manifest.permission.ACCESS_FINE_LOCATION};
+    private final int requestCode = 100;
+
+    @AfterPermissionGranted(requestCode)
+    private void permissionsManager() {
+        if (EasyPermissions.hasPermissions(getApplicationContext(), permissions)) {
+            initMapView();
+
+        } else {
+            EasyPermissions.requestPermissions(this, "请同意下面的权限", requestCode, permissions);
+
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @androidx.annotation.NonNull String[] permissions, @androidx.annotation.NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        EasyPermissions.onRequestPermissionsResult(requestCode, permissions, grantResults, this);
+    }
+
 
     /**
      * 定位

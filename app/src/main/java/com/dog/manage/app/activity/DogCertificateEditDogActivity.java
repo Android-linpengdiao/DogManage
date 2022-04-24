@@ -6,9 +6,11 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
 
+import com.base.utils.CommonUtil;
 import com.base.utils.FileUtils;
 import com.base.utils.GlideLoader;
 import com.base.utils.PermissionUtils;
+import com.base.utils.ToastUtils;
 import com.base.view.OnClickListener;
 import com.dog.manage.app.R;
 import com.dog.manage.app.databinding.ActivityDogCertificateEditDogBinding;
@@ -34,7 +36,7 @@ public class DogCertificateEditDogActivity extends BaseActivity {
     public static final int type_immune = 2;//免疫证办理
     private int type = 0;
 
-    private List<String> dogList = Arrays.asList("添加新犬只","萨摩耶", "柯基", "泰迪", "哈士奇");
+    private List<String> dogList = Arrays.asList("添加新犬只", "萨摩耶", "柯基", "泰迪", "哈士奇");
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,6 +71,7 @@ public class DogCertificateEditDogActivity extends BaseActivity {
                     @Override
                     public void onClick(View view, Object object) {
                         String content = (String) object;
+                        dogCertificate = dogList.indexOf(content);
                         binding.dogCertificateView.binding.itemContent.setText(content);
                     }
 
@@ -82,7 +85,60 @@ public class DogCertificateEditDogActivity extends BaseActivity {
 
     }
 
+    private int dogCertificate = 0;//添加新犬只
+    private String dogName = null;
+    private String dogHair = "addadad";
+    private int dogSex = 0;//0-雌性 1-雄性
+    private int dogBear = 0;//0-未绝育 1-已绝育
+    private String testify = null;
+    private int dogAge = 12;
+    private String leftFace = null;
+    private String centerFace = null;
+    private String rightFace = null;
+
     public void onClickConfirm(View view) {
+
+        dogName = binding.dogNameView.binding.itemEdit.getText().toString();
+        if (CommonUtil.isBlank(dogName)) {
+            ToastUtils.showShort(getApplicationContext(), "请输入犬昵称");
+            return;
+        }
+
+        if (CommonUtil.isBlank(dogHair)) {
+            ToastUtils.showShort(getApplicationContext(), "选择犬只毛色");
+            return;
+        }
+
+        int bearCheckedRadioButtonId = binding.radioGroupBear.getCheckedRadioButtonId();
+        if (bearCheckedRadioButtonId == R.id.radioButton0) {//未绝育
+
+        } else if (bearCheckedRadioButtonId == R.id.radioButton1) {//已绝育
+            if (CommonUtil.isBlank(testify)) {
+                ToastUtils.showShort(getApplicationContext(), "请上传绝育证明");
+                return;
+            }
+
+        }
+
+        if (dogAge <= 0) {
+            ToastUtils.showShort(getApplicationContext(), "选择犬只年龄");
+            return;
+        }
+
+        if (CommonUtil.isBlank(leftFace)) {
+            ToastUtils.showShort(getApplicationContext(), "请上传左侧面照片");
+            return;
+        }
+        if (CommonUtil.isBlank(centerFace)) {
+            ToastUtils.showShort(getApplicationContext(), "请上传正面照片");
+            return;
+        }
+        if (CommonUtil.isBlank(rightFace)) {
+            ToastUtils.showShort(getApplicationContext(), "请上传右侧面照片");
+            return;
+        }
+
+
         if (type == type_userInfo) {
 
 
@@ -206,16 +262,20 @@ public class DogCertificateEditDogActivity extends BaseActivity {
                                     @Override
                                     public void onSuccess(File file) {
                                         if (requestCode == request_Testify) {
-                                            GlideLoader.LoderImage(DogCertificateEditDogActivity.this, file.getAbsolutePath(), binding.testifyView, 8);
+                                            testify = file.getAbsolutePath();
+                                            GlideLoader.LoderImage(DogCertificateEditDogActivity.this, file.getAbsolutePath(), binding.testifyView, 6);
 
                                         } else if (requestCode == request_LeftFace) {
-                                            GlideLoader.LoderImage(DogCertificateEditDogActivity.this, file.getAbsolutePath(), binding.leftFaceView, 8);
+                                            leftFace = file.getAbsolutePath();
+                                            GlideLoader.LoderImage(DogCertificateEditDogActivity.this, file.getAbsolutePath(), binding.leftFaceView, 6);
 
                                         } else if (requestCode == request_CenterFace) {
-                                            GlideLoader.LoderImage(DogCertificateEditDogActivity.this, file.getAbsolutePath(), binding.centerFaceView, 8);
+                                            centerFace = file.getAbsolutePath();
+                                            GlideLoader.LoderImage(DogCertificateEditDogActivity.this, file.getAbsolutePath(), binding.centerFaceView, 6);
 
                                         } else if (requestCode == request_RightFace) {
-                                            GlideLoader.LoderImage(DogCertificateEditDogActivity.this, file.getAbsolutePath(), binding.rightFaceView, 8);
+                                            rightFace = file.getAbsolutePath();
+                                            GlideLoader.LoderImage(DogCertificateEditDogActivity.this, file.getAbsolutePath(), binding.rightFaceView, 6);
 
                                         }
                                     }

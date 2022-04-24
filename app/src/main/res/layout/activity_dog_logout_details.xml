@@ -14,7 +14,7 @@
         android:orientation="vertical">
 
         <com.dog.manage.app.view.TitleView
-            android:id="@+id/itemVipView"
+            android:id="@+id/titleView"
             android:layout_width="match_parent"
             android:layout_height="@dimen/dp_48"
             app:tv_content=""
@@ -128,7 +128,7 @@
                 </androidx.cardview.widget.CardView>
 
                 <com.dog.manage.app.view.ViewItemLayout
-                    android:id="@+id/selectView"
+                    android:id="@+id/dogCertificateView"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@color/white"
@@ -181,7 +181,7 @@
                             android:textSize="@dimen/sp_14" />
 
                         <RadioButton
-                            android:id="@+id/radioButton2"
+                            android:id="@+id/radioButton0"
                             android:layout_width="@dimen/dp_84"
                             android:layout_height="@dimen/dp_32"
                             android:layout_marginLeft="@dimen/dp_10"
@@ -254,7 +254,7 @@
                                 android:textStyle="normal" />
 
                             <ImageView
-                                android:id="@+id/image1View"
+                                android:id="@+id/pictureView1"
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
                                 android:onClick="onClickImage1" />
@@ -288,7 +288,7 @@
                                 android:textStyle="normal" />
 
                             <ImageView
-                                android:id="@+id/image2View"
+                                android:id="@+id/pictureView2"
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
                                 android:onClick="onClickImage2" />
@@ -321,7 +321,7 @@
                                 android:textStyle="normal" />
 
                             <ImageView
-                                android:id="@+id/image3View"
+                                android:id="@+id/pictureView3"
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
                                 android:onClick="onClickImage3" />
@@ -357,12 +357,14 @@
                         android:textSize="@dimen/sp_14" />
 
                     <EditText
+                        android:id="@+id/descriptionView"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/dp_17"
                         android:background="@null"
                         android:hint="请对情况简要描述"
-                        android:textColor="#999999"
+                        android:textColor="#333333"
+                        android:textColorHint="#999999"
                         android:textSize="@dimen/sp_14" />
 
                 </LinearLayout>
