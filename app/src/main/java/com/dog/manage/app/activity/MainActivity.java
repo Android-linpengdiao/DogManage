@@ -145,9 +145,6 @@ public class MainActivity extends BaseActivity {
     public void onClickUser(View view) {
         if (checkUserRank(getApplicationContext(), true)) {
             openActivity(UserHomeActivity.class);
-//        permissionsManager();
-//        OneKeyLoginManager.getInstance().setAuthThemeConfig(ConfigUtils.getCJSConfig(MainActivity.this), ConfigUtils.getCJSConfig(MainActivity.this));
-//        openLoginActivity(true);
         }
 
     }

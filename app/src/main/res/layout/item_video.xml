@@ -8,12 +8,12 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="@dimen/dp_108">
 
         <ImageView
             android:id="@+id/coverView"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="@dimen/dp_108" />
 
         <TextView
             android:id="@+id/durationView"

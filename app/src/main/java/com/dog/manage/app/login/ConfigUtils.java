@@ -15,6 +15,7 @@ import com.chuanglan.shanyan_sdk.OneKeyLoginManager;
 import com.chuanglan.shanyan_sdk.tool.ShanYanUIConfig;
 import com.dog.manage.app.R;
 import com.dog.manage.app.activity.LoginActivity;
+import com.okhttp.utils.APIUrls;
 
 public class ConfigUtils {
 
@@ -72,35 +73,35 @@ public class ConfigUtils {
 
 
                 //授权页号码栏：
-                .setNumberColor(Color.parseColor("#333333"))  //设置手机号码字体颜色
-                .setNumFieldOffsetY(303)    //设置号码栏相对于标题栏下边缘y偏移
-//                .setNumFieldOffsetBottomY(303)    //设置号码栏相对于标题栏下边缘y偏移
-                .setNumberSize(32)
+                .setNumberColor(Color.parseColor("#000000"))  //设置手机号码字体颜色
+                .setNumFieldOffsetY(220)
+                .setNumberSize(18)
+                .setNumberBold(true)
                 .setNumFieldHeight(50)
                 .setNumFieldOffsetX(0)
                 .setNumFieldWidth(CommonUtil.getScreenWidth(context))
 
 
                 //授权页登录按钮：
-                .setLogBtnText("一键登录")  //设置登录按钮文字
+                .setLogBtnText("本机号码一键登录")  //设置登录按钮文字
                 .setLogBtnTextColor(Color.parseColor("#ffffff"))   //设置登录按钮文字颜色
                 .setLogBtnImgPath(context.getResources().getDrawable(R.drawable.button_theme))   //设置登录按钮图片
-                .setLogBtnTextSize(18)
+                .setLogBtnTextSize(15)
                 .setLogBtnHeight(48)
-                .setLogBtnOffsetBottomY(180)
-                .setLogBtnWidth(CommonUtil.px2dip(context, CommonUtil.getScreenWidth(context)) - 136)
+                .setLogBtnOffsetY(286)
+                .setLogBtnWidth(CommonUtil.px2dip(context, CommonUtil.getScreenWidth(context)) - 70)
 
                 //授权页隐私栏：
-                .setAppPrivacyOne("用户协议", "http://download.bjshiwuwei.com/protocol.html")  //设置开发者隐私条款1名称和URL(名称，url)
-                .setAppPrivacyTwo("隐私政策", "http://download.bjshiwuwei.com/service.html")  //设置开发者隐私条款2名称和URL(名称，url)
-                .setAppPrivacyColor(Color.parseColor("#5C5C5C"), Color.parseColor("#333333"))    //	设置隐私条款名称颜色(基础文字颜色，协议文字颜色)
-                .setPrivacyText("同意", "和", "、", "、", "并授权获取手机号")
-                .setPrivacyOffsetBottomY(20)//设置隐私条款相对于屏幕下边缘y偏
+                .setAppPrivacyOne("用户协议", APIUrls.protocol)  //设置开发者隐私条款1名称和URL(名称，url)
+                .setAppPrivacyTwo("隐私政策", APIUrls.service)  //设置开发者隐私条款2名称和URL(名称，url)
+                .setAppPrivacyColor(Color.parseColor("#5C5C5C"), Color.parseColor("#5E44FF"))    //	设置隐私条款名称颜色(基础文字颜色，协议文字颜色)
+                .setPrivacyText("同意", "和", "、", "、", "并授权北京养犬APP获取本机号码")
+                .setPrivacyOffsetY(356)//设置隐私条款相对于屏幕下边缘y偏
                 .setPrivacyState(false)
                 .setUncheckedImgPath(uncheckedImgPath)
                 .setCheckedImgPath(checkedImgPath)
-                .setPrivacyTextSize(12)
-                .setPrivacyOffsetX(0)
+                .setPrivacyTextSize(15)
+                .setPrivacyWidth(CommonUtil.px2dip(context, CommonUtil.getScreenWidth(context)) - 80)
                 .setSloganHidden(true)
                 .setShanYanSloganTextColor(Color.parseColor("#ffffff"))
 
@@ -117,15 +118,8 @@ public class ConfigUtils {
 
     private static void otherLogin(final Context context, RelativeLayout relativeLayout) {
         ImageView back = relativeLayout.findViewById(R.id.back);
-        View loginView = relativeLayout.findViewById(R.id.login_view);
         TextView switchLogin = relativeLayout.findViewById(R.id.switch_login);
 
-//        RelativeLayout.LayoutParams loginViewParams = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
-//        loginViewParams.setMargins(CommonUtil.dip2px(context, 25), 0, CommonUtil.dip2px(context, 25), CommonUtil.getScreenHeight(context) / 2);
-//        loginViewParams.addRule(RelativeLayout.CENTER_HORIZONTAL);
-//        loginViewParams.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
-//        loginView.setLayoutParams(loginViewParams);
-//
         back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

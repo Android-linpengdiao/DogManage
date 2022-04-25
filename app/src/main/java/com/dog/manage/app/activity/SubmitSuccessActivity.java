@@ -73,7 +73,6 @@ public class SubmitSuccessActivity extends BaseActivity {
             openActivity(RecordActivity.class, bundle);
 
         } else if (type == type_update) {
-            binding.titleView.binding.itemTitle.setText("信息变更");
 
         } else if (type == type_transfer) {
             bundle.putInt("type", RecordActivity.type_transfer);
@@ -84,7 +83,8 @@ public class SubmitSuccessActivity extends BaseActivity {
             openActivity(RecordActivity.class, bundle);
 
         } else if (type == type_examined) {
-            binding.titleView.binding.itemTitle.setText("犬证年审");
+            bundle.putInt("type", RecordActivity.type_certificate);
+            openActivity(RecordActivity.class, bundle);
 
         } else if (type == type_adoption) {
             bundle.putInt("type", RecordActivity.type_adoption);

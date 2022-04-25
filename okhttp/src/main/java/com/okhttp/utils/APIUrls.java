@@ -10,6 +10,9 @@ public class APIUrls {
     public final static String user_agreement = URL_DOMAIN + "user_agreement.html";
     public final static String privacy_policy = URL_DOMAIN + "privacy_policy.html";
 
+    public final static String protocol = URL_DOMAIN + "protocol.html";
+    public final static String service = URL_DOMAIN + "protocol.html";
+
     public final static String URL_UPLOAD_FILES = URL_DOMAIN + "storage/handle";
     public final static String URL_createSecurityToken = URL_DOMAIN + "storage/createSecurityToken";
 

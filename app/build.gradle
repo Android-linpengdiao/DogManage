@@ -7,8 +7,8 @@ android {
 
 
     defaultConfig {
-        applicationId "com.dog.manage.app"
-//        applicationId "com.queke.im.yahu"
+//        applicationId "com.dog.manage.app"
+        applicationId "com.queke.im.yahu"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1

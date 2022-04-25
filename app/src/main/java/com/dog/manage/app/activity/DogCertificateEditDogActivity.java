@@ -34,6 +34,7 @@ public class DogCertificateEditDogActivity extends BaseActivity {
     public static final int type_userInfo = 0;//我的信息
     public static final int type_certificate = 1;//犬证办理
     public static final int type_immune = 2;//免疫证办理
+    public static final int type_examined = 3;//犬证年审
     private int type = 0;
 
     private List<String> dogList = Arrays.asList("添加新犬只", "萨摩耶", "柯基", "泰迪", "哈士奇");
@@ -61,6 +62,13 @@ public class DogCertificateEditDogActivity extends BaseActivity {
             binding.firstStepView.setText("①犬主信息");
             binding.secondStepView.setText("②犬只信息");
             binding.thirdStepView.setText("③选择医院");
+
+        } else if (type == type_examined) {
+            binding.titleView.binding.itemTitle.setText("犬证办理");
+            binding.secondStepView.setSelected(true);
+            binding.firstStepView.setText("①犬主信息");
+            binding.secondStepView.setText("②犬只信息");
+            binding.thirdStepView.setText("③提交审核");
 
         }
 
@@ -142,9 +150,9 @@ public class DogCertificateEditDogActivity extends BaseActivity {
         if (type == type_userInfo) {
 
 
-        } else if (type == type_certificate) {
+        } else if (type == type_certificate || type == type_examined) {
             Bundle bundle = new Bundle();
-            bundle.putInt("type", 1);
+            bundle.putInt("type", type);
             openActivity(DogCertificateEditSubmitActivity.class, bundle);
 
         } else if (type == type_immune) {
