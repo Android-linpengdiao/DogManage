@@ -289,6 +289,7 @@ public class DogCertificateEditDogOwnerActivity extends BaseActivity {
     private int personalIDCardType = 0;
     private String personalIDCardFront = null;
     private String personalIDCardBack = null;
+    private int dogType = 0;
     private String personaHouseNumber = null;
     private String personaHouseProprietaryCertificate = null;
 
@@ -314,14 +315,13 @@ public class DogCertificateEditDogOwnerActivity extends BaseActivity {
 
         } else if (type == type_certificate || type == type_immune || type == type_examined || type == type_adoption) {
 
-            Map<String, Object> map = new HashMap<>();
+            Map<String, String> map = new HashMap<>();
 
             //犬主类型
             int checkedRadioButtonId = binding.radioGroupDogOwner.getCheckedRadioButtonId();
             if (checkedRadioButtonId == R.id.radioButtonOrgan) {
+                personalIDCardType = 1;
                 //单位办理
-                int IDCardCheckedRadioButtonId = binding.radioGroupIDCard.getCheckedRadioButtonId();
-
                 organName = binding.organNameView.binding.itemEdit.getText().toString();
                 if (CommonUtil.isBlank(organName)) {
                     ToastUtils.showShort(getApplicationContext(), "请输入单位名称");
@@ -381,7 +381,21 @@ public class DogCertificateEditDogOwnerActivity extends BaseActivity {
                     return;
                 }
 
+                map.put("personalIDCardType", String.valueOf(personalIDCardType));
+                map.put("organName", organName);
+                map.put("businessLicense", businessLicense);
+                map.put("dogOwnerName", dogOwnerName);
+                map.put("dogOwnerIDCard", dogOwnerIDCard);
+                map.put("legalPersonIDCardFront", legalPersonIDCardFront);
+                map.put("legalPersonIDCardBack", legalPersonIDCardBack);
+                map.put("address", address);
+                map.put("detailedAddress", detailedAddress);
+                map.put("legalManagementSystem", legalManagementSystem);
+                map.put("legalFacility1", legalFacility1);
+                map.put("legalFacility2", legalFacility1);
+
             } else if (checkedRadioButtonId == R.id.radioButtonPersonal) {
+                personalIDCardType = 0;
                 //个人办理
                 int IDCardCheckedRadioButtonId = binding.radioGroupIDCard.getCheckedRadioButtonId();
                 if (IDCardCheckedRadioButtonId == R.id.radioButtonIDCard) {//身份证
@@ -419,11 +433,12 @@ public class DogCertificateEditDogOwnerActivity extends BaseActivity {
                     return;
                 }
 
+                //养犬类型
                 int dogTypeCheckedRadioButtonId = binding.radioGroupDogType.getCheckedRadioButtonId();
+                //是否为鳏寡老人
+                int oldManCheckedRadioButtonId = binding.radioGroupOldMan.getCheckedRadioButtonId();
                 if (dogTypeCheckedRadioButtonId == R.id.radioButtonOldMan) {//陪伴犬
-
-                    //是否为鳏寡老人
-                    int oldManCheckedRadioButtonId = binding.radioGroupOldMan.getCheckedRadioButtonId();
+                    dogType = 1;
                     if (oldManCheckedRadioButtonId == R.id.radioButtonOldMan1) {//是
                         if (CommonUtil.isBlank(oldManOrDisabledCertificate)) {
                             ToastUtils.showShort(getApplicationContext(), "请上传鳏寡老人证明");
@@ -436,6 +451,7 @@ public class DogCertificateEditDogOwnerActivity extends BaseActivity {
                     }
 
                 } else if (dogTypeCheckedRadioButtonId == R.id.radioButtonDisabled) {//导盲犬/扶助犬
+                    dogType = 0;
                     if (CommonUtil.isBlank(oldManOrDisabledCertificate)) {
                         ToastUtils.showShort(getApplicationContext(), "请上传残疾人证");
                         return;
@@ -464,6 +480,24 @@ public class DogCertificateEditDogOwnerActivity extends BaseActivity {
                     ToastUtils.showShort(getApplicationContext(), "请上传房产证或房屋租赁合同");
                     return;
                 }
+
+                map.put("personalIDCardType", String.valueOf(personalIDCardType));
+                map.put("personalIDCardFront", personalIDCardFront);
+                map.put("personalIDCardBack", personalIDCardBack);
+                map.put("dogOwnerName", dogOwnerName);
+                map.put("dogOwnerIDCard", dogOwnerIDCard);
+                map.put("dogType", String.valueOf(dogType));
+                if (dogType == 0) {
+                    map.put("oldManOrDisabledCertificate", oldManOrDisabledCertificate);
+                } else if (dogType == 1) {
+                    if (oldManCheckedRadioButtonId == R.id.radioButtonOldMan1) {
+                        map.put("oldManOrDisabledCertificate", oldManOrDisabledCertificate);
+                    }
+                }
+                map.put("address", address);
+                map.put("detailedAddress", detailedAddress);
+                map.put("personaHouseNumber", personaHouseNumber);
+                map.put("personaHouseProprietaryCertificate", personaHouseProprietaryCertificate);
 
             }
 

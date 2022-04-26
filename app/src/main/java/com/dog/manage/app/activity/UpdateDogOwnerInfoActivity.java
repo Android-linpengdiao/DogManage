@@ -11,9 +11,9 @@ import com.base.utils.CommonUtil;
 import com.base.utils.FileUtils;
 import com.base.utils.GlideLoader;
 import com.base.utils.GsonUtils;
+import com.base.utils.LogUtil;
 import com.base.utils.PermissionUtils;
 import com.base.utils.ToastUtils;
-import com.dog.manage.app.Config;
 import com.dog.manage.app.R;
 import com.dog.manage.app.databinding.ActivityUpdateDogOwnerInfoBinding;
 import com.dog.manage.app.media.MediaFile;
@@ -22,22 +22,25 @@ import com.dog.manage.app.media.MediaUtils;
 import com.dog.manage.app.utils.UploadFileManager;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
-import com.obs.services.ObsClient;
-import com.obs.services.exception.ObsException;
 import com.obs.services.model.ProgressListener;
 import com.obs.services.model.ProgressStatus;
 import com.obs.services.model.PutObjectRequest;
+import com.okhttp.SendRequest;
+import com.okhttp.callbacks.GenericsCallback;
+import com.okhttp.sample_okhttp.JsonGenericsSerializator;
 
-import java.io.ByteArrayInputStream;
 import java.io.File;
-import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import okhttp3.Call;
 import top.zibin.luban.Luban;
 import top.zibin.luban.OnCompressListener;
 
+/**
+ * 信息变更
+ */
 public class UpdateDogOwnerInfoActivity extends BaseActivity {
 
     private ActivityUpdateDogOwnerInfoBinding binding;
@@ -45,7 +48,7 @@ public class UpdateDogOwnerInfoActivity extends BaseActivity {
     public static final int type_submit = 1;//提交
 
     private int type = 0;
-    private Map<String, Object> paramsMap = new HashMap<>();
+    private Map<String, String> paramsMap = new HashMap<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -115,14 +118,14 @@ public class UpdateDogOwnerInfoActivity extends BaseActivity {
                 return;
             }
 
-            Map<String, Object> map = new HashMap<>();
-            map.put("address", address);
-            map.put("detailedAddress", detailedAddress);
-            map.put("personaHouseNumber", personaHouseNumber);
+            Map<String, String> paramsMap = new HashMap<>();
+            paramsMap.put("address", address);
+            paramsMap.put("detailedAddress", detailedAddress);
+            paramsMap.put("personaHouseNumber", personaHouseNumber);
 
             Bundle bundle = new Bundle();
             bundle.putInt("type", type_submit);
-            bundle.putString("paramsJson", GsonUtils.toJson(map));
+            bundle.putString("paramsJson", GsonUtils.toJson(paramsMap));
             openActivity(UpdateDogOwnerInfoActivity.class, bundle);
 
         } else if (type == type_submit) {
@@ -133,6 +136,21 @@ public class UpdateDogOwnerInfoActivity extends BaseActivity {
             finishActivity(DogManageWorkflowActivity.class);
             finishActivity(UpdateDogCertificateActivity.class);
             finish();
+
+            if (LogUtil.isDebug){
+                return;
+            }
+            SendRequest.UpdateDogInfo(getUserInfo().getToken(), paramsMap, new GenericsCallback(new JsonGenericsSerializator()) {
+                @Override
+                public void onError(Call call, Exception e, int id) {
+
+                }
+
+                @Override
+                public void onResponse(Object response, int id) {
+
+                }
+            });
 
         }
     }

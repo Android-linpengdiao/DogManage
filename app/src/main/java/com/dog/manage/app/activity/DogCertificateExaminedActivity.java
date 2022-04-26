@@ -10,6 +10,7 @@ import com.base.manager.DialogManager;
 import com.base.utils.CommonUtil;
 import com.base.utils.FileUtils;
 import com.base.utils.GlideLoader;
+import com.base.utils.GsonUtils;
 import com.base.utils.PermissionUtils;
 import com.base.utils.ToastUtils;
 import com.base.view.OnClickListener;
@@ -24,7 +25,9 @@ import com.google.gson.reflect.TypeToken;
 
 import java.io.File;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import top.zibin.luban.Luban;
 import top.zibin.luban.OnCompressListener;
@@ -130,7 +133,10 @@ public class DogCertificateExaminedActivity extends BaseActivity {
             bundle.putInt("type", DogCertificateEditDogOwnerActivity.type_examined);
             openActivity(DogCertificateEditDogOwnerActivity.class, bundle);
         } else {
-            openActivity(DogCertificateExaminedSubmitActivity.class);
+            Map<String, String> paramsMap = new HashMap<>();
+            Bundle bundle = new Bundle();
+            bundle.putString("paramsJson", GsonUtils.toJson(paramsMap));
+            openActivity(DogCertificateExaminedSubmitActivity.class,bundle);
         }
     }
 

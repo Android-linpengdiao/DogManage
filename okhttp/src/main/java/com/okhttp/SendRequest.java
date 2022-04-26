@@ -158,13 +158,72 @@ public class SendRequest {
     // ==================================== 练琴帮 =============================================
 
     /**
-     * 首页频道信息
+     * 犬证办理
      *
      * @param token
      * @param call
      */
-    public static void channel_home(String token, Callback call) {
-        Map<String, String> map = new HashMap<>();
+    public static void DogCertificate(String token,Map<String, String> map, Callback call) {
+        map.put("token", token);
+        OkHttpUtils.post().params(map).url(APIUrls.channel_home).build().execute(call);
+
+    }
+
+    /**
+     * 免疫证办理
+     *
+     * @param token
+     * @param call
+     */
+    public static void DogImmuneHospital(String token,Map<String, String> map, Callback call) {
+        map.put("token", token);
+        OkHttpUtils.post().params(map).url(APIUrls.channel_home).build().execute(call);
+
+    }
+
+    /**
+     * 犬证年审
+     *
+     * @param token
+     * @param call
+     */
+    public static void CertificateExamined(String token,Map<String, String> map, Callback call) {
+        map.put("token", token);
+        OkHttpUtils.post().params(map).url(APIUrls.channel_home).build().execute(call);
+
+    }
+
+    /**
+     * 犬只过户
+     * @param token
+     * @param map
+     * @param call
+     */
+    public static void DogTransfer(String token,Map<String, String> map, Callback call) {
+        map.put("token", token);
+        OkHttpUtils.post().params(map).url(APIUrls.channel_home).build().execute(call);
+
+    }
+
+    /**
+     * 犬只注销
+     * @param token
+     * @param map
+     * @param call
+     */
+    public static void DogLogout(String token,Map<String, String> map, Callback call) {
+        map.put("token", token);
+        OkHttpUtils.post().params(map).url(APIUrls.channel_home).build().execute(call);
+
+    }
+
+    /**
+     * 信息变更
+     * @param token
+     * @param map
+     * @param call
+     */
+    public static void UpdateDogInfo(String token,Map<String, String> map, Callback call) {
         map.put("token", token);
         OkHttpUtils.post().params(map).url(APIUrls.channel_home).build().execute(call);
 

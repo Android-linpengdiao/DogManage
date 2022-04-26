@@ -1,18 +1,14 @@
 package com.dog.manage.app.activity;
 
 
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.util.Log;
+import android.text.TextUtils;
 import android.view.View;
-import android.widget.CheckBox;
 
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.amap.api.maps.AMap;
-import com.amap.api.maps.AMapOptions;
 import com.amap.api.maps.CameraUpdate;
 import com.amap.api.maps.CameraUpdateFactory;
 import com.amap.api.maps.model.BitmapDescriptorFactory;
@@ -22,19 +18,27 @@ import com.amap.api.maps.model.Marker;
 import com.amap.api.maps.model.MarkerOptions;
 import com.base.LocationBean;
 import com.base.utils.CommonUtil;
+import com.base.utils.LogUtil;
 import com.base.utils.MapNavigationUtil;
 import com.base.utils.ToastUtils;
 import com.base.view.OnClickListener;
 import com.base.view.RecycleViewDivider;
 import com.dog.manage.app.R;
-import com.dog.manage.app.activity.record.MessageDetailsActivity;
 import com.dog.manage.app.adapter.DogImmuneHospitalAdapter;
-import com.dog.manage.app.adapter.MessageAdapter;
 import com.dog.manage.app.databinding.ActivityDogImmuneHospitalBinding;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+import com.okhttp.SendRequest;
+import com.okhttp.callbacks.GenericsCallback;
+import com.okhttp.sample_okhttp.JsonGenericsSerializator;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
+import okhttp3.Call;
 
 /**
  * 犬只选择免疫医院
@@ -43,6 +47,7 @@ public class DogImmuneHospitalActivity extends BaseActivity implements AMap.OnMa
 
     private ActivityDogImmuneHospitalBinding binding;
     private DogImmuneHospitalAdapter adapter;
+    private Map<String, String> paramsMap = new HashMap<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,6 +55,13 @@ public class DogImmuneHospitalActivity extends BaseActivity implements AMap.OnMa
         binding = getViewData(R.layout.activity_dog_immune_hospital);
         addActivity(this);
         binding.thirdStepView.setSelected(true);
+
+        String paramsJson = getIntent().getStringExtra("paramsJson");
+        if (!TextUtils.isEmpty(paramsJson)) {
+            Gson gson = new Gson();
+            paramsMap = gson.fromJson(paramsJson, new TypeToken<Map<String, Object>>() {
+            }.getType());
+        }
 
         initView();
         initMapView(savedInstanceState);
@@ -109,6 +121,21 @@ public class DogImmuneHospitalActivity extends BaseActivity implements AMap.OnMa
         finishActivity(DogCertificateEditDogOwnerActivity.class);
         finishActivity(DogCertificateEditDogActivity.class);
         finish();
+
+        if (LogUtil.isDebug){
+            return;
+        }
+        SendRequest.DogImmuneHospital(getUserInfo().getToken(), paramsMap, new GenericsCallback(new JsonGenericsSerializator()) {
+            @Override
+            public void onError(Call call, Exception e, int id) {
+
+            }
+
+            @Override
+            public void onResponse(Object response, int id) {
+
+            }
+        });
 
     }
 

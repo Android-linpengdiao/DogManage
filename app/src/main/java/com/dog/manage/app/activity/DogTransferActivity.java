@@ -5,13 +5,22 @@ import android.view.View;
 
 import com.base.manager.DialogManager;
 import com.base.utils.CommonUtil;
+import com.base.utils.GsonUtils;
+import com.base.utils.LogUtil;
 import com.base.utils.ToastUtils;
 import com.base.view.OnClickListener;
 import com.dog.manage.app.R;
 import com.dog.manage.app.databinding.ActivityDogTransferBinding;
+import com.okhttp.SendRequest;
+import com.okhttp.callbacks.GenericsCallback;
+import com.okhttp.sample_okhttp.JsonGenericsSerializator;
 
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
+import okhttp3.Call;
 
 /**
  * 犬只过户
@@ -52,7 +61,7 @@ public class DogTransferActivity extends BaseActivity {
     private String dogOwnerPhone = null;
 
     public void onClickConfirm(View view) {
-
+        Map<String, String> paramsMap = new HashMap<>();
         if (dogCertificate < 0) {
             ToastUtils.showShort(getApplicationContext(), "请选择犬只");
             return;
@@ -69,11 +78,30 @@ public class DogTransferActivity extends BaseActivity {
             return;
         }
 
+        paramsMap.put("dogCertificate", String.valueOf(dogCertificate));
+        paramsMap.put("dogOwnerName", dogOwnerName);
+        paramsMap.put("dogOwnerPhone", dogOwnerPhone);
+
         Bundle bundle = new Bundle();
         bundle.putInt("type", SubmitSuccessActivity.type_transfer);
         openActivity(SubmitSuccessActivity.class, bundle);
 
         finishActivity(DogManageWorkflowActivity.class);
         finish();
+
+        if (LogUtil.isDebug){
+            return;
+        }
+        SendRequest.DogTransfer(getUserInfo().getToken(), paramsMap, new GenericsCallback(new JsonGenericsSerializator()) {
+            @Override
+            public void onError(Call call, Exception e, int id) {
+
+            }
+
+            @Override
+            public void onResponse(Object response, int id) {
+
+            }
+        });
     }
 }

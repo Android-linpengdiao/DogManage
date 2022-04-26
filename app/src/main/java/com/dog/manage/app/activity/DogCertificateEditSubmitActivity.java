@@ -4,6 +4,7 @@ package com.dog.manage.app.activity;
 import android.Manifest;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 
@@ -11,21 +12,39 @@ import com.amap.api.location.AMapLocation;
 import com.amap.api.location.AMapLocationClient;
 import com.amap.api.location.AMapLocationClientOption;
 import com.amap.api.location.AMapLocationListener;
+import com.base.utils.LogUtil;
 import com.dog.manage.app.R;
 import com.dog.manage.app.databinding.ActivityDogCertificateEditSubmitBinding;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+import com.okhttp.SendRequest;
+import com.okhttp.callbacks.GenericsCallback;
+import com.okhttp.sample_okhttp.JsonGenericsSerializator;
 
+import java.util.HashMap;
+import java.util.Map;
+
+import okhttp3.Call;
 import pub.devrel.easypermissions.AfterPermissionGranted;
 import pub.devrel.easypermissions.EasyPermissions;
 
 public class DogCertificateEditSubmitActivity extends BaseActivity implements AMapLocationListener {
 
     private ActivityDogCertificateEditSubmitBinding binding;
+    private Map<String, String> paramsMap = new HashMap<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = getViewData(R.layout.activity_dog_certificate_edit_submit);
         addActivity(this);
+
+        String paramsJson = getIntent().getStringExtra("paramsJson");
+        if (!TextUtils.isEmpty(paramsJson)) {
+            Gson gson = new Gson();
+            paramsMap = gson.fromJson(paramsJson, new TypeToken<Map<String, Object>>() {
+            }.getType());
+        }
 
         setTypeface(binding.acceptUnitsHintView);
         binding.thirdStepView.setSelected(true);
@@ -43,6 +62,21 @@ public class DogCertificateEditSubmitActivity extends BaseActivity implements AM
         finishActivity(DogCertificateEditDogOwnerActivity.class);
         finishActivity(DogCertificateEditDogActivity.class);
         finish();
+
+        if (LogUtil.isDebug) {
+            return;
+        }
+        SendRequest.DogCertificate(getUserInfo().getToken(), paramsMap, new GenericsCallback(new JsonGenericsSerializator()) {
+            @Override
+            public void onError(Call call, Exception e, int id) {
+
+            }
+
+            @Override
+            public void onResponse(Object response, int id) {
+
+            }
+        });
 
     }
 

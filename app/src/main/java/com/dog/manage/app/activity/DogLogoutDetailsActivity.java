@@ -11,6 +11,7 @@ import android.widget.RelativeLayout;
 import com.base.utils.CommonUtil;
 import com.base.utils.FileUtils;
 import com.base.utils.GlideLoader;
+import com.base.utils.LogUtil;
 import com.base.utils.PermissionUtils;
 import com.base.utils.ToastUtils;
 import com.base.view.OnClickListener;
@@ -21,11 +22,17 @@ import com.dog.manage.app.media.MediaSelectActivity;
 import com.dog.manage.app.media.MediaUtils;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import com.okhttp.SendRequest;
+import com.okhttp.callbacks.GenericsCallback;
+import com.okhttp.sample_okhttp.JsonGenericsSerializator;
 
 import java.io.File;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
+import okhttp3.Call;
 import top.zibin.luban.Luban;
 import top.zibin.luban.OnCompressListener;
 
@@ -147,17 +154,21 @@ public class DogLogoutDetailsActivity extends BaseActivity {
 
     public void onClickConfirm(View view) {
 
+        Map<String, String> paramsMap = new HashMap<>();
         if (dogCertificate < 0) {
             ToastUtils.showShort(getApplicationContext(), "请选择犬只");
             return;
         }
-
+        paramsMap.put("dogCertificate", String.valueOf(dogCertificate));
         int checkedRadioButtonId = binding.radioGroupView.getCheckedRadioButtonId();
         if (checkedRadioButtonId == R.id.radioButton0) {//犬只死亡
             if (CommonUtil.isBlank(picture1) || CommonUtil.isBlank(picture2) || CommonUtil.isBlank(picture3)) {
                 ToastUtils.showShort(getApplicationContext(), "请上传无害化处理过程图片3张");
                 return;
             }
+            paramsMap.put("picture1", String.valueOf(picture1));
+            paramsMap.put("picture2", String.valueOf(picture2));
+            paramsMap.put("picture3", String.valueOf(picture3));
 
         } else if (checkedRadioButtonId == R.id.radioButton1) {//犬只丢失
             description = binding.descriptionView.getText().toString();
@@ -165,6 +176,7 @@ public class DogLogoutDetailsActivity extends BaseActivity {
                 ToastUtils.showShort(getApplicationContext(), "请输入简要说明");
                 return;
             }
+            paramsMap.put("description", String.valueOf(description));
 
         }
 
@@ -174,6 +186,21 @@ public class DogLogoutDetailsActivity extends BaseActivity {
 
         finishActivity(DogManageWorkflowActivity.class);
         finish();
+
+        if (LogUtil.isDebug) {
+            return;
+        }
+        SendRequest.DogLogout(getUserInfo().getToken(), paramsMap, new GenericsCallback(new JsonGenericsSerializator()) {
+            @Override
+            public void onError(Call call, Exception e, int id) {
+
+            }
+
+            @Override
+            public void onResponse(Object response, int id) {
+
+            }
+        });
     }
 
 

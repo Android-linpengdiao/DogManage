@@ -2,21 +2,42 @@ package com.dog.manage.app.activity;
 
 
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 
 import com.base.utils.GlideLoader;
+import com.base.utils.LogUtil;
 import com.dog.manage.app.R;
 import com.dog.manage.app.databinding.ActivityDogAdoptionSubmitBinding;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+import com.okhttp.SendRequest;
+import com.okhttp.callbacks.GenericsCallback;
+import com.okhttp.sample_okhttp.JsonGenericsSerializator;
+
+import java.util.HashMap;
+import java.util.Map;
+
+import okhttp3.Call;
 
 public class DogAdoptionSubmitActivity extends BaseActivity {
 
     private ActivityDogAdoptionSubmitBinding binding;
+    private Map<String, String> paramsMap = new HashMap<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = getViewData(R.layout.activity_dog_adoption_submit);
         addActivity(this);
+
+        String paramsJson = getIntent().getStringExtra("paramsJson");
+        if (!TextUtils.isEmpty(paramsJson)) {
+            Gson gson = new Gson();
+            paramsMap = gson.fromJson(paramsJson, new TypeToken<Map<String, Object>>() {
+            }.getType());
+        }
+
 
         GlideLoader.LoderImage(this, "https://pics7.baidu.com/feed/6c224f4a20a446236fb6db0ac3bf5d040df3d785.jpeg", binding.coverView);
 
@@ -33,5 +54,20 @@ public class DogAdoptionSubmitActivity extends BaseActivity {
         finishActivity(DogDetailsThemeActivity.class);
         finishActivity(DogCertificateEditDogOwnerActivity.class);
         finish();
+
+        if (LogUtil.isDebug){
+            return;
+        }
+        SendRequest.CertificateExamined(getUserInfo().getToken(), paramsMap, new GenericsCallback(new JsonGenericsSerializator()) {
+            @Override
+            public void onError(Call call, Exception e, int id) {
+
+            }
+
+            @Override
+            public void onResponse(Object response, int id) {
+
+            }
+        });
     }
 }

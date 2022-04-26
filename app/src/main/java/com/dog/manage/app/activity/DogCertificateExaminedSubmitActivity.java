@@ -2,6 +2,7 @@ package com.dog.manage.app.activity;
 
 import android.Manifest;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 
@@ -9,21 +10,39 @@ import com.amap.api.location.AMapLocation;
 import com.amap.api.location.AMapLocationClient;
 import com.amap.api.location.AMapLocationClientOption;
 import com.amap.api.location.AMapLocationListener;
+import com.base.utils.LogUtil;
 import com.dog.manage.app.R;
 import com.dog.manage.app.databinding.ActivityDogCertificateExaminedSubmitBinding;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+import com.okhttp.SendRequest;
+import com.okhttp.callbacks.GenericsCallback;
+import com.okhttp.sample_okhttp.JsonGenericsSerializator;
 
+import java.util.HashMap;
+import java.util.Map;
+
+import okhttp3.Call;
 import pub.devrel.easypermissions.AfterPermissionGranted;
 import pub.devrel.easypermissions.EasyPermissions;
 
 public class DogCertificateExaminedSubmitActivity extends BaseActivity implements AMapLocationListener {
 
     private ActivityDogCertificateExaminedSubmitBinding binding;
+    private Map<String, String> paramsMap = new HashMap<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = getViewData(R.layout.activity_dog_certificate_examined_submit);
         addActivity(this);
+
+        String paramsJson = getIntent().getStringExtra("paramsJson");
+        if (!TextUtils.isEmpty(paramsJson)) {
+            Gson gson = new Gson();
+            paramsMap = gson.fromJson(paramsJson, new TypeToken<Map<String, Object>>() {
+            }.getType());
+        }
 
         setTypeface(binding.acceptUnitsHintView);
 
@@ -38,6 +57,22 @@ public class DogCertificateExaminedSubmitActivity extends BaseActivity implement
         finishActivity(DogManageWorkflowActivity.class);
         finishActivity(DogCertificateExaminedActivity.class);
         finish();
+
+        if (LogUtil.isDebug){
+            return;
+        }
+        Map<String, String> paramsMap = new HashMap<>();
+        SendRequest.CertificateExamined(getUserInfo().getToken(), paramsMap, new GenericsCallback(new JsonGenericsSerializator()) {
+            @Override
+            public void onError(Call call, Exception e, int id) {
+
+            }
+
+            @Override
+            public void onResponse(Object response, int id) {
+
+            }
+        });
     }
 
     private String[] permissions = {
