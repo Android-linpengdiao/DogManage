@@ -122,6 +122,7 @@ public class UpdateDogOwnerInfoActivity extends BaseActivity {
             paramsMap.put("address", address);
             paramsMap.put("detailedAddress", detailedAddress);
             paramsMap.put("personaHouseNumber", personaHouseNumber);
+            paramsMap.put("personaHouseProprietaryCertificate", personaHouseProprietaryCertificate);
 
             Bundle bundle = new Bundle();
             bundle.putInt("type", type_submit);

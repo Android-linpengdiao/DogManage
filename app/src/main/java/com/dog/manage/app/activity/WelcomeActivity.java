@@ -55,7 +55,7 @@ public class WelcomeActivity extends BaseActivity {
             @Override
             public void onItemLeft() {
                 Intent intent = new Intent();
-                intent.setData(Uri.parse(APIUrls.user_agreement));
+                intent.setData(Uri.parse(APIUrls.protocol));
                 intent.setAction(Intent.ACTION_VIEW);
 //                startActivity(intent);
             }
@@ -63,7 +63,7 @@ public class WelcomeActivity extends BaseActivity {
             @Override
             public void onItemRight() {
                 Intent intent = new Intent();
-                intent.setData(Uri.parse(APIUrls.privacy_policy));
+                intent.setData(Uri.parse(APIUrls.service));
                 intent.setAction(Intent.ACTION_VIEW);
 //                startActivity(intent);
             }

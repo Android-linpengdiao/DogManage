@@ -114,35 +114,6 @@ public class BaseFragment extends Fragment {
                 });
     }
 
-    /**
-     * 关注
-     *
-     * @param type     关注类型 1用户
-     * @param typeId
-     * @param url
-     * @param callback
-     */
-    public void focusFans(int type, int typeId, String url, Callback callback) {
-        if (!checkUserRank(getActivity(), true)) {
-            return;
-        }
-        SendRequest.focusFans(getUserInfo().getToken(), type, typeId, url,
-                new GenericsCallback<BaseData>(new JsonGenericsSerializator()) {
-                    @Override
-                    public void onError(Call call, Exception e, int id) {
-                        if (callback != null)
-                            callback.onError();
-                    }
-
-                    @Override
-                    public void onResponse(BaseData response, int id) {
-                        if (callback != null)
-                            callback.onResponse(response.isSuccess(), id);
-
-                    }
-                });
-    }
-
     public void openActivity(Class<?> mClass) {
         openActivity(mClass, null);
     }

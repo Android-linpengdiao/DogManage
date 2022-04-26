@@ -10,6 +10,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.GridLayoutManager;
 
 import com.base.utils.CommonUtil;
+import com.base.utils.PermissionUtils;
 import com.base.utils.ToastUtils;
 import com.base.view.OnClickListener;
 import com.chuanglan.shanyan_sdk.OneKeyLoginManager;
@@ -51,8 +52,8 @@ public class MainActivity extends BaseActivity {
 
         initView();
 
-        Log.i(TAG, "onCreate: dp_16 = "+getResources().getDimensionPixelSize(R.dimen.dp_14));
-        Log.i(TAG, "onCreate: sp_16 = "+getResources().getDimensionPixelSize(R.dimen.dp_14));
+        Log.i(TAG, "onCreate: dp_16 = " + getResources().getDimensionPixelSize(R.dimen.dp_14));
+        Log.i(TAG, "onCreate: sp_16 = " + getResources().getDimensionPixelSize(R.dimen.dp_14));
 
     }
 
@@ -63,6 +64,7 @@ public class MainActivity extends BaseActivity {
         } else {
             binding.topView.setVisibility(View.GONE);
         }
+        binding.topView.setVisibility(View.VISIBLE);
         super.onResume();
     }
 
@@ -137,9 +139,12 @@ public class MainActivity extends BaseActivity {
     }
 
     public void onClickMessage(View view) {
-        if (checkUserRank(getApplicationContext(), true)) {
-            openActivity(MessageActivity.class);
+        if (checkPermissions(PermissionUtils.CAMERA, 100)) {
+            openActivity(CameraActivity.class);
         }
+//        if (checkUserRank(getApplicationContext(), true)) {
+//            openActivity(MessageActivity.class);
+//        }
     }
 
     public void onClickUser(View view) {

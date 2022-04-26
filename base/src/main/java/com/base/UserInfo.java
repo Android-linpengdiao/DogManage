@@ -85,6 +85,7 @@ public class UserInfo implements Serializable, Comparator<FriendBean> {
     private int favoriteDynamicNumbers;
     private int membersPurchasedNumbers;
     private String token;
+    private String accessToken;
     private List<?> rids;
     private String socialMind;
     private String emotionStatus;
@@ -744,6 +745,14 @@ public class UserInfo implements Serializable, Comparator<FriendBean> {
 
     public void setToken(String token) {
         this.token = token;
+    }
+
+    public String getAccessToken() {
+        return accessToken;
+    }
+
+    public void setAccessToken(String accessToken) {
+        this.accessToken = accessToken;
     }
 
     public List<?> getRids() {

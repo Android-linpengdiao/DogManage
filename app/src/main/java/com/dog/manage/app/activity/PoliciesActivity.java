@@ -97,7 +97,7 @@ public class PoliciesActivity extends BaseActivity {
     }
 
     public void loadData(boolean isRefresh) {
-        SendRequest.favorite_getPager(getUserInfo().getToken(), 11, creationPager.getNextCursor(),
+        SendRequest.getPager(getUserInfo().getToken(), 11, creationPager.getNextCursor(),
                 new GenericsCallback<Pager<BaseData>>(new JsonGenericsSerializator()) {
 
                     @Override

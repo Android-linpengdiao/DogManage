@@ -3,3 +3,4 @@ include ':okhttp'
 include ':base'
 include ':app'
 rootProject.name = "DogManage"
+include ':camera'
