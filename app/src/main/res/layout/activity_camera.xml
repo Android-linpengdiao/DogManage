@@ -52,9 +52,8 @@
 
             <com.cjt2325.camera.PetCameraView
                 android:id="@+id/cameraView"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/dp_0"
-                android:layout_weight="1"
+                android:layout_width="@dimen/dp_192"
+                android:layout_height="@dimen/dp_192"
                 android:layout_marginTop="@dimen/dp_65" />
 
             <TextView
