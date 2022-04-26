@@ -10,6 +10,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="@color/white"
         android:orientation="vertical">
 
         <RelativeLayout
@@ -39,11 +40,11 @@
                 android:textColor="@color/black"
                 android:textSize="@dimen/sp_16"
                 android:textStyle="normal"
-                tools:text="title" />
+                android:text="鼻纹采集" />
         </RelativeLayout>
 
 
-        <LinearLayout
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="@dimen/dp_0"
             android:layout_weight="1"
@@ -52,32 +53,47 @@
 
             <com.cjt2325.camera.PetCameraView
                 android:id="@+id/cameraView"
-                android:layout_width="@dimen/dp_192"
-                android:layout_height="@dimen/dp_192"
-                android:layout_marginTop="@dimen/dp_65" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/dp_16"
-                android:text="请将采集圈对准鼻纹"
-                android:textColor="#273154"
-                android:textSize="@dimen/sp_13" />
-
-            <TextView
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/dp_72"
-                android:layout_marginTop="@dimen/dp_42"
-                android:layout_marginRight="@dimen/dp_72"
-                android:text="注意事项：
+                android:layout_height="match_parent"/>
+
+            <com.dog.manage.app.view.CircleCropView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center_horizontal"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:layout_width="@dimen/dp_192"
+                    android:layout_height="@dimen/dp_192"
+                    android:layout_marginTop="@dimen/dp_64"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dp_16"
+                    android:text="请将采集圈对准鼻纹"
+                    android:textColor="#273154"
+                    android:textSize="@dimen/sp_13" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/dp_72"
+                    android:layout_marginTop="@dimen/dp_42"
+                    android:layout_marginRight="@dimen/dp_72"
+                    android:text="注意事项：
 \n1.请保持鼻纹清洗，不要有遮挡物
 \n2.将鼻纹正面置于采集圈内，自动采集
 \n3.持续对准鼻纹采集不成功，会开放拍照供用户选择，用户可拍照采集"
-                android:textColor="#999999"
-                android:textSize="@dimen/sp_13" />
+                    android:textColor="#999999"
+                    android:textSize="@dimen/sp_13" />
+            </LinearLayout>
 
-        </LinearLayout>
+        </RelativeLayout>
 
         <TextView
             android:id="@+id/confirmView"

@@ -79,7 +79,7 @@ public class PetCameraView extends FrameLayout implements CameraInterface.Camera
 
 
     //回调监听
-    private JCameraListener jCameraLisenter;
+    private JCameraListener jCameraListener;
     private ClickListener leftClickListener;
     private ClickListener rightClickListener;
 
@@ -328,8 +328,8 @@ public class PetCameraView extends FrameLayout implements CameraInterface.Camera
     }
 
 
-    public void setJCameraLisenter(JCameraListener jCameraLisenter) {
-        this.jCameraLisenter = jCameraLisenter;
+    public void setJCameraListener(JCameraListener jCameraListener) {
+        this.jCameraListener = jCameraListener;
     }
 
 
@@ -366,8 +366,8 @@ public class PetCameraView extends FrameLayout implements CameraInterface.Camera
             case TYPE_VIDEO:
                 break;
             case TYPE_PICTURE:
-                if (jCameraLisenter != null) {
-                    jCameraLisenter.captureSuccess(captureBitmap);
+                if (jCameraListener != null) {
+                    jCameraListener.captureSuccess(captureBitmap);
                 }
                 break;
             case TYPE_SHORT:

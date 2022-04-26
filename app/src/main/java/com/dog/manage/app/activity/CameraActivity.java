@@ -63,7 +63,7 @@ public class CameraActivity extends BaseActivity{
     private void initCamera() {
         binding.cameraView.setMediaQuality(JCameraView.MEDIA_QUALITY_HIGH);
         //CameraView监听
-        binding.cameraView.setJCameraLisenter(new JCameraListener() {
+        binding.cameraView.setJCameraListener(new JCameraListener() {
             @Override
             public void captureSuccess(Bitmap bitmap) {
                 //获取图片bitmap
