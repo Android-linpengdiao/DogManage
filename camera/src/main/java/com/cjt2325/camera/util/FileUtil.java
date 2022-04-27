@@ -3,6 +3,8 @@ package com.cjt2325.camera.util;
 import android.graphics.Bitmap;
 import android.os.Environment;
 
+import com.base.BaseApplication;
+
 import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
@@ -18,7 +20,7 @@ import java.io.IOException;
  */
 public class FileUtil {
     private static final String TAG = "CJT";
-    private static final File parentPath = Environment.getExternalStorageDirectory();
+    private static final File parentPath = BaseApplication.getInstance().getExternalFilesDir(null);
     private static String storagePath = "";
     private static String DST_FOLDER_NAME = "JCamera";
 

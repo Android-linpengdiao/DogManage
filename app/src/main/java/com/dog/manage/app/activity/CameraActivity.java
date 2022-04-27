@@ -3,13 +3,9 @@ package com.dog.manage.app.activity;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.ImageFormat;
-import android.hardware.Camera;
-import android.media.ImageReader;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
-import android.view.SurfaceHolder;
 import android.view.View;
 
 import com.base.UserInfo;
@@ -18,7 +14,6 @@ import com.base.utils.FileUtils;
 import com.base.utils.ToastUtils;
 import com.cjt2325.camera.JCameraView;
 import com.cjt2325.camera.listener.JCameraListener;
-import com.cjt2325.camera.util.FileUtil;
 import com.dog.manage.app.Config;
 import com.dog.manage.app.R;
 import com.dog.manage.app.databinding.ActivityCameraBinding;
@@ -36,12 +31,16 @@ import org.json.JSONObject;
 
 import java.io.File;
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 import okhttp3.Call;
 import top.zibin.luban.Luban;
 import top.zibin.luban.OnCompressListener;
 
-public class CameraActivity extends BaseActivity{
+public class CameraActivity extends BaseActivity {
 
     private ActivityCameraBinding binding;
 
@@ -60,15 +59,39 @@ public class CameraActivity extends BaseActivity{
 
     }
 
+    @Override
+    protected void onResume() {
+        if (isCapture) {
+            startTimer();
+        }
+        binding.cameraView.onResume();
+        super.onResume();
+    }
+
+    @Override
+    protected void onPause() {
+        if (isCapture) {
+            stopTimer();
+        }
+        binding.cameraView.onPause();
+        super.onPause();
+    }
+
+    @Override
+    protected void onDestroy() {
+        stopTimer();
+        super.onDestroy();
+    }
+
+    private boolean isCapture = false;
+
     private void initCamera() {
-        binding.cameraView.setMediaQuality(JCameraView.MEDIA_QUALITY_HIGH);
         //CameraView监听
         binding.cameraView.setJCameraListener(new JCameraListener() {
             @Override
             public void captureSuccess(Bitmap bitmap) {
                 //获取图片bitmap
-                Log.i(TAG, "captureSuccess: bitmap = " + bitmap.getWidth());
-                String path = FileUtil.saveBitmap("JCamera", bitmap);
+
             }
 
             @Override
@@ -77,6 +100,57 @@ public class CameraActivity extends BaseActivity{
 
             }
         });
+    }
+
+    private ExecutorService executorService = Executors.newSingleThreadExecutor();
+    private Timer timer;
+    private TimerTask timerTask;
+    private Object object = new Object();
+
+    public void startTimer() {
+        timer = new Timer();
+        timerTask = new TimerTask() {
+            @Override
+            public void run() {
+                Bitmap bitmap = binding.cameraView.createFirstFrameBitmap();
+                Log.i(TAG, "run: bitmap " + bitmap);
+                if (bitmap != null) {
+                    String path = FileUtils.saveFirstFrameBitmap(bitmap);
+                    Log.i(TAG, "run: path " + path);
+                }
+            }
+        };
+        timer.schedule(timerTask, 0, 1000);
+
+    }
+
+    public void stopTimer() {
+        if (timer != null) {
+            timer.cancel();
+        }
+    }
+
+    /**
+     * 开始采集
+     *
+     * @param view
+     */
+    public void onClickCapture(View view) {
+        isCapture = !isCapture;
+        binding.captureView.setText(isCapture ? "停止采集" : "开始采集");
+        executorService.submit(new Runnable() {
+            @Override
+            public void run() {
+                synchronized (object) {
+                    if (isCapture) {
+                        startTimer();
+                    } else {
+                        stopTimer();
+                    }
+                }
+            }
+        });
+
     }
 
 
@@ -179,6 +253,7 @@ public class CameraActivity extends BaseActivity{
      * @param filePath
      */
     private void createPetArchives(String filePath) {
+        stopTimer();
         SendRequest.createPetArchives(getUserInfo().getAccessToken(), filePath,
                 new GenericsCallback<PetArchives>(new JsonGenericsSerializator()) {
                     @Override
@@ -204,18 +279,33 @@ public class CameraActivity extends BaseActivity{
      * @param filePath
      */
     private void petType(String filePath) {
+        stopTimer();
         SendRequest.petType(getUserInfo().getAccessToken(), filePath,
                 new GenericsCallback<PetType>(new JsonGenericsSerializator()) {
+
                     @Override
                     public void onError(Call call, Exception e, int id) {
-
+                        startTimer();
                     }
 
                     @Override
                     public void onResponse(PetType response, int id) {
                         if (response.getStatus() == 200) {
+                            if (response.getData() != null &&
+                                    response.getData().getPet() != null &&
+                                    response.getData().getPet().size() > 0 &&
+                                    response.getData().getPet().get(0).getIdentification() != null &&
+                                    response.getData().getPet().get(0).getIdentification().size() > 0) {
+                                String english_name = response.getData().getPet().get(0).getIdentification().get(0).getEnglish_name();
+                                String chinese_name = response.getData().getPet().get(0).getIdentification().get(0).getChinese_name();
+                                Double confidence = response.getData().getPet().get(0).getIdentification().get(0).getConfidence();
+                                ToastUtils.showShort(CameraActivity.this, chinese_name);
+                            } else {
+                                startTimer();
+                            }
 
                         } else {
+                            startTimer();
                             ToastUtils.showShort(CameraActivity.this, response.getMessage());
                         }
 

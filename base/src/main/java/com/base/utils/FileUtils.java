@@ -273,6 +273,29 @@ public class FileUtils {
         return file.getPath();
     }
 
+    public static String saveFirstFrameBitmap(Bitmap bitmap) {
+        File file = null;
+        try {
+            String jpegName = "first_frame_" + System.currentTimeMillis() + ".jpg";
+            file = new File(getTempPath() + jpegName);
+            file.getParentFile().mkdirs();
+            if (file.exists()) {
+                file.delete();
+            }
+            file.createNewFile();
+
+            FileOutputStream fout = new FileOutputStream(file);
+            BufferedOutputStream bos = new BufferedOutputStream(fout);
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, bos);
+            bos.flush();
+            bos.close();
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        return file.getPath();
+    }
+
     public static String saveBitmap(Bitmap bitmap, int width, int height, int option) {
 
         String jpegName = System.currentTimeMillis() + "_cover.jpg";

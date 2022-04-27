@@ -457,6 +457,9 @@ public class CameraInterface implements Camera.PreviewCallback {
     Bitmap firstFrameBitmap = null;
 
     public Bitmap createFirstFrameBitmap() {
+        if (!isPreviewing){
+            return null;
+        }
         Camera.Parameters parameters = mCamera.getParameters();
         int width = parameters.getPreviewSize().width;
         int height = parameters.getPreviewSize().height;

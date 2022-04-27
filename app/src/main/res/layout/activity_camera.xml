@@ -66,15 +66,10 @@
                 android:gravity="center_horizontal"
                 android:orientation="vertical">
 
-                <ImageView
-                    android:layout_width="@dimen/dp_192"
-                    android:layout_height="@dimen/dp_192"
-                    android:layout_marginTop="@dimen/dp_64"/>
-
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/dp_16"
+                    android:layout_marginTop="@dimen/dp_270"
                     android:text="请将采集圈对准鼻纹"
                     android:textColor="#273154"
                     android:textSize="@dimen/sp_13" />
@@ -96,7 +91,7 @@
         </RelativeLayout>
 
         <TextView
-            android:id="@+id/confirmView"
+            android:id="@+id/captureView"
             android:layout_width="match_parent"
             android:layout_height="@dimen/dp_48"
             android:layout_alignParentRight="true"
@@ -106,7 +101,7 @@
             android:layout_marginBottom="@dimen/dp_18"
             android:background="@drawable/button_theme"
             android:gravity="center"
-            android:onClick="onClickConfirm"
+            android:onClick="onClickCapture"
             android:text="开始采集"
             android:textColor="#ffffff"
             android:textSize="@dimen/sp_16" />

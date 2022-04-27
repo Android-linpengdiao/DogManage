@@ -175,18 +175,23 @@ public class PetCameraView extends FrameLayout implements CameraInterface.Camera
         });
         //拍照
 //        machine.capture();
-        Observable.interval(1, TimeUnit.SECONDS)
-                .subscribe(new Consumer<Long>() {
-                    @Override
-                    public void accept(final Long time) {
-                        Bitmap bitmap = CameraInterface.getInstance().createFirstFrameBitmap();
-                        Log.i("TAG", "accept: bitmap = "+bitmap.getWidth());
-                        String path = FileUtil.saveBitmap("JCamera", bitmap);
-                        Log.i("TAG", "accept: path = "+path);
-                    }
-                });
+//        Observable.interval(1, TimeUnit.SECONDS)
+//                .subscribe(new Consumer<Long>() {
+//                    @Override
+//                    public void accept(final Long time) {
+//                        Log.i("TAG", "accept: time = "+time);
+//                        Bitmap firstFrameBitmap = CameraInterface.getInstance().createFirstFrameBitmap();
+//                        if (jCameraListener != null) {
+//                            jCameraListener.captureSuccess(firstFrameBitmap);
+//                        }
+//                    }
+//                });
 
         foucsView();
+    }
+
+    public Bitmap createFirstFrameBitmap(){
+        return CameraInterface.getInstance().createFirstFrameBitmap();
     }
 
     private int CAMERA_FACING = 0;
