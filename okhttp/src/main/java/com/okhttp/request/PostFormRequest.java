@@ -8,6 +8,7 @@ import java.net.URLEncoder;
 import java.util.List;
 import java.util.Map;
 
+import com.google.gson.Gson;
 import com.okhttp.Builder.PostFormBuilder;
 import com.okhttp.callbacks.Callback;
 import com.okhttp.utils.OkHttpUtils;
@@ -32,26 +33,31 @@ public class PostFormRequest extends OkHttpRequest
     @Override
     protected RequestBody buildRequestBody()
     {
-        if (files == null || files.isEmpty())
-        {
-            FormBody.Builder builder = new FormBody.Builder();
-            addParams(builder);
-            FormBody formBody = builder.build();
-            return formBody;
-        } else
-        {
-            MultipartBody.Builder builder = new MultipartBody.Builder()
-                    .setType(MultipartBody.FORM);
-            addParams(builder);
 
-            for (int i = 0; i < files.size(); i++)
-            {
-                PostFormBuilder.FileInput fileInput = files.get(i);
-                RequestBody fileBody = RequestBody.create(MediaType.parse(guessMimeType(fileInput.filename)), fileInput.file);
-                builder.addFormDataPart(fileInput.key, fileInput.filename, fileBody);
-            }
-            return builder.build();
-        }
+        RequestBody requestBody = RequestBody.create(MediaType.parse("application/json"), new Gson().toJson(params));
+        return requestBody;
+
+//        if (files == null || files.isEmpty())
+//        {
+//            FormBody.Builder builder = new FormBody.Builder();
+//            addParams(builder);
+//            FormBody formBody = builder.build();
+//            return formBody;
+//        } else
+//        {
+//            MultipartBody.Builder builder = new MultipartBody.Builder()
+//                    .setType(MultipartBody.FORM);
+//            addParams(builder);
+//
+//            for (int i = 0; i < files.size(); i++)
+//            {
+//                PostFormBuilder.FileInput fileInput = files.get(i);
+//                RequestBody fileBody = RequestBody.create(MediaType.parse(guessMimeType(fileInput.filename)), fileInput.file);
+//                builder.addFormDataPart(fileInput.key, fileInput.filename, fileBody);
+//            }
+//            return builder.build();
+//        }
+
     }
 
     @Override

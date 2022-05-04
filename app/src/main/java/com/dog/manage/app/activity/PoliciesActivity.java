@@ -13,6 +13,7 @@ import com.base.view.RecycleViewDivider;
 import com.dog.manage.app.R;
 import com.dog.manage.app.adapter.PoliciesAdapter;
 import com.dog.manage.app.databinding.ActivityPoliciesBinding;
+import com.dog.manage.app.model.PoliciesBean;
 import com.okhttp.Pager;
 import com.okhttp.SendRequest;
 import com.okhttp.callbacks.GenericsCallback;
@@ -50,20 +51,13 @@ public class PoliciesActivity extends BaseActivity {
         binding.recyclerView.setNestedScrollingEnabled(false);
         adapter = new PoliciesAdapter(getApplicationContext());
         binding.recyclerView.setAdapter(adapter);
-        adapter.refreshData(Arrays.asList(
-                "犬证办理",
-                "免疫证办理",
-                "犬证年审",
-                "犬只过户",
-                "犬只领养",
-                "犬只注销",
-                "信息变更",
-                "办理流程",
-                "政策法规"));
         adapter.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view, Object object) {
-                openActivity(PoliciesDetailsActivity.class);
+                PoliciesBean dataBean = (PoliciesBean) object;
+                Bundle bundle = new Bundle();
+                bundle.putSerializable("dataBean",dataBean);
+                openActivity(PoliciesDetailsActivity.class,bundle);
             }
 
             @Override
@@ -76,29 +70,30 @@ public class PoliciesActivity extends BaseActivity {
 
     }
 
-    private Pager<BaseData> creationPager = new Pager<>();
+    private Pager<PoliciesBean> creationPager = new Pager<>();
+
     private void setRefresh() {
         binding.refreshLayout.setOnRefreshListener(new OnRefreshListener() {
             @Override
             public void onRefresh(RefreshLayout refreshlayout) {
                 creationPager = new Pager<>();
-//                loadData(true);
+                loadData(true);
             }
         });
         binding.refreshLayout.setOnLoadMoreListener(new OnLoadMoreListener() {
             @Override
             public void onLoadMore(RefreshLayout refreshlayout) {
-//                loadData(false);
+                loadData(false);
 
             }
         });
-//        binding.refreshLayout.autoRefresh();
+        binding.refreshLayout.autoRefresh();
 
     }
 
     public void loadData(boolean isRefresh) {
-        SendRequest.getPager(getUserInfo().getToken(), 11, creationPager.getNextCursor(),
-                new GenericsCallback<Pager<BaseData>>(new JsonGenericsSerializator()) {
+        SendRequest.noticeList(getUserInfo().getAuthorization(), 0, 20,
+                new GenericsCallback<Pager<PoliciesBean>>(new JsonGenericsSerializator()) {
 
                     @Override
                     public void onAfter(int id) {
@@ -120,19 +115,19 @@ public class PoliciesActivity extends BaseActivity {
                     }
 
                     @Override
-                    public void onResponse(Pager<BaseData> response, int id) {
+                    public void onResponse(Pager<PoliciesBean> response, int id) {
                         creationPager = response;
-                        if (response != null && response.getData() != null) {
-//                            if (isRefresh) {
-//                                adapter.refreshData(response.getData());
-//                            } else {
-//                                adapter.loadMoreData(response.getData());
-//                            }
-//                            if (!response.isHasnext()) {
-//                                binding.refreshLayout.setNoMoreData(true);
-//                            }
-//                            binding.emptyView.setVisibility(adapter.getList().size() > 0 ? View.GONE : View.VISIBLE);
-//                            binding.emptyView.setText("暂无内容～");
+                        if (response != null && response.getRows() != null) {
+                            if (isRefresh) {
+                                adapter.refreshData(response.getRows());
+                            } else {
+                                adapter.loadMoreData(response.getRows());
+                            }
+                            if (adapter.getList().size() == response.getTotal()) {
+                                binding.refreshLayout.setNoMoreData(true);
+                            }
+                            binding.emptyView.setVisibility(adapter.getList().size() > 0 ? View.GONE : View.VISIBLE);
+                            binding.emptyView.setText("暂无内容～");
                         }
                     }
                 });

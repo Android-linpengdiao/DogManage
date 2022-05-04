@@ -20,7 +20,14 @@ import com.dog.manage.app.R;
 import com.dog.manage.app.adapter.FrameItemAdapter;
 import com.dog.manage.app.databinding.ActivityMainBinding;
 import com.dog.manage.app.login.ConfigUtils;
+import com.dog.manage.app.model.BannerBean;
+import com.dog.manage.app.model.PoliciesBean;
 import com.dog.manage.app.utils.GlideImageLoader;
+import com.okhttp.Pager;
+import com.okhttp.ResultClient;
+import com.okhttp.SendRequest;
+import com.okhttp.callbacks.GenericsCallback;
+import com.okhttp.sample_okhttp.JsonGenericsSerializator;
 import com.xw.banner.BannerConfig;
 import com.xw.banner.Transformer;
 import com.xw.banner.listener.OnBannerListener;
@@ -33,6 +40,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import cn.jpush.android.api.JPushInterface;
+import okhttp3.Call;
 import pub.devrel.easypermissions.AfterPermissionGranted;
 import pub.devrel.easypermissions.EasyPermissions;
 
@@ -129,13 +137,57 @@ public class MainActivity extends BaseActivity {
                 openActivity(AdvertiseActivity.class);
             }
         });
-        List<String> images = new ArrayList<>();
-        images.add("https://pics7.baidu.com/feed/6c224f4a20a446236fb6db0ac3bf5d040df3d785.jpeg");
-        images.add("https://pics7.baidu.com/feed/6c224f4a20a446236fb6db0ac3bf5d040df3d785.jpeg");
-        images.add("https://pics7.baidu.com/feed/6c224f4a20a446236fb6db0ac3bf5d040df3d785.jpeg");
 
-        binding.mainBanner.setImages(Arrays.asList("")).start();
-        binding.banner.setImages(images).start();
+//        bannerInfoList();
+        getForbiddenById();
+    }
+
+    public void bannerInfoList() {
+        SendRequest.bannerInfoList(getUserInfo().getAuthorization(), 0, 20,
+                new GenericsCallback<Pager<BannerBean>>(new JsonGenericsSerializator()) {
+
+
+                    @Override
+                    public void onError(Call call, Exception e, int id) {
+
+                    }
+
+                    @Override
+                    public void onResponse(Pager<BannerBean> response, int id) {
+                        if (response != null && response.getRows() != null && response.getRows().size() > 0) {
+                            List<String> images = new ArrayList<>();
+                            images.add("https://pics7.baidu.com/feed/6c224f4a20a446236fb6db0ac3bf5d040df3d785.jpeg");
+                            images.add("https://pics7.baidu.com/feed/6c224f4a20a446236fb6db0ac3bf5d040df3d785.jpeg");
+                            images.add("https://pics7.baidu.com/feed/6c224f4a20a446236fb6db0ac3bf5d040df3d785.jpeg");
+                            binding.mainBanner.setImages(Arrays.asList("")).start();
+                        }
+                    }
+                });
+
+    }
+
+    public void getForbiddenById() {
+        SendRequest.getForbiddenById(getUserInfo().getAuthorization(),
+                new GenericsCallback<ResultClient<PoliciesBean>>(new JsonGenericsSerializator()) {
+
+
+                    @Override
+                    public void onError(Call call, Exception e, int id) {
+
+                    }
+
+                    @Override
+                    public void onResponse(ResultClient<PoliciesBean> response, int id) {
+                        if (response != null && response.getData() != null) {
+                            List<String> images = new ArrayList<>();
+                            images.add("https://pics7.baidu.com/feed/6c224f4a20a446236fb6db0ac3bf5d040df3d785.jpeg");
+                            images.add("https://pics7.baidu.com/feed/6c224f4a20a446236fb6db0ac3bf5d040df3d785.jpeg");
+                            images.add("https://pics7.baidu.com/feed/6c224f4a20a446236fb6db0ac3bf5d040df3d785.jpeg");
+                            binding.banner.setImages(images).start();
+                        }
+                    }
+                });
+
     }
 
     public void onClickMessage(View view) {

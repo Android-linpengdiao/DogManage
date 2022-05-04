@@ -190,7 +190,7 @@ public class DogLogoutDetailsActivity extends BaseActivity {
         if (LogUtil.isDebug) {
             return;
         }
-        SendRequest.DogLogout(getUserInfo().getToken(), paramsMap, new GenericsCallback(new JsonGenericsSerializator()) {
+        SendRequest.DogLogout(getUserInfo().getAuthorization(), paramsMap, new GenericsCallback(new JsonGenericsSerializator()) {
             @Override
             public void onError(Call call, Exception e, int id) {
 

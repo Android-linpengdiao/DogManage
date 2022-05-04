@@ -48,7 +48,7 @@ public class AccountActivity extends BaseActivity {
             return;
         }
         binding.sendCodeView.setEnabled(false);
-        SendRequest.createUpdatePhone(getUserInfo().getToken(), phone, new GenericsCallback<BaseData>(new JsonGenericsSerializator()) {
+        SendRequest.sendMessageUser(phone, new GenericsCallback<BaseData>(new JsonGenericsSerializator()) {
 
             @Override
             public void onBefore(Request request, int id) {

@@ -185,7 +185,7 @@ public class BaseActivity extends AppCompatActivity {
     public boolean checkUserRank(Context context, boolean login) {
         UserInfo user = getUserInfo();
         //游客模式
-        if (user == null || TextUtils.isEmpty(user.getToken())) {
+        if (user == null || TextUtils.isEmpty(user.getAuthorization())) {
             if (login) {
                 Intent intent = new Intent(context, LoginActivity.class);
                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -201,7 +201,7 @@ public class BaseActivity extends AppCompatActivity {
     }
 
     public void updateUserInfo(Callback callback) {
-        SendRequest.userLoad(getUserInfo().getToken(), getUserInfo().getId(),
+        SendRequest.userLoad(getUserInfo().getAuthorization(), getUserInfo().getId(),
                 new GenericsCallback<ResultClient<UserInfo>>(new JsonGenericsSerializator()) {
 
                     @Override
@@ -213,7 +213,7 @@ public class BaseActivity extends AppCompatActivity {
                     @Override
                     public void onResponse(ResultClient<UserInfo> response, int id) {
                         if (response.isSuccess()) {
-                            response.getData().setToken(getUserInfo().getToken());
+                            response.getData().setAuthorization(getUserInfo().getAuthorization());
                             setUserInfo(response.getData());
                         }
                         if (callback != null)
@@ -237,37 +237,6 @@ public class BaseActivity extends AppCompatActivity {
             return new UserInfo();
         }
         return new UserInfo();
-    }
-
-    public void getVisitor() {
-        getVisitor(null);
-    }
-
-    public void getVisitor(Callback callback) {
-        SendRequest.getVisitor(new GenericsCallback<ResultClient<UserInfo>>(new JsonGenericsSerializator()) {
-            @Override
-            public void onError(Call call, Exception e, int id) {
-                if (callback != null) {
-                    callback.onError();
-                }
-
-            }
-
-            @Override
-            public void onResponse(ResultClient<UserInfo> response, int id) {
-                if (response.isSuccess() && response.getData() != null) {
-                    BaseApplication.getInstance().setUserInfo(response.getData());
-                    MessageBus.Builder builder = new MessageBus.Builder();
-                    MessageBus messageBus = builder
-                            .codeType(MessageBus.msgId_updateUser)
-                            .build();
-                    EventBus.getDefault().post(messageBus);
-                    if (callback != null) {
-                        callback.onResponse(true, id);
-                    }
-                }
-            }
-        });
     }
 
     public void onClickDogCertificate(Activity activity, List<String> list, int index, OnClickListener listener) {

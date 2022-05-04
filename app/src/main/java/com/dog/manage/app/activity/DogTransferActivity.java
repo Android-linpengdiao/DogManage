@@ -92,7 +92,7 @@ public class DogTransferActivity extends BaseActivity {
         if (LogUtil.isDebug){
             return;
         }
-        SendRequest.DogTransfer(getUserInfo().getToken(), paramsMap, new GenericsCallback(new JsonGenericsSerializator()) {
+        SendRequest.DogTransfer(getUserInfo().getAuthorization(), paramsMap, new GenericsCallback(new JsonGenericsSerializator()) {
             @Override
             public void onError(Call call, Exception e, int id) {
 

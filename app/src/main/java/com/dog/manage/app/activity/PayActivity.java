@@ -34,7 +34,7 @@ public class PayActivity extends BaseActivity {
     private int month = 1;
 
     private void createOrder(Integer id) {
-        SendRequest.viporder_createOrder(getUserInfo().getToken(), month, id,
+        SendRequest.viporder_createOrder(getUserInfo().getAuthorization(), month, id,
                 new GenericsCallback<ResultClient<VipOrderBean>>(new JsonGenericsSerializator()) {
                     @Override
                     public void onError(Call call, Exception e, int id) {
@@ -55,7 +55,7 @@ public class PayActivity extends BaseActivity {
 
     private void orderCreateOrderAboutVip(int vipoid) {
         if (true) {
-            SendRequest.orderCreateAliOrderAboutVip(getUserInfo().getToken(), vipoid,
+            SendRequest.orderCreateAliOrderAboutVip(getUserInfo().getAuthorization(), vipoid,
                     new GenericsCallback<BaseData>(new JsonGenericsSerializator()) {
                         @Override
                         public void onError(Call call, Exception e, int id) {
@@ -71,7 +71,7 @@ public class PayActivity extends BaseActivity {
 //                                orderTestSuccess(oid);
 
 
-                                SendRequest.order_aliOrderPayParam(getUserInfo().getToken(), Long.toString(oid),
+                                SendRequest.order_aliOrderPayParam(getUserInfo().getAuthorization(), Long.toString(oid),
                                         new GenericsCallback<String>(new JsonGenericsSerializator()) {
 
                                             @Override
@@ -123,7 +123,7 @@ public class PayActivity extends BaseActivity {
                         }
                     });
         } else {
-            SendRequest.orderCreateWxOrderAboutVip(getUserInfo().getToken(), vipoid,
+            SendRequest.orderCreateWxOrderAboutVip(getUserInfo().getAuthorization(), vipoid,
                     new GenericsCallback<BaseData>(new JsonGenericsSerializator()) {
                         @Override
                         public void onError(Call call, Exception e, int id) {
@@ -134,7 +134,7 @@ public class PayActivity extends BaseActivity {
                         public void onResponse(BaseData response, int id) {
                             if (response.isSuccess()) {
                                 long oid = ((long) Double.parseDouble(response.getData().toString()));
-                                SendRequest.order_wxOrderPayParam(getUserInfo().getToken(), Long.toString(oid),
+                                SendRequest.order_wxOrderPayParam(getUserInfo().getAuthorization(), Long.toString(oid),
                                         new GenericsCallback<String>(new JsonGenericsSerializator()) {
 
                                             @Override

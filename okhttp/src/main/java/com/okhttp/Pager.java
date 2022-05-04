@@ -8,13 +8,13 @@ public class Pager<T> implements Serializable {
     private String cursor = "0";
     private int size = 20;
     private int page = 1;
-    private List<T> data;
+    private List<T> rows;
     private String preCursor = "0";
     private String nextCursor = "0";
     private int count = 0;
     private long totalCount = 0L;
     private boolean hasnext;
-    private long totalPage;
+    private long total;
 
     //ResultClient 数据
     private boolean success = true;
@@ -92,24 +92,24 @@ public class Pager<T> implements Serializable {
         this.nextCursor = nextCursor;
     }
 
-    public List<T> getData() {
-        return data;
+    public List<T> getRows() {
+        return rows;
     }
 
-    public void setData(List<T> data) {
-        this.data = data;
+    public void setRows(List<T> rows) {
+        this.rows = rows;
     }
 
-    public long getTotalPage() {
-        return totalPage;
+    public long getTotal() {
+        return total;
     }
 
-    public void setTotalPage(long totalPage) {
-        this.totalPage = totalPage;
+    public void setTotal(long total) {
+        this.total = total;
     }
 
     public boolean isSuccess() {
-        return success;
+        return code == 200;
     }
 
     public void setSuccess(boolean success) {

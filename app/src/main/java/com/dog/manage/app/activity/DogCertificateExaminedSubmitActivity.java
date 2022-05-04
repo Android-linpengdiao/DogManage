@@ -62,7 +62,7 @@ public class DogCertificateExaminedSubmitActivity extends BaseActivity implement
             return;
         }
         Map<String, String> paramsMap = new HashMap<>();
-        SendRequest.CertificateExamined(getUserInfo().getToken(), paramsMap, new GenericsCallback(new JsonGenericsSerializator()) {
+        SendRequest.CertificateExamined(getUserInfo().getAuthorization(), paramsMap, new GenericsCallback(new JsonGenericsSerializator()) {
             @Override
             public void onError(Call call, Exception e, int id) {
 

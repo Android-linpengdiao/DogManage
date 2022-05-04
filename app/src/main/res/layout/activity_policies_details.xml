@@ -25,6 +25,7 @@
             app:tv_title_size="@dimen/titleViewSize" />
 
         <com.dog.manage.app.view.TextBoldView
+            android:id="@+id/noticeTitleView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/dp_28"
@@ -36,6 +37,7 @@
             android:textSize="@dimen/sp_17" />
 
         <TextView
+            android:id="@+id/noticeTimeView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/dp_18"
@@ -47,6 +49,7 @@
             android:textStyle="normal" />
 
         <TextView
+            android:id="@+id/noticeContentView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/dp_15"

@@ -125,7 +125,7 @@ public class DogImmuneHospitalActivity extends BaseActivity implements AMap.OnMa
         if (LogUtil.isDebug){
             return;
         }
-        SendRequest.DogImmuneHospital(getUserInfo().getToken(), paramsMap, new GenericsCallback(new JsonGenericsSerializator()) {
+        SendRequest.DogImmuneHospital(getUserInfo().getAuthorization(), paramsMap, new GenericsCallback(new JsonGenericsSerializator()) {
             @Override
             public void onError(Call call, Exception e, int id) {
 

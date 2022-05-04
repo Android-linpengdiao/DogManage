@@ -59,7 +59,7 @@ public class BaseFragment extends Fragment {
     public boolean checkUserRank(Context context, boolean login) {
         UserInfo user = getUserInfo();
         //游客模式
-        if (user == null || TextUtils.isEmpty(user.getToken()) || user.getUserRank() == 99) {
+        if (user == null || TextUtils.isEmpty(user.getAuthorization())) {
             if (login) {
                 Intent intent = new Intent(context, LoginActivity.class);
                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -92,7 +92,7 @@ public class BaseFragment extends Fragment {
     }
 
     public void updateUserInfo(Callback callback) {
-        SendRequest.userLoad(getUserInfo().getToken(), getUserInfo().getId(),
+        SendRequest.userLoad(getUserInfo().getAuthorization(), getUserInfo().getId(),
                 new GenericsCallback<ResultClient<UserInfo>>(new JsonGenericsSerializator()) {
 
                     @Override
@@ -104,7 +104,7 @@ public class BaseFragment extends Fragment {
                     @Override
                     public void onResponse(ResultClient<UserInfo> response, int id) {
                         if (response.isSuccess()) {
-                            response.getData().setToken(getUserInfo().getToken());
+                            response.getData().setAuthorization(getUserInfo().getAuthorization());
                             setUserInfo(response.getData());
                         }
                         if (callback != null) {

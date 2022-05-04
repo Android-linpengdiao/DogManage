@@ -2,23 +2,33 @@ package com.okhttp;
 
 import java.io.Serializable;
 
-/**统一响应数据*/
+/**
+ * 统一响应数据
+ */
 public class ResultClient<T> implements Serializable {
 
-    /**响应状态*/
+    /**
+     * 响应状态
+     */
     private boolean success = true;
 
-    /**返回数据*/
+    /**
+     * 返回数据
+     */
     private T data;
 
-    /**响应描述*/
-    private  String msg;
+    /**
+     * 响应描述
+     */
+    private String msg;
 
-    /**响应代码*/
+    /**
+     * 响应代码
+     */
     private int code;
 
     public boolean isSuccess() {
-        return success;
+        return code == 200;
     }
 
     public void setSuccess(boolean success) {

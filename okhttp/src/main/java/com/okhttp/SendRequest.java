@@ -1,57 +1,107 @@
 package com.okhttp;
 
-import android.os.Build;
-import android.text.TextUtils;
 import android.util.Log;
 
-import com.base.utils.CommonUtil;
 import com.okhttp.callbacks.Callback;
 import com.okhttp.utils.APIUrls;
 import com.okhttp.utils.OkHttpUtils;
 
 import java.io.File;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 public class SendRequest {
+
     private static String TAG = "SendRequest";
 
     /**
-     * 密码登录
+     * APP登录
+     * 设备类型 1 ios 2 安卓
      */
-    public static void login(String phone, String password, Callback call) {
+    public static void userLogin(String phone, String code, Callback call) {
         Map<String, String> map = new HashMap<>();
-        map.put("phone", phone);
-        map.put("password", password);
-        OkHttpUtils.post().params(map).url(APIUrls.login).build().execute(call);
+        map.put("loginPhone", phone);
+        map.put("code", code);
+        map.put("tremType", "2");
+        OkHttpUtils.post().params(map).url(APIUrls.userLogin).build().execute(call);
 
     }
 
     /**
-     * 登陆-注册  (快捷登录)
+     * 发送短信验证
+     *
+     * @param loginPhone
+     * @param call
      */
-    public static void loginOrRegisterForCode(String phone, String code, Callback call) {
+    public static void sendMessageUser(String loginPhone, Callback call) {
         Map<String, String> map = new HashMap<>();
-        map.put("phone", phone);
-        map.put("code", code);
-        OkHttpUtils.post().params(map).url(APIUrls.loginOrRegisterForCode).build().execute(call);
+        map.put("loginPhone", loginPhone);
+        OkHttpUtils.post().params(map).url(APIUrls.sendMessageUser).build().execute(call);
 
     }
 
-    public static void createUpdatePhone(String token, String phone, Callback call) {
+    /**
+     * 政策法规
+     *
+     * @param pageNum
+     * @param pageSize
+     * @param call
+     */
+    public static void noticeList(String authorization, int pageNum, int pageSize, Callback call) {
+        Map<String, String> headers = new HashMap<>();
+        headers.put("Authorization", authorization);
+
         Map<String, String> map = new HashMap<>();
-        map.put("token", token);
-        map.put("phone", phone);
-        OkHttpUtils.post().params(map).url(APIUrls.createUpdatePhone).build().execute(call);
+        map.put("pageNum", String.valueOf(pageNum));
+        map.put("pageSize", String.valueOf(pageSize));
+        OkHttpUtils.post().headers(headers).params(map).url(APIUrls.noticeList).build().execute(call);
 
     }
 
-    public static void getVisitor(Callback call) {
+    /**
+     * 政策法规详情
+     *
+     * @param authorization
+     * @param noticeId
+     * @param call
+     */
+    public static void getNoticeById(String authorization, int noticeId, Callback call) {
+        Map<String, String> headers = new HashMap<>();
+        headers.put("Authorization", authorization);
+
         Map<String, String> map = new HashMap<>();
-        OkHttpUtils.post().params(map).url(APIUrls.getVisitor).build().execute(call);
+        map.put("noticeId", String.valueOf(noticeId));
+        OkHttpUtils.post().headers(headers).params(map).url(APIUrls.getNoticeById).build().execute(call);
 
     }
+
+    /**
+     * 获取banner图片列表
+     *
+     * @param pageNum
+     * @param pageSize
+     * @param call
+     */
+    public static void bannerInfoList(String authorization, int pageNum, int pageSize, Callback call) {
+        Map<String, String> headers = new HashMap<>();
+        headers.put("Authorization", authorization);
+
+        Map<String, String> map = new HashMap<>();
+        map.put("pageNum", String.valueOf(pageNum));
+        map.put("pageSize", String.valueOf(pageSize));
+        OkHttpUtils.post().headers(headers).params(map).url(APIUrls.bannerInfoList).build().execute(call);
+
+    }
+
+    public static void getForbiddenById(String authorization,Callback call) {
+        Map<String, String> headers = new HashMap<>();
+        headers.put("Authorization", authorization);
+
+        Map<String, String> map = new HashMap<>();
+        OkHttpUtils.post().headers(headers).url(APIUrls.getForbiddenById).build().execute(call);
+
+    }
+
 
     public static void userLoad(String token, int id, Callback call) {
         Map<String, String> map = new HashMap<>();
@@ -194,6 +244,7 @@ public class SendRequest {
      * imageBase64	string	图片base64编码；支持PNG、JPG、JPEG、BMP格式；
      * 如果同时传入file、imageUrl、imageBase64，本API使用顺序为imageUrl优先，imageBase64最低
      * petType 宠物种类：0为狗，1为猫
+     *
      * @param token
      * @param filePath
      * @param call

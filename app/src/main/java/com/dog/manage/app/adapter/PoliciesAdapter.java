@@ -7,22 +7,16 @@ import com.base.BaseRecyclerAdapter;
 import com.base.utils.GlideLoader;
 import com.base.view.OnClickListener;
 import com.dog.manage.app.R;
-import com.dog.manage.app.databinding.ItemDongManageWorkflowBinding;
 import com.dog.manage.app.databinding.ItemPoliciesBinding;
+import com.dog.manage.app.model.PoliciesBean;
 
-public class PoliciesAdapter extends BaseRecyclerAdapter<String, ItemPoliciesBinding> {
+public class PoliciesAdapter extends BaseRecyclerAdapter<PoliciesBean, ItemPoliciesBinding> {
 
 
     private OnClickListener onClickListener;
 
     public void setOnClickListener(OnClickListener onClickListener) {
         this.onClickListener = onClickListener;
-    }
-
-    private String searchContent;
-
-    public void setContent(String searchContent) {
-        this.searchContent = searchContent;
     }
 
     public PoliciesAdapter(Context context) {
@@ -40,8 +34,10 @@ public class PoliciesAdapter extends BaseRecyclerAdapter<String, ItemPoliciesBin
     }
 
     @Override
-    protected void onBindItem(ItemPoliciesBinding binding, String dataBean, int position) {
-        GlideLoader.LoderImage(mContext, "https://pics7.baidu.com/feed/6c224f4a20a446236fb6db0ac3bf5d040df3d785.jpeg", binding.coverView, 5);
+    protected void onBindItem(ItemPoliciesBinding binding, PoliciesBean dataBean, int position) {
+        binding.titleView.setText(dataBean.getNoticeTitle());
+        binding.timeView.setText(dataBean.getCreateTime());
+        GlideLoader.LoderImage(mContext, dataBean.getImageUrl(), binding.coverView, 5);
         binding.getRoot().setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

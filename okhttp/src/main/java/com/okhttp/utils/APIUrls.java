@@ -2,20 +2,16 @@ package com.okhttp.utils;
 
 public class APIUrls {
 
-    public final static String URL_DOMAIN = "http://39.107.247.82:10000/";
+    public final static String URL_DOMAIN = "http://124.70.40.92:9204/";
 
     public final static String protocol = URL_DOMAIN + "protocol.html";
     public final static String service = URL_DOMAIN + "protocol.html";
 
-    public final static String URL_UPLOAD_FILES = URL_DOMAIN + "storage/handle";
 
-
-    //用户信息
-    public final static String login = URL_DOMAIN + "login/login";
-    public final static String loginOrRegisterForCode = URL_DOMAIN + "login/loginOrRegisterForCode";
-    public final static String createAuthCodeOnLoginOut = URL_DOMAIN + "web/user/createAuthCodeOnLoginOut";
-    //发送更新手机号验证码
-    public final static String createUpdatePhone = URL_DOMAIN + "web/user/createUpdatePhone";
+    //APP登录
+    public final static String userLogin = URL_DOMAIN + "user/toLogin";
+    //发送短信验证
+    public final static String sendMessageUser = URL_DOMAIN + "user/sendMessageUser";
     //获得游客身份
     public final static String getVisitor = URL_DOMAIN + "web/user/getVisitor";
     //获取用户信息
@@ -24,6 +20,15 @@ public class APIUrls {
     // ==================================== 犬只管理 =============================================
 
     public final static String testUrl = URL_DOMAIN + "testUrl";
+
+    //政策法规
+    public final static String noticeList = URL_DOMAIN + "notice/list";
+    //政策法规详情
+    public final static String getNoticeById = URL_DOMAIN + "notice/getNoticeById";
+    //获取banner图片列表
+    public final static String bannerInfoList = URL_DOMAIN + "bannerInfo/list";
+    //禁养犬宣传接口
+    public final static String getForbiddenById = URL_DOMAIN + "forbidden/getForbiddenById";
 
     /**
      * 悦保

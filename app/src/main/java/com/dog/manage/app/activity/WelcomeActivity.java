@@ -80,7 +80,7 @@ public class WelcomeActivity extends BaseActivity {
             }
         }, 1000);
 
-//        if (CommonUtil.isBlank(getUserInfo()) || CommonUtil.isBlank(getUserInfo().getToken())) {
+//        if (CommonUtil.isBlank(getUserInfo()) || CommonUtil.isBlank(getUserInfo().getAuthorization())) {
 //            SendRequest.getVisitor(new GenericsCallback<ResultClient<UserInfo>>(new JsonGenericsSerializator()) {
 //                @Override
 //                public void onError(Call call, Exception e, int id) {

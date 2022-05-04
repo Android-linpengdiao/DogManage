@@ -66,7 +66,7 @@ public class DogCertificateEditSubmitActivity extends BaseActivity implements AM
         if (LogUtil.isDebug) {
             return;
         }
-        SendRequest.DogCertificate(getUserInfo().getToken(), paramsMap, new GenericsCallback(new JsonGenericsSerializator()) {
+        SendRequest.DogCertificate(getUserInfo().getAuthorization(), paramsMap, new GenericsCallback(new JsonGenericsSerializator()) {
             @Override
             public void onError(Call call, Exception e, int id) {
 

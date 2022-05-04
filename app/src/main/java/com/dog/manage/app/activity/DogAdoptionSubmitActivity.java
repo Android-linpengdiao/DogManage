@@ -58,7 +58,7 @@ public class DogAdoptionSubmitActivity extends BaseActivity {
         if (LogUtil.isDebug){
             return;
         }
-        SendRequest.CertificateExamined(getUserInfo().getToken(), paramsMap, new GenericsCallback(new JsonGenericsSerializator()) {
+        SendRequest.CertificateExamined(getUserInfo().getAuthorization(), paramsMap, new GenericsCallback(new JsonGenericsSerializator()) {
             @Override
             public void onError(Call call, Exception e, int id) {
 

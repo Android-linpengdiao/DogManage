@@ -173,10 +173,10 @@ public class DialogManager {
         ImageView userIconImageView = window.findViewById(R.id.userIconImageView);
         ImageView qrCodeImageView = window.findViewById(R.id.qrCodeImageView);
         TextView userNameTextView = window.findViewById(R.id.userNameTextView);
-        userNameTextView.setText(BaseApplication.getInstance().getUserInfo().getName());
+//        userNameTextView.setText(BaseApplication.getInstance().getUserInfo().getName());
         Bitmap bitmap = ZxingManager.getInstance(act).createQRCode(qrCode + "?" + type + "=" + id);
         qrCodeImageView.setImageBitmap(bitmap);
-        GlideLoader.LoderCircleImage(act, BaseApplication.getInstance().getUserInfo().getIcon(), userIconImageView);
+//        GlideLoader.LoderCircleImage(act, BaseApplication.getInstance().getUserInfo().getIcon(), userIconImageView);
     }
 
     public static void showGroupNameDialog(final Activity act, String name, String title, final OnClickListener listener) {
@@ -550,7 +550,7 @@ public class DialogManager {
         TextView superFocusTextView = window.findViewById(R.id.superFocusTextView);
         TextView tvLeft = window.findViewById(R.id.tv_left);
         TextView tvRight = window.findViewById(R.id.tv_right);
-        superFocusTextView.setText(String.format(act.getString(R.string.OnlyLeftLikes), String.valueOf(BaseApplication.getInstance().getUserInfo().getRemainingSuperFocus())));
+//        superFocusTextView.setText(String.format(act.getString(R.string.OnlyLeftLikes), String.valueOf(BaseApplication.getInstance().getUserInfo().getRemainingSuperFocus())));
         tvLeft.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -632,7 +632,7 @@ public class DialogManager {
         window.setContentView(R.layout.view_check_user_icon_dialog_alert);
         ImageView userIconImageView = window.findViewById(R.id.userIconImageView);
         View confirmView = window.findViewById(R.id.confirmView);
-        GlideLoader.LoderImage(act, BaseApplication.getInstance().getUserInfo().getIcon(), userIconImageView, 4);
+//        GlideLoader.LoderImage(act, BaseApplication.getInstance().getUserInfo().getIcon(), userIconImageView, 4);
         confirmView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

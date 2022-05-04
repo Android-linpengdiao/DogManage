@@ -141,7 +141,7 @@ public class UpdateDogOwnerInfoActivity extends BaseActivity {
             if (LogUtil.isDebug){
                 return;
             }
-            SendRequest.UpdateDogInfo(getUserInfo().getToken(), paramsMap, new GenericsCallback(new JsonGenericsSerializator()) {
+            SendRequest.UpdateDogInfo(getUserInfo().getAuthorization(), paramsMap, new GenericsCallback(new JsonGenericsSerializator()) {
                 @Override
                 public void onError(Call call, Exception e, int id) {
 

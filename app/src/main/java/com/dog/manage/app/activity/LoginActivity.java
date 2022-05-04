@@ -11,13 +11,10 @@ import android.view.View;
 
 import com.base.BaseApplication;
 import com.base.BaseData;
-import com.base.MessageBus;
 import com.base.UserInfo;
 import com.base.manager.LoadingManager;
 import com.base.utils.CommonUtil;
-import com.base.utils.LogUtil;
 import com.base.utils.ToastUtils;
-import com.dog.manage.app.MyApplication;
 import com.dog.manage.app.MyClickableSpan;
 import com.dog.manage.app.R;
 import com.dog.manage.app.databinding.ActivityLoginBinding;
@@ -25,8 +22,6 @@ import com.okhttp.ResultClient;
 import com.okhttp.SendRequest;
 import com.okhttp.callbacks.GenericsCallback;
 import com.okhttp.sample_okhttp.JsonGenericsSerializator;
-
-import org.greenrobot.eventbus.EventBus;
 
 import java.util.concurrent.TimeUnit;
 
@@ -47,7 +42,7 @@ public class LoginActivity extends BaseActivity {
         setStatusBarDarkTheme(true);
         addActivity(this);
 
-        privacyState = getIntent().getBooleanExtra("privacyState", false);
+        privacyState = getIntent().getBooleanExtra("privacyState", true);
         binding.checkView.setSelected(privacyState);
         binding.checkView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -86,18 +81,7 @@ public class LoginActivity extends BaseActivity {
             ToastUtils.showShort(getApplicationContext(), "请同意服务条款");
             return;
         }
-        UserInfo userInfo = new UserInfo();
-        userInfo.setToken("token");
-        userInfo.setName("13521614827");
-        userInfo.setPhone("13521614827");
-        userInfo.setId(666888);
-        setUserInfo(userInfo);
-        openActivity(MainActivity.class);
-
-        if (LogUtil.isDebug) {
-            return;
-        }
-        SendRequest.loginOrRegisterForCode(phone, code, new GenericsCallback<ResultClient<UserInfo>>(new JsonGenericsSerializator()) {
+        SendRequest.userLogin(phone, code, new GenericsCallback<ResultClient<UserInfo>>(new JsonGenericsSerializator()) {
             @Override
             public void onError(Call call, Exception e, int id) {
 
@@ -122,36 +106,8 @@ public class LoginActivity extends BaseActivity {
         if (!CommonUtil.isPhone(getApplicationContext(), phone)) {
             return;
         }
-        Observable.intervalRange(1, 60, 1, 1, TimeUnit.SECONDS).subscribe(new Consumer<Long>() {
-            @Override
-            public void accept(final Long time) {
-                binding.sendCodeView.post(new Runnable() {
-                    @Override
-                    public void run() {
-                        binding.sendCodeView.setText("重新发送 (" + (60 - time) + ")");
-                        binding.sendCodeView.setTextColor(Color.parseColor("#FFFFFF"));
-                    }
-                });
-                if (time == 60) {
-                    binding.sendCodeView.post(new Runnable() {
-                        @Override
-                        public void run() {
-                            binding.sendCodeView.setEnabled(true);
-                            binding.sendCodeView.setText("发送短信");
-                            binding.sendCodeView.setTextColor(Color.parseColor("#FFFFFF"));
-                        }
-                    });
-                }
-            }
-        });
-
-
-        if (LogUtil.isDebug) {
-            return;
-        }
-
         binding.sendCodeView.setEnabled(false);
-        SendRequest.createUpdatePhone(getUserInfo().getToken(), phone, new GenericsCallback<BaseData>(new JsonGenericsSerializator()) {
+        SendRequest.sendMessageUser(phone, new GenericsCallback<BaseData>(new JsonGenericsSerializator()) {
 
             @Override
             public void onBefore(Request request, int id) {

@@ -24,7 +24,7 @@ ext{
     externalPaypal = 'com.paypal.sdk:paypal-android-sdk:2.16.0'
 
     //okhttp
-    externalOkhttp = 'com.squareup.okhttp3:okhttp:3.3.0'
+    externalOkhttp = 'com.squareup.okhttp3:okhttp:4.9.1'
     externalOkhttpInterceptor = 'com.squareup.okhttp3:logging-interceptor:3.8.1'
 
     //retrofit
