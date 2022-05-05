@@ -594,7 +594,11 @@ public class DogCertificateEditDogOwnerActivity extends BaseActivity {
 
                 @Override
                 public void onResponse(ResultClient<Boolean> response, int id) {
+                    if (response.isSuccess() && response.getData() != null) {
 
+                    } else {
+                        ToastUtils.showShort(getApplicationContext(), response.getMsg());
+                    }
                 }
             });
 

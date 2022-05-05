@@ -41,6 +41,14 @@ public class SendRequest {
 
     }
 
+    public static void userLoad(String token, int id, Callback call) {
+        Map<String, String> map = new HashMap<>();
+        map.put("token", token);
+        map.put("id", String.valueOf(id));
+        OkHttpUtils.post().params(map).url(APIUrls.userLoad).build().execute(call);
+
+    }
+
     /**
      * 政策法规
      *
@@ -103,7 +111,12 @@ public class SendRequest {
 
     }
 
-
+    /**
+     * 保存犬主信息
+     *
+     * @param map
+     * @param call
+     */
     public static void editDogUser(Map<String, String> map, Callback call) {
         Map<String, String> headers = new HashMap<>();
         headers.put("Authorization", BaseApplication.getInstance().getUserInfo().getAuthorization());
@@ -111,14 +124,47 @@ public class SendRequest {
 
     }
 
-
-    public static void userLoad(String token, int id, Callback call) {
-        Map<String, String> map = new HashMap<>();
-        map.put("token", token);
-        map.put("id", String.valueOf(id));
-        OkHttpUtils.post().params(map).url(APIUrls.userLoad).build().execute(call);
+    /**
+     * 保存犬只
+     *
+     * @param map
+     * @param call
+     */
+    public static void savaDog(Map<String, String> map, Callback call) {
+        Map<String, String> headers = new HashMap<>();
+        headers.put("Authorization", BaseApplication.getInstance().getUserInfo().getAuthorization());
+        OkHttpUtils.post().headers(headers).params(map).url(APIUrls.savaDog).build().execute(call);
 
     }
+
+    /**
+     * 获取价格、手里单位信息接口
+     *
+     * @param map
+     * @param call
+     */
+    public static void getHandleInfo(Map<String, String> map, Callback call) {
+        Map<String, String> headers = new HashMap<>();
+        headers.put("Authorization", BaseApplication.getInstance().getUserInfo().getAuthorization());
+        OkHttpUtils.post().headers(headers).params(map).url(APIUrls.getHandleInfo).build().execute(call);
+
+    }
+
+    /**
+     * 犬证提交审核
+     *
+     * @param map
+     * @param call
+     */
+    public static void approveDogLicence(Map<String, String> map, Callback call) {
+        Map<String, String> headers = new HashMap<>();
+        headers.put("Authorization", BaseApplication.getInstance().getUserInfo().getAuthorization());
+        OkHttpUtils.post().headers(headers).params(map).url(APIUrls.approveDogLicence).build().execute(call);
+
+    }
+
+
+
 
 
     // ==================================== 练琴帮 =============================================
@@ -208,7 +254,7 @@ public class SendRequest {
     }
 
 
-    /*====================================    悦保      ==========================================*/
+    /*====================================    华为云     ==========================================*/
 
     /**
      * 获取鉴权Token

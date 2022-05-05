@@ -35,6 +35,12 @@ public class APIUrls {
      */
     //保存犬主信息
     public final static String editDogUser = URL_DOMAIN + "user/editDogUser";
+    //保存犬只
+    public final static String savaDog = URL_DOMAIN + "user/dog/savaDog";
+    //获取价格、手里单位信息接口
+    public final static String getHandleInfo = URL_DOMAIN + "user/dog/getHandleInfo";
+    //犬证提交审核
+    public final static String approveDogLicence = URL_DOMAIN + "user/dog/approveDogLicence";
 
     /**
      * 悦保

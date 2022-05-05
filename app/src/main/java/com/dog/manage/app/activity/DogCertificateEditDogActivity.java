@@ -20,6 +20,10 @@ import com.dog.manage.app.media.MediaSelectActivity;
 import com.dog.manage.app.media.MediaUtils;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import com.okhttp.ResultClient;
+import com.okhttp.SendRequest;
+import com.okhttp.callbacks.GenericsCallback;
+import com.okhttp.sample_okhttp.JsonGenericsSerializator;
 
 import java.io.File;
 import java.util.Arrays;
@@ -27,6 +31,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import okhttp3.Call;
 import top.zibin.luban.Luban;
 import top.zibin.luban.OnCompressListener;
 
@@ -218,6 +223,22 @@ public class DogCertificateEditDogActivity extends BaseActivity {
             openActivity(DogImmuneHospitalActivity.class, bundle);
 
         }
+
+        SendRequest.savaDog(map, new GenericsCallback<ResultClient<Boolean>>(new JsonGenericsSerializator()) {
+            @Override
+            public void onError(Call call, Exception e, int id) {
+
+            }
+
+            @Override
+            public void onResponse(ResultClient<Boolean> response, int id) {
+                if (response.isSuccess() && response.getData() != null) {
+
+                } else {
+                    ToastUtils.showShort(getApplicationContext(), response.getMsg());
+                }
+            }
+        });
     }
 
 

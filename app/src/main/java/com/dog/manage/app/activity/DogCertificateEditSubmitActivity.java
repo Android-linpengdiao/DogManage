@@ -13,10 +13,12 @@ import com.amap.api.location.AMapLocationClient;
 import com.amap.api.location.AMapLocationClientOption;
 import com.amap.api.location.AMapLocationListener;
 import com.base.utils.LogUtil;
+import com.base.utils.ToastUtils;
 import com.dog.manage.app.R;
 import com.dog.manage.app.databinding.ActivityDogCertificateEditSubmitBinding;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import com.okhttp.ResultClient;
 import com.okhttp.SendRequest;
 import com.okhttp.callbacks.GenericsCallback;
 import com.okhttp.sample_okhttp.JsonGenericsSerializator;
@@ -49,8 +51,38 @@ public class DogCertificateEditSubmitActivity extends BaseActivity implements AM
         setTypeface(binding.acceptUnitsHintView);
         binding.thirdStepView.setSelected(true);
 
+        getHandleInfo();
         permissionsManager();
 
+    }
+
+    private void getHandleInfo() {
+        /**
+         * dogId
+         * integer
+         * 犬只id
+         * addressId
+         * integer
+         * 地址id
+         */
+        Map<String, String> map = new HashMap<>();
+        map.put("dogId", "dogId");
+        map.put("addressId", "addressId");
+        SendRequest.getHandleInfo(map, new GenericsCallback<ResultClient<Boolean>>(new JsonGenericsSerializator()) {
+            @Override
+            public void onError(Call call, Exception e, int id) {
+
+            }
+
+            @Override
+            public void onResponse(ResultClient<Boolean> response, int id) {
+                if (response.isSuccess() && response.getData() != null) {
+
+                } else {
+                    ToastUtils.showShort(getApplicationContext(), response.getMsg());
+                }
+            }
+        });
     }
 
     public void onClickConfirm(View view) {
@@ -66,15 +98,20 @@ public class DogCertificateEditSubmitActivity extends BaseActivity implements AM
         if (LogUtil.isDebug) {
             return;
         }
-        SendRequest.DogCertificate(getUserInfo().getAuthorization(), paramsMap, new GenericsCallback(new JsonGenericsSerializator()) {
+
+        SendRequest.approveDogLicence(paramsMap, new GenericsCallback<ResultClient<Boolean>>(new JsonGenericsSerializator()) {
             @Override
             public void onError(Call call, Exception e, int id) {
 
             }
 
             @Override
-            public void onResponse(Object response, int id) {
+            public void onResponse(ResultClient<Boolean> response, int id) {
+                if (response.isSuccess() && response.getData() != null) {
 
+                } else {
+                    ToastUtils.showShort(getApplicationContext(), response.getMsg());
+                }
             }
         });
 
