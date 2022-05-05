@@ -1,11 +1,13 @@
 package com.dog.manage.app.model;
 
+import java.io.Serializable;
+
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @NoArgsConstructor
 @Data
-public class PetArchives {
+public class PetArchives implements Serializable {
 
     private Integer code;
     private DataBean data;
@@ -16,7 +18,7 @@ public class PetArchives {
 
     @NoArgsConstructor
     @Data
-    public static class DataBean {
+    public static class DataBean implements Serializable{
         private Integer compareResult;
         private String url;
         private String petId;

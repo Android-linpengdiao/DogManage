@@ -43,6 +43,9 @@ import top.zibin.luban.OnCompressListener;
 public class CameraActivity extends BaseActivity {
 
     private ActivityCameraBinding binding;
+    public final static int type_petType = 0;
+    public final static int type_petArchives = 1;
+    private int type = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,6 +53,9 @@ public class CameraActivity extends BaseActivity {
         binding = getViewData(R.layout.activity_camera);
         setStatusBarDarkTheme(true);
         addActivity(this);
+
+        type = getIntent().getIntExtra("type", 0);
+        binding.titleView.setText(type == type_petType ? "犬只品种" : "鼻纹采集");
 
         if (CommonUtil.isBlank(getUserInfo().getAccessToken())) {
             getAccessToken();
@@ -185,68 +191,6 @@ public class CameraActivity extends BaseActivity {
                 });
     }
 
-    public void onClickConfirm(View view) {
-//        if (checkPermissions(PermissionUtils.STORAGE, request_Phone)) {
-//            Bundle bundle = new Bundle();
-//            bundle.putInt("mediaType", MediaUtils.MEDIA_TYPE_PHOTO);
-//            bundle.putInt("maxNumber", 1);
-//            openActivity(MediaSelectActivity.class, bundle, request_Phone);
-//        }
-    }
-
-    private final int request_Phone = 100;
-
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (resultCode == RESULT_OK) {
-            switch (requestCode) {
-                case request_Phone:
-                    compressImage(data);
-
-                    break;
-            }
-        }
-    }
-
-    private void compressImage(Intent data) {
-        try {
-            if (data != null) {
-                String imageJson = data.getStringExtra("imageJson");
-                if (!TextUtils.isEmpty(imageJson)) {
-                    Gson gson = new Gson();
-                    List<MediaFile> imageList = gson.fromJson(imageJson, new TypeToken<List<MediaFile>>() {
-                    }.getType());
-                    if (imageList != null && imageList.size() > 0) {
-                        String path = imageList.get(0).getPath();
-                        Luban.with(this)
-                                .load(path)// 传人要压缩的图片列表
-                                .ignoreBy(100)// 忽略不压缩图片的大小
-                                .setTargetDir(FileUtils.getMediaPath())// 设置压缩后文件存储位置
-                                .setCompressListener(new OnCompressListener() { //设置回调
-                                    @Override
-                                    public void onStart() {
-                                    }
-
-                                    @Override
-                                    public void onSuccess(File file) {
-//                                        createPetArchives(file.getAbsolutePath());
-//                                        petType(file.getAbsolutePath());
-
-                                    }
-
-                                    @Override
-                                    public void onError(Throwable e) {
-                                    }
-                                }).launch();//启动压缩
-                    }
-                }
-            }
-        } catch (Exception e) {
-            e.getMessage();
-        }
-    }
-
     /**
      * 宠物狗面部+鼻纹建档
      *
@@ -300,6 +244,7 @@ public class CameraActivity extends BaseActivity {
                                 String chinese_name = response.getData().getPet().get(0).getIdentification().get(0).getChinese_name();
                                 Double confidence = response.getData().getPet().get(0).getIdentification().get(0).getConfidence();
                                 ToastUtils.showShort(CameraActivity.this, chinese_name);
+
                             } else {
                                 startTimer();
                             }

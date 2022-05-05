@@ -20,9 +20,12 @@ import com.dog.manage.app.R;
 import com.dog.manage.app.adapter.FrameItemAdapter;
 import com.dog.manage.app.databinding.ActivityMainBinding;
 import com.dog.manage.app.login.ConfigUtils;
+import com.dog.manage.app.media.MediaFile;
 import com.dog.manage.app.model.BannerBean;
 import com.dog.manage.app.model.PoliciesBean;
 import com.dog.manage.app.utils.GlideImageLoader;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.okhttp.Pager;
 import com.okhttp.ResultClient;
 import com.okhttp.SendRequest;
@@ -138,7 +141,7 @@ public class MainActivity extends BaseActivity {
             }
         });
 
-//        bannerInfoList();
+        bannerInfoList();
         getForbiddenById();
     }
 
@@ -155,10 +158,12 @@ public class MainActivity extends BaseActivity {
                     @Override
                     public void onResponse(Pager<BannerBean> response, int id) {
                         if (response != null && response.getRows() != null && response.getRows().size() > 0) {
-                            List<String> images = new ArrayList<>();
-                            images.add("https://pics7.baidu.com/feed/6c224f4a20a446236fb6db0ac3bf5d040df3d785.jpeg");
-                            images.add("https://pics7.baidu.com/feed/6c224f4a20a446236fb6db0ac3bf5d040df3d785.jpeg");
-                            images.add("https://pics7.baidu.com/feed/6c224f4a20a446236fb6db0ac3bf5d040df3d785.jpeg");
+                            List<String> imageList = new ArrayList<>();
+                            for (BannerBean bannerBean : response.getRows()) {
+                                imageList.add(bannerBean.getImageUrl());
+                            }
+                            binding.mainBanner.setImages(imageList).start();
+                        } else {
                             binding.mainBanner.setImages(Arrays.asList("")).start();
                         }
                     }
@@ -179,11 +184,13 @@ public class MainActivity extends BaseActivity {
                     @Override
                     public void onResponse(ResultClient<PoliciesBean> response, int id) {
                         if (response != null && response.getData() != null) {
-                            List<String> images = new ArrayList<>();
-                            images.add("https://pics7.baidu.com/feed/6c224f4a20a446236fb6db0ac3bf5d040df3d785.jpeg");
-                            images.add("https://pics7.baidu.com/feed/6c224f4a20a446236fb6db0ac3bf5d040df3d785.jpeg");
-                            images.add("https://pics7.baidu.com/feed/6c224f4a20a446236fb6db0ac3bf5d040df3d785.jpeg");
-                            binding.banner.setImages(images).start();
+                            try {
+                                List<String> imageList = new Gson().fromJson(response.getData().getImageUrl(), new TypeToken<List<String>>() {
+                                }.getType());
+                                binding.banner.setImages(imageList).start();
+                            } catch (Exception e) {
+                                e.getMessage();
+                            }
                         }
                     }
                 });
@@ -191,12 +198,9 @@ public class MainActivity extends BaseActivity {
     }
 
     public void onClickMessage(View view) {
-        if (checkPermissions(PermissionUtils.CAMERA, 100)) {
-            openActivity(CameraActivity.class);
+        if (checkUserRank(getApplicationContext(), true)) {
+            openActivity(MessageActivity.class);
         }
-//        if (checkUserRank(getApplicationContext(), true)) {
-//            openActivity(MessageActivity.class);
-//        }
     }
 
     public void onClickUser(View view) {

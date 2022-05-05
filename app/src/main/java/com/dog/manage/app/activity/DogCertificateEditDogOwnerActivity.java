@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.RadioGroup;
 
+import com.base.BaseData;
 import com.base.utils.CommonUtil;
 import com.base.utils.FileUtils;
 import com.base.utils.GlideLoader;
@@ -21,12 +22,17 @@ import com.dog.manage.app.media.MediaSelectActivity;
 import com.dog.manage.app.media.MediaUtils;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import com.okhttp.ResultClient;
+import com.okhttp.SendRequest;
+import com.okhttp.callbacks.GenericsCallback;
+import com.okhttp.sample_okhttp.JsonGenericsSerializator;
 
 import java.io.File;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import okhttp3.Call;
 import top.zibin.luban.Luban;
 import top.zibin.luban.OnCompressListener;
 
@@ -286,10 +292,9 @@ public class DogCertificateEditDogOwnerActivity extends BaseActivity {
     }
 
     //个人
-    private int personalIDCardType = 0;
     private String personalIDCardFront = null;
     private String personalIDCardBack = null;
-    private int dogType = 0;
+    private int dogType = 1;
     private String personaHouseNumber = null;
     private String personaHouseProprietaryCertificate = null;
 
@@ -309,6 +314,65 @@ public class DogCertificateEditDogOwnerActivity extends BaseActivity {
     private String address = null;
     private String detailedAddress = null;
 
+
+    /**
+     * userType
+     * integer
+     * 用户类型（全）;1：个人 2 ：单位
+     * userName
+     * string
+     * 法人姓名（单位）
+     * idType
+     * integer
+     * 证件类型（全）;1:身份证 2 营业执照
+     * idPhoto
+     * string
+     * 证件照片/法人证件照（全）
+     * idNum
+     * string
+     * 身份证号（个人）/法人身份证号
+     * dogType
+     * integer
+     * 养犬类型（个人）;1导盲犬/扶助犬 2 陪伴犬
+     * agedProve
+     * string
+     * 鳏寡老人证明（个人）
+     * aged
+     * integer
+     * 是否鳏寡老人（个人）;0：否 1：是
+     * contactPhoneNum
+     * string
+     * 联系电话（全）
+     * address
+     * string
+     * 居住地址（全）例：012/02/31
+     * detailedAddress
+     * string
+     * 详细地址（全）
+     * houseNum
+     * string
+     * 房本编号（个人）
+     * housePhoto
+     * string
+     * 房产证或租赁合同照片（个人）
+     * bizLicense
+     * string
+     * 单位营业执照（单位）
+     * dogManagement
+     * string
+     * 养犬管理制度（单位）
+     * dogDevice
+     * string
+     * 养犬设施图片（单位）
+     * orgName
+     * string
+     * 个人/企业名称（全）
+     * busTypeId
+     * string
+     * 业务类型 1 个人信息 0 犬证、疫苗
+     *
+     * @param view
+     */
     public void onClickConfirm(View view) {
         if (type == type_userInfo) {
             finish();
@@ -320,7 +384,6 @@ public class DogCertificateEditDogOwnerActivity extends BaseActivity {
             //犬主类型
             int checkedRadioButtonId = binding.radioGroupDogOwner.getCheckedRadioButtonId();
             if (checkedRadioButtonId == R.id.radioButtonOrgan) {
-                personalIDCardType = 1;
                 //单位办理
                 organName = binding.organNameView.binding.itemEdit.getText().toString();
                 if (CommonUtil.isBlank(organName)) {
@@ -381,21 +444,21 @@ public class DogCertificateEditDogOwnerActivity extends BaseActivity {
                     return;
                 }
 
-                map.put("personalIDCardType", String.valueOf(personalIDCardType));
-                map.put("organName", organName);
-                map.put("businessLicense", businessLicense);
-                map.put("dogOwnerName", dogOwnerName);
-                map.put("dogOwnerIDCard", dogOwnerIDCard);
-                map.put("legalPersonIDCardFront", legalPersonIDCardFront);
-                map.put("legalPersonIDCardBack", legalPersonIDCardBack);
-                map.put("address", address);
-                map.put("detailedAddress", detailedAddress);
-                map.put("legalManagementSystem", legalManagementSystem);
-                map.put("legalFacility1", legalFacility1);
-                map.put("legalFacility2", legalFacility1);
+                map.put("userType", String.valueOf(2));//用户类型（全）;1：个人 2 ：单位
+                map.put("idType", String.valueOf(2));//证件类型（全）;1:身份证 2 营业执照
+                map.put("orgName", organName);//企业名称
+                map.put("bizLicense", businessLicense);//单位营业执照（单位）
+                map.put("userName", dogOwnerName);//法人姓名
+                map.put("idNum", dogOwnerIDCard);//法人身份证号
+                map.put("idPhoto", legalPersonIDCardFront);//法人证件照（全）
+                map.put("idPhoto", legalPersonIDCardBack);//法人证件照（全）
+                map.put("address", address);//居住地址
+                map.put("detailedAddress", detailedAddress);//详细地址
+                map.put("dogManagement", legalManagementSystem);//养犬管理制度
+                map.put("dogDevice", legalFacility1);//养犬设施图片
+                map.put("dogDevice", legalFacility1);//养犬设施图片
 
             } else if (checkedRadioButtonId == R.id.radioButtonPersonal) {
-                personalIDCardType = 0;
                 //个人办理
                 int IDCardCheckedRadioButtonId = binding.radioGroupIDCard.getCheckedRadioButtonId();
                 if (IDCardCheckedRadioButtonId == R.id.radioButtonIDCard) {//身份证
@@ -433,12 +496,12 @@ public class DogCertificateEditDogOwnerActivity extends BaseActivity {
                     return;
                 }
 
-                //养犬类型
+                //养犬类型（个人）;1导盲犬/扶助犬 2 陪伴犬
                 int dogTypeCheckedRadioButtonId = binding.radioGroupDogType.getCheckedRadioButtonId();
                 //是否为鳏寡老人
                 int oldManCheckedRadioButtonId = binding.radioGroupOldMan.getCheckedRadioButtonId();
-                if (dogTypeCheckedRadioButtonId == R.id.radioButtonOldMan) {//陪伴犬
-                    dogType = 1;
+                if (dogTypeCheckedRadioButtonId == R.id.radioButtonOldMan) {//2 陪伴犬
+                    dogType = 2;
                     if (oldManCheckedRadioButtonId == R.id.radioButtonOldMan1) {//是
                         if (CommonUtil.isBlank(oldManOrDisabledCertificate)) {
                             ToastUtils.showShort(getApplicationContext(), "请上传鳏寡老人证明");
@@ -450,8 +513,8 @@ public class DogCertificateEditDogOwnerActivity extends BaseActivity {
 
                     }
 
-                } else if (dogTypeCheckedRadioButtonId == R.id.radioButtonDisabled) {//导盲犬/扶助犬
-                    dogType = 0;
+                } else if (dogTypeCheckedRadioButtonId == R.id.radioButtonDisabled) {//1导盲犬/扶助犬
+                    dogType = 1;
                     if (CommonUtil.isBlank(oldManOrDisabledCertificate)) {
                         ToastUtils.showShort(getApplicationContext(), "请上传残疾人证");
                         return;
@@ -481,41 +544,64 @@ public class DogCertificateEditDogOwnerActivity extends BaseActivity {
                     return;
                 }
 
-                map.put("personalIDCardType", String.valueOf(personalIDCardType));
-                map.put("personalIDCardFront", personalIDCardFront);
-                map.put("personalIDCardBack", personalIDCardBack);
-                map.put("dogOwnerName", dogOwnerName);
-                map.put("dogOwnerIDCard", dogOwnerIDCard);
-                map.put("dogType", String.valueOf(dogType));
-                if (dogType == 0) {
+                map.put("userType", String.valueOf(1));//用户类型（全）;1：个人 2 ：单位
+                map.put("idType", String.valueOf(1));//证件类型（全）;1:身份证 2 营业执照
+                map.put("idPhoto", personalIDCardFront);//证件照片
+                map.put("idPhoto", personalIDCardBack);//证件照片
+                map.put("orgName", dogOwnerName);//个人名称
+                map.put("idNum", dogOwnerIDCard);//身份证号
+                map.put("dogType", String.valueOf(dogType));//养犬类型（个人）;1导盲犬/扶助犬 2 陪伴犬
+                if (dogType == 1) {//1导盲犬/扶助犬
                     map.put("oldManOrDisabledCertificate", oldManOrDisabledCertificate);
-                } else if (dogType == 1) {
-                    if (oldManCheckedRadioButtonId == R.id.radioButtonOldMan1) {
-                        map.put("oldManOrDisabledCertificate", oldManOrDisabledCertificate);
+                } else if (dogType == 2) {//2 陪伴犬
+                    if (oldManCheckedRadioButtonId == R.id.radioButtonOldMan1) {//是
+                        map.put("agedProve", oldManOrDisabledCertificate);//鳏寡老人证明（个人）
                     }
+                    map.put("aged", oldManCheckedRadioButtonId == R.id.radioButtonOldMan1 ? "1" : "0");//是否鳏寡老人（个人）;0：否 1：是
                 }
-                map.put("address", address);
-                map.put("detailedAddress", detailedAddress);
-                map.put("personaHouseNumber", personaHouseNumber);
-                map.put("personaHouseProprietaryCertificate", personaHouseProprietaryCertificate);
+                map.put("address", address);//居住地址
+                map.put("detailedAddress", detailedAddress);//详细地址
+                map.put("houseNum", personaHouseNumber);//房本编号
+                map.put("housePhoto", personaHouseProprietaryCertificate);//房产证或租赁合同照片
 
             }
 
-            Bundle bundle = new Bundle();
-            bundle.putInt("type", type);
-            bundle.putString("paramsJson", GsonUtils.toJson(map));
-            if (type == type_certificate || type == type_immune || type == type_examined) {
-                openActivity(DogCertificateEditDogActivity.class, bundle);
+            if (type == type_certificate || type == type_immune) {
+                map.put("busTypeId", String.valueOf(0));//业务类型 1 个人信息 0 犬证、疫苗
 
-            } else if (type == type_adoption) {
-                openActivity(DogAdoptionSubmitActivity.class);
-
+            } else if (type == type_details) {
+                map.put("busTypeId", String.valueOf(1));//业务类型 1 个人信息 0 犬证、疫苗
 
             }
+
+//            Bundle bundle = new Bundle();
+//            bundle.putInt("type", type);
+//            bundle.putString("paramsJson", GsonUtils.toJson(map));
+//            if (type == type_certificate || type == type_immune || type == type_examined) {
+//                openActivity(DogCertificateEditDogActivity.class, bundle);
+//
+//            } else if (type == type_adoption) {
+//                openActivity(DogAdoptionSubmitActivity.class);
+//
+//
+//            }
+
+            SendRequest.editDogUser(map, new GenericsCallback<ResultClient<Boolean>>(new JsonGenericsSerializator()) {
+                @Override
+                public void onError(Call call, Exception e, int id) {
+
+                }
+
+                @Override
+                public void onResponse(ResultClient<Boolean> response, int id) {
+
+                }
+            });
 
         }
 
     }
+
 
     private final int request_IDCardFront = 100;
     private final int request_IDCardBack = 200;

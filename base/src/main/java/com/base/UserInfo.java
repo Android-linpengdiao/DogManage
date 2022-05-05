@@ -5,7 +5,7 @@ import java.io.Serializable;
 public class UserInfo implements Serializable{
 
     private int id;
-    private String Authorization;
+    private String Authorization = "";
     private String accessToken;
 
     public int getId() {

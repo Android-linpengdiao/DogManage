@@ -2,6 +2,7 @@ package com.okhttp;
 
 import android.util.Log;
 
+import com.base.BaseApplication;
 import com.okhttp.callbacks.Callback;
 import com.okhttp.utils.APIUrls;
 import com.okhttp.utils.OkHttpUtils;
@@ -93,12 +94,20 @@ public class SendRequest {
 
     }
 
-    public static void getForbiddenById(String authorization,Callback call) {
+    public static void getForbiddenById(String authorization, Callback call) {
         Map<String, String> headers = new HashMap<>();
         headers.put("Authorization", authorization);
 
         Map<String, String> map = new HashMap<>();
         OkHttpUtils.post().headers(headers).url(APIUrls.getForbiddenById).build().execute(call);
+
+    }
+
+
+    public static void editDogUser(Map<String, String> map, Callback call) {
+        Map<String, String> headers = new HashMap<>();
+        headers.put("Authorization", BaseApplication.getInstance().getUserInfo().getAuthorization());
+        OkHttpUtils.post().headers(headers).params(map).url(APIUrls.editDogUser).build().execute(call);
 
     }
 
@@ -198,6 +207,20 @@ public class SendRequest {
 
     }
 
+
+    /*====================================    悦保      ==========================================*/
+
+    /**
+     * 获取鉴权Token
+     *
+     * @param call
+     */
+    public static void getObsFormInfo(Callback call) {
+        Map<String, String> headers = new HashMap<>();
+        headers.put("Authorization", BaseApplication.getInstance().getUserInfo().getAuthorization());
+        OkHttpUtils.get().headers(headers).url(APIUrls.getObsFormInfo).build().execute(call);
+
+    }
 
     /*====================================    悦保      ==========================================*/
 

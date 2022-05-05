@@ -31,11 +31,22 @@ public class APIUrls {
     public final static String getForbiddenById = URL_DOMAIN + "forbidden/getForbiddenById";
 
     /**
+     * 办理犬证
+     */
+    //保存犬主信息
+    public final static String editDogUser = URL_DOMAIN + "user/editDogUser";
+
+    /**
      * 悦保
      */
-    public final static String getAccessToken =   "https://ai.ybinsure.com/s/api/getAccessToken";
-    public final static String createPetArchives =   "https://ai.ybinsure.com/s/api/createPetArchives";
-    public final static String petType =   "https://ai.ybinsure.com/s/api/petType";
+    public final static String getAccessToken = "https://ai.ybinsure.com/s/api/getAccessToken";
+    public final static String createPetArchives = "https://ai.ybinsure.com/s/api/createPetArchives";
+    public final static String petType = "https://ai.ybinsure.com/s/api/petType";
+
+    /**
+     * 获取OBS信息
+     */
+    public final static String getObsFormInfo = URL_DOMAIN + "obs/getObsFormInfo";
 
     /**
      * 支付

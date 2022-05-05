@@ -86,6 +86,18 @@ public class UpdateDogOwnerInfoActivity extends BaseActivity {
             binding.dogOwnerContainer.setVisibility(View.GONE);
         }
 
+        SendRequest.getObsFormInfo(new GenericsCallback(new JsonGenericsSerializator()) {
+            @Override
+            public void onError(Call call, Exception e, int id) {
+
+            }
+
+            @Override
+            public void onResponse(Object response, int id) {
+
+            }
+        });
+
     }
 
     private String address = null;
@@ -138,7 +150,7 @@ public class UpdateDogOwnerInfoActivity extends BaseActivity {
             finishActivity(UpdateDogCertificateActivity.class);
             finish();
 
-            if (LogUtil.isDebug){
+            if (LogUtil.isDebug) {
                 return;
             }
             SendRequest.UpdateDogInfo(getUserInfo().getAuthorization(), paramsMap, new GenericsCallback(new JsonGenericsSerializator()) {

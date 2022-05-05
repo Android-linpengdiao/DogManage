@@ -113,7 +113,40 @@ public class DogCertificateEditDogActivity extends BaseActivity {
     private String leftFace = null;
     private String centerFace = null;
     private String rightFace = null;
+    private String dogType = null;
+    private String noseprint = null;
 
+    /**
+     * dogName
+     * string
+     * 犬只姓名
+     * dogColor
+     * string
+     * 犬只颜色
+     * dogGender
+     * integer
+     * 犬只性别;0:雌性， 1：雄性
+     * sterilization
+     * integer
+     * 是否绝育;0：否 1：是
+     * sterilizationProve
+     * string
+     * 绝育证明
+     * dogAge
+     * integer
+     * 犬只年龄;记录月份
+     * dogPhoto
+     * string
+     * 犬只照片，多张图片以“，”分开
+     * dogType
+     * string
+     * 犬只品种
+     * noseprint
+     * string
+     * 鼻纹信息
+     *
+     * @param view
+     */
     public void onClickConfirm(View view) {
 
         Map<String, String> map = new HashMap<>();
@@ -158,15 +191,17 @@ public class DogCertificateEditDogActivity extends BaseActivity {
             return;
         }
 
-        map.put("dogName", dogName);
-        map.put("dogHair", dogHair);
-        map.put("dogSex", String.valueOf(dogSex));
-        map.put("dogBear", String.valueOf(dogBear));
-        map.put("testify", testify);
-        map.put("dogAge", String.valueOf(dogAge));
-        map.put("leftFace", leftFace);
-        map.put("centerFace", centerFace);
-        map.put("rightFace", rightFace);
+        map.put("dogName", dogName);//犬只姓名
+        map.put("dogColor", dogHair);//犬只颜色
+        map.put("dogGender", String.valueOf(dogSex));//犬只性别;0:雌性， 1：雄性
+        map.put("sterilization", String.valueOf(dogBear));//是否绝育;0：否 1：是
+        map.put("sterilizationProve", testify);//绝育证明
+        map.put("dogAge", String.valueOf(dogAge));//犬只年龄;记录月份
+        map.put("dogPhoto", leftFace);
+        map.put("dogPhoto", centerFace);
+        map.put("dogPhoto", rightFace);//犬只照片，多张图片以“，”分开
+        map.put("dogType", dogType);//犬只品种
+        map.put("noseprint", noseprint);//鼻纹信息
 
         if (type == type_userInfo) {
 
@@ -244,6 +279,32 @@ public class DogCertificateEditDogActivity extends BaseActivity {
             bundle.putInt("mediaType", MediaUtils.MEDIA_TYPE_PHOTO);
             bundle.putInt("maxNumber", 1);
             openActivity(MediaSelectActivity.class, bundle, request_RightFace);
+        }
+    }
+
+    /**
+     * 犬只品种
+     *
+     * @param view
+     */
+    public void onClickPetType(View view) {
+        if (checkPermissions(PermissionUtils.CAMERA, 100)) {
+            Bundle bundle = new Bundle();
+            bundle.putInt("type", CameraActivity.type_petType);
+            openActivity(CameraActivity.class, bundle);
+        }
+    }
+
+    /**
+     * 鼻纹信息
+     *
+     * @param view
+     */
+    public void onClickCreatePetArchives(View view) {
+        if (checkPermissions(PermissionUtils.CAMERA, 100)) {
+            Bundle bundle = new Bundle();
+            bundle.putInt("type", CameraActivity.type_petArchives);
+            openActivity(CameraActivity.class, bundle);
         }
     }
 
