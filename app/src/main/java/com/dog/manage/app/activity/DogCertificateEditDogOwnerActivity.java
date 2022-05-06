@@ -8,6 +8,8 @@ import android.util.Log;
 import android.view.View;
 import android.widget.RadioGroup;
 
+import com.base.manager.DialogManager;
+import com.base.manager.LoadingManager;
 import com.base.utils.CommonUtil;
 import com.base.utils.FileUtils;
 import com.base.utils.GlideLoader;
@@ -34,6 +36,7 @@ import java.util.List;
 import java.util.Map;
 
 import okhttp3.Call;
+import okhttp3.Request;
 import top.zibin.luban.Luban;
 import top.zibin.luban.OnCompressListener;
 
@@ -149,6 +152,19 @@ public class DogCertificateEditDogOwnerActivity extends BaseActivity {
 
     private void checkingDogUser() {
         SendRequest.checkingDogUser(new GenericsCallback<ResultClient<Boolean>>(new JsonGenericsSerializator()) {
+
+            @Override
+            public void onBefore(Request request, int id) {
+                super.onBefore(request, id);
+                LoadingManager.showLoadingDialog(DogCertificateEditDogOwnerActivity.this);
+            }
+
+            @Override
+            public void onAfter(int id) {
+                super.onAfter(id);
+                LoadingManager.hideLoadingDialog(DogCertificateEditDogOwnerActivity.this);
+            }
+
             @Override
             public void onError(Call call, Exception e, int id) {
 
@@ -157,12 +173,24 @@ public class DogCertificateEditDogOwnerActivity extends BaseActivity {
             @Override
             public void onResponse(ResultClient<Boolean> response, int id) {
                 if (response.isSuccess() && response.getData()) {
+                    binding.container.setVisibility(View.VISIBLE);
+                    binding.confirmView.setVisibility(View.VISIBLE);
                     getDogUser();
                 } else {
-                    Bundle bundle = new Bundle();
-                    bundle.putInt("type", DogCertificateEditDogOwnerActivity.type_userInfo);
-                    openActivity(DogCertificateEditDogOwnerActivity.class, bundle);
-                    finish();
+                    DialogManager.showConfirmDialog(DogCertificateEditDogOwnerActivity.this, "请先完善个人信息", new DialogManager.Listener() {
+                        @Override
+                        public void onItemLeft() {
+                            finish();
+                        }
+
+                        @Override
+                        public void onItemRight() {
+                            Bundle bundle = new Bundle();
+                            bundle.putInt("type", DogCertificateEditDogOwnerActivity.type_userInfo);
+                            openActivity(DogCertificateEditDogOwnerActivity.class, bundle);
+                            finish();
+                        }
+                    });
                 }
             }
         });

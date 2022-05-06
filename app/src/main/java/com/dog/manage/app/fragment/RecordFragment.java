@@ -195,47 +195,50 @@ public class RecordFragment extends BaseFragment {
             @Override
             public void onRefresh(RefreshLayout refreshlayout) {
                 creationPager = new Pager<>();
-//                loadData(true);
+                if (type == RecordActivity.type_certificate) {
+                    getUserDogLicence(true);
+                }
             }
         });
         binding.refreshLayout.setOnLoadMoreListener(new OnLoadMoreListener() {
             @Override
             public void onLoadMore(RefreshLayout refreshlayout) {
-//                loadData(false);
+                if (type == RecordActivity.type_certificate) {
+                    getUserDogLicence(false);
+                }
 
             }
         });
-//        binding.refreshLayout.autoRefresh();
+        binding.refreshLayout.autoRefresh();
 
     }
 
-    public void loadData(boolean isRefresh) {
-        SendRequest.getPager(getUserInfo().getAuthorization(), 11, "creationPager.getNextCursor()",
-                new GenericsCallback<Pager<BaseData>>(new JsonGenericsSerializator()) {
+    public void getUserDogLicence(boolean isRefresh) {
+        SendRequest.getUserDogLicence(type, new GenericsCallback<Pager<BaseData>>(new JsonGenericsSerializator()) {
 
-                    @Override
-                    public void onAfter(int id) {
-                        super.onAfter(id);
-                        if (isRefresh) {
-                            binding.refreshLayout.finishRefresh();
-                        } else {
-                            binding.refreshLayout.finishLoadMore();
-                        }
-                    }
+            @Override
+            public void onAfter(int id) {
+                super.onAfter(id);
+                if (isRefresh) {
+                    binding.refreshLayout.finishRefresh();
+                } else {
+                    binding.refreshLayout.finishLoadMore();
+                }
+            }
 
-                    @Override
-                    public void onError(Call call, Exception e, int id) {
-                        if (isRefresh) {
-                            binding.refreshLayout.finishRefresh(false);
-                        } else {
-                            binding.refreshLayout.finishLoadMore(false);
-                        }
-                    }
+            @Override
+            public void onError(Call call, Exception e, int id) {
+                if (isRefresh) {
+                    binding.refreshLayout.finishRefresh(false);
+                } else {
+                    binding.refreshLayout.finishLoadMore(false);
+                }
+            }
 
-                    @Override
-                    public void onResponse(Pager<BaseData> response, int id) {
-                        creationPager = response;
-                        if (response != null && response.getRows() != null) {
+            @Override
+            public void onResponse(Pager<BaseData> response, int id) {
+                creationPager = response;
+                if (response != null && response.getRows() != null) {
 //                            if (isRefresh) {
 //                                adapter.refreshData(response.getData());
 //                            } else {
@@ -246,9 +249,9 @@ public class RecordFragment extends BaseFragment {
 //                            }
 //                            binding.emptyView.setVisibility(adapter.getList().size() > 0 ? View.GONE : View.VISIBLE);
 //                            binding.emptyView.setText("暂无内容～");
-                        }
-                    }
-                });
+                }
+            }
+        });
 
     }
 

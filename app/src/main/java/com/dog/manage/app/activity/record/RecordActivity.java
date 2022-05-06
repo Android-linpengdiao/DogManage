@@ -39,6 +39,7 @@ public class RecordActivity extends BaseActivity {
 
         if (type == type_certificate) {
             binding.titleView.binding.itemTitle.setText("犬证办理记录");
+            //办理状态 0 全部 1：待审核 2：代缴费 3：审核驳回 4：已办结 5：已过期 6：已注销
             mainPagerAdapter.addFragment("审核中", RecordFragment.getInstance(type, 1));
             mainPagerAdapter.addFragment("审核通过", RecordFragment.getInstance(type, 2));
             mainPagerAdapter.addFragment("审核拒绝", RecordFragment.getInstance(type, 3));

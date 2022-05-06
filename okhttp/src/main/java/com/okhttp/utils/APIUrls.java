@@ -47,6 +47,8 @@ public class APIUrls {
     public final static String getHandleInfo = URL_DOMAIN + "user/dog/getHandleInfo";
     //犬证提交审核
     public final static String approveDogLicence = URL_DOMAIN + "user/dog/approveDogLicence";
+    //犬证办理记录
+    public final static String getUserDogLicence = URL_DOMAIN + "user/dog/getUserDogLincence";
 
     /**
      * 悦保

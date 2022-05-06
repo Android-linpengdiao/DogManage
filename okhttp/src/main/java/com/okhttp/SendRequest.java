@@ -199,6 +199,23 @@ public class SendRequest {
 
     }
 
+    /**
+     * 犬证提交审核
+     *
+     * @param lincenceStatus 办理状态 0 全部 1：待审核 2：代缴费 3：审核驳回 4：已办结 5：已过期 6：已注销
+     * @param call
+     */
+    public static void getUserDogLicence(int lincenceStatus, Callback call) {
+        Map<String, String> headers = new HashMap<>();
+        headers.put("Authorization", BaseApplication.getInstance().getUserInfo().getAuthorization());
+
+        Map<String, String> map = new HashMap<>();
+        map.put("lincenceStatus", String.valueOf(lincenceStatus));
+
+        OkHttpUtils.post().headers(headers).params(map).url(APIUrls.getUserDogLicence).build().execute(call);
+
+    }
+
 
     // ==================================== 练琴帮 =============================================
 

@@ -12,6 +12,7 @@ import com.amap.api.location.AMapLocation;
 import com.amap.api.location.AMapLocationClient;
 import com.amap.api.location.AMapLocationClientOption;
 import com.amap.api.location.AMapLocationListener;
+import com.base.utils.GsonUtils;
 import com.base.utils.LogUtil;
 import com.base.utils.ToastUtils;
 import com.dog.manage.app.R;
@@ -24,6 +25,7 @@ import com.okhttp.SendRequest;
 import com.okhttp.callbacks.GenericsCallback;
 import com.okhttp.sample_okhttp.JsonGenericsSerializator;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -49,12 +51,12 @@ public class DogCertificateEditSubmitActivity extends BaseActivity implements AM
         addressId = getIntent().getIntExtra("addressId", 0);
         dogType = getIntent().getStringExtra("dogType");
         binding.dogTypeView.binding.itemContent.setText(dogType + "");
-        String paramsJson = getIntent().getStringExtra("paramsJson");
-        if (!TextUtils.isEmpty(paramsJson)) {
-            Gson gson = new Gson();
-            paramsMap = gson.fromJson(paramsJson, new TypeToken<Map<String, Object>>() {
-            }.getType());
-        }
+//        String paramsJson = getIntent().getStringExtra("paramsJson");
+//        if (!TextUtils.isEmpty(paramsJson)) {
+//            Gson gson = new Gson();
+//            paramsMap = gson.fromJson(paramsJson, new TypeToken<Map<String, Object>>() {
+//            }.getType());
+//        }
 
         setTypeface(binding.acceptUnitsHintView);
         binding.thirdStepView.setSelected(true);
@@ -63,6 +65,8 @@ public class DogCertificateEditSubmitActivity extends BaseActivity implements AM
         permissionsManager();
 
     }
+
+    private HandleInfo handleInfo;
 
     private void getHandleInfo() {
         /**
@@ -85,6 +89,7 @@ public class DogCertificateEditSubmitActivity extends BaseActivity implements AM
             @Override
             public void onResponse(ResultClient<HandleInfo> response, int id) {
                 if (response.isSuccess() && response.getData() != null) {
+                    handleInfo = response.getData();
                     binding.handleUnitAddressView.setText(response.getData().getHandleUnitAddress());
                     binding.costValueView.binding.itemContent.setText("￥" + response.getData().getCostValue());
                 } else {
@@ -95,19 +100,32 @@ public class DogCertificateEditSubmitActivity extends BaseActivity implements AM
     }
 
     public void onClickConfirm(View view) {
-        Bundle bundle = new Bundle();
-        bundle.putInt("type", SubmitSuccessActivity.type_certificate);
-        openActivity(SubmitSuccessActivity.class, bundle);
-
-        finishActivity(DogManageWorkflowActivity.class);
-        finishActivity(DogCertificateEditDogOwnerActivity.class);
-        finishActivity(DogCertificateEditDogActivity.class);
-        finish();
-
-        if (LogUtil.isDebug) {
+        if (handleInfo == null) {
+            ToastUtils.showShort(getApplicationContext(), "提交失败");
             return;
         }
-
+        /**
+         * addressId
+         * integer
+         * 住址id
+         * dogId
+         * integer
+         * 犬只id
+         * acceptUnit
+         * string
+         * 受理单位
+         * unitId
+         * integer
+         * 受理单位id
+         * immunePhoto
+         * string
+         * 犬只犬证照片 ，正面照
+         */
+        paramsMap.put("addressId", String.valueOf(addressId));
+        paramsMap.put("dogId", String.valueOf(dogId));
+        paramsMap.put("acceptUnit", handleInfo.getHandleUnitAddress());
+        paramsMap.put("unitId", String.valueOf(handleInfo.getHandleUnitId()));
+        paramsMap.put("immunePhoto", "https://pics7.baidu.com/feed/6c224f4a20a446236fb6db0ac3bf5d040df3d785.jpeg");
         SendRequest.approveDogLicence(paramsMap, new GenericsCallback<ResultClient<Boolean>>(new JsonGenericsSerializator()) {
             @Override
             public void onError(Call call, Exception e, int id) {
@@ -117,7 +135,14 @@ public class DogCertificateEditSubmitActivity extends BaseActivity implements AM
             @Override
             public void onResponse(ResultClient<Boolean> response, int id) {
                 if (response.isSuccess() && response.getData() != null) {
+                    Bundle bundle = new Bundle();
+                    bundle.putInt("type", SubmitSuccessActivity.type_certificate);
+                    openActivity(SubmitSuccessActivity.class, bundle);
 
+                    finishActivity(DogManageWorkflowActivity.class);
+                    finishActivity(DogCertificateEditDogOwnerActivity.class);
+                    finishActivity(DogCertificateEditDogActivity.class);
+                    finish();
                 } else {
                     ToastUtils.showShort(getApplicationContext(), response.getMsg());
                 }

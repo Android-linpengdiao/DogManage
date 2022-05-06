@@ -79,21 +79,24 @@
         </LinearLayout>
 
         <ScrollView
+            android:id="@+id/container"
             android:layout_width="match_parent"
             android:layout_height="@dimen/dp_0"
             android:layout_weight="1"
             android:background="@color/app_background"
-            android:overScrollMode="never">
+            android:overScrollMode="never"
+            android:visibility="gone"
+            tools:visibility="visible">
 
             <LinearLayout
                 android:id="@+id/dogOwnerContainer"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:paddingTop="@dimen/dp_7"
                 android:background="@color/app_background"
                 android:focusable="true"
                 android:focusableInTouchMode="true"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:paddingTop="@dimen/dp_7">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -798,12 +801,12 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:paddingTop="@dimen/dp_12"
-                    android:paddingBottom="@dimen/dp_12"
                     android:minHeight="@dimen/dp_121"
                     android:orientation="horizontal"
                     android:paddingLeft="@dimen/viewPadding"
-                    android:paddingRight="@dimen/viewPadding">
+                    android:paddingTop="@dimen/dp_12"
+                    android:paddingRight="@dimen/viewPadding"
+                    android:paddingBottom="@dimen/dp_12">
 
                     <com.dog.manage.app.view.TextBoldView
                         android:id="@+id/detailedAddressHintView"
@@ -822,8 +825,8 @@
                         android:gravity="top|right"
                         android:hint="请输入详细地址"
                         android:minHeight="@dimen/dp_60"
-                        android:textColorHint="#999999"
                         android:textColor="#333333"
+                        android:textColorHint="#999999"
                         android:textSize="@dimen/sp_14" />
 
                 </LinearLayout>
@@ -1131,7 +1134,9 @@
             android:onClick="onClickConfirm"
             android:text="下一步"
             android:textColor="@color/white"
-            android:textSize="@dimen/sp_16" />
+            android:textSize="@dimen/sp_16"
+            android:visibility="gone"
+            tools:visibility="visible" />
 
     </LinearLayout>
 </layout>
