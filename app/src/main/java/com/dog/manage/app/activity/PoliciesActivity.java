@@ -56,8 +56,8 @@ public class PoliciesActivity extends BaseActivity {
             public void onClick(View view, Object object) {
                 PoliciesBean dataBean = (PoliciesBean) object;
                 Bundle bundle = new Bundle();
-                bundle.putSerializable("dataBean",dataBean);
-                openActivity(PoliciesDetailsActivity.class,bundle);
+                bundle.putSerializable("dataBean", dataBean);
+                openActivity(PoliciesDetailsActivity.class, bundle);
             }
 
             @Override
@@ -70,13 +70,13 @@ public class PoliciesActivity extends BaseActivity {
 
     }
 
-    private Pager<PoliciesBean> creationPager = new Pager<>();
+    private Pager<PoliciesBean> pager = new Pager<>();
 
     private void setRefresh() {
         binding.refreshLayout.setOnRefreshListener(new OnRefreshListener() {
             @Override
             public void onRefresh(RefreshLayout refreshlayout) {
-                creationPager = new Pager<>();
+                pager = new Pager<>();
                 loadData(true);
             }
         });
@@ -92,7 +92,7 @@ public class PoliciesActivity extends BaseActivity {
     }
 
     public void loadData(boolean isRefresh) {
-        SendRequest.noticeList(getUserInfo().getAuthorization(), 0, 20,
+        SendRequest.noticeList(getUserInfo().getAuthorization(), pager.getCursor(), pager.getSize(),
                 new GenericsCallback<Pager<PoliciesBean>>(new JsonGenericsSerializator()) {
 
                     @Override
@@ -116,12 +116,15 @@ public class PoliciesActivity extends BaseActivity {
 
                     @Override
                     public void onResponse(Pager<PoliciesBean> response, int id) {
-                        creationPager = response;
+                        pager = response;
                         if (response != null && response.getRows() != null) {
                             if (isRefresh) {
                                 adapter.refreshData(response.getRows());
                             } else {
                                 adapter.loadMoreData(response.getRows());
+                                if (adapter.getList().size() < response.getTotal()) {
+                                    pager.setCursor(pager.getCursor() + 1);
+                                }
                             }
                             if (adapter.getList().size() == response.getTotal()) {
                                 binding.refreshLayout.setNoMoreData(true);

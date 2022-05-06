@@ -5,15 +5,9 @@ import java.util.List;
 
 public class Pager<T> implements Serializable {
     private static final long serialVersionUID = -3957020823257107332L;
-    private String cursor = "0";
+    private int cursor = 0;
     private int size = 20;
-    private int page = 1;
     private List<T> rows;
-    private String preCursor = "0";
-    private String nextCursor = "0";
-    private int count = 0;
-    private long totalCount = 0L;
-    private boolean hasnext;
     private long total;
 
     //ResultClient 数据
@@ -28,14 +22,6 @@ public class Pager<T> implements Serializable {
         this.size = size;
     }
 
-    public long getTotalCount() {
-        return this.totalCount;
-    }
-
-    public void setTotalCount(long totalCount) {
-        this.totalCount = totalCount;
-    }
-
     public int getSize() {
         return this.size;
     }
@@ -44,52 +30,12 @@ public class Pager<T> implements Serializable {
         this.size = size;
     }
 
-    public int getCount() {
-        return this.count;
-    }
-
-    public void setCount(int count) {
-        this.count = count;
-    }
-
-    public int getPage() {
-        return this.page;
-    }
-
-    public void setPage(int page) {
-        this.page = page;
-    }
-
-    public boolean isHasnext() {
-        return this.hasnext;
-    }
-
-    public void setHasnext(boolean hasnext) {
-        this.hasnext = hasnext;
-    }
-
-    public String getCursor() {
+    public int getCursor() {
         return this.cursor;
     }
 
-    public void setCursor(String cursor) {
+    public void setCursor(int cursor) {
         this.cursor = cursor;
-    }
-
-    public String getPreCursor() {
-        return this.preCursor;
-    }
-
-    public void setPreCursor(String preCursor) {
-        this.preCursor = preCursor;
-    }
-
-    public String getNextCursor() {
-        return this.nextCursor;
-    }
-
-    public void setNextCursor(String nextCursor) {
-        this.nextCursor = nextCursor;
     }
 
     public List<T> getRows() {

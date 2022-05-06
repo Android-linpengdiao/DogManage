@@ -94,13 +94,14 @@
                     android:background="#F6F6F6" />
 
                 <com.dog.manage.app.view.ViewItemLayout
+                    android:id="@+id/dogTypeView"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@color/app_background"
                     android:paddingLeft="@dimen/viewPadding"
                     android:paddingRight="@dimen/viewPadding"
                     app:item_container_height="@dimen/dp_50"
-                    app:item_content="柴犬"
+                    app:item_content=""
                     app:item_content_color="#333333"
                     app:item_content_size="@dimen/sp_14"
                     app:item_title="犬只品种"
@@ -145,11 +146,12 @@
                             android:src="@drawable/dingwei" />
 
                         <TextView
+                            android:id="@+id/handleUnitAddressView"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="@dimen/dp_5"
                             android:gravity="center_vertical"
-                            android:text="北京市西城区天桥街道派出所"
+                            android:text=""
                             android:textColor="#333333"
                             android:textSize="@dimen/sp_14"
                             tools:text="北京市西城区天桥街道派出所" />
@@ -164,13 +166,14 @@
                     android:background="@color/colorDivider" />
 
                 <com.dog.manage.app.view.ViewItemLayout
+                    android:id="@+id/costValueView"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@color/app_background"
                     android:paddingLeft="@dimen/viewPadding"
                     android:paddingRight="@dimen/viewPadding"
                     app:item_container_height="@dimen/dp_60"
-                    app:item_content="￥200"
+                    app:item_content="￥0"
                     app:item_content_color="@color/blue"
                     app:item_content_size="@dimen/sp_18"
                     app:item_title="办理费用"

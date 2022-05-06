@@ -81,7 +81,7 @@ public class PunishRecordActivity extends BaseActivity {
     }
 
     public void loadData(boolean isRefresh) {
-        SendRequest.getPager(getUserInfo().getAuthorization(), 11, creationPager.getNextCursor(),
+        SendRequest.getPager(getUserInfo().getAuthorization(), 11, "creationPager.getCursor()",
                 new GenericsCallback<Pager<BaseData>>(new JsonGenericsSerializator()) {
 
                     @Override

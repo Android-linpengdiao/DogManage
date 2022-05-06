@@ -16,6 +16,7 @@ import com.base.utils.LogUtil;
 import com.base.utils.ToastUtils;
 import com.dog.manage.app.R;
 import com.dog.manage.app.databinding.ActivityDogCertificateEditSubmitBinding;
+import com.dog.manage.app.model.HandleInfo;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.okhttp.ResultClient;
@@ -34,6 +35,9 @@ public class DogCertificateEditSubmitActivity extends BaseActivity implements AM
 
     private ActivityDogCertificateEditSubmitBinding binding;
     private Map<String, String> paramsMap = new HashMap<>();
+    private int dogId;
+    private int addressId;
+    private String dogType = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,6 +45,10 @@ public class DogCertificateEditSubmitActivity extends BaseActivity implements AM
         binding = getViewData(R.layout.activity_dog_certificate_edit_submit);
         addActivity(this);
 
+        dogId = getIntent().getIntExtra("dogId", 0);
+        addressId = getIntent().getIntExtra("addressId", 0);
+        dogType = getIntent().getStringExtra("dogType");
+        binding.dogTypeView.binding.itemContent.setText(dogType + "");
         String paramsJson = getIntent().getStringExtra("paramsJson");
         if (!TextUtils.isEmpty(paramsJson)) {
             Gson gson = new Gson();
@@ -66,18 +74,19 @@ public class DogCertificateEditSubmitActivity extends BaseActivity implements AM
          * 地址id
          */
         Map<String, String> map = new HashMap<>();
-        map.put("dogId", "dogId");
-        map.put("addressId", "addressId");
-        SendRequest.getHandleInfo(map, new GenericsCallback<ResultClient<Boolean>>(new JsonGenericsSerializator()) {
+        map.put("dogId", String.valueOf(dogId));
+        map.put("addressId", String.valueOf(addressId));
+        SendRequest.getHandleInfo(map, new GenericsCallback<ResultClient<HandleInfo>>(new JsonGenericsSerializator()) {
             @Override
             public void onError(Call call, Exception e, int id) {
 
             }
 
             @Override
-            public void onResponse(ResultClient<Boolean> response, int id) {
+            public void onResponse(ResultClient<HandleInfo> response, int id) {
                 if (response.isSuccess() && response.getData() != null) {
-
+                    binding.handleUnitAddressView.setText(response.getData().getHandleUnitAddress());
+                    binding.costValueView.binding.itemContent.setText("￥" + response.getData().getCostValue());
                 } else {
                     ToastUtils.showShort(getApplicationContext(), response.getMsg());
                 }

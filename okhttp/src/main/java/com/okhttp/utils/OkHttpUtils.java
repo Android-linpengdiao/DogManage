@@ -6,6 +6,7 @@ import java.util.concurrent.Executor;
 import com.okhttp.Builder.GetBuilder;
 import com.okhttp.Builder.HeadBuilder;
 import com.okhttp.Builder.OtherRequestBuilder;
+import com.okhttp.Builder.PetPostFormBuilder;
 import com.okhttp.Builder.PostFileBuilder;
 import com.okhttp.Builder.PostFormBuilder;
 import com.okhttp.Builder.PostStringBuilder;
@@ -73,6 +74,10 @@ public class OkHttpUtils {
 
     public static PostFormBuilder post() {
         return new PostFormBuilder();
+    }
+
+    public static PetPostFormBuilder pet() {
+        return new PetPostFormBuilder();
     }
 
     public static OtherRequestBuilder put() {

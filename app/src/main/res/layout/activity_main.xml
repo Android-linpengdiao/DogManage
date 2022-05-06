@@ -48,14 +48,14 @@
                         android:src="@drawable/zcfg" />
 
                     <com.dog.manage.app.view.MarqueeTextView
-                        android:id="@+id/music_text"
+                        android:id="@+id/noticeView"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="@dimen/dp_16"
                         android:ellipsize="marquee"
                         android:marqueeRepeatLimit="marquee_forever"
                         android:singleLine="true"
-                        android:text="近日于3月13日起开展文明养犬督查活动，请广大市民"
+                        tools:text="近日于3月13日起开展文明养犬督查活动，请广大市民"
                         android:textColor="@color/black"
                         android:textSize="@dimen/sp_15" />
                 </LinearLayout>

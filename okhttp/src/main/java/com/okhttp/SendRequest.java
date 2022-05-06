@@ -112,6 +112,30 @@ public class SendRequest {
     }
 
     /**
+     * 验证用户是否填写 个人信息
+     *
+     * @param call
+     */
+    public static void checkingDogUser(Callback call) {
+        Map<String, String> headers = new HashMap<>();
+        headers.put("Authorization", BaseApplication.getInstance().getUserInfo().getAuthorization());
+        OkHttpUtils.post().headers(headers).url(APIUrls.checkingDogUser).build().execute(call);
+
+    }
+
+    /**
+     * 获取犬主信息
+     *
+     * @param call
+     */
+    public static void getDogUser(Callback call) {
+        Map<String, String> headers = new HashMap<>();
+        headers.put("Authorization", BaseApplication.getInstance().getUserInfo().getAuthorization());
+        OkHttpUtils.post().headers(headers).url(APIUrls.getDogUser).build().execute(call);
+
+    }
+
+    /**
      * 保存犬主信息
      *
      * @param map
@@ -121,6 +145,18 @@ public class SendRequest {
         Map<String, String> headers = new HashMap<>();
         headers.put("Authorization", BaseApplication.getInstance().getUserInfo().getAuthorization());
         OkHttpUtils.post().headers(headers).params(map).url(APIUrls.editDogUser).build().execute(call);
+
+    }
+
+    /**
+     * 获取犬只信息列表
+     *
+     * @param call
+     */
+    public static void getDogList(Callback call) {
+        Map<String, String> headers = new HashMap<>();
+        headers.put("Authorization", BaseApplication.getInstance().getUserInfo().getAuthorization());
+        OkHttpUtils.post().headers(headers).url(APIUrls.getDogList).build().execute(call);
 
     }
 
@@ -162,9 +198,6 @@ public class SendRequest {
         OkHttpUtils.post().headers(headers).params(map).url(APIUrls.approveDogLicence).build().execute(call);
 
     }
-
-
-
 
 
     // ==================================== 练琴帮 =============================================
@@ -301,7 +334,7 @@ public class SendRequest {
         Map<String, String> map = new HashMap<>();
         map.put("token", token);
         String filename = filePath.substring(filePath.lastIndexOf("/") + 1);
-        OkHttpUtils.post().addFile("file", filename, new File(filePath)).params(map).url(APIUrls.createPetArchives).build().execute(call);
+        OkHttpUtils.pet().addFile("file", filename, new File(filePath)).params(map).url(APIUrls.createPetArchives).build().execute(call);
 
     }
 
@@ -323,7 +356,7 @@ public class SendRequest {
         map.put("token", token);
         map.put("petType", String.valueOf(0));
         String filename = filePath.substring(filePath.lastIndexOf("/") + 1);
-        OkHttpUtils.post().addFile("file", filename, new File(filePath)).params(map).url(APIUrls.petType).build().execute(call);
+        OkHttpUtils.pet().addFile("file", filename, new File(filePath)).params(map).url(APIUrls.petType).build().execute(call);
 
     }
 

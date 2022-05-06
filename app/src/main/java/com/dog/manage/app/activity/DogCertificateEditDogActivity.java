@@ -4,6 +4,7 @@ package com.dog.manage.app.activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 
 import com.base.utils.CommonUtil;
@@ -18,6 +19,8 @@ import com.dog.manage.app.databinding.ActivityDogCertificateEditDogBinding;
 import com.dog.manage.app.media.MediaFile;
 import com.dog.manage.app.media.MediaSelectActivity;
 import com.dog.manage.app.media.MediaUtils;
+import com.dog.manage.app.model.Dog;
+import com.dog.manage.app.model.DogUser;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.okhttp.ResultClient;
@@ -44,6 +47,7 @@ public class DogCertificateEditDogActivity extends BaseActivity {
     public static final int type_immune = 2;//免疫证办理
     public static final int type_examined = 3;//犬证年审
     private int type = 0;
+    private int addressId = 0;
     private Map<String, String> paramsMap = new HashMap<>();
 
     private List<String> dogList = Arrays.asList("添加新犬只", "萨摩耶", "柯基", "泰迪", "哈士奇");
@@ -54,6 +58,8 @@ public class DogCertificateEditDogActivity extends BaseActivity {
         binding = getViewData(R.layout.activity_dog_certificate_edit_dog);
         addActivity(this);
         type = getIntent().getIntExtra("type", 0);
+        addressId = getIntent().getIntExtra("addressId", 0);
+
         String paramsJson = getIntent().getStringExtra("paramsJson");
         if (!TextUtils.isEmpty(paramsJson)) {
             Gson gson = new Gson();
@@ -106,6 +112,25 @@ public class DogCertificateEditDogActivity extends BaseActivity {
             }
         });
 
+        getDogList();
+
+    }
+
+    private void getDogList() {
+        SendRequest.getDogList(new GenericsCallback<ResultClient<List<Dog>>>(new JsonGenericsSerializator()) {
+            @Override
+            public void onError(Call call, Exception e, int id) {
+
+            }
+
+            @Override
+            public void onResponse(ResultClient<List<Dog>> response, int id) {
+                if (response.isSuccess() && response.getData() != null) {
+
+
+                }
+            }
+        });
     }
 
     private int dogCertificate = 0;//添加新犬只
@@ -114,12 +139,12 @@ public class DogCertificateEditDogActivity extends BaseActivity {
     private int dogSex = 0;//0-雌性 1-雄性
     private int dogBear = 0;//0-未绝育 1-已绝育
     private String testify = null;
-    private int dogAge = 12;
-    private String leftFace = null;
-    private String centerFace = null;
-    private String rightFace = null;
-    private String dogType = null;
-    private String noseprint = null;
+    private int dogAge = 1;
+    private String leftFace = "https://img2.baidu.com/it/u=4114155986,1519346958&fm=253&fmt=auto&app=138&f=JPEG?w=500&h=603";
+    private String centerFace = "https://img2.baidu.com/it/u=4114155986,1519346958&fm=253&fmt=auto&app=138&f=JPEG?w=500&h=603";
+    private String rightFace = "https://img2.baidu.com/it/u=4114155986,1519346958&fm=253&fmt=auto&app=138&f=JPEG?w=500&h=603";
+    private String dogType = "柴犬";
+    private String noseprint = "23325059-b2c1-11eb-1Vu7hqwN6";
 
     /**
      * dogName
@@ -202,38 +227,53 @@ public class DogCertificateEditDogActivity extends BaseActivity {
         map.put("sterilization", String.valueOf(dogBear));//是否绝育;0：否 1：是
         map.put("sterilizationProve", testify);//绝育证明
         map.put("dogAge", String.valueOf(dogAge));//犬只年龄;记录月份
-        map.put("dogPhoto", leftFace);
-        map.put("dogPhoto", centerFace);
-        map.put("dogPhoto", rightFace);//犬只照片，多张图片以“，”分开
+        map.put("dogPhoto", GsonUtils.toJson(Arrays.asList(leftFace, centerFace,rightFace)));//犬只照片，多张图片以“，”分开
         map.put("dogType", dogType);//犬只品种
         map.put("noseprint", noseprint);//鼻纹信息
 
-        if (type == type_userInfo) {
+//        if (type == type_userInfo) {
+//
+//
+//        } else if (type == type_certificate || type == type_examined) {
+//            Bundle bundle = new Bundle();
+//            bundle.putInt("type", type);
+//            bundle.putString("paramsJson", GsonUtils.toJson(map));
+//            openActivity(DogCertificateEditSubmitActivity.class, bundle);
+//
+//        } else if (type == type_immune) {
+//            Bundle bundle = new Bundle();
+//            bundle.putString("paramsJson", GsonUtils.toJson(map));
+//            openActivity(DogImmuneHospitalActivity.class, bundle);
+//
+//        }
 
-
-        } else if (type == type_certificate || type == type_examined) {
-            Bundle bundle = new Bundle();
-            bundle.putInt("type", type);
-            bundle.putString("paramsJson", GsonUtils.toJson(map));
-            openActivity(DogCertificateEditSubmitActivity.class, bundle);
-
-        } else if (type == type_immune) {
-            Bundle bundle = new Bundle();
-            bundle.putString("paramsJson", GsonUtils.toJson(map));
-            openActivity(DogImmuneHospitalActivity.class, bundle);
-
-        }
-
-        SendRequest.savaDog(map, new GenericsCallback<ResultClient<Boolean>>(new JsonGenericsSerializator()) {
+        //{"msg":"操作成功","code":200,"data":{"dogId":3}}
+        SendRequest.savaDog(map, new GenericsCallback<ResultClient<Dog>>(new JsonGenericsSerializator()) {
             @Override
             public void onError(Call call, Exception e, int id) {
 
             }
 
             @Override
-            public void onResponse(ResultClient<Boolean> response, int id) {
+            public void onResponse(ResultClient<Dog> response, int id) {
                 if (response.isSuccess() && response.getData() != null) {
+                    if (type == type_userInfo) {
 
+
+                    } else if (type == type_certificate || type == type_examined) {
+                        Bundle bundle = new Bundle();
+                        bundle.putInt("type", type);
+                        bundle.putInt("dogId", response.getData().getDogId());
+                        bundle.putInt("addressId", addressId);
+                        bundle.putString("dogType", dogType);
+                        openActivity(DogCertificateEditSubmitActivity.class, bundle);
+
+                    } else if (type == type_immune) {
+                        Bundle bundle = new Bundle();
+                        bundle.putString("paramsJson", GsonUtils.toJson(map));
+                        openActivity(DogImmuneHospitalActivity.class, bundle);
+
+                    }
                 } else {
                     ToastUtils.showShort(getApplicationContext(), response.getMsg());
                 }

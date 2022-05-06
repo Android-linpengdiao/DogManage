@@ -210,7 +210,7 @@ public class RecordFragment extends BaseFragment {
     }
 
     public void loadData(boolean isRefresh) {
-        SendRequest.getPager(getUserInfo().getAuthorization(), 11, creationPager.getNextCursor(),
+        SendRequest.getPager(getUserInfo().getAuthorization(), 11, "creationPager.getNextCursor()",
                 new GenericsCallback<Pager<BaseData>>(new JsonGenericsSerializator()) {
 
                     @Override

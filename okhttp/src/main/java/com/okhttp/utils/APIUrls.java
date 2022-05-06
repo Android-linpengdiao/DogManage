@@ -33,8 +33,14 @@ public class APIUrls {
     /**
      * 办理犬证
      */
+    //验证用户是否填写 个人信息
+    public final static String checkingDogUser = URL_DOMAIN + "user/checkingDogUser";
+    //获取犬主信息
+    public final static String getDogUser = URL_DOMAIN + "user/getDogUser";
     //保存犬主信息
     public final static String editDogUser = URL_DOMAIN + "user/editDogUser";
+    //获取犬只信息列表
+    public final static String getDogList = URL_DOMAIN + "user/dog/getDogList";
     //保存犬只
     public final static String savaDog = URL_DOMAIN + "user/dog/savaDog";
     //获取价格、手里单位信息接口

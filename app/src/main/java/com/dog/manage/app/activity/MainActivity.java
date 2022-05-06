@@ -62,6 +62,7 @@ public class MainActivity extends BaseActivity {
         JPushInterface.setAlias(this, getUserInfo().getId(), String.valueOf(getUserInfo().getId()));
 
         initView();
+        noticeList();
 
         Log.i(TAG, "onCreate: dp_16 = " + getResources().getDimensionPixelSize(R.dimen.dp_14));
         Log.i(TAG, "onCreate: sp_16 = " + getResources().getDimensionPixelSize(R.dimen.dp_14));
@@ -191,6 +192,28 @@ public class MainActivity extends BaseActivity {
                             } catch (Exception e) {
                                 e.getMessage();
                             }
+                        }
+                    }
+                });
+
+    }
+
+    public void noticeList() {
+        SendRequest.noticeList(getUserInfo().getAuthorization(), 0, 10,
+                new GenericsCallback<Pager<PoliciesBean>>(new JsonGenericsSerializator()) {
+
+                    @Override
+                    public void onError(Call call, Exception e, int id) {
+                    }
+
+                    @Override
+                    public void onResponse(Pager<PoliciesBean> response, int id) {
+                        if (response != null && response.getRows() != null && response.getRows().size() > 0) {
+                            StringBuffer buffer = new StringBuffer();
+                            for (PoliciesBean policiesBean : response.getRows()) {
+                                buffer.append(policiesBean.getNoticeTitle()).append("       ");
+                            }
+                            binding.noticeView.setText(buffer);
                         }
                     }
                 });
