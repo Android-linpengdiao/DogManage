@@ -1,6 +1,7 @@
 package com.dog.manage.app.activity;
 
 
+import android.Manifest;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -8,6 +9,10 @@ import android.view.View;
 
 import androidx.recyclerview.widget.LinearLayoutManager;
 
+import com.amap.api.location.AMapLocation;
+import com.amap.api.location.AMapLocationClient;
+import com.amap.api.location.AMapLocationClientOption;
+import com.amap.api.location.AMapLocationListener;
 import com.amap.api.maps.AMap;
 import com.amap.api.maps.CameraUpdate;
 import com.amap.api.maps.CameraUpdateFactory;
@@ -26,24 +31,27 @@ import com.base.view.RecycleViewDivider;
 import com.dog.manage.app.R;
 import com.dog.manage.app.adapter.DogImmuneHospitalAdapter;
 import com.dog.manage.app.databinding.ActivityDogImmuneHospitalBinding;
+import com.dog.manage.app.model.Hospital;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import com.okhttp.ResultClient;
 import com.okhttp.SendRequest;
 import com.okhttp.callbacks.GenericsCallback;
 import com.okhttp.sample_okhttp.JsonGenericsSerializator;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import okhttp3.Call;
+import pub.devrel.easypermissions.AfterPermissionGranted;
+import pub.devrel.easypermissions.EasyPermissions;
 
 /**
  * 犬只选择免疫医院
  */
-public class DogImmuneHospitalActivity extends BaseActivity implements AMap.OnMarkerClickListener {
+public class DogImmuneHospitalActivity extends BaseActivity implements AMap.OnMarkerClickListener, AMapLocationListener {
 
     private ActivityDogImmuneHospitalBinding binding;
     private DogImmuneHospitalAdapter adapter;
@@ -65,8 +73,33 @@ public class DogImmuneHospitalActivity extends BaseActivity implements AMap.OnMa
 
         initView();
         initMapView(savedInstanceState);
+        permissionsLocation();
+
+        getHospitalPosition();
 
 
+    }
+
+    /**
+     * 根据坐标获取宠物医院信息
+     */
+    private void getHospitalPosition() {
+        SendRequest.getHospitalPosition("39.90403,116.407525",
+                new GenericsCallback<ResultClient<List<Hospital>>>(new JsonGenericsSerializator()) {
+                    @Override
+                    public void onError(Call call, Exception e, int id) {
+
+                    }
+
+                    @Override
+                    public void onResponse(ResultClient<List<Hospital>> response, int id) {
+                        if (response.isSuccess() && response.getData() != null) {
+                            adapter.refreshData(response.getData());
+                        } else {
+                            ToastUtils.showShort(getApplicationContext(), response.getMsg());
+                        }
+                    }
+                });
     }
 
     private void initView() {
@@ -81,7 +114,6 @@ public class DogImmuneHospitalActivity extends BaseActivity implements AMap.OnMa
         binding.recyclerView.setNestedScrollingEnabled(false);
         adapter = new DogImmuneHospitalAdapter(getApplicationContext());
         binding.recyclerView.setAdapter(adapter);
-        adapter.refreshData(Arrays.asList("", "", ""));
         adapter.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view, Object object) {
@@ -94,6 +126,7 @@ public class DogImmuneHospitalActivity extends BaseActivity implements AMap.OnMa
                     case R.id.selectedView:
                         changeCamera(CameraUpdateFactory.newCameraPosition(new CameraPosition(
                                 latLngs.get(position), 15, 30, 30)));
+                        binding.hospitalNameView.setText(adapter.getList().get(position).getHospitalName());
 
                         break;
                 }
@@ -112,32 +145,38 @@ public class DogImmuneHospitalActivity extends BaseActivity implements AMap.OnMa
             ToastUtils.showShort(getApplicationContext(), "请选择1个医院");
             return;
         }
-
-        Bundle bundle = new Bundle();
-        bundle.putInt("type", SubmitSuccessActivity.type_immune);
-        openActivity(SubmitSuccessActivity.class, bundle);
-
-        finishActivity(DogManageWorkflowActivity.class);
-        finishActivity(DogCertificateEditDogOwnerActivity.class);
-        finishActivity(DogCertificateEditDogActivity.class);
-        finish();
-
-        if (LogUtil.isDebug){
+        Hospital dataBean = adapter.getList().get(adapter.getSelect());
+        if (dataBean == null) {
+            ToastUtils.showShort(getApplicationContext(), "提交失败");
             return;
         }
-        SendRequest.DogImmuneHospital(getUserInfo().getAuthorization(), paramsMap, new GenericsCallback(new JsonGenericsSerializator()) {
-            @Override
-            public void onError(Call call, Exception e, int id) {
+        SendRequest.saveImmune(8, dataBean.getId(), dataBean.getHospitalName(),
+                new GenericsCallback<ResultClient<Boolean>>(new JsonGenericsSerializator()) {
+                    @Override
+                    public void onError(Call call, Exception e, int id) {
 
-            }
+                    }
 
-            @Override
-            public void onResponse(Object response, int id) {
+                    @Override
+                    public void onResponse(ResultClient<Boolean> response, int id) {
+                        if (response.isSuccess() && response.getData()) {
+                            Bundle bundle = new Bundle();
+                            bundle.putInt("type", SubmitSuccessActivity.type_immune);
+                            openActivity(SubmitSuccessActivity.class, bundle);
 
-            }
-        });
+                            finishActivity(DogManageWorkflowActivity.class);
+                            finishActivity(DogCertificateEditDogOwnerActivity.class);
+                            finishActivity(DogCertificateEditDogActivity.class);
+                            finish();
+                        } else {
+                            ToastUtils.showShort(getApplicationContext(), response.getMsg());
+                        }
+                    }
+                });
 
     }
+
+    //==================================     定位     ==============================================
 
     private void changeCamera(CameraUpdate update) {
         binding.mapView.getMap().moveCamera(update);
@@ -193,6 +232,72 @@ public class DogImmuneHospitalActivity extends BaseActivity implements AMap.OnMa
             MapNavigationUtil.showChooseMap(DogImmuneHospitalActivity.this, new LocationBean(null, latLng.latitude, latLng.longitude));
         } else {
             ToastUtils.showLong(DogImmuneHospitalActivity.this, "未找到地图APP，请下载安装高德地图APP");
+        }
+    }
+
+    //==================================     定位     ==============================================
+
+    private String[] permissions = {
+            Manifest.permission.ACCESS_COARSE_LOCATION,
+            Manifest.permission.ACCESS_FINE_LOCATION};
+    private final int requestCode = 100;
+
+    @AfterPermissionGranted(requestCode)
+    private void permissionsLocation() {
+        if (EasyPermissions.hasPermissions(getApplicationContext(), permissions)) {
+            initLocation();
+
+        } else {
+            EasyPermissions.requestPermissions(this, "请同意下面的权限", requestCode, permissions);
+
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @androidx.annotation.NonNull String[] permissions, @androidx.annotation.NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        EasyPermissions.onRequestPermissionsResult(requestCode, permissions, grantResults, this);
+    }
+
+
+    /**
+     * 定位
+     */
+    private void initLocation() {
+
+        AMapLocationClient mlocationClient = new AMapLocationClient(getApplicationContext());
+        //初始化定位参数
+        AMapLocationClientOption mLocationOption = new AMapLocationClientOption();
+        //设置定位监听
+        mlocationClient.setLocationListener(this);
+        //设置定位模式为高精度模式，Battery_Saving为低功耗模式，Device_Sensors是仅设备模式
+        mLocationOption.setLocationMode(AMapLocationClientOption.AMapLocationMode.Hight_Accuracy);
+        //设置定位间隔,单位毫秒,默认为2000ms
+        mLocationOption.setInterval(2000);
+        mLocationOption.setOnceLocation(true);
+        //设置定位参数
+        mlocationClient.setLocationOption(mLocationOption);
+        // 此方法为每隔固定时间会发起一次定位请求，为了减少电量消耗或网络流量消耗，
+        // 注意设置合适的定位时间的间隔（最小间隔支持为1000ms），并且在合适时间调用stopLocation()方法来取消定位请求
+        // 在定位结束后，在合适的生命周期调用onDestroy()方法
+        // 在单次定位情况下，定位无论成功与否，都无需调用stopLocation()方法移除请求，定位sdk内部会移除
+        // 启动定位
+        mlocationClient.startLocation();
+    }
+
+
+    @Override
+    public void onLocationChanged(AMapLocation amapLocation) {
+        if (amapLocation != null) {
+            if (amapLocation.getErrorCode() == 0) {
+                //定位成功回调信息，设置相关消息
+                amapLocation.getLocationType();//获取当前定位结果来源，如网络定位结果，详见定位类型表
+                double latitude = amapLocation.getLatitude();//获取纬度
+                double longitude = amapLocation.getLongitude();//获取经度
+                String address = amapLocation.getAoiName();
+
+            } else {
+            }
         }
     }
 

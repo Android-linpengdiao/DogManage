@@ -84,9 +84,7 @@
             android:layout_height="@dimen/dp_0"
             android:layout_weight="1"
             android:background="@color/app_background"
-            android:overScrollMode="never"
-            android:visibility="gone"
-            tools:visibility="visible">
+            android:overScrollMode="never">
 
             <LinearLayout
                 android:id="@+id/dogOwnerContainer"
@@ -1134,9 +1132,7 @@
             android:onClick="onClickConfirm"
             android:text="下一步"
             android:textColor="@color/white"
-            android:textSize="@dimen/sp_16"
-            android:visibility="gone"
-            tools:visibility="visible" />
+            android:textSize="@dimen/sp_16"/>
 
     </LinearLayout>
 </layout>

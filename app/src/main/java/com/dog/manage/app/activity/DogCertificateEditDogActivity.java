@@ -112,12 +112,12 @@ public class DogCertificateEditDogActivity extends BaseActivity {
             }
         });
 
-        getDogList();
+        getDogImmuneList();
 
     }
 
-    private void getDogList() {
-        SendRequest.getDogList(new GenericsCallback<ResultClient<List<Dog>>>(new JsonGenericsSerializator()) {
+    private void getDogImmuneList() {
+        SendRequest.getDogImmuneList(new GenericsCallback<ResultClient<List<Dog>>>(new JsonGenericsSerializator()) {
             @Override
             public void onError(Call call, Exception e, int id) {
 

@@ -3,8 +3,20 @@ package com.dog.manage.app.activity;
 import android.os.Bundle;
 import android.view.View;
 
+import com.base.manager.LoadingManager;
+import com.base.utils.ToastUtils;
 import com.dog.manage.app.R;
 import com.dog.manage.app.databinding.ActivityCertificateDetailsBinding;
+import com.dog.manage.app.model.Dog;
+import com.okhttp.ResultClient;
+import com.okhttp.SendRequest;
+import com.okhttp.callbacks.GenericsCallback;
+import com.okhttp.sample_okhttp.JsonGenericsSerializator;
+
+import java.util.List;
+
+import okhttp3.Call;
+import okhttp3.Request;
 
 public class CertificateDetailsActivity extends BaseActivity {
 
@@ -40,9 +52,45 @@ public class CertificateDetailsActivity extends BaseActivity {
             }
         });
 
+        getDogLicenceDetail();
+
     }
 
     public void onClickConfirm(View view) {
         openActivity(PayActivity.class);
+    }
+
+    /**
+     * 获取个人犬只免疫列表
+     */
+    private void getDogLicenceDetail() {
+        SendRequest.getDogLicenceDetail(0, new GenericsCallback<ResultClient<List<Dog>>>(new JsonGenericsSerializator()) {
+
+            @Override
+            public void onBefore(Request request, int id) {
+                super.onBefore(request, id);
+                LoadingManager.showLoadingDialog(CertificateDetailsActivity.this);
+            }
+
+            @Override
+            public void onAfter(int id) {
+                super.onAfter(id);
+                LoadingManager.hideLoadingDialog(CertificateDetailsActivity.this);
+            }
+
+            @Override
+            public void onError(Call call, Exception e, int id) {
+
+            }
+
+            @Override
+            public void onResponse(ResultClient<List<Dog>> response, int id) {
+                if (response.isSuccess() && response.getData() != null) {
+
+                } else {
+                    ToastUtils.showShort(getApplicationContext(), response.getMsg());
+                }
+            }
+        });
     }
 }

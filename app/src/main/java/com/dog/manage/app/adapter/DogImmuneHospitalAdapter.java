@@ -8,8 +8,9 @@ import com.base.view.OnClickListener;
 import com.dog.manage.app.R;
 import com.dog.manage.app.databinding.ItemDogImmuneHospitalBinding;
 import com.dog.manage.app.databinding.ItemMessageBinding;
+import com.dog.manage.app.model.Hospital;
 
-public class DogImmuneHospitalAdapter extends BaseRecyclerAdapter<String, ItemDogImmuneHospitalBinding> {
+public class DogImmuneHospitalAdapter extends BaseRecyclerAdapter<Hospital, ItemDogImmuneHospitalBinding> {
 
     private int select = -1;
     private OnClickListener onClickListener;
@@ -37,8 +38,11 @@ public class DogImmuneHospitalAdapter extends BaseRecyclerAdapter<String, ItemDo
     }
 
     @Override
-    protected void onBindItem(ItemDogImmuneHospitalBinding binding, String dataBean, int position) {
+    protected void onBindItem(ItemDogImmuneHospitalBinding binding, Hospital dataBean, int position) {
 
+        binding.hospitalNameView.setText(dataBean.getHospitalName());
+        binding.hospitalAddressView.setText(dataBean.getHospitalAddress());
+        binding.hospitalPhoneView.setText(dataBean.getHospitalPhone());
         binding.selectedView.setSelected(select == position ? true : false);
         binding.selectedView.setOnClickListener(new View.OnClickListener() {
             @Override

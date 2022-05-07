@@ -36,7 +36,7 @@ public class PoliciesDetailsActivity extends BaseActivity {
     }
 
     public void loadData(Integer noticeId) {
-        SendRequest.getNoticeById(getUserInfo().getAuthorization(), noticeId,
+        SendRequest.getNoticeById(noticeId,
                 new GenericsCallback<ResultClient<PoliciesBean>>(new JsonGenericsSerializator()) {
 
                     @Override

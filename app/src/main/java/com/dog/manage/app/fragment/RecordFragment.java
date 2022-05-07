@@ -213,6 +213,11 @@ public class RecordFragment extends BaseFragment {
 
     }
 
+    /**
+     * 犬证办理记录
+     *
+     * @param isRefresh
+     */
     public void getUserDogLicence(boolean isRefresh) {
         SendRequest.getUserDogLicence(type, new GenericsCallback<Pager<BaseData>>(new JsonGenericsSerializator()) {
 

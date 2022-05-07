@@ -39,16 +39,45 @@ public class APIUrls {
     public final static String getDogUser = URL_DOMAIN + "user/getDogUser";
     //保存犬主信息
     public final static String editDogUser = URL_DOMAIN + "user/editDogUser";
-    //获取犬只信息列表
-    public final static String getDogList = URL_DOMAIN + "user/dog/getDogList";
     //保存犬只
     public final static String savaDog = URL_DOMAIN + "user/dog/savaDog";
+    //验证犬只是否可养
+    public final static String verificationDog = URL_DOMAIN + "user/dog/verificationDog";
     //获取价格、手里单位信息接口
     public final static String getHandleInfo = URL_DOMAIN + "user/dog/getHandleInfo";
     //犬证提交审核
     public final static String approveDogLicence = URL_DOMAIN + "user/dog/approveDogLicence";
+
+
+    /**
+     * 犬只免疫办理
+     */
+    //根据坐标获取宠物医院信息
+    public final static String getHospitalPosition = URL_DOMAIN + "user/dog/getHospitalPosition";
+    //免疫证 提交免疫证办理
+    public final static String saveImmune = URL_DOMAIN + "user/dog/saveImmune";
+
+
+    //获取犬只信息列表
+    public final static String getDogList = URL_DOMAIN + "user/dog/getDogList";
+
+
+    /**
+     * 我的
+     */
+    //获取犬证列表
+    public final static String getDogLicenceList = URL_DOMAIN + "user/dog/getDogLicenceList";
+    //获取个人犬只免疫列表
+    public final static String getDogImmuneList = URL_DOMAIN + "/user/dog/getDogImmuneList";
     //犬证办理记录
     public final static String getUserDogLicence = URL_DOMAIN + "user/dog/getUserDogLincence";
+    //犬证办理记录详情
+    public final static String getDogLicenceDetail = URL_DOMAIN + "user/dog/getDogLincenceDetail";
+    //犬证 获取犬主信息
+    public final static String getUserById = URL_DOMAIN + "user/dog/getUserById";
+    //犬证 获取犬只详情信息
+    public final static String getDogById = URL_DOMAIN + "user/dog/getDogById";
+
 
     /**
      * 悦保

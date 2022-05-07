@@ -92,7 +92,7 @@ public class PoliciesActivity extends BaseActivity {
     }
 
     public void loadData(boolean isRefresh) {
-        SendRequest.noticeList(getUserInfo().getAuthorization(), pager.getCursor(), pager.getSize(),
+        SendRequest.noticeList(pager.getCursor(), pager.getSize(),
                 new GenericsCallback<Pager<PoliciesBean>>(new JsonGenericsSerializator()) {
 
                     @Override

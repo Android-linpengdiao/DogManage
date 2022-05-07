@@ -56,31 +56,24 @@ public class SendRequest {
      * @param pageSize
      * @param call
      */
-    public static void noticeList(String authorization, int pageNum, int pageSize, Callback call) {
-        Map<String, String> headers = new HashMap<>();
-        headers.put("Authorization", authorization);
-
+    public static void noticeList(int pageNum, int pageSize, Callback call) {
         Map<String, String> map = new HashMap<>();
         map.put("pageNum", String.valueOf(pageNum));
         map.put("pageSize", String.valueOf(pageSize));
-        OkHttpUtils.post().headers(headers).params(map).url(APIUrls.noticeList).build().execute(call);
+        OkHttpUtils.post().params(map).url(APIUrls.noticeList).build().execute(call);
 
     }
 
     /**
      * 政策法规详情
      *
-     * @param authorization
      * @param noticeId
      * @param call
      */
-    public static void getNoticeById(String authorization, int noticeId, Callback call) {
-        Map<String, String> headers = new HashMap<>();
-        headers.put("Authorization", authorization);
-
+    public static void getNoticeById(int noticeId, Callback call) {
         Map<String, String> map = new HashMap<>();
         map.put("noticeId", String.valueOf(noticeId));
-        OkHttpUtils.post().headers(headers).params(map).url(APIUrls.getNoticeById).build().execute(call);
+        OkHttpUtils.post().params(map).url(APIUrls.getNoticeById).build().execute(call);
 
     }
 
@@ -91,23 +84,16 @@ public class SendRequest {
      * @param pageSize
      * @param call
      */
-    public static void bannerInfoList(String authorization, int pageNum, int pageSize, Callback call) {
-        Map<String, String> headers = new HashMap<>();
-        headers.put("Authorization", authorization);
-
+    public static void bannerInfoList(int pageNum, int pageSize, Callback call) {
         Map<String, String> map = new HashMap<>();
         map.put("pageNum", String.valueOf(pageNum));
         map.put("pageSize", String.valueOf(pageSize));
-        OkHttpUtils.post().headers(headers).params(map).url(APIUrls.bannerInfoList).build().execute(call);
+        OkHttpUtils.post().params(map).url(APIUrls.bannerInfoList).build().execute(call);
 
     }
 
-    public static void getForbiddenById(String authorization, Callback call) {
-        Map<String, String> headers = new HashMap<>();
-        headers.put("Authorization", authorization);
-
-        Map<String, String> map = new HashMap<>();
-        OkHttpUtils.post().headers(headers).url(APIUrls.getForbiddenById).build().execute(call);
+    public static void getForbiddenById(Callback call) {
+        OkHttpUtils.post().url(APIUrls.getForbiddenById).build().execute(call);
 
     }
 
@@ -149,18 +135,6 @@ public class SendRequest {
     }
 
     /**
-     * 获取犬只信息列表
-     *
-     * @param call
-     */
-    public static void getDogList(Callback call) {
-        Map<String, String> headers = new HashMap<>();
-        headers.put("Authorization", BaseApplication.getInstance().getUserInfo().getAuthorization());
-        OkHttpUtils.post().headers(headers).url(APIUrls.getDogList).build().execute(call);
-
-    }
-
-    /**
      * 保存犬只
      *
      * @param map
@@ -170,6 +144,22 @@ public class SendRequest {
         Map<String, String> headers = new HashMap<>();
         headers.put("Authorization", BaseApplication.getInstance().getUserInfo().getAuthorization());
         OkHttpUtils.post().headers(headers).params(map).url(APIUrls.savaDog).build().execute(call);
+
+    }
+
+    /**
+     * 验证犬只是否可养
+     *
+     * @param dogType
+     * @param call
+     */
+    public static void verificationDog(String dogType, Callback call) {
+        Map<String, String> headers = new HashMap<>();
+        headers.put("Authorization", BaseApplication.getInstance().getUserInfo().getAuthorization());
+
+        Map<String, String> map = new HashMap<>();
+        map.put("dogType", dogType);
+        OkHttpUtils.post().headers(headers).params(map).url(APIUrls.verificationDog).build().execute(call);
 
     }
 
@@ -199,6 +189,85 @@ public class SendRequest {
 
     }
 
+
+    /**
+     * 根据坐标获取宠物医院信息
+     *
+     * @param coordinate 坐标 经纬度 2342342,12312
+     * @param call
+     */
+    public static void getHospitalPosition(String coordinate, Callback call) {
+        Map<String, String> headers = new HashMap<>();
+        headers.put("Authorization", BaseApplication.getInstance().getUserInfo().getAuthorization());
+
+        Map<String, String> map = new HashMap<>();
+        map.put("coordinate", coordinate);
+        OkHttpUtils.post().headers(headers).params(map).url(APIUrls.getHospitalPosition).build().execute(call);
+
+    }
+
+    /**
+     * 免疫证 提交免疫证办理
+     *
+     * @param dogId    犬只id
+     * @param unitId   医院id
+     * @param unitName 医院名称
+     * @param call
+     */
+    public static void saveImmune(int dogId, int unitId, String unitName, Callback call) {
+        Map<String, String> headers = new HashMap<>();
+        headers.put("Authorization", BaseApplication.getInstance().getUserInfo().getAuthorization());
+
+        Map<String, String> map = new HashMap<>();
+        map.put("dogId", String.valueOf(dogId));
+        map.put("unitId", String.valueOf(unitId));
+        map.put("unitName", unitName);
+        OkHttpUtils.post().headers(headers).params(map).url(APIUrls.saveImmune).build().execute(call);
+
+    }
+
+
+    /**
+     * 获取犬只信息列表
+     *
+     * @param call
+     */
+    public static void getDogList(Callback call) {
+        Map<String, String> headers = new HashMap<>();
+        headers.put("Authorization", BaseApplication.getInstance().getUserInfo().getAuthorization());
+        OkHttpUtils.post().headers(headers).url(APIUrls.getDogList).build().execute(call);
+
+    }
+
+
+    // ==================================== 我的 =============================================
+
+
+    /**
+     * 获取犬证列表
+     *
+     * @param call
+     */
+    public static void getDogLicenceList(Callback call) {
+        Map<String, String> headers = new HashMap<>();
+        headers.put("Authorization", BaseApplication.getInstance().getUserInfo().getAuthorization());
+        OkHttpUtils.post().headers(headers).url(APIUrls.getDogLicenceList).build().execute(call);
+
+    }
+
+    /**
+     * 获取个人犬只免疫列表
+     *
+     * @param call
+     */
+    public static void getDogImmuneList(Callback call) {
+        Map<String, String> headers = new HashMap<>();
+        headers.put("Authorization", BaseApplication.getInstance().getUserInfo().getAuthorization());
+        OkHttpUtils.post().headers(headers).url(APIUrls.getDogImmuneList).build().execute(call);
+
+    }
+
+
     /**
      * 犬证提交审核
      *
@@ -213,6 +282,55 @@ public class SendRequest {
         map.put("lincenceStatus", String.valueOf(lincenceStatus));
 
         OkHttpUtils.post().headers(headers).params(map).url(APIUrls.getUserDogLicence).build().execute(call);
+
+    }
+
+    /**
+     * 犬证办理记录详情
+     * @param lincenceId
+     * @param call
+     */
+    public static void getDogLicenceDetail(int lincenceId, Callback call) {
+        Map<String, String> headers = new HashMap<>();
+        headers.put("Authorization", BaseApplication.getInstance().getUserInfo().getAuthorization());
+
+        Map<String, String> map = new HashMap<>();
+        map.put("lincenceId", String.valueOf(lincenceId));
+        OkHttpUtils.post().headers(headers).params(map).url(APIUrls.getDogLicenceDetail).build().execute(call);
+
+    }
+
+    /**
+     * 犬证 获取犬主信息
+     *
+     * @param userId 用户id
+     * @param dogId 犬只id
+     * @param call
+     */
+    public static void getUserById(int userId, int dogId, Callback call) {
+        Map<String, String> headers = new HashMap<>();
+        headers.put("Authorization", BaseApplication.getInstance().getUserInfo().getAuthorization());
+
+        Map<String, String> map = new HashMap<>();
+        map.put("userId", String.valueOf(userId));
+        map.put("dogId", String.valueOf(dogId));
+        OkHttpUtils.post().headers(headers).params(map).url(APIUrls.getUserById).build().execute(call);
+
+    }
+
+    /**
+     * 犬证 获取犬只详情信息
+     *
+     * @param dogId 犬只id
+     * @param call
+     */
+    public static void getDogById(int dogId, Callback call) {
+        Map<String, String> headers = new HashMap<>();
+        headers.put("Authorization", BaseApplication.getInstance().getUserInfo().getAuthorization());
+
+        Map<String, String> map = new HashMap<>();
+        map.put("dogId", String.valueOf(dogId));
+        OkHttpUtils.post().headers(headers).params(map).url(APIUrls.getDogById).build().execute(call);
 
     }
 

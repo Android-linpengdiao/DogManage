@@ -25,6 +25,7 @@
             android:orientation="horizontal">
 
             <com.dog.manage.app.view.TextBoldView
+                android:id="@+id/hospitalNameView"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -53,13 +54,14 @@
                 android:src="@drawable/dingwei_s" />
 
             <TextView
+                android:id="@+id/hospitalAddressView"
                 android:layout_width="@dimen/dp_0"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:ellipsize="end"
                 android:gravity="center_vertical"
                 android:maxLines="2"
-                android:text="北京市海淀区西直门北大街1号办公楼一层"
+                tools:text="北京市海淀区西直门北大街1号办公楼一层"
                 android:textColor="#333333"
                 android:textSize="@dimen/sp_14" />
 
@@ -86,13 +88,14 @@
                 android:background="@drawable/dianhua" />
 
             <TextView
+                android:id="@+id/hospitalPhoneView"
                 android:layout_width="@dimen/dp_0"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:ellipsize="end"
                 android:gravity="center_vertical"
                 android:maxLines="2"
-                android:text="010-62259221"
+                tools:text="010-62259221"
                 android:textColor="#333333"
                 android:textSize="@dimen/sp_14" />
 

@@ -147,8 +147,7 @@ public class MainActivity extends BaseActivity {
     }
 
     public void bannerInfoList() {
-        SendRequest.bannerInfoList(getUserInfo().getAuthorization(), 0, 20,
-                new GenericsCallback<Pager<BannerBean>>(new JsonGenericsSerializator()) {
+        SendRequest.bannerInfoList(0, 20, new GenericsCallback<Pager<BannerBean>>(new JsonGenericsSerializator()) {
 
 
                     @Override
@@ -173,8 +172,7 @@ public class MainActivity extends BaseActivity {
     }
 
     public void getForbiddenById() {
-        SendRequest.getForbiddenById(getUserInfo().getAuthorization(),
-                new GenericsCallback<ResultClient<PoliciesBean>>(new JsonGenericsSerializator()) {
+        SendRequest.getForbiddenById(new GenericsCallback<ResultClient<PoliciesBean>>(new JsonGenericsSerializator()) {
 
 
                     @Override
@@ -199,7 +197,7 @@ public class MainActivity extends BaseActivity {
     }
 
     public void noticeList() {
-        SendRequest.noticeList(getUserInfo().getAuthorization(), 0, 10,
+        SendRequest.noticeList(0, 10,
                 new GenericsCallback<Pager<PoliciesBean>>(new JsonGenericsSerializator()) {
 
                     @Override
@@ -222,7 +220,9 @@ public class MainActivity extends BaseActivity {
 
     public void onClickMessage(View view) {
         if (checkUserRank(getApplicationContext(), true)) {
-            openActivity(MessageActivity.class);
+//            openActivity(MessageActivity.class);
+//            openActivity(DogCertificateEditSubmitActivity.class);
+            openActivity(DogCertificateEditDogOwnerActivity.class);
         }
     }
 

@@ -121,11 +121,12 @@
                     android:textSize="@dimen/sp_18" />
 
                 <com.dog.manage.app.view.TextBoldView
+                    android:id="@+id/hospitalNameView"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
                     android:gravity="center"
-                    android:text="北京爱牧家动物医院(西直门店)"
+                    tools:text="北京爱牧家动物医院(西直门店)"
                     android:textColor="#333333"
                     android:textSize="@dimen/sp_18" />
             </LinearLayout>

@@ -100,10 +100,10 @@ public class DogCertificateEditSubmitActivity extends BaseActivity implements AM
     }
 
     public void onClickConfirm(View view) {
-        if (handleInfo == null) {
-            ToastUtils.showShort(getApplicationContext(), "提交失败");
-            return;
-        }
+//        if (handleInfo == null) {
+//            ToastUtils.showShort(getApplicationContext(), "提交失败");
+//            return;
+//        }
         /**
          * addressId
          * integer
@@ -121,10 +121,18 @@ public class DogCertificateEditSubmitActivity extends BaseActivity implements AM
          * string
          * 犬只犬证照片 ，正面照
          */
+
+        addressId = 112;
+        dogId = 8;
+        String acceptUnit = "北京市西城区天桥派出所";
+        int unitId = 1;
+        paramsMap.put("acceptUnit", acceptUnit);
+        paramsMap.put("unitId", String.valueOf(unitId));
+
         paramsMap.put("addressId", String.valueOf(addressId));
         paramsMap.put("dogId", String.valueOf(dogId));
-        paramsMap.put("acceptUnit", handleInfo.getHandleUnitAddress());
-        paramsMap.put("unitId", String.valueOf(handleInfo.getHandleUnitId()));
+//        paramsMap.put("acceptUnit", handleInfo.getHandleUnitAddress());
+//        paramsMap.put("unitId", String.valueOf(handleInfo.getHandleUnitId()));
         paramsMap.put("immunePhoto", "https://pics7.baidu.com/feed/6c224f4a20a446236fb6db0ac3bf5d040df3d785.jpeg");
         SendRequest.approveDogLicence(paramsMap, new GenericsCallback<ResultClient<Boolean>>(new JsonGenericsSerializator()) {
             @Override
