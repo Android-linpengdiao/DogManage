@@ -337,29 +337,6 @@ public class SendRequest {
 
     // ==================================== 练琴帮 =============================================
 
-    /**
-     * 犬证办理
-     *
-     * @param token
-     * @param call
-     */
-    public static void DogCertificate(String token, Map<String, String> map, Callback call) {
-        map.put("token", token);
-        OkHttpUtils.post().params(map).url(APIUrls.testUrl).build().execute(call);
-
-    }
-
-    /**
-     * 免疫证办理
-     *
-     * @param token
-     * @param call
-     */
-    public static void DogImmuneHospital(String token, Map<String, String> map, Callback call) {
-        map.put("token", token);
-        OkHttpUtils.post().params(map).url(APIUrls.testUrl).build().execute(call);
-
-    }
 
     /**
      * 犬证年审
