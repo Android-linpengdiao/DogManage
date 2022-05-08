@@ -18,6 +18,12 @@ public class AreaSelectAdapter extends BaseRecyclerAdapter<CityData.FirstChildre
         this.onClickListener = onClickListener;
     }
 
+    private int select = 0;
+
+    public int getSelect() {
+        return select;
+    }
+
     public AreaSelectAdapter(Context context) {
         super(context);
     }
@@ -30,9 +36,12 @@ public class AreaSelectAdapter extends BaseRecyclerAdapter<CityData.FirstChildre
     @Override
     protected void onBindItem(ItemAreaSelectBinding binding, CityData.FirstChildrenBean.SecondChildrenBean dataBean, int position) {
         binding.titleView.setText(dataBean.getName());
+        binding.selectedView.setVisibility(select == position ? View.VISIBLE : View.GONE);
         binding.getRoot().setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                select = position;
+                notifyDataSetChanged();
                 if (onClickListener != null)
                     onClickListener.onClick(view, dataBean);
             }

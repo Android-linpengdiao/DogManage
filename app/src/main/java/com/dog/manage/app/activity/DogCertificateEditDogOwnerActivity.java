@@ -2,11 +2,15 @@ package com.dog.manage.app.activity;
 
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.RadioGroup;
+
+import androidx.databinding.DataBindingUtil;
+import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.base.manager.DialogManager;
 import com.base.manager.LoadingManager;
@@ -16,8 +20,15 @@ import com.base.utils.GlideLoader;
 import com.base.utils.GsonUtils;
 import com.base.utils.PermissionUtils;
 import com.base.utils.ToastUtils;
+import com.base.view.BaseBottomSheetDialog;
+import com.base.view.OnClickListener;
+import com.base.view.RecycleViewDivider;
 import com.dog.manage.app.R;
+import com.dog.manage.app.adapter.AreaSelectAdapter;
+import com.dog.manage.app.area.CityData;
+import com.dog.manage.app.area.CityManager;
 import com.dog.manage.app.databinding.ActivityDogCertificateEditDogOwnerBinding;
+import com.dog.manage.app.databinding.DialogAddressBinding;
 import com.dog.manage.app.media.MediaFile;
 import com.dog.manage.app.media.MediaSelectActivity;
 import com.dog.manage.app.media.MediaUtils;
@@ -28,6 +39,7 @@ import com.okhttp.ResultClient;
 import com.okhttp.SendRequest;
 import com.okhttp.callbacks.GenericsCallback;
 import com.okhttp.sample_okhttp.JsonGenericsSerializator;
+import com.okhttp.utils.APIUrls;
 
 import java.io.File;
 import java.util.Arrays;
@@ -147,7 +159,49 @@ public class DogCertificateEditDogOwnerActivity extends BaseActivity {
         binding.addressView.binding.itemContent.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                openActivity(AreaSelectActivity.class, request_City);
+//                openActivity(AreaSelectActivity.class, request_City);
+
+                View contentView = View.inflate(DogCertificateEditDogOwnerActivity.this, R.layout.dialog_address, null);
+                DialogAddressBinding addressBinding = DataBindingUtil.bind(contentView);
+                BaseBottomSheetDialog bottomSheetDialog = new BaseBottomSheetDialog(DogCertificateEditDogOwnerActivity.this) {
+                    @Override
+                    protected View initContentView() {
+                        return addressBinding.getRoot();
+                    }
+                };
+                bottomSheetDialog.show();
+
+                addressBinding.recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
+                addressBinding.recyclerView.setNestedScrollingEnabled(false);
+                RecycleViewDivider divider = new RecycleViewDivider(getApplicationContext(),
+                        LinearLayoutManager.VERTICAL,
+                        CommonUtil.dip2px(getApplicationContext(), 0.5f),
+                        Color.parseColor("#E1E1E1"));
+                addressBinding.recyclerView.addItemDecoration(divider);
+                addressBinding.recyclerView.setNestedScrollingEnabled(false);
+                AreaSelectAdapter areaSelectAdapter = new AreaSelectAdapter(getApplicationContext());
+                addressBinding.recyclerView.setAdapter(areaSelectAdapter);
+
+                List<CityData> cities = CityManager.getInstance().getCityDataList();
+                if (cities.size() > 0) {
+                    for (CityData cityData : cities) {
+                        if (cityData.getName().equals("北京市")) {
+                            areaSelectAdapter.refreshData(cityData.getChildren().get(0).getChildren());
+                            break;
+                        }
+                    }
+                }
+                addressBinding.confirmView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        CityData.FirstChildrenBean.SecondChildrenBean dataBean = areaSelectAdapter.getList().get(areaSelectAdapter.getSelect());
+                        address = dataBean.getName();
+                        binding.addressView.binding.itemContent.setText(address);
+                        bottomSheetDialog.cancel();
+                    }
+                });
+
+
             }
         });
 

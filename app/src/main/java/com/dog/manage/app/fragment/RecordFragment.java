@@ -25,7 +25,9 @@ import com.dog.manage.app.adapter.AdoptionRecordAdapter;
 import com.dog.manage.app.adapter.CertificateRecordAdapter;
 import com.dog.manage.app.adapter.PunishRecordAdapter;
 import com.dog.manage.app.databinding.FragmentRecordBinding;
+import com.dog.manage.app.model.RecordImmune;
 import com.okhttp.Pager;
+import com.okhttp.ResultClient;
 import com.okhttp.SendRequest;
 import com.okhttp.callbacks.GenericsCallback;
 import com.okhttp.sample_okhttp.JsonGenericsSerializator;
@@ -34,6 +36,7 @@ import com.scwang.smart.refresh.layout.listener.OnLoadMoreListener;
 import com.scwang.smart.refresh.layout.listener.OnRefreshListener;
 
 import java.util.Arrays;
+import java.util.List;
 
 import okhttp3.Call;
 
@@ -46,7 +49,6 @@ public class RecordFragment extends BaseFragment {
 
     private int type;
 
-    private Pager<BaseData> creationPager = new Pager<>();
     private AdoptionRecordAdapter adoptionRecordAdapter;
     private CertificateRecordAdapter certificateRecordAdapter;
 
@@ -97,7 +99,7 @@ public class RecordFragment extends BaseFragment {
 
                     }
                 });
-                certificateRecordAdapter.refreshData(Arrays.asList("", "", "", "", "", "", "", "", ""));
+//                certificateRecordAdapter.refreshData(Arrays.asList("", "", "", "", "", "", "", "", ""));
 
             } else if (type == RecordActivity.type_immune) {
                 certificateRecordAdapter = new CertificateRecordAdapter(getActivity());
@@ -106,8 +108,10 @@ public class RecordFragment extends BaseFragment {
                 certificateRecordAdapter.setOnClickListener(new OnClickListener() {
                     @Override
                     public void onClick(View view, Object object) {
+                        RecordImmune dataBean = (RecordImmune) object;
                         Bundle bundle = new Bundle();
-                        bundle.putInt("type", (Integer) object);
+                        bundle.putInt("type", 0);
+                        bundle.putInt("immuneId", dataBean.getImmuneId());
                         openActivity(ImmuneDetailsActivity.class, bundle);
 
                     }
@@ -117,7 +121,7 @@ public class RecordFragment extends BaseFragment {
 
                     }
                 });
-                certificateRecordAdapter.refreshData(Arrays.asList("", "", "", "", "", "", "", "", ""));
+//                certificateRecordAdapter.refreshData(Arrays.asList("", "", "", "", "", "", "", "", ""));
 
             } else if (type == RecordActivity.type_transfer) {
                 certificateRecordAdapter = new CertificateRecordAdapter(getActivity());
@@ -137,7 +141,7 @@ public class RecordFragment extends BaseFragment {
 
                     }
                 });
-                certificateRecordAdapter.refreshData(Arrays.asList("", "", "", "", "", "", "", "", ""));
+//                certificateRecordAdapter.refreshData(Arrays.asList("", "", "", "", "", "", "", "", ""));
 
             } else if (type == RecordActivity.type_adoption) {
                 adoptionRecordAdapter = new AdoptionRecordAdapter(getActivity());
@@ -177,7 +181,7 @@ public class RecordFragment extends BaseFragment {
 
                     }
                 });
-                certificateRecordAdapter.refreshData(Arrays.asList("", "", "", "", "", "", "", "", ""));
+//                certificateRecordAdapter.refreshData(Arrays.asList("", "", "", "", "", "", "", "", ""));
 
             }
 
@@ -194,55 +198,39 @@ public class RecordFragment extends BaseFragment {
         binding.refreshLayout.setOnRefreshListener(new OnRefreshListener() {
             @Override
             public void onRefresh(RefreshLayout refreshlayout) {
-                creationPager = new Pager<>();
                 if (type == RecordActivity.type_certificate) {
-                    getUserDogLicence(true);
-                }
-            }
-        });
-        binding.refreshLayout.setOnLoadMoreListener(new OnLoadMoreListener() {
-            @Override
-            public void onLoadMore(RefreshLayout refreshlayout) {
-                if (type == RecordActivity.type_certificate) {
-                    getUserDogLicence(false);
-                }
+                    getUserDogLicence();
 
+                } else if (type == RecordActivity.type_immune) {
+                    getDogImmuneStatusList();
+
+                }
             }
         });
+        binding.refreshLayout.setEnableLoadMore(false);
         binding.refreshLayout.autoRefresh();
 
     }
 
     /**
      * 犬证办理记录
-     *
-     * @param isRefresh
      */
-    public void getUserDogLicence(boolean isRefresh) {
+    public void getUserDogLicence() {
         SendRequest.getUserDogLicence(type, new GenericsCallback<Pager<BaseData>>(new JsonGenericsSerializator()) {
 
             @Override
             public void onAfter(int id) {
                 super.onAfter(id);
-                if (isRefresh) {
-                    binding.refreshLayout.finishRefresh();
-                } else {
-                    binding.refreshLayout.finishLoadMore();
-                }
+                binding.refreshLayout.finishRefresh();
             }
 
             @Override
             public void onError(Call call, Exception e, int id) {
-                if (isRefresh) {
-                    binding.refreshLayout.finishRefresh(false);
-                } else {
-                    binding.refreshLayout.finishLoadMore(false);
-                }
+                binding.refreshLayout.finishRefresh(false);
             }
 
             @Override
             public void onResponse(Pager<BaseData> response, int id) {
-                creationPager = response;
                 if (response != null && response.getRows() != null) {
 //                            if (isRefresh) {
 //                                adapter.refreshData(response.getData());
@@ -252,6 +240,35 @@ public class RecordFragment extends BaseFragment {
 //                            if (!response.isHasnext()) {
 //                                binding.refreshLayout.setNoMoreData(true);
 //                            }
+//                            binding.emptyView.setVisibility(adapter.getList().size() > 0 ? View.GONE : View.VISIBLE);
+//                            binding.emptyView.setText("暂无内容～");
+                }
+            }
+        });
+
+    }
+
+    /**
+     * 免疫证办理记录列表
+     */
+    public void getDogImmuneStatusList() {
+        SendRequest.getDogImmuneStatusList(type, new GenericsCallback<ResultClient<List<RecordImmune>>>(new JsonGenericsSerializator()) {
+
+            @Override
+            public void onAfter(int id) {
+                super.onAfter(id);
+                binding.refreshLayout.finishRefresh();
+            }
+
+            @Override
+            public void onError(Call call, Exception e, int id) {
+                binding.refreshLayout.finishRefresh(false);
+            }
+
+            @Override
+            public void onResponse(ResultClient<List<RecordImmune>> response, int id) {
+                if (response != null && response.getData() != null) {
+                    certificateRecordAdapter.refreshData(response.getData());
 //                            binding.emptyView.setVisibility(adapter.getList().size() > 0 ? View.GONE : View.VISIBLE);
 //                            binding.emptyView.setText("暂无内容～");
                 }

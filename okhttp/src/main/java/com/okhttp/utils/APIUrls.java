@@ -68,7 +68,7 @@ public class APIUrls {
     //获取犬证列表
     public final static String getDogLicenceList = URL_DOMAIN + "user/dog/getDogLicenceList";
     //获取个人犬只免疫列表
-    public final static String getDogImmuneList = URL_DOMAIN + "/user/dog/getDogImmuneList";
+    public final static String getDogImmuneList = URL_DOMAIN + "user/dog/getDogImmuneList";
     //犬证办理记录
     public final static String getUserDogLicence = URL_DOMAIN + "user/dog/getUserDogLincence";
     //犬证办理记录详情
@@ -77,6 +77,11 @@ public class APIUrls {
     public final static String getUserById = URL_DOMAIN + "user/dog/getUserById";
     //犬证 获取犬只详情信息
     public final static String getDogById = URL_DOMAIN + "user/dog/getDogById";
+
+    //免疫证办理记录列表
+    public final static String getDogImmuneStatusList = URL_DOMAIN + "user/dog/getDogImmuneStatusList";
+    //免疫证办理记录详情
+    public final static String getDogImmuneApproveDetail = URL_DOMAIN + "user/dog/getDogImmuneApproveDetail";
 
 
     /**

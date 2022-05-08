@@ -335,6 +335,39 @@ public class SendRequest {
     }
 
 
+
+    /**
+     * 免疫证办理记录列表
+     *
+     * @param licenceStatus 办理状态 0 默认 1：未接种 2：已接种 3: 即将过期 4: 已过期
+     * @param call
+     */
+    public static void getDogImmuneStatusList(int licenceStatus, Callback call) {
+        Map<String, String> headers = new HashMap<>();
+        headers.put("Authorization", BaseApplication.getInstance().getUserInfo().getAuthorization());
+
+        Map<String, String> map = new HashMap<>();
+        map.put("licenceStatus", String.valueOf(licenceStatus));
+        OkHttpUtils.post().headers(headers).params(map).url(APIUrls.getDogImmuneStatusList).build().execute(call);
+
+    }
+
+    /**
+     * 犬证办理记录详情
+     * @param immuneId 免疫证主键id
+     * @param call
+     */
+    public static void getDogImmuneApproveDetail(int immuneId, Callback call) {
+        Map<String, String> headers = new HashMap<>();
+        headers.put("Authorization", BaseApplication.getInstance().getUserInfo().getAuthorization());
+
+        Map<String, String> map = new HashMap<>();
+        map.put("immuneId", String.valueOf(immuneId));
+        OkHttpUtils.post().headers(headers).params(map).url(APIUrls.getDogImmuneApproveDetail).build().execute(call);
+
+    }
+
+
     // ==================================== 练琴帮 =============================================
 
 

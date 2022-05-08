@@ -50,7 +50,7 @@ public class RecordActivity extends BaseActivity {
             mainPagerAdapter.addFragment("已预约", RecordFragment.getInstance(type, 1));
             mainPagerAdapter.addFragment("已办结", RecordFragment.getInstance(type, 2));
             mainPagerAdapter.addFragment("即将过期", RecordFragment.getInstance(type, 3));
-            mainPagerAdapter.addFragment("已过期", RecordFragment.getInstance(type, 3));
+            mainPagerAdapter.addFragment("已过期", RecordFragment.getInstance(type, 4));
 
         } else if (type == type_transfer) {
             binding.titleView.binding.itemTitle.setText("过户记录");
