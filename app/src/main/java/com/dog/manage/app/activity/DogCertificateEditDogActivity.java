@@ -135,7 +135,7 @@ public class DogCertificateEditDogActivity extends BaseActivity {
 
     private int dogCertificate = 0;//添加新犬只
     private String dogName = null;
-    private String dogHair = "addadad";
+    private String dogHair = "金黄色";
     private int dogSex = 0;//0-雌性 1-雄性
     private int dogBear = 0;//0-未绝育 1-已绝育
     private String testify = null;

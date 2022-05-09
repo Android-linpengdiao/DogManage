@@ -7,6 +7,19 @@ import lombok.NoArgsConstructor;
 @Data
 public class RecordImmune {
 
+    //犬证办理
+    /**
+     * "lincenceId":6,
+     * "licenceStatus":1,
+     * "dogType":"柴犬",
+     * "dogAge":1,
+     * "createdTime":"2022-05-09"
+     */
+    private Integer lincenceId;
+    private Integer licenceStatus;
+    private String createdTime;
+
+    //犬只免疫证
     /**
      * immuneId : 1
      * dogType : 哈士奇
@@ -17,7 +30,7 @@ public class RecordImmune {
 
     private Integer immuneId;
     private String dogType;
-    private Object createTime;
+    private String createTime;
     private Integer dogAge;
     private Integer lincenceStatus;
 }

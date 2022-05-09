@@ -66,6 +66,7 @@ public class DogCertificateEditDogOwnerActivity extends BaseActivity {
     public static final int type_adoption = 4;//犬只领养
     public static final int type_details = 5;//犬主信息
     private int type = 0;
+    private int dogId = 0;
     private DogUser dogUser = new DogUser();
 
     @Override
@@ -135,6 +136,7 @@ public class DogCertificateEditDogOwnerActivity extends BaseActivity {
             binding.dogOwnerNameView.binding.itemEdit.setEnabled(false);
             binding.dogOwnerIDCardView.binding.itemEdit.setEnabled(false);
 
+            dogId = getIntent().getIntExtra("dogId", 0);
             getDogUserById();
 
         }
@@ -273,93 +275,7 @@ public class DogCertificateEditDogOwnerActivity extends BaseActivity {
                 if (response.isSuccess() && response.getData() != null) {
                     DogUser dogUser = response.getData();
                     Log.i(TAG, "onResponse: dogUser = " + GsonUtils.toJson(dogUser));
-
-                    if (type == type_userInfo) {
-                        if (dogUser.getUserType() == DogUser.userType_personal) {
-                            //个人办理
-                            binding.radioButtonOrgan.setVisibility(View.GONE);
-                            binding.radioButtonHaiWai.setVisibility(View.GONE);
-                            binding.radioButtonGanGao.setVisibility(View.GONE);
-
-                            binding.dogOwnerNameView.binding.itemEdit.setText(dogUser.getOrgName());
-                            binding.dogOwnerNameView.binding.itemEdit.setEnabled(false);
-
-                            binding.dogOwnerIDCardView.binding.itemEdit.setText(dogUser.getIdNum());
-                            binding.dogOwnerIDCardView.binding.itemEdit.setEnabled(false);
-
-                            binding.IDCardFrontView.setEnabled(false);
-                            binding.IDCardBackView.setEnabled(false);
-
-                            try {
-                                List<String> idPhotos = new Gson().fromJson(dogUser.getIdPhoto(), new TypeToken<List<String>>() {
-                                }.getType());
-                                GlideLoader.LoderImage(DogCertificateEditDogOwnerActivity.this,
-                                        idPhotos.size() > 0 ? idPhotos.get(0) : "", binding.IDCardFrontView, 6);
-                                GlideLoader.LoderImage(DogCertificateEditDogOwnerActivity.this,
-                                        idPhotos.size() > 1 ? idPhotos.get(1) : "", binding.IDCardBackView, 6);
-                            } catch (Exception e) {
-                                e.getMessage();
-                            }
-
-                        } else if (dogUser.getUserType() == DogUser.userType_organ) {
-                            binding.radioButtonPersonal.setVisibility(View.GONE);
-
-                            binding.organNameView.binding.itemEdit.setText(dogUser.getOrgName());
-                            binding.organNameView.binding.itemEdit.setEnabled(false);
-                            GlideLoader.LoderImage(DogCertificateEditDogOwnerActivity.this, dogUser.getBizLicense(), binding.businessLicenseView, 6);
-                            binding.businessLicenseView.setEnabled(false);
-
-                            binding.dogOwnerNameView.binding.itemEdit.setText(dogUser.getOrgName());
-                            binding.dogOwnerNameView.binding.itemEdit.setEnabled(false);
-
-                            binding.dogOwnerIDCardView.binding.itemEdit.setText(dogUser.getIdNum());
-                            binding.dogOwnerIDCardView.binding.itemEdit.setEnabled(false);
-
-                            initOrganView();
-
-                        }
-
-                    } else {
-                        if (dogUser.getUserType() == DogUser.userType_personal) {
-                            //个人办理
-                            binding.radioButtonOrgan.setVisibility(View.GONE);
-                            binding.radioButtonHaiWai.setVisibility(View.GONE);
-                            binding.radioButtonGanGao.setVisibility(View.GONE);
-
-                            binding.dogOwnerNameView.binding.itemEdit.setText(dogUser.getOrgName());
-                            binding.dogOwnerNameView.binding.itemEdit.setEnabled(false);
-
-                            binding.dogOwnerIDCardView.binding.itemEdit.setText(dogUser.getIdNum());
-                            binding.dogOwnerIDCardView.binding.itemEdit.setEnabled(false);
-
-                            try {
-                                List<String> idPhotos = new Gson().fromJson(dogUser.getIdPhoto(), new TypeToken<List<String>>() {
-                                }.getType());
-                                GlideLoader.LoderImage(DogCertificateEditDogOwnerActivity.this,
-                                        idPhotos.size() > 0 ? idPhotos.get(0) : "", binding.IDCardFrontView, 6);
-                                GlideLoader.LoderImage(DogCertificateEditDogOwnerActivity.this,
-                                        idPhotos.size() > 1 ? idPhotos.get(1) : "", binding.IDCardBackView, 6);
-                            } catch (Exception e) {
-                                e.getMessage();
-                            }
-
-                        } else if (dogUser.getUserType() == DogUser.userType_organ) {
-                            binding.radioButtonPersonal.setVisibility(View.GONE);
-
-                            binding.organNameView.binding.itemEdit.setText(dogUser.getOrgName());
-                            binding.organNameView.binding.itemEdit.setEnabled(false);
-                            GlideLoader.LoderImage(DogCertificateEditDogOwnerActivity.this, dogUser.getBizLicense(), binding.businessLicenseView, 6);
-
-                            binding.dogOwnerNameView.binding.itemEdit.setText(dogUser.getOrgName());
-                            binding.dogOwnerNameView.binding.itemEdit.setEnabled(false);
-
-                            binding.dogOwnerIDCardView.binding.itemEdit.setText(dogUser.getIdNum());
-                            binding.dogOwnerIDCardView.binding.itemEdit.setEnabled(false);
-
-                            initOrganView();
-
-                        }
-                    }
+                    initView(dogUser);
                 }
             }
         });
@@ -369,7 +285,7 @@ public class DogCertificateEditDogOwnerActivity extends BaseActivity {
      * 犬证 获取犬主信息
      */
     private void getDogUserById() {
-        SendRequest.getUserById(0, 0, new GenericsCallback<ResultClient<DogUser>>(new JsonGenericsSerializator()) {
+        SendRequest.getUserById(getUserInfo().getId(), dogId, new GenericsCallback<ResultClient<DogUser>>(new JsonGenericsSerializator()) {
             @Override
             public void onError(Call call, Exception e, int id) {
 
@@ -379,10 +295,99 @@ public class DogCertificateEditDogOwnerActivity extends BaseActivity {
             public void onResponse(ResultClient<DogUser> response, int id) {
                 if (response.isSuccess() && response.getData() != null) {
                     DogUser dogUser = response.getData();
-
+                    initView(dogUser);
                 }
             }
         });
+    }
+
+    private void initView(DogUser dogUser) {
+        if (type == type_userInfo) {
+            if (dogUser.getUserType() == DogUser.userType_personal) {
+                //个人办理
+                binding.radioButtonOrgan.setVisibility(View.GONE);
+                binding.radioButtonHaiWai.setVisibility(View.GONE);
+                binding.radioButtonGanGao.setVisibility(View.GONE);
+
+                binding.dogOwnerNameView.binding.itemEdit.setText(dogUser.getOrgName());
+                binding.dogOwnerNameView.binding.itemEdit.setEnabled(false);
+
+                binding.dogOwnerIDCardView.binding.itemEdit.setText(dogUser.getIdNum());
+                binding.dogOwnerIDCardView.binding.itemEdit.setEnabled(false);
+
+                binding.IDCardFrontView.setEnabled(false);
+                binding.IDCardBackView.setEnabled(false);
+
+                try {
+                    List<String> idPhotos = new Gson().fromJson(dogUser.getIdPhoto(), new TypeToken<List<String>>() {
+                    }.getType());
+                    GlideLoader.LoderImage(DogCertificateEditDogOwnerActivity.this,
+                            idPhotos.size() > 0 ? idPhotos.get(0) : "", binding.IDCardFrontView, 6);
+                    GlideLoader.LoderImage(DogCertificateEditDogOwnerActivity.this,
+                            idPhotos.size() > 1 ? idPhotos.get(1) : "", binding.IDCardBackView, 6);
+                } catch (Exception e) {
+                    e.getMessage();
+                }
+
+            } else if (dogUser.getUserType() == DogUser.userType_organ) {
+                binding.radioButtonPersonal.setVisibility(View.GONE);
+
+                binding.organNameView.binding.itemEdit.setText(dogUser.getOrgName());
+                binding.organNameView.binding.itemEdit.setEnabled(false);
+                GlideLoader.LoderImage(DogCertificateEditDogOwnerActivity.this, dogUser.getBizLicense(), binding.businessLicenseView, 6);
+                binding.businessLicenseView.setEnabled(false);
+
+                binding.dogOwnerNameView.binding.itemEdit.setText(dogUser.getOrgName());
+                binding.dogOwnerNameView.binding.itemEdit.setEnabled(false);
+
+                binding.dogOwnerIDCardView.binding.itemEdit.setText(dogUser.getIdNum());
+                binding.dogOwnerIDCardView.binding.itemEdit.setEnabled(false);
+
+                initOrganView();
+
+            }
+
+        } else {
+            if (dogUser.getUserType() == DogUser.userType_personal) {
+                //个人办理
+                binding.radioButtonOrgan.setVisibility(View.GONE);
+                binding.radioButtonHaiWai.setVisibility(View.GONE);
+                binding.radioButtonGanGao.setVisibility(View.GONE);
+
+                binding.dogOwnerNameView.binding.itemEdit.setText(dogUser.getOrgName());
+                binding.dogOwnerNameView.binding.itemEdit.setEnabled(false);
+
+                binding.dogOwnerIDCardView.binding.itemEdit.setText(dogUser.getIdNum());
+                binding.dogOwnerIDCardView.binding.itemEdit.setEnabled(false);
+
+                try {
+                    List<String> idPhotos = new Gson().fromJson(dogUser.getIdPhoto(), new TypeToken<List<String>>() {
+                    }.getType());
+                    GlideLoader.LoderImage(DogCertificateEditDogOwnerActivity.this,
+                            idPhotos.size() > 0 ? idPhotos.get(0) : "", binding.IDCardFrontView, 6);
+                    GlideLoader.LoderImage(DogCertificateEditDogOwnerActivity.this,
+                            idPhotos.size() > 1 ? idPhotos.get(1) : "", binding.IDCardBackView, 6);
+                } catch (Exception e) {
+                    e.getMessage();
+                }
+
+            } else if (dogUser.getUserType() == DogUser.userType_organ) {
+                binding.radioButtonPersonal.setVisibility(View.GONE);
+
+                binding.organNameView.binding.itemEdit.setText(dogUser.getOrgName());
+                binding.organNameView.binding.itemEdit.setEnabled(false);
+                GlideLoader.LoderImage(DogCertificateEditDogOwnerActivity.this, dogUser.getBizLicense(), binding.businessLicenseView, 6);
+
+                binding.dogOwnerNameView.binding.itemEdit.setText(dogUser.getOrgName());
+                binding.dogOwnerNameView.binding.itemEdit.setEnabled(false);
+
+                binding.dogOwnerIDCardView.binding.itemEdit.setText(dogUser.getIdNum());
+                binding.dogOwnerIDCardView.binding.itemEdit.setEnabled(false);
+
+                initOrganView();
+
+            }
+        }
     }
 
     /**
@@ -879,6 +884,9 @@ public class DogCertificateEditDogOwnerActivity extends BaseActivity {
      * @param view
      */
     public void onClickIDCardFront(View view) {
+        if (!isEnabled()) {
+            return;
+        }
         if (type == type_userInfo) {
             if (checkPermissions(PermissionUtils.STORAGE, request_IDCardFront)) {
                 Bundle bundle = new Bundle();
@@ -895,6 +903,9 @@ public class DogCertificateEditDogOwnerActivity extends BaseActivity {
      * @param view
      */
     public void onClickIDCardBack(View view) {
+        if (!isEnabled()) {
+            return;
+        }
         if (type == type_userInfo) {
             if (checkPermissions(PermissionUtils.STORAGE, request_IDCardBack)) {
                 Bundle bundle = new Bundle();
@@ -911,7 +922,7 @@ public class DogCertificateEditDogOwnerActivity extends BaseActivity {
      * @param view
      */
     public void onClickLegalPersonIDCardFront(View view) {
-        if (type == type_details) {
+        if (!isEnabled()) {
             return;
         }
         if (checkPermissions(PermissionUtils.STORAGE, request_LegalPersonIDCardFront)) {
@@ -928,7 +939,7 @@ public class DogCertificateEditDogOwnerActivity extends BaseActivity {
      * @param view
      */
     public void onClickLegalPersonIDCardBack(View view) {
-        if (type == type_details) {
+        if (!isEnabled()) {
             return;
         }
         if (checkPermissions(PermissionUtils.STORAGE, request_LegalPersonIDCardBack)) {
@@ -945,7 +956,7 @@ public class DogCertificateEditDogOwnerActivity extends BaseActivity {
      * @param view
      */
     public void onClickBusinessLicense(View view) {
-        if (type == type_details) {
+        if (!isEnabled()) {
             return;
         }
         if (checkPermissions(PermissionUtils.STORAGE, request_BusinessLicense)) {
@@ -962,6 +973,9 @@ public class DogCertificateEditDogOwnerActivity extends BaseActivity {
      * @param view
      */
     public void onClickOldManOrDisabledCertificate(View view) {
+        if (!isEnabled()) {
+            return;
+        }
         if (checkPermissions(PermissionUtils.STORAGE, request_OldManOrDisabledCertificate)) {
             Bundle bundle = new Bundle();
             bundle.putInt("mediaType", MediaUtils.MEDIA_TYPE_PHOTO);
@@ -976,6 +990,9 @@ public class DogCertificateEditDogOwnerActivity extends BaseActivity {
      * @param view
      */
     public void onClickHouseProprietaryCertificate(View view) {
+        if (!isEnabled()) {
+            return;
+        }
         if (checkPermissions(PermissionUtils.STORAGE, request_HouseProprietaryCertificate)) {
             Bundle bundle = new Bundle();
             bundle.putInt("mediaType", MediaUtils.MEDIA_TYPE_PHOTO);
@@ -990,6 +1007,9 @@ public class DogCertificateEditDogOwnerActivity extends BaseActivity {
      * @param view
      */
     public void onClickManagementSystem(View view) {
+        if (!isEnabled()) {
+            return;
+        }
         if (checkPermissions(PermissionUtils.STORAGE, request_ManagementSystem)) {
             Bundle bundle = new Bundle();
             bundle.putInt("mediaType", MediaUtils.MEDIA_TYPE_PHOTO);
@@ -1004,6 +1024,9 @@ public class DogCertificateEditDogOwnerActivity extends BaseActivity {
      * @param view
      */
     public void onClickFacility1(View view) {
+        if (!isEnabled()) {
+            return;
+        }
         if (checkPermissions(PermissionUtils.STORAGE, request_Facility1)) {
             Bundle bundle = new Bundle();
             bundle.putInt("mediaType", MediaUtils.MEDIA_TYPE_PHOTO);
@@ -1018,6 +1041,9 @@ public class DogCertificateEditDogOwnerActivity extends BaseActivity {
      * @param view
      */
     public void onClickFacility2(View view) {
+        if (!isEnabled()) {
+            return;
+        }
         if (checkPermissions(PermissionUtils.STORAGE, request_Facility2)) {
             Bundle bundle = new Bundle();
             bundle.putInt("mediaType", MediaUtils.MEDIA_TYPE_PHOTO);
@@ -1156,6 +1182,14 @@ public class DogCertificateEditDogOwnerActivity extends BaseActivity {
             }
         } catch (Exception e) {
             e.getMessage();
+        }
+    }
+
+    private boolean isEnabled(){
+        if (type == type_details) {
+            return false;
+        }else {
+            return true;
         }
     }
 }

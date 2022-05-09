@@ -32,21 +32,33 @@
                 android:layout_height="match_parent"
                 android:orientation="vertical">
 
+                <com.xw.banner.Banner
+                    android:id="@+id/banner"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dp_294"
+                    app:xw_banner_layout="@layout/banner_layout"
+                    app:xw_indicator_drawable_selected="@drawable/tab_b"
+                    app:xw_indicator_drawable_unselected="@drawable/tab_b_t50"
+                    app:xw_indicator_height="@dimen/dp_0"
+                    app:xw_indicator_width="@dimen/dp_0" />
+
                 <ImageView
                     android:id="@+id/coverView"
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/dp_294" />
+                    android:layout_height="@dimen/dp_294"
+                    android:visibility="gone" />
 
 
                 <com.dog.manage.app.view.TextBoldView
+                    android:id="@+id/dogNameView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/dp_26"
                     android:layout_marginTop="@dimen/dp_18"
                     android:gravity="center"
-                    android:text="柯基犬|白色|1岁2个月"
                     android:textColor="@color/colorAppTheme"
-                    android:textSize="@dimen/sp_18" />
+                    android:textSize="@dimen/sp_18"
+                    tools:text="柯基犬|白色|1岁2个月" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -136,10 +148,11 @@
                         android:background="@drawable/xinxi" />
 
                     <TextView
+                        android:id="@+id/idNumView"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:gravity="center"
-                        android:text="犬只编号：BH2022090909876"
+                        android:text="犬只编号："
                         android:textColor="@color/colorAppTheme"
                         android:textSize="@dimen/sp_13" />
                 </LinearLayout>
@@ -160,10 +173,11 @@
                         android:visibility="invisible" />
 
                     <TextView
+                        android:id="@+id/dogGenderView"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:gravity="center"
-                        android:text="犬只性别：雄性"
+                        android:text="犬只性别："
                         android:textColor="@color/colorAppTheme"
                         android:textSize="@dimen/sp_13" />
                 </LinearLayout>
@@ -232,10 +246,11 @@
                         android:visibility="invisible" />
 
                     <TextView
+                        android:id="@+id/sterilizationView"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:gravity="center"
-                        android:text="绝育情况：已绝育"
+                        android:text="绝育情况："
                         android:textColor="@color/colorAppTheme"
                         android:textSize="@dimen/sp_13" />
                 </LinearLayout>

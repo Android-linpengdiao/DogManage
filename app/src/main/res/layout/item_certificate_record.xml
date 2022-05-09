@@ -52,12 +52,13 @@
                     android:textSize="@dimen/sp_12" />
 
                 <TextView
+                    android:id="@+id/createTimeView"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/dp_8"
                     android:layout_weight="1"
                     android:gravity="right"
-                    android:text="2022.03.09 10:00"
+                    tools:text="2022.03.09 10:00"
                     android:textColor="#999999"
                     android:textSize="@dimen/sp_14" />
 

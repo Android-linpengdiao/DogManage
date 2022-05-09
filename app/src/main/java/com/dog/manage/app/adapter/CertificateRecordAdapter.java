@@ -45,7 +45,8 @@ public class CertificateRecordAdapter extends BaseRecyclerAdapter<RecordImmune, 
             binding.titleView.setText("犬证办理");
             binding.bottomView.setVisibility(View.VISIBLE);
             binding.dogOwnerContainer.setVisibility(View.INVISIBLE);
-            binding.contentView.setText("萨摩耶-2岁3个月");
+            binding.contentView.setText(dataBean.getDogType() + "-" + dataBean.getDogAge() + "岁3个月");
+            binding.createTimeView.setText(dataBean.getCreatedTime());
             binding.contentView.setTextColor(Color.parseColor("#999999"));
             if (position == 1) {
                 binding.checkStatusView.setText("审核通过");
@@ -139,9 +140,13 @@ public class CertificateRecordAdapter extends BaseRecyclerAdapter<RecordImmune, 
             @Override
             public void onClick(View view) {
                 if (onClickListener != null)
-                    if (type == RecordActivity.type_immune) {
+                    if (type == RecordActivity.type_certificate) {
                         onClickListener.onClick(view, dataBean);
-                    }else {
+
+                    }else if (type == RecordActivity.type_immune) {
+                        onClickListener.onClick(view, dataBean);
+
+                    } else {
                         onClickListener.onClick(view, position);
                     }
             }

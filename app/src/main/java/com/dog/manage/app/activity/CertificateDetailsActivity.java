@@ -22,6 +22,8 @@ public class CertificateDetailsActivity extends BaseActivity {
 
     private ActivityCertificateDetailsBinding binding;
     private int type;//1-审核通过 2-审核拒绝 3-已办结
+    private int lincenceId;
+    private Dog dog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,6 +32,8 @@ public class CertificateDetailsActivity extends BaseActivity {
         addActivity(this);
 
         type = getIntent().getIntExtra("type", 0);
+        lincenceId = getIntent().getIntExtra("lincenceId", 0);
+
         binding.auditStatusView.setText(type == 1 ? "审核通过" : type == 2 ? "审核拒绝" : type == 3 ? "已办结" : "审核中");
         binding.payTypeView.setVisibility(type == 3 ? View.VISIBLE : View.GONE);
         binding.auditReasonView.setVisibility(type == 2 ? View.VISIBLE : View.GONE);
@@ -40,7 +44,11 @@ public class CertificateDetailsActivity extends BaseActivity {
         binding.dogOwnerInfoView.binding.itemInfo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                if (dog == null) {
+                    return;
+                }
                 Bundle bundle = new Bundle();
+                bundle.putInt("dogId", dog.getDogId());
                 bundle.putInt("type", DogCertificateEditDogOwnerActivity.type_details);
                 openActivity(DogCertificateEditDogOwnerActivity.class, bundle);
             }
@@ -48,7 +56,12 @@ public class CertificateDetailsActivity extends BaseActivity {
         binding.dogDetailsView.binding.itemInfo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                openActivity(DogDetailsActivity.class);
+                if (dog == null) {
+                    return;
+                }
+                Bundle bundle = new Bundle();
+                bundle.putInt("dogId", dog.getDogId());
+                openActivity(DogDetailsActivity.class, bundle);
             }
         });
 
@@ -64,7 +77,7 @@ public class CertificateDetailsActivity extends BaseActivity {
      * 获取个人犬只免疫列表
      */
     private void getDogLicenceDetail() {
-        SendRequest.getDogLicenceDetail(0, new GenericsCallback<ResultClient<List<Dog>>>(new JsonGenericsSerializator()) {
+        SendRequest.getDogLicenceDetail(lincenceId, new GenericsCallback<ResultClient<Dog>>(new JsonGenericsSerializator()) {
 
             @Override
             public void onBefore(Request request, int id) {
@@ -84,13 +97,24 @@ public class CertificateDetailsActivity extends BaseActivity {
             }
 
             @Override
-            public void onResponse(ResultClient<List<Dog>> response, int id) {
+            public void onResponse(ResultClient<Dog> response, int id) {
                 if (response.isSuccess() && response.getData() != null) {
+                    initView(response.getData());
 
                 } else {
                     ToastUtils.showShort(getApplicationContext(), response.getMsg());
                 }
             }
         });
+    }
+
+    private void initView(Dog data) {
+        dog = data;
+        binding.contentView.setText(data.getDogType() + "-" + data.getDogAge() + "岁3个月");
+        binding.createTimeView.setText(data.getCreatedTime());
+        binding.dogOwnerInfoView.binding.itemContent.setText(data.getUserName());
+        binding.dogDetailsView.binding.itemContent.setText(data.getDogType());
+        binding.acceptUnitView.setText(data.getAcceptUnit());
+        binding.priceView.binding.itemContent.setText("￥" + data.getPrice());
     }
 }

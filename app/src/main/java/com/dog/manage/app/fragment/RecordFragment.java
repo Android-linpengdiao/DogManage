@@ -88,8 +88,10 @@ public class RecordFragment extends BaseFragment {
                 certificateRecordAdapter.setOnClickListener(new OnClickListener() {
                     @Override
                     public void onClick(View view, Object object) {
+                        RecordImmune dataBean = (RecordImmune) object;
                         Bundle bundle = new Bundle();
-                        bundle.putInt("type", (Integer) object);
+                        bundle.putInt("type", 0);
+                        bundle.putInt("lincenceId", dataBean.getLincenceId());
                         openActivity(CertificateDetailsActivity.class, bundle);
 
                     }
@@ -216,7 +218,7 @@ public class RecordFragment extends BaseFragment {
      * 犬证办理记录
      */
     public void getUserDogLicence() {
-        SendRequest.getUserDogLicence(type, new GenericsCallback<Pager<BaseData>>(new JsonGenericsSerializator()) {
+        SendRequest.getUserDogLicence(type, new GenericsCallback<ResultClient<List<RecordImmune>>>(new JsonGenericsSerializator()) {
 
             @Override
             public void onAfter(int id) {
@@ -230,16 +232,9 @@ public class RecordFragment extends BaseFragment {
             }
 
             @Override
-            public void onResponse(Pager<BaseData> response, int id) {
-                if (response != null && response.getRows() != null) {
-//                            if (isRefresh) {
-//                                adapter.refreshData(response.getData());
-//                            } else {
-//                                adapter.loadMoreData(response.getData());
-//                            }
-//                            if (!response.isHasnext()) {
-//                                binding.refreshLayout.setNoMoreData(true);
-//                            }
+            public void onResponse(ResultClient<List<RecordImmune>> response, int id) {
+                if (response != null && response.getData() != null) {
+                    certificateRecordAdapter.refreshData(response.getData());
 //                            binding.emptyView.setVisibility(adapter.getList().size() > 0 ? View.GONE : View.VISIBLE);
 //                            binding.emptyView.setText("暂无内容～");
                 }
