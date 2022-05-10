@@ -228,6 +228,25 @@ public class SendRequest {
 
 
     /**
+     * 犬证年审-选择我的犬只详情
+     *
+     * @param call
+     * @paramlincenceId 犬证id
+     */
+    public static void getDogLicenseDetail(int lincenceId, Callback call) {
+        Map<String, String> headers = new HashMap<>();
+        headers.put("Authorization", BaseApplication.getInstance().getUserInfo().getAuthorization());
+        Map<String, String> map = new HashMap<>();
+        map.put("lincenceId", String.valueOf(lincenceId));
+        OkHttpUtils.post().headers(headers).params(map).url(APIUrls.getDogLicenseDetail).build().execute(call);
+
+    }
+
+
+    // ==================================== 犬证年审 =============================================
+
+
+    /**
      * 获取犬只信息列表
      *
      * @param call
@@ -287,6 +306,7 @@ public class SendRequest {
 
     /**
      * 犬证办理记录详情
+     *
      * @param lincenceId
      * @param call
      */
@@ -304,7 +324,7 @@ public class SendRequest {
      * 犬证 获取犬主信息
      *
      * @param userId 用户id
-     * @param dogId 犬只id
+     * @param dogId  犬只id
      * @param call
      */
     public static void getUserById(int userId, int dogId, Callback call) {
@@ -335,7 +355,6 @@ public class SendRequest {
     }
 
 
-
     /**
      * 免疫证办理记录列表
      *
@@ -354,6 +373,7 @@ public class SendRequest {
 
     /**
      * 犬证办理记录详情
+     *
      * @param immuneId 免疫证主键id
      * @param call
      */

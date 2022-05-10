@@ -38,11 +38,12 @@
                         android:padding="@dimen/dp_2" />
 
                     <TextView
+                        android:id="@+id/userNameView"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/dp_14"
                         android:gravity="center"
-                        android:text="138****2355"
+                        tools:text="138****2355"
                         android:textColor="#ffffff"
                         android:textSize="@dimen/sp_18" />
                 </LinearLayout>

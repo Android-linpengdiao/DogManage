@@ -63,6 +63,13 @@ public class APIUrls {
 
 
     /**
+     * 犬证年审
+     */
+    //犬证年审-选择我的犬只详情
+    public final static String getDogLicenseDetail = URL_DOMAIN + "user/dog/getDogLicenseDetail";
+
+
+    /**
      * 我的
      */
     //获取犬证列表
