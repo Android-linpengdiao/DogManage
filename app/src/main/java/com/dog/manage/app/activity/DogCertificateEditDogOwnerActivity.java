@@ -21,7 +21,6 @@ import com.base.utils.GsonUtils;
 import com.base.utils.PermissionUtils;
 import com.base.utils.ToastUtils;
 import com.base.view.BaseBottomSheetDialog;
-import com.base.view.OnClickListener;
 import com.base.view.RecycleViewDivider;
 import com.dog.manage.app.R;
 import com.dog.manage.app.adapter.AreaSelectAdapter;
@@ -39,7 +38,6 @@ import com.okhttp.ResultClient;
 import com.okhttp.SendRequest;
 import com.okhttp.callbacks.GenericsCallback;
 import com.okhttp.sample_okhttp.JsonGenericsSerializator;
-import com.okhttp.utils.APIUrls;
 
 import java.io.File;
 import java.util.Arrays;
@@ -108,6 +106,7 @@ public class DogCertificateEditDogOwnerActivity extends BaseActivity {
             binding.secondStepView.setText("②犬只信息");
             binding.thirdStepView.setText("③提交审核");
             initPersonal();
+            checkingDogUser();
 
         } else if (type == type_adoption) {
             binding.titleView.binding.itemTitle.setText("犬只领养");
@@ -118,6 +117,7 @@ public class DogCertificateEditDogOwnerActivity extends BaseActivity {
             binding.thirdStepView.setText("③提交审核");
             binding.secondStepView.setPadding(getResources().getDimensionPixelOffset(R.dimen.dp_10), 0, getResources().getDimensionPixelOffset(R.dimen.dp_10), 0);
             initPersonal();
+            checkingDogUser();
 
         } else if (type == type_details) {
             binding.titleView.binding.itemTitle.setText("犬主信息");
@@ -280,8 +280,7 @@ public class DogCertificateEditDogOwnerActivity extends BaseActivity {
                 dogUser = response.getData();
                 if (response.isSuccess() && response.getData() != null) {
                     DogUser dogUser = response.getData();
-                    Log.i(TAG, "onResponse: dogUser = " + GsonUtils.toJson(dogUser));
-                    initView(dogUser);
+                    initDogUserView(dogUser);
                 }
             }
         });
@@ -301,60 +300,17 @@ public class DogCertificateEditDogOwnerActivity extends BaseActivity {
             public void onResponse(ResultClient<DogUser> response, int id) {
                 if (response.isSuccess() && response.getData() != null) {
                     DogUser dogUser = response.getData();
-                    initView(dogUser);
+                    initDogUserView(dogUser);
                 }
             }
         });
     }
 
-    private void initView(DogUser dogUser) {
-        if (type == type_userInfo) {
-//            if (dogUser.getUserType() == DogUser.userType_personal) {
-//                //个人办理
-//                binding.radioButtonOrgan.setVisibility(View.GONE);
-//                binding.radioButtonHaiWai.setVisibility(View.GONE);
-//                binding.radioButtonGanGao.setVisibility(View.GONE);
-//
-//                binding.dogOwnerNameView.binding.itemEdit.setText(dogUser.getOrgName());
-//                binding.dogOwnerNameView.binding.itemEdit.setEnabled(false);
-//
-//                binding.dogOwnerIDCardView.binding.itemEdit.setText(dogUser.getIdNum());
-//                binding.dogOwnerIDCardView.binding.itemEdit.setEnabled(false);
-//
-//                binding.IDCardFrontView.setEnabled(false);
-//                binding.IDCardBackView.setEnabled(false);
-//
-//                try {
-//                    List<String> idPhotos = new Gson().fromJson(dogUser.getIdPhoto(), new TypeToken<List<String>>() {
-//                    }.getType());
-//                    GlideLoader.LoderImage(DogCertificateEditDogOwnerActivity.this,
-//                            idPhotos.size() > 0 ? idPhotos.get(0) : "", binding.IDCardFrontView, 6);
-//                    GlideLoader.LoderImage(DogCertificateEditDogOwnerActivity.this,
-//                            idPhotos.size() > 1 ? idPhotos.get(1) : "", binding.IDCardBackView, 6);
-//                } catch (Exception e) {
-//                    e.getMessage();
-//                }
-//
-//            } else if (dogUser.getUserType() == DogUser.userType_organ) {
-//                binding.radioButtonPersonal.setVisibility(View.GONE);
-//
-//                binding.organNameView.binding.itemEdit.setText(dogUser.getOrgName());
-//                binding.organNameView.binding.itemEdit.setEnabled(false);
-//                GlideLoader.LoderImage(DogCertificateEditDogOwnerActivity.this, dogUser.getBizLicense(), binding.businessLicenseView, 6);
-//                binding.businessLicenseView.setEnabled(false);
-//
-//                binding.dogOwnerNameView.binding.itemEdit.setText(dogUser.getOrgName());
-//                binding.dogOwnerNameView.binding.itemEdit.setEnabled(false);
-//
-//                binding.dogOwnerIDCardView.binding.itemEdit.setText(dogUser.getIdNum());
-//                binding.dogOwnerIDCardView.binding.itemEdit.setEnabled(false);
-//
-//                initOrganView();
-//
-//            }
 
-        } else {
+    private void initDogUserView(DogUser dogUser) {
+        if (dogUser.getUserType() == 1 || dogUser.getUserType() == 2) {
             if (dogUser.getUserType() == DogUser.userType_personal) {
+
                 //个人办理
                 binding.radioButtonOrgan.setVisibility(View.GONE);
                 binding.radioButtonHaiWai.setVisibility(View.GONE);
@@ -366,24 +322,62 @@ public class DogCertificateEditDogOwnerActivity extends BaseActivity {
                 binding.dogOwnerIDCardView.binding.itemEdit.setText(dogUser.getIdNum());
                 binding.dogOwnerIDCardView.binding.itemEdit.setEnabled(false);
 
+                binding.IDCardFrontView.setEnabled(false);
+                binding.IDCardBackView.setEnabled(false);
+
                 try {
                     List<String> idPhotos = new Gson().fromJson(dogUser.getIdPhoto(), new TypeToken<List<String>>() {
                     }.getType());
-                    GlideLoader.LoderImage(DogCertificateEditDogOwnerActivity.this,
-                            idPhotos.size() > 0 ? idPhotos.get(0) : "", binding.IDCardFrontView, 6);
-                    GlideLoader.LoderImage(DogCertificateEditDogOwnerActivity.this,
-                            idPhotos.size() > 1 ? idPhotos.get(1) : "", binding.IDCardBackView, 6);
+                    if (idPhotos.size() > 0) {
+                        GlideLoader.LoderImage(DogCertificateEditDogOwnerActivity.this,
+                                idPhotos.size() > 0 ? idPhotos.get(0) : "", binding.IDCardFrontView, 6);
+                        personalIDCardFront = idPhotos.get(0);
+                    }
+                    if (idPhotos.size() > 1) {
+                        GlideLoader.LoderImage(DogCertificateEditDogOwnerActivity.this,
+                                idPhotos.size() > 1 ? idPhotos.get(1) : "", binding.IDCardBackView, 6);
+                        personalIDCardBack = idPhotos.get(1);
+                    }
                 } catch (Exception e) {
                     e.getMessage();
                 }
 
+                dogType = dogUser.getDogType();
+                //养犬类型（个人）;1导盲犬/扶助犬 2 陪伴犬
+                if (dogUser.getDogType() == 1) {
+                    binding.oldManContainer.setVisibility(View.GONE);
+                    binding.oldManOrDisabledCertificateHintView.setText("残疾人证");
+                    GlideLoader.LoderUploadImage(DogCertificateEditDogOwnerActivity.this, dogUser.getAgedProve(), binding.oldManOrDisabledCertificateView, 6);
+
+                } else if (dogUser.getDogType() == 2) {
+                    binding.radioButtonOldMan.setChecked(true);
+                    binding.oldManContainer.setVisibility(View.VISIBLE);
+                    binding.oldManOrDisabledCertificateHintView.setText("鳏寡老人证明");
+                    //是否鳏寡老人（个人）;0：否 1：是
+                    if (dogUser.getAged() == 1) {
+                        GlideLoader.LoderUploadImage(DogCertificateEditDogOwnerActivity.this, dogUser.getAgedProve(), binding.oldManOrDisabledCertificateView, 6);
+                    }
+
+                }
+
+                //居住地址（全）例：012/02/31
+                binding.addressView.binding.itemContent.setText(dogUser.getAddress());
+                //详细地址（全）
+                binding.detailedAddressView.setText(dogUser.getDetailedAddress());
+
+                binding.houseNumberView.binding.itemEdit.setText(dogUser.getHouseNum());
+                GlideLoader.LoderUploadImage(DogCertificateEditDogOwnerActivity.this, dogUser.getHousePhoto(), binding.houseProprietaryCertificateView, 6);
+
 
             } else if (dogUser.getUserType() == DogUser.userType_organ) {
+                initOrganView();
+
                 binding.radioButtonPersonal.setVisibility(View.GONE);
 
                 binding.organNameView.binding.itemEdit.setText(dogUser.getOrgName());
                 binding.organNameView.binding.itemEdit.setEnabled(false);
                 GlideLoader.LoderImage(DogCertificateEditDogOwnerActivity.this, dogUser.getBizLicense(), binding.businessLicenseView, 6);
+                binding.businessLicenseView.setEnabled(false);
 
                 binding.dogOwnerNameView.binding.itemEdit.setText(dogUser.getOrgName());
                 binding.dogOwnerNameView.binding.itemEdit.setEnabled(false);
@@ -391,7 +385,49 @@ public class DogCertificateEditDogOwnerActivity extends BaseActivity {
                 binding.dogOwnerIDCardView.binding.itemEdit.setText(dogUser.getIdNum());
                 binding.dogOwnerIDCardView.binding.itemEdit.setEnabled(false);
 
-                initOrganView();
+
+                try {
+                    //法人证件照（全）
+                    List<String> idPhotos = new Gson().fromJson(dogUser.getIdPhoto(), new TypeToken<List<String>>() {
+                    }.getType());
+                    if (idPhotos.size() > 0) {
+                        GlideLoader.LoderImage(DogCertificateEditDogOwnerActivity.this,
+                                idPhotos.size() > 0 ? idPhotos.get(0) : "", binding.legalPersonIDCardFrontView, 6);
+                        legalPersonIDCardFront = idPhotos.get(0);
+                    }
+                    if (idPhotos.size() > 1) {
+                        GlideLoader.LoderImage(DogCertificateEditDogOwnerActivity.this,
+                                idPhotos.size() > 1 ? idPhotos.get(1) : "", binding.legalPersonIDCardBackView, 6);
+                        legalPersonIDCardBack = idPhotos.get(1);
+                    }
+                } catch (Exception e) {
+                    e.getMessage();
+                }
+
+                //居住地址（全）例：012/02/31
+                binding.addressView.binding.itemContent.setText(dogUser.getAddress());
+                //详细地址（全）
+                binding.detailedAddressView.setText(dogUser.getDetailedAddress());
+
+                //养犬管理制度（单位）
+                GlideLoader.LoderUploadImage(DogCertificateEditDogOwnerActivity.this, dogUser.getDogManagement(), binding.managementSystemView, 6);
+                try {
+                    //养犬设施图片（单位）
+                    List<String> idPhotos = new Gson().fromJson(dogUser.getDogDevice(), new TypeToken<List<String>>() {
+                    }.getType());
+                    if (idPhotos.size() > 0) {
+                        GlideLoader.LoderImage(DogCertificateEditDogOwnerActivity.this,
+                                idPhotos.size() > 0 ? idPhotos.get(0) : "", binding.facility1View, 6);
+                        legalFacility1 = idPhotos.get(0);
+                    }
+                    if (idPhotos.size() > 1) {
+                        GlideLoader.LoderImage(DogCertificateEditDogOwnerActivity.this,
+                                idPhotos.size() > 1 ? idPhotos.get(1) : "", binding.facility2View, 6);
+                        legalFacility2 = idPhotos.get(1);
+                    }
+                } catch (Exception e) {
+                    e.getMessage();
+                }
 
             }
         }
@@ -458,19 +494,15 @@ public class DogCertificateEditDogOwnerActivity extends BaseActivity {
             public void onCheckedChanged(RadioGroup radioGroup, int i) {
                 switch (i) {
                     case R.id.radioButtonOldMan://陪伴犬
-//                        oldManOrDisabledCertificate = null;
-                        dogUser.setAgedProve(null);
-                        GlideLoader.LoderUploadImage(DogCertificateEditDogOwnerActivity.this, null, binding.oldManOrDisabledCertificateView, 6);
                         binding.oldManContainer.setVisibility(View.VISIBLE);
                         binding.oldManOrDisabledCertificateHintView.setText("鳏寡老人证明");
+                        GlideLoader.LoderUploadImage(DogCertificateEditDogOwnerActivity.this, dogUser.getAgedProve(), binding.oldManOrDisabledCertificateView, 6);
 
                         break;
                     case R.id.radioButtonDisabled://导盲犬/扶助犬
-//                        oldManOrDisabledCertificate = null;
-                        dogUser.setAgedProve(null);
-                        GlideLoader.LoderUploadImage(DogCertificateEditDogOwnerActivity.this, null, binding.oldManOrDisabledCertificateView, 6);
                         binding.oldManContainer.setVisibility(View.GONE);
                         binding.oldManOrDisabledCertificateHintView.setText("残疾人证");
+                        GlideLoader.LoderUploadImage(DogCertificateEditDogOwnerActivity.this, dogUser.getAgedProve(), binding.oldManOrDisabledCertificateView, 6);
 
                         break;
                     default:
@@ -532,24 +564,12 @@ public class DogCertificateEditDogOwnerActivity extends BaseActivity {
     private String personalIDCardFront = null;
     private String personalIDCardBack = null;
     private int dogType = 1;
-//    private String oldManOrDisabledCertificate = null;
-//    private String personaHouseNumber = null;
-//    private String personaHouseProprietaryCertificate = null;
 
     //单位
-//    private String organName = null;
-//    private String businessLicense = null;
     private String legalPersonIDCardFront = null;
     private String legalPersonIDCardBack = null;
-    //    private String legalManagementSystem = null;
     private String legalFacility1 = null;
     private String legalFacility2 = null;
-
-
-//    private String dogOwnerName = null;
-//    private String dogOwnerIDCard = null;
-//    private String address = null;
-//    private String detailedAddress = null;
 
 
     /**
@@ -611,17 +631,6 @@ public class DogCertificateEditDogOwnerActivity extends BaseActivity {
      * @param view
      */
     public void onClickConfirm(View view) {
-
-//        Bundle bundle = new Bundle();
-//        bundle.putInt("type", type);
-//        if (type == type_certificate || type == type_immune || type == type_examined) {
-//            openActivity(DogCertificateEditDogActivity.class, bundle);
-//
-//        } else if (type == type_adoption) {
-//            openActivity(DogAdoptionSubmitActivity.class);
-//
-//
-//        }
 
         if (type == type_userInfo || type == type_certificate || type == type_immune || type == type_examined || type == type_adoption) {
 
@@ -1179,7 +1188,7 @@ public class DogCertificateEditDogOwnerActivity extends BaseActivity {
                                             String oldManOrDisabledCertificate = file.getAbsolutePath();
                                             oldManOrDisabledCertificate = url;
                                             dogUser.setAgedProve(oldManOrDisabledCertificate);
-                                            GlideLoader.LoderImage(DogCertificateEditDogOwnerActivity.this, file.getAbsolutePath(), binding.oldManOrDisabledCertificateView, 6);
+                                            GlideLoader.LoderImage(DogCertificateEditDogOwnerActivity.this, oldManOrDisabledCertificate, binding.oldManOrDisabledCertificateView, 6);
 
                                         } else if (requestCode == request_HouseProprietaryCertificate) {
                                             String personaHouseProprietaryCertificate = file.getAbsolutePath();
