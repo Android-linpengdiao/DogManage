@@ -38,6 +38,7 @@ import com.base.utils.StatusBarUtil;
 import com.base.utils.ToastUtils;
 import com.base.view.OnClickListener;
 import com.dog.manage.app.Callback;
+import com.dog.manage.app.DogDialogManager;
 import com.dog.manage.app.R;
 //import com.lianqinbang.Callback;
 //import com.lianqinbang.MyApplication;
@@ -58,6 +59,7 @@ import com.dog.manage.app.R;
 //import com.liulishuo.filedownloader.FileDownloadListener;
 //import com.liulishuo.filedownloader.FileDownloader;
 //import com.liulishuo.filedownloader.util.FileDownloadUtils;
+import com.dog.manage.app.model.Dog;
 import com.okhttp.Pager;
 import com.okhttp.ResultClient;
 import com.okhttp.SendRequest;
@@ -239,9 +241,9 @@ public class BaseActivity extends AppCompatActivity {
         return new UserInfo();
     }
 
-    public void onClickDogCertificate(Activity activity, List<String> list, int index, OnClickListener listener) {
-        DialogManager.getInstance().showRankDialog(activity, list, index,
-                new DialogManager.OnClickListener() {
+    public void onClickDogCertificate(Activity activity, List<Dog> list, int index, OnClickListener listener) {
+        DogDialogManager.getInstance().showDogListDialog(activity, list, index,
+                new DogDialogManager.OnClickListener() {
                     @Override
                     public void onClick(View view, Object object) {
                         if (listener!=null)

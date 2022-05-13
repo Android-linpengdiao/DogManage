@@ -7,6 +7,7 @@ public class UserInfo implements Serializable{
     private int id;
     private String Authorization = "";
     private String accessToken;
+    private String loginPhone;
 
     public int getId() {
         return id;
@@ -30,5 +31,13 @@ public class UserInfo implements Serializable{
 
     public void setAccessToken(String accessToken) {
         this.accessToken = accessToken;
+    }
+
+    public String getLoginPhone() {
+        return loginPhone;
+    }
+
+    public void setLoginPhone(String loginPhone) {
+        this.loginPhone = loginPhone;
     }
 }

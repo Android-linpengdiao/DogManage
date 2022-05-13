@@ -20,7 +20,6 @@ import com.dog.manage.app.media.MediaFile;
 import com.dog.manage.app.media.MediaSelectActivity;
 import com.dog.manage.app.media.MediaUtils;
 import com.dog.manage.app.model.Dog;
-import com.dog.manage.app.model.DogUser;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.okhttp.ResultClient;
@@ -29,6 +28,7 @@ import com.okhttp.callbacks.GenericsCallback;
 import com.okhttp.sample_okhttp.JsonGenericsSerializator;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
@@ -49,8 +49,9 @@ public class DogCertificateEditDogActivity extends BaseActivity {
     private int type = 0;
     private int addressId = 0;
     private Map<String, String> paramsMap = new HashMap<>();
+    private Dog dog = new Dog();
 
-    private List<String> dogList = Arrays.asList("添加新犬只", "萨摩耶", "柯基", "泰迪", "哈士奇");
+    private List<Dog> dogList = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -96,19 +97,20 @@ public class DogCertificateEditDogActivity extends BaseActivity {
         binding.dogCertificateView.binding.itemContent.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                onClickDogCertificate(DogCertificateEditDogActivity.this, dogList, dogList.indexOf(binding.dogCertificateView.binding.itemContent.getText().toString()), new OnClickListener() {
-                    @Override
-                    public void onClick(View view, Object object) {
-                        String content = (String) object;
-                        dogCertificate = dogList.indexOf(content);
-                        binding.dogCertificateView.binding.itemContent.setText(content);
-                    }
+                onClickDogCertificate(DogCertificateEditDogActivity.this,
+                        dogList, dogList.indexOf(binding.dogCertificateView.binding.itemContent.getText().toString()),
+                        new OnClickListener() {
+                            @Override
+                            public void onClick(View view, Object object) {
+                                dog = (Dog) object;
+                                binding.dogCertificateView.binding.itemContent.setText(dog.getDogType());
+                            }
 
-                    @Override
-                    public void onLongClick(View view, Object object) {
+                            @Override
+                            public void onLongClick(View view, Object object) {
 
-                    }
-                });
+                            }
+                        });
             }
         });
 
@@ -120,20 +122,26 @@ public class DogCertificateEditDogActivity extends BaseActivity {
         SendRequest.getDogImmuneList(new GenericsCallback<ResultClient<List<Dog>>>(new JsonGenericsSerializator()) {
             @Override
             public void onError(Call call, Exception e, int id) {
-
             }
 
             @Override
             public void onResponse(ResultClient<List<Dog>> response, int id) {
                 if (response.isSuccess() && response.getData() != null) {
-
+                    if (response.getData().size() > 0) {
+                        dogList = response.getData();
+                    }
+                    Dog newDog = new Dog();
+                    newDog.setDogId(0);
+                    newDog.setDogType("添加新犬只");
+                    dogList.add(newDog);
+                    dog = response.getData().get(0);
+                    binding.dogCertificateView.binding.itemContent.setText(dog.getDogType());
 
                 }
             }
         });
     }
 
-    private int dogCertificate = 0;//添加新犬只
     private String dogName = null;
     private String dogHair = "金黄色";
     private int dogSex = 0;//0-雌性 1-雄性
@@ -227,7 +235,7 @@ public class DogCertificateEditDogActivity extends BaseActivity {
         map.put("sterilization", String.valueOf(dogBear));//是否绝育;0：否 1：是
         map.put("sterilizationProve", testify);//绝育证明
         map.put("dogAge", String.valueOf(dogAge));//犬只年龄;记录月份
-        map.put("dogPhoto", GsonUtils.toJson(Arrays.asList(leftFace, centerFace,rightFace)));//犬只照片，多张图片以“，”分开
+        map.put("dogPhoto", GsonUtils.toJson(Arrays.asList(leftFace, centerFace, rightFace)));//犬只照片，多张图片以“，”分开
         map.put("dogType", dogType);//犬只品种
         map.put("noseprint", noseprint);//鼻纹信息
 

@@ -36,6 +36,8 @@ public class UserHomeActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         binding = getViewData(R.layout.activity_user_home);
         addActivity(this);
+
+        binding.userNameView.setText(getUserInfo().getLoginPhone());
     }
 
     public void onClickHead(View view) {

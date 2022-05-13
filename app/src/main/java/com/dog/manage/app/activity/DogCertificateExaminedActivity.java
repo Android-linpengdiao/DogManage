@@ -63,7 +63,7 @@ public class DogCertificateExaminedActivity extends BaseActivity {
         binding.dogCertificateView.binding.itemContent.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                onClickDogCertificate(DogCertificateExaminedActivity.this, dogList, dogList.indexOf(binding.dogCertificateView.binding.itemContent.getText().toString()), new OnClickListener() {
+                onClickDogCertificate(DogCertificateExaminedActivity.this, null, dogList.indexOf(binding.dogCertificateView.binding.itemContent.getText().toString()), new OnClickListener() {
                     @Override
                     public void onClick(View view, Object object) {
                         String content = (String) object;

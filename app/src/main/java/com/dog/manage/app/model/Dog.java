@@ -20,5 +20,8 @@ public class Dog implements Serializable {
     private String acceptUnit;
     private Integer price;
     private Object rejectionReason;
-    private Integer payTypeId;
+    private String payTypeId;
+
+    private String idNum;
+    private String immuneId;
 }

@@ -5,6 +5,7 @@
     <color name="media_color">#fdfdfd</color>
     <color name="transparentDark">#1D000000</color>
     <color name="transparent">#00000000</color>
+    <color name="app_background">#FAFAFA</color>
 
     <color name="white">@android:color/white</color>
     <color name="black">@android:color/black</color>

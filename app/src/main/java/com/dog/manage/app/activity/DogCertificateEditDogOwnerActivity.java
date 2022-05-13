@@ -136,7 +136,7 @@ public class DogCertificateEditDogOwnerActivity extends BaseActivity {
             binding.dogOwnerNameView.binding.itemEdit.setEnabled(false);
             binding.dogOwnerIDCardView.binding.itemEdit.setEnabled(false);
 
-            binding.addressView.binding.itemEdit.setEnabled(false);
+            binding.addressView.binding.itemContent.setEnabled(false);
             binding.detailedAddressView.setEnabled(false);
             binding.houseNumberView.binding.itemEdit.setEnabled(false);
             initPersonal();
@@ -342,20 +342,33 @@ public class DogCertificateEditDogOwnerActivity extends BaseActivity {
                     e.getMessage();
                 }
 
-                dogType = dogUser.getDogType();
+                if (dogUser.getDogType() != null)
+                    dogType = dogUser.getDogType();
                 //养犬类型（个人）;1导盲犬/扶助犬 2 陪伴犬
-                if (dogUser.getDogType() == 1) {
+                if (dogType == 1) {
                     binding.oldManContainer.setVisibility(View.GONE);
                     binding.oldManOrDisabledCertificateHintView.setText("残疾人证");
                     GlideLoader.LoderUploadImage(DogCertificateEditDogOwnerActivity.this, dogUser.getAgedProve(), binding.oldManOrDisabledCertificateView, 6);
 
-                } else if (dogUser.getDogType() == 2) {
+                    if (type == type_details) {
+                        binding.radioButtonOldMan.setVisibility(View.GONE);
+                    }
+
+                } else if (dogType == 2) {
                     binding.radioButtonOldMan.setChecked(true);
                     binding.oldManContainer.setVisibility(View.VISIBLE);
                     binding.oldManOrDisabledCertificateHintView.setText("鳏寡老人证明");
                     //是否鳏寡老人（个人）;0：否 1：是
                     if (dogUser.getAged() == 1) {
                         GlideLoader.LoderUploadImage(DogCertificateEditDogOwnerActivity.this, dogUser.getAgedProve(), binding.oldManOrDisabledCertificateView, 6);
+                    }
+
+                    if (type == type_details) {
+                        binding.radioButtonDisabled.setVisibility(View.GONE);
+                        binding.radioButtonOldMan0.setChecked(dogUser.getAged() == 0 ? true : false);
+                        binding.radioButtonOldMan0.setVisibility(dogUser.getAged() == 0 ? View.VISIBLE : View.GONE);
+                        binding.radioButtonOldMan1.setChecked(dogUser.getAged() == 1 ? true : false);
+                        binding.radioButtonOldMan1.setVisibility(dogUser.getAged() == 1 ? View.VISIBLE : View.GONE);
                     }
 
                 }

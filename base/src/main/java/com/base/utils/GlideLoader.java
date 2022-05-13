@@ -55,8 +55,8 @@ public class GlideLoader {
                     .load(url)
                     .centerCrop()
                     .transform(new GlideRoundTransform(context, round))
-                    .placeholder(R.drawable.placeholder)
-                    .error(R.drawable.placeholder)
+                    .placeholder(round == 0 ? R.color.app_background : R.drawable.placeholder)
+                    .error(round == 0 ? R.color.app_background : R.drawable.placeholder)
                     .diskCacheStrategy(DiskCacheStrategy.ALL)
                     .into(view);
         } catch (Exception e) {

@@ -222,7 +222,7 @@ public class MainActivity extends BaseActivity {
         if (checkUserRank(getApplicationContext(), true)) {
 //            openActivity(MessageActivity.class);
 //            openActivity(DogCertificateEditSubmitActivity.class);
-            openActivity(DogCertificateEditDogOwnerActivity.class);
+            openActivity(DogCertificateEditDogActivity.class);
         }
     }
 
