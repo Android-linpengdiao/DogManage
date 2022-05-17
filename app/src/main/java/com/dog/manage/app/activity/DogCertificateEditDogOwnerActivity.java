@@ -65,6 +65,7 @@ public class DogCertificateEditDogOwnerActivity extends BaseActivity {
     public static final int type_details = 5;//犬主信息
     private int type = 0;
     private int dogId = 0;
+    private int leaveId = 0;
     private DogUser dogUser = new DogUser();
 
     @Override
@@ -117,6 +118,8 @@ public class DogCertificateEditDogOwnerActivity extends BaseActivity {
             binding.thirdStepView.setText("③提交审核");
             binding.secondStepView.setPadding(getResources().getDimensionPixelOffset(R.dimen.dp_10), 0, getResources().getDimensionPixelOffset(R.dimen.dp_10), 0);
             initPersonal();
+
+            leaveId = getIntent().getIntExtra("leaveId", 0);
             checkingDogUser();
 
         } else if (type == type_details) {
@@ -887,6 +890,8 @@ public class DogCertificateEditDogOwnerActivity extends BaseActivity {
                             openActivity(DogCertificateEditDogActivity.class, bundle);
 
                         } else if (type == type_adoption) {
+                            bundle.putInt("leaveId", leaveId);
+                            bundle.putInt("addressId", response.getData().getAddressId());
                             openActivity(DogAdoptionSubmitActivity.class);
 
 

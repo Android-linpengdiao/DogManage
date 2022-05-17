@@ -47,15 +47,15 @@ public class AdvertiseActivity extends BaseActivity {
 
             }
         });
-        adapter.refreshData(Arrays.asList(
-                "犬证办理",
-                "免疫证办理",
-                "犬证年审",
-                "犬只过户",
-                "犬只领养",
-                "犬只注销",
-                "信息变更",
-                "办理流程",
-                "政策法规"));
+//        adapter.refreshData(Arrays.asList(
+//                "犬证办理",
+//                "免疫证办理",
+//                "犬证年审",
+//                "犬只过户",
+//                "犬只领养",
+//                "犬只注销",
+//                "信息变更",
+//                "办理流程",
+//                "政策法规"));
     }
 }

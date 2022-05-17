@@ -90,6 +90,14 @@ public class APIUrls {
     //免疫证办理记录详情
     public final static String getDogImmuneApproveDetail = URL_DOMAIN + "user/dog/getDogImmuneApproveDetail";
 
+    /**
+     * 犬只领养
+     */
+    //犬只领养-留检犬只信息分页列表
+    public final static String getLeaveDogPageList = URL_DOMAIN + "user/dog/getLeaveDogPageList";
+    //犬只领养-犬只详情
+    public final static String getLeaveDogDetail = URL_DOMAIN + "user/dog/getLeaveDogDetail";
+
 
     /**
      * 悦保

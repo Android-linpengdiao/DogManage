@@ -24,4 +24,18 @@ public class Dog implements Serializable {
 
     private String idNum;
     private String immuneId;
+    private String dogName;
+    private String dogColor;
+    private Integer dogGender;//0-雌性 1-雄性
+    private Integer sterilization;
+    private String sterilizationProve;
+    private String dogPhoto;
+    private String noseprint;
+    private Integer leaveId;
+
+    public Dog(Integer dogId, String dogType, String idNum) {
+        this.dogId = dogId;
+        this.dogType = dogType;
+        this.idNum = idNum;
+    }
 }

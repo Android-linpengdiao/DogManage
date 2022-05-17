@@ -15,8 +15,8 @@
             android:id="@+id/titleView"
             android:layout_width="wrap_content"
             android:layout_height="40dp"
-            android:drawablePadding="6dp"
             android:layout_centerInParent="true"
+            android:drawablePadding="6dp"
             android:gravity="center"
             android:text="学生数从高到低"
             android:textColor="#333333"
@@ -26,10 +26,11 @@
             android:id="@+id/doneView"
             android:layout_width="12dp"
             android:layout_height="10dp"
-            android:layout_marginLeft="6dp"
             android:layout_centerVertical="true"
+            android:layout_marginLeft="6dp"
             android:layout_toRightOf="@+id/titleView"
-            android:src="@drawable/done" />
+            android:src="@drawable/done"
+            android:visibility="gone" />
     </RelativeLayout>
 
 

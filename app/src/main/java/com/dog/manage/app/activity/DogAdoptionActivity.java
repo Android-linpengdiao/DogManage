@@ -8,13 +8,24 @@ import android.view.View;
 import com.base.utils.CommonUtil;
 import com.base.view.OnClickListener;
 import com.dog.manage.app.R;
-import com.dog.manage.app.activity.record.AdoptionDetailsActivity;
 import com.dog.manage.app.adapter.DogAdapter;
 import com.dog.manage.app.databinding.ActivityDogAdoptionBinding;
+import com.dog.manage.app.model.Dog;
 import com.dog.manage.app.view.GridItemDecoration;
+import com.okhttp.Pager;
+import com.okhttp.SendRequest;
+import com.okhttp.callbacks.GenericsCallback;
+import com.okhttp.sample_okhttp.JsonGenericsSerializator;
+import com.scwang.smart.refresh.layout.api.RefreshLayout;
+import com.scwang.smart.refresh.layout.listener.OnLoadMoreListener;
+import com.scwang.smart.refresh.layout.listener.OnRefreshListener;
 
-import java.util.Arrays;
 
+import okhttp3.Call;
+
+/**
+ * 犬只领养
+ */
 public class DogAdoptionActivity extends BaseActivity {
 
     private ActivityDogAdoptionBinding binding;
@@ -43,7 +54,10 @@ public class DogAdoptionActivity extends BaseActivity {
         adapter.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view, Object object) {
-                openActivity(DogDetailsThemeActivity.class);
+                Dog dataBean = (Dog) object;
+                Bundle bundle = new Bundle();
+                bundle.putInt("leaveId", dataBean.getLeaveId());
+                openActivity(DogDetailsThemeActivity.class, bundle);
 
             }
 
@@ -52,18 +66,76 @@ public class DogAdoptionActivity extends BaseActivity {
 
             }
         });
-        adapter.refreshData(Arrays.asList(
-                "",
-                "",
-                "",
-                "",
-                "",
-                "",
-                "",
-                "",
-                ""));
-
+        setRefresh();
 
     }
+
+    private Pager<Dog> pager = new Pager<>();
+
+    private void setRefresh() {
+        binding.refreshLayout.setOnRefreshListener(new OnRefreshListener() {
+            @Override
+            public void onRefresh(RefreshLayout refreshlayout) {
+                pager = new Pager<>();
+                loadData(true);
+            }
+        });
+        binding.refreshLayout.setOnLoadMoreListener(new OnLoadMoreListener() {
+            @Override
+            public void onLoadMore(RefreshLayout refreshlayout) {
+                loadData(false);
+
+            }
+        });
+        binding.refreshLayout.autoRefresh();
+
+    }
+
+    public void loadData(boolean isRefresh) {
+        SendRequest.getLeaveDogPageList(pager.getCursor(), pager.getSize(),
+                new GenericsCallback<Pager<Dog>>(new JsonGenericsSerializator()) {
+
+                    @Override
+                    public void onAfter(int id) {
+                        super.onAfter(id);
+                        if (isRefresh) {
+                            binding.refreshLayout.finishRefresh();
+                        } else {
+                            binding.refreshLayout.finishLoadMore();
+                        }
+                    }
+
+                    @Override
+                    public void onError(Call call, Exception e, int id) {
+                        if (isRefresh) {
+                            binding.refreshLayout.finishRefresh(false);
+                        } else {
+                            binding.refreshLayout.finishLoadMore(false);
+                        }
+                    }
+
+                    @Override
+                    public void onResponse(Pager<Dog> response, int id) {
+                        pager = response;
+                        if (response != null && response.getRows() != null) {
+                            if (isRefresh) {
+                                adapter.refreshData(response.getRows());
+                            } else {
+                                adapter.loadMoreData(response.getRows());
+                                if (adapter.getList().size() < response.getTotal()) {
+                                    pager.setCursor(pager.getCursor() + 1);
+                                }
+                            }
+                            if (adapter.getList().size() == response.getTotal()) {
+                                binding.refreshLayout.setNoMoreData(true);
+                            }
+                            binding.emptyView.setVisibility(adapter.getList().size() > 0 ? View.GONE : View.VISIBLE);
+                            binding.emptyView.setText("暂无犬只～");
+                        }
+                    }
+                });
+
+    }
+
 
 }

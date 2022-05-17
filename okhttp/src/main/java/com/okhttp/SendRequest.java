@@ -387,6 +387,40 @@ public class SendRequest {
 
     }
 
+    /**
+     * 犬只领养-留检犬只信息分页列表
+     *
+     * @param pageNum
+     * @param pageSize
+     * @param call
+     */
+    public static void getLeaveDogPageList(int pageNum, int pageSize, Callback call) {
+        Map<String, String> headers = new HashMap<>();
+        headers.put("Authorization", BaseApplication.getInstance().getUserInfo().getAuthorization());
+
+        Map<String, String> map = new HashMap<>();
+        map.put("pageNum", String.valueOf(pageNum));
+        map.put("pageSize", String.valueOf(pageSize));
+        OkHttpUtils.post().headers(headers).params(map).url(APIUrls.getLeaveDogPageList).build().execute(call);
+
+    }
+
+    /**
+     * 犬只领养-犬只详情
+     *
+     * @param leaveId
+     * @param call
+     */
+    public static void getLeaveDogDetail(int leaveId, Callback call) {
+        Map<String, String> headers = new HashMap<>();
+        headers.put("Authorization", BaseApplication.getInstance().getUserInfo().getAuthorization());
+
+        Map<String, String> map = new HashMap<>();
+        map.put("leaveId", String.valueOf(leaveId));
+        OkHttpUtils.post().headers(headers).params(map).url(APIUrls.getLeaveDogDetail).build().execute(call);
+
+    }
+
 
     // ==================================== 练琴帮 =============================================
 

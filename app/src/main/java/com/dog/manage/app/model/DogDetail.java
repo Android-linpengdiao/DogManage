@@ -31,6 +31,11 @@ public class DogDetail {
     private Integer updatedBy;
     private String updatedTime;
 
+    private Integer leaveCenter;//留检所信息
+    private Integer dogShape;//犬只体型 0 小型 1 中型
+    private Integer immuneStatus;//免疫状态 0未免疫 1 已免疫
+    private String immuneExprie;//免疫到期时间
+
     @NoArgsConstructor
     @Data
     public static class ParamsBean {

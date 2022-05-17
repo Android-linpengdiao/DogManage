@@ -7,10 +7,16 @@ import com.base.BaseRecyclerAdapter;
 import com.base.utils.GlideLoader;
 import com.base.view.OnClickListener;
 import com.dog.manage.app.R;
+import com.dog.manage.app.activity.DogCertificateEditDogActivity;
 import com.dog.manage.app.databinding.ItemDogBinding;
 import com.dog.manage.app.databinding.ItemFrameBinding;
+import com.dog.manage.app.model.Dog;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
-public class DogAdapter extends BaseRecyclerAdapter<String, ItemDogBinding> {
+import java.util.List;
+
+public class DogAdapter extends BaseRecyclerAdapter<Dog, ItemDogBinding> {
 
     private int type = 0;//0-领养 1-宣传
     private OnClickListener onClickListener;
@@ -33,19 +39,36 @@ public class DogAdapter extends BaseRecyclerAdapter<String, ItemDogBinding> {
     }
 
     @Override
-    protected void onBindItem(ItemDogBinding binding, String dataBean, int position) {
+    protected void onBindItem(ItemDogBinding binding, Dog dataBean, int position) {
 
         binding.titleView.setVisibility(type == 0 ? View.VISIBLE : View.GONE);
         binding.contentView.setVisibility(type == 0 ? View.GONE : View.VISIBLE);
-        GlideLoader.LoderImage(mContext, "https://pics7.baidu.com/feed/6c224f4a20a446236fb6db0ac3bf5d040df3d785.jpeg", binding.iconView);
-//        binding.titleView.setText(dataBean);
-//        binding.contentView.setText(dataBean);
+
+        try {
+            //犬只照片
+            List<String> idPhotos = new Gson().fromJson(dataBean.getDogPhoto(), new TypeToken<List<String>>() {
+            }.getType());
+            if (idPhotos.size() > 1) {
+                GlideLoader.LoderImage(mContext, idPhotos.size() > 1 ? idPhotos.get(1) : "", binding.iconView);
+            }
+            if (idPhotos.size() > 0) {
+                GlideLoader.LoderImage(mContext, idPhotos.size() > 0 ? idPhotos.get(0) : "", binding.iconView);
+            }
+            if (idPhotos.size() > 2) {
+                GlideLoader.LoderImage(mContext, idPhotos.size() > 2 ? idPhotos.get(2) : "", binding.iconView);
+            }
+        } catch (Exception e) {
+            e.getMessage();
+        }
+
+        binding.titleView.setText(dataBean.getDogName() + "|" + dataBean.getDogColor() + "|" + dataBean.getDogAge() + "岁3个月");
+        binding.contentView.setText(dataBean.getDogName() + "|" + dataBean.getDogColor() + "|" + dataBean.getDogAge() + "岁3个月");
 
         binding.getRoot().setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (onClickListener != null)
-                    onClickListener.onClick(view, position);
+                    onClickListener.onClick(view, dataBean);
             }
         });
     }

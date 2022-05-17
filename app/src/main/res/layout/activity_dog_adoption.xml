@@ -76,14 +76,37 @@
 
         </LinearLayout>
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recyclerView"
+        <com.scwang.smart.refresh.layout.SmartRefreshLayout
+            android:id="@+id/refreshLayout"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:overScrollMode="never"
-            android:paddingLeft="@dimen/viewPadding"
-            android:paddingTop="@dimen/dp_10"
-            android:paddingRight="@dimen/viewPadding" />
+            android:layout_height="match_parent">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:paddingBottom="@dimen/dp_50">
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recyclerView"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:overScrollMode="never"
+                    android:paddingLeft="@dimen/viewPadding"
+                    android:paddingTop="@dimen/dp_10"
+                    android:paddingRight="@dimen/viewPadding" />
+
+                <TextView
+                    android:id="@+id/emptyView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:text="暂无犬只～"
+                    android:textColor="#999999"
+                    android:textSize="@dimen/sp_14"
+                    android:visibility="gone" />
+            </RelativeLayout>
+
+        </com.scwang.smart.refresh.layout.SmartRefreshLayout>
 
     </LinearLayout>
 </layout>

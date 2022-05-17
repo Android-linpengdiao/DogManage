@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
 
-import com.base.manager.DialogManager;
 import com.base.utils.CommonUtil;
 import com.base.utils.FileUtils;
 import com.base.utils.GlideLoader;
@@ -20,8 +19,14 @@ import com.dog.manage.app.databinding.ActivityDogCertificateExaminedBinding;
 import com.dog.manage.app.media.MediaFile;
 import com.dog.manage.app.media.MediaSelectActivity;
 import com.dog.manage.app.media.MediaUtils;
+import com.dog.manage.app.model.Dog;
+import com.dog.manage.app.model.PoliciesBean;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import com.okhttp.ResultClient;
+import com.okhttp.SendRequest;
+import com.okhttp.callbacks.GenericsCallback;
+import com.okhttp.sample_okhttp.JsonGenericsSerializator;
 
 import java.io.File;
 import java.util.Arrays;
@@ -29,6 +34,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import okhttp3.Call;
 import top.zibin.luban.Luban;
 import top.zibin.luban.OnCompressListener;
 
@@ -38,7 +44,12 @@ import top.zibin.luban.OnCompressListener;
 public class DogCertificateExaminedActivity extends BaseActivity {
 
     private ActivityDogCertificateExaminedBinding binding;
-    private List<String> dogList = Arrays.asList("萨摩耶", "柯基", "泰迪", "哈士奇", "纸质凭证");
+    private List<Dog> dogList = Arrays.asList(
+            new Dog(1, "萨摩耶", "000000000"),
+            new Dog(1, "柯基", "000000000"),
+            new Dog(1, "泰迪", "000000000"),
+            new Dog(1, "哈士奇", "000000000"),
+            new Dog(0, "纸质凭证", null));
     private final int request_DogCertificate = 100;
     private final int request_ImmuneCertificate = 200;
 
@@ -63,25 +74,28 @@ public class DogCertificateExaminedActivity extends BaseActivity {
         binding.dogCertificateView.binding.itemContent.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                onClickDogCertificate(DogCertificateExaminedActivity.this, null, dogList.indexOf(binding.dogCertificateView.binding.itemContent.getText().toString()), new OnClickListener() {
-                    @Override
-                    public void onClick(View view, Object object) {
-                        String content = (String) object;
-                        binding.dogCertificateView.binding.itemContent.setText(content);
-                        if (content.equals("纸质凭证")) {
-                            binding.dianZhiContainer.setVisibility(View.GONE);
-                            binding.zhiZhiContainer.setVisibility(View.VISIBLE);
-                        } else {
-                            binding.dianZhiContainer.setVisibility(View.VISIBLE);
-                            binding.zhiZhiContainer.setVisibility(View.GONE);
-                        }
-                    }
+                onClickDogCertificate(DogCertificateExaminedActivity.this,
+                        dogList, dogList.indexOf(binding.dogCertificateView.binding.itemContent.getText().toString()),
+                        new OnClickListener() {
+                            @Override
+                            public void onClick(View view, Object object) {
+                                Dog dataBean = (Dog) object;
+                                binding.dogCertificateView.binding.itemContent.setText(dataBean.getDogType());
+                                if (dataBean.getDogId() == 0) {
+                                    binding.dianZhiContainer.setVisibility(View.GONE);
+                                    binding.zhiZhiContainer.setVisibility(View.VISIBLE);
+                                } else {
+                                    binding.dianZhiContainer.setVisibility(View.VISIBLE);
+                                    binding.zhiZhiContainer.setVisibility(View.GONE);
+                                    getDogLicenseDetail(dataBean.getLincenceId());
+                                }
+                            }
 
-                    @Override
-                    public void onLongClick(View view, Object object) {
+                            @Override
+                            public void onLongClick(View view, Object object) {
 
-                    }
-                });
+                            }
+                        });
             }
         });
 
@@ -116,6 +130,51 @@ public class DogCertificateExaminedActivity extends BaseActivity {
             }
         });
 
+        getDogImmuneList();
+
+    }
+
+    /**
+     * 获取个人犬只免疫列表
+     */
+    private void getDogImmuneList() {
+        SendRequest.getDogImmuneList(new GenericsCallback<ResultClient<List<Dog>>>(new JsonGenericsSerializator()) {
+            @Override
+            public void onError(Call call, Exception e, int id) {
+            }
+
+            @Override
+            public void onResponse(ResultClient<List<Dog>> response, int id) {
+                if (response.isSuccess() && response.getData() != null) {
+                    if (response.getData().size() > 0) {
+                        dogList = response.getData();
+                        getDogLicenseDetail(dogList.get(0).getLincenceId());
+                    }
+
+                }
+            }
+        });
+    }
+
+    /**
+     * 犬证年审-选择我的犬只详情
+     */
+    private void getDogLicenseDetail(int lincenceId) {
+        SendRequest.getDogLicenseDetail(lincenceId, new GenericsCallback<ResultClient<PoliciesBean>>(new JsonGenericsSerializator()) {
+            @Override
+            public void onError(Call call, Exception e, int id) {
+
+            }
+
+            @Override
+            public void onResponse(ResultClient<PoliciesBean> response, int id) {
+                if (response.isSuccess() && response.getData() != null) {
+
+                } else {
+                    ToastUtils.showShort(getApplicationContext(), response.getMsg());
+                }
+            }
+        });
     }
 
 
@@ -136,7 +195,7 @@ public class DogCertificateExaminedActivity extends BaseActivity {
             Map<String, String> paramsMap = new HashMap<>();
             Bundle bundle = new Bundle();
             bundle.putString("paramsJson", GsonUtils.toJson(paramsMap));
-            openActivity(DogCertificateExaminedSubmitActivity.class,bundle);
+            openActivity(DogCertificateExaminedSubmitActivity.class, bundle);
         }
     }
 

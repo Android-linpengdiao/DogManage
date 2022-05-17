@@ -4,7 +4,6 @@ package com.dog.manage.app.activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 
 import com.base.utils.CommonUtil;
@@ -14,6 +13,7 @@ import com.base.utils.GsonUtils;
 import com.base.utils.PermissionUtils;
 import com.base.utils.ToastUtils;
 import com.base.view.OnClickListener;
+import com.dog.manage.app.DogDialogManager;
 import com.dog.manage.app.R;
 import com.dog.manage.app.databinding.ActivityDogCertificateEditDogBinding;
 import com.dog.manage.app.media.MediaFile;
@@ -52,6 +52,7 @@ public class DogCertificateEditDogActivity extends BaseActivity {
     private Dog dog = new Dog();
 
     private List<Dog> dogList = new ArrayList<>();
+    private List<String> dogColors = Arrays.asList("金黄色", "黑色", "棕色");
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -113,6 +114,46 @@ public class DogCertificateEditDogActivity extends BaseActivity {
                         });
             }
         });
+        binding.dogColorView.binding.itemContent.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                DogDialogManager.getInstance().showDogColorDialog(DogCertificateEditDogActivity.this, dogColors,
+                        new DogDialogManager.OnClickListener() {
+                            @Override
+                            public void onClick(View view, Object object) {
+                                String color = (String) object;
+                                dog.setDogColor(color);
+                                binding.dogColorView.binding.itemContent.setText(dog.getDogColor());
+                            }
+                        });
+            }
+        });
+        binding.petTypeView.binding.itemInfo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dog.setDogType("柴犬");
+                binding.petTypeView.binding.itemContent.setText(dog.getDogType());
+
+//                if (checkPermissions(PermissionUtils.CAMERA, 100)) {
+//                    Bundle bundle = new Bundle();
+//                    bundle.putInt("type", CameraActivity.type_petType);
+//                    openActivity(CameraActivity.class, bundle);
+//                }
+            }
+        });
+        binding.createPetArchivesView.binding.itemInfo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dog.setNoseprint("23325059-b2c1-11eb-1Vu7hqwN6");
+                binding.createPetArchivesView.binding.itemContent.setText("已完成采集");
+
+//                if (checkPermissions(PermissionUtils.CAMERA, 100)) {
+//                    Bundle bundle = new Bundle();
+//                    bundle.putInt("type", CameraActivity.type_petArchives);
+//                    openActivity(CameraActivity.class, bundle);
+//                }
+            }
+        });
 
         getDogImmuneList();
 
@@ -134,25 +175,70 @@ public class DogCertificateEditDogActivity extends BaseActivity {
                     newDog.setDogId(0);
                     newDog.setDogType("添加新犬只");
                     dogList.add(newDog);
-                    dog = response.getData().get(0);
+                    dog = dogList.get(0);
                     binding.dogCertificateView.binding.itemContent.setText(dog.getDogType());
+                    if (dog.getDogId() != 0) {
+                        intiView();
+                    }
 
                 }
             }
         });
     }
 
-    private String dogName = null;
-    private String dogHair = "金黄色";
-    private int dogSex = 0;//0-雌性 1-雄性
-    private int dogBear = 0;//0-未绝育 1-已绝育
-    private String testify = null;
-    private int dogAge = 1;
-    private String leftFace = "https://img2.baidu.com/it/u=4114155986,1519346958&fm=253&fmt=auto&app=138&f=JPEG?w=500&h=603";
-    private String centerFace = "https://img2.baidu.com/it/u=4114155986,1519346958&fm=253&fmt=auto&app=138&f=JPEG?w=500&h=603";
-    private String rightFace = "https://img2.baidu.com/it/u=4114155986,1519346958&fm=253&fmt=auto&app=138&f=JPEG?w=500&h=603";
-    private String dogType = "柴犬";
-    private String noseprint = "23325059-b2c1-11eb-1Vu7hqwN6";
+    private void intiView() {
+        //犬只姓名
+        binding.dogNameView.binding.itemEdit.setText(dog.getDogName());
+        //犬只颜色
+        binding.dogColorView.binding.itemEdit.setText(dog.getDogColor());
+        //犬只年龄
+        binding.dogAgeView.binding.itemContent.setText(dog.getDogAge() + "");
+
+        //犬只性别;0:雌性， 1：雄性
+        if (dog.getDogGender() == 1) {
+            binding.radioButtonMale.setChecked(true);
+        }
+
+        //是否绝育;0：否 1：是
+        if (dog.getSterilization() == 1) {
+            binding.radioButtonSterilization1.setChecked(true);
+        }
+
+        binding.petTypeView.binding.itemContent.setText(dog.getDogType());//犬只品种
+        if (!CommonUtil.isBlank(dog.getNoseprint()))
+            binding.createPetArchivesView.binding.itemContent.setText("已完成采集");//鼻纹信息
+
+        //绝育证明
+        GlideLoader.LoderImage(DogCertificateEditDogActivity.this, dog.getSterilizationProve(), binding.testifyView, 6);
+
+        try {
+            //犬只照片
+            List<String> idPhotos = new Gson().fromJson(dog.getDogPhoto(), new TypeToken<List<String>>() {
+            }.getType());
+            if (idPhotos.size() > 0) {
+                GlideLoader.LoderImage(DogCertificateEditDogActivity.this,
+                        idPhotos.size() > 0 ? idPhotos.get(0) : "", binding.leftFaceView, 6);
+                leftFace = idPhotos.get(0);
+            }
+            if (idPhotos.size() > 1) {
+                GlideLoader.LoderImage(DogCertificateEditDogActivity.this,
+                        idPhotos.size() > 1 ? idPhotos.get(1) : "", binding.centerFaceView, 6);
+                centerFace = idPhotos.get(1);
+            }
+            if (idPhotos.size() > 2) {
+                GlideLoader.LoderImage(DogCertificateEditDogActivity.this,
+                        idPhotos.size() > 2 ? idPhotos.get(2) : "", binding.rightFaceView, 6);
+                rightFace = idPhotos.get(2);
+            }
+        } catch (Exception e) {
+            e.getMessage();
+        }
+
+    }
+
+    private String leftFace = null;
+    private String centerFace = null;
+    private String rightFace = null;
 
     /**
      * dogName
@@ -189,29 +275,39 @@ public class DogCertificateEditDogActivity extends BaseActivity {
 
         Map<String, String> map = new HashMap<>();
 
-        dogName = binding.dogNameView.binding.itemEdit.getText().toString();
+        String dogName = binding.dogNameView.binding.itemEdit.getText().toString();
         if (CommonUtil.isBlank(dogName)) {
             ToastUtils.showShort(getApplicationContext(), "请输入犬昵称");
             return;
+        } else {
+            dog.setDogName(dogName);
         }
 
-        if (CommonUtil.isBlank(dogHair)) {
+        if (CommonUtil.isBlank(dog.getDogColor())) {
             ToastUtils.showShort(getApplicationContext(), "选择犬只毛色");
             return;
         }
 
-        int bearCheckedRadioButtonId = binding.radioGroupBear.getCheckedRadioButtonId();
-        if (bearCheckedRadioButtonId == R.id.radioButton0) {//未绝育
+        //0-雌性 1-雄性
+        int sexCheckedRadioButtonId = binding.radioGroupSex.getCheckedRadioButtonId();
+        if (sexCheckedRadioButtonId == R.id.radioButtonMale) {//雄性
+            dog.setDogGender(1);
+        } else if (sexCheckedRadioButtonId == R.id.radioButtonFemale) {//雌性
+            dog.setDogGender(0);
+        }
 
-        } else if (bearCheckedRadioButtonId == R.id.radioButton1) {//已绝育
-            if (CommonUtil.isBlank(testify)) {
+        int bearCheckedRadioButtonId = binding.radioGroupSterilization.getCheckedRadioButtonId();
+        if (bearCheckedRadioButtonId == R.id.radioButtonSterilization0) {//未绝育
+
+        } else if (bearCheckedRadioButtonId == R.id.radioButtonSterilization1) {//已绝育
+            if (CommonUtil.isBlank(dog.getSterilizationProve())) {
                 ToastUtils.showShort(getApplicationContext(), "请上传绝育证明");
                 return;
             }
 
         }
 
-        if (dogAge <= 0) {
+        if (dog.getDogAge() <= 0) {
             ToastUtils.showShort(getApplicationContext(), "选择犬只年龄");
             return;
         }
@@ -229,33 +325,25 @@ public class DogCertificateEditDogActivity extends BaseActivity {
             return;
         }
 
-        map.put("dogName", dogName);//犬只姓名
-        map.put("dogColor", dogHair);//犬只颜色
-        map.put("dogGender", String.valueOf(dogSex));//犬只性别;0:雌性， 1：雄性
-        map.put("sterilization", String.valueOf(dogBear));//是否绝育;0：否 1：是
-        map.put("sterilizationProve", testify);//绝育证明
-        map.put("dogAge", String.valueOf(dogAge));//犬只年龄;记录月份
+        if (CommonUtil.isBlank(dog.getDogType())) {
+            ToastUtils.showShort(getApplicationContext(), "识别犬只品种");
+            return;
+        }
+        if (CommonUtil.isBlank(dog.getNoseprint())) {
+            ToastUtils.showShort(getApplicationContext(), "采集鼻纹信息");
+            return;
+        }
+
+        map.put("dogName", dog.getDogName());//犬只姓名
+        map.put("dogColor", dog.getDogColor());//犬只颜色
+        map.put("dogGender", String.valueOf(dog.getDogGender()));//犬只性别;0:雌性， 1：雄性
+        map.put("sterilization", String.valueOf(dog.getSterilization()));//是否绝育;0：否 1：是
+        map.put("sterilizationProve", dog.getSterilizationProve());//绝育证明
+        map.put("dogAge", String.valueOf(dog.getDogAge()));//犬只年龄;记录月份
         map.put("dogPhoto", GsonUtils.toJson(Arrays.asList(leftFace, centerFace, rightFace)));//犬只照片，多张图片以“，”分开
-        map.put("dogType", dogType);//犬只品种
-        map.put("noseprint", noseprint);//鼻纹信息
+        map.put("dogType", dog.getDogType());//犬只品种
+        map.put("noseprint", dog.getNoseprint());//鼻纹信息
 
-//        if (type == type_userInfo) {
-//
-//
-//        } else if (type == type_certificate || type == type_examined) {
-//            Bundle bundle = new Bundle();
-//            bundle.putInt("type", type);
-//            bundle.putString("paramsJson", GsonUtils.toJson(map));
-//            openActivity(DogCertificateEditSubmitActivity.class, bundle);
-//
-//        } else if (type == type_immune) {
-//            Bundle bundle = new Bundle();
-//            bundle.putString("paramsJson", GsonUtils.toJson(map));
-//            openActivity(DogImmuneHospitalActivity.class, bundle);
-//
-//        }
-
-        //{"msg":"操作成功","code":200,"data":{"dogId":3}}
         SendRequest.savaDog(map, new GenericsCallback<ResultClient<Dog>>(new JsonGenericsSerializator()) {
             @Override
             public void onError(Call call, Exception e, int id) {
@@ -273,7 +361,7 @@ public class DogCertificateEditDogActivity extends BaseActivity {
                         bundle.putInt("type", type);
                         bundle.putInt("dogId", response.getData().getDogId());
                         bundle.putInt("addressId", addressId);
-                        bundle.putString("dogType", dogType);
+                        bundle.putString("dogType", dog.getDogType());
                         openActivity(DogCertificateEditSubmitActivity.class, bundle);
 
                     } else if (type == type_immune) {
@@ -351,31 +439,6 @@ public class DogCertificateEditDogActivity extends BaseActivity {
         }
     }
 
-    /**
-     * 犬只品种
-     *
-     * @param view
-     */
-    public void onClickPetType(View view) {
-        if (checkPermissions(PermissionUtils.CAMERA, 100)) {
-            Bundle bundle = new Bundle();
-            bundle.putInt("type", CameraActivity.type_petType);
-            openActivity(CameraActivity.class, bundle);
-        }
-    }
-
-    /**
-     * 鼻纹信息
-     *
-     * @param view
-     */
-    public void onClickCreatePetArchives(View view) {
-        if (checkPermissions(PermissionUtils.CAMERA, 100)) {
-            Bundle bundle = new Bundle();
-            bundle.putInt("type", CameraActivity.type_petArchives);
-            openActivity(CameraActivity.class, bundle);
-        }
-    }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -424,20 +487,20 @@ public class DogCertificateEditDogActivity extends BaseActivity {
                                     @Override
                                     public void onSuccess(File file) {
                                         if (requestCode == request_Testify) {
-                                            testify = file.getAbsolutePath();
-                                            GlideLoader.LoderImage(DogCertificateEditDogActivity.this, file.getAbsolutePath(), binding.testifyView, 6);
+                                            dog.setSterilizationProve(file.getAbsolutePath());
+                                            GlideLoader.LoderImage(DogCertificateEditDogActivity.this, dog.getSterilizationProve(), binding.testifyView, 6);
 
                                         } else if (requestCode == request_LeftFace) {
                                             leftFace = file.getAbsolutePath();
-                                            GlideLoader.LoderImage(DogCertificateEditDogActivity.this, file.getAbsolutePath(), binding.leftFaceView, 6);
+                                            GlideLoader.LoderImage(DogCertificateEditDogActivity.this, leftFace, binding.leftFaceView, 6);
 
                                         } else if (requestCode == request_CenterFace) {
                                             centerFace = file.getAbsolutePath();
-                                            GlideLoader.LoderImage(DogCertificateEditDogActivity.this, file.getAbsolutePath(), binding.centerFaceView, 6);
+                                            GlideLoader.LoderImage(DogCertificateEditDogActivity.this, centerFace, binding.centerFaceView, 6);
 
                                         } else if (requestCode == request_RightFace) {
                                             rightFace = file.getAbsolutePath();
-                                            GlideLoader.LoderImage(DogCertificateEditDogActivity.this, file.getAbsolutePath(), binding.rightFaceView, 6);
+                                            GlideLoader.LoderImage(DogCertificateEditDogActivity.this, rightFace, binding.rightFaceView, 6);
 
                                         }
                                     }
