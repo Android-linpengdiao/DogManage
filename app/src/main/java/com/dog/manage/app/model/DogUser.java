@@ -69,7 +69,7 @@ public class DogUser {
      * 业务类型 1 个人信息 0 犬证、疫苗
      */
     private Integer id;
-    private Integer userType;
+    private Integer userType = 0;
     private String bizLicense;
     private String userName;
     private String orgName;
@@ -77,7 +77,7 @@ public class DogUser {
     private String idPhoto;
     private String idNum;
     private Integer dogType;
-    private Integer aged;
+    private Integer aged = 0;
     private String agedProve;
     private String contactPhoneNum;
     private String address;

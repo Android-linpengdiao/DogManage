@@ -102,10 +102,11 @@
                         android:src="@drawable/dingwei_s" />
 
                     <TextView
+                        android:id="@+id/centerAddressView"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:gravity="center"
-                        android:text="北京市昌平区七里渠甲1号"
+                        tools:text="北京市昌平区七里渠甲1号"
                         android:textColor="@color/colorAppTheme"
                         android:textSize="@dimen/sp_13" />
                 </LinearLayout>
@@ -126,10 +127,11 @@
                         android:src="@drawable/dianhua" />
 
                     <TextView
+                        android:id="@+id/phoneView"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:gravity="center"
-                        android:text="010-49384834"
+                        tools:text="010-49384834"
                         android:textColor="@color/colorAppTheme"
                         android:textSize="@dimen/sp_13" />
                 </LinearLayout>

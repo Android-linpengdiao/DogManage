@@ -95,6 +95,8 @@ public class DogDetailsThemeActivity extends BaseActivity {
                     DogDetail dogDetail = response.getData();
                     binding.dogNameView.setText(dogDetail.getDogName() + "|" + dogDetail.getDogColor() + "|" + dogDetail.getDogAge() + "岁3个月");
                     binding.leaveCenterView.setText(dogDetail.getLeaveCenter());
+                    binding.centerAddressView.setText(dogDetail.getCenterAddress());
+                    binding.phoneView.setText(dogDetail.getPhone());
                     binding.idNumView.setText("犬只编号：" + dogDetail.getIdNum());
                     binding.dogGenderView.setText("犬只性别：" + (dogDetail.getDogGender() == 0 ? "雌性" : "雄性"));
                     binding.dogShapeView.setText("犬只体型：" + (dogDetail.getDogShape() == 0 ? "小型" : "中型"));

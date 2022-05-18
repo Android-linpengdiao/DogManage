@@ -311,7 +311,7 @@ public class DogCertificateEditDogOwnerActivity extends BaseActivity {
 
 
     private void initDogUserView(DogUser dogUser) {
-        if (dogUser.getUserType() == 1 || dogUser.getUserType() == 2) {
+        if (dogUser.getUserType() != null && dogUser.getUserType() == 1 || dogUser.getUserType() == 2) {
             if (dogUser.getUserType() == DogUser.userType_personal) {
 
                 //个人办理
@@ -861,18 +861,6 @@ public class DogCertificateEditDogOwnerActivity extends BaseActivity {
                 map.put("busTypeId", String.valueOf(1));//业务类型 1 个人信息 0 犬证、疫苗
 
             }
-
-//            Bundle bundle = new Bundle();
-//            bundle.putInt("type", type);
-//            bundle.putString("paramsJson", GsonUtils.toJson(map));
-//            if (type == type_certificate || type == type_immune || type == type_examined) {
-//                openActivity(DogCertificateEditDogActivity.class, bundle);
-//
-//            } else if (type == type_adoption) {
-//                openActivity(DogAdoptionSubmitActivity.class);
-//
-//
-//            }
 
             SendRequest.editDogUser(map, new GenericsCallback<ResultClient<DogUser>>(new JsonGenericsSerializator()) {
                 @Override
