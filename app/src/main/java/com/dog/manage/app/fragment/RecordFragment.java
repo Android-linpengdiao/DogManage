@@ -48,6 +48,7 @@ public class RecordFragment extends BaseFragment {
     private FragmentRecordBinding binding;
 
     private int type;
+    private int id;
 
     private AdoptionRecordAdapter adoptionRecordAdapter;
     private CertificateRecordAdapter certificateRecordAdapter;
@@ -70,6 +71,7 @@ public class RecordFragment extends BaseFragment {
         if (getArguments() != null) {
 
             type = getArguments().getInt("type");
+            id = getArguments().getInt("id");
 
             binding.recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
             binding.recyclerView.setNestedScrollingEnabled(false);
@@ -90,7 +92,6 @@ public class RecordFragment extends BaseFragment {
                     public void onClick(View view, Object object) {
                         RecordImmune dataBean = (RecordImmune) object;
                         Bundle bundle = new Bundle();
-                        bundle.putInt("type", 0);
                         bundle.putInt("lincenceId", dataBean.getLincenceId());
                         openActivity(CertificateDetailsActivity.class, bundle);
 
@@ -218,7 +219,7 @@ public class RecordFragment extends BaseFragment {
      * 犬证办理记录
      */
     public void getUserDogLicence() {
-        SendRequest.getUserDogLicence(type, new GenericsCallback<ResultClient<List<RecordImmune>>>(new JsonGenericsSerializator()) {
+        SendRequest.getUserDogLicence(id, new GenericsCallback<ResultClient<List<RecordImmune>>>(new JsonGenericsSerializator()) {
 
             @Override
             public void onAfter(int id) {
@@ -235,8 +236,8 @@ public class RecordFragment extends BaseFragment {
             public void onResponse(ResultClient<List<RecordImmune>> response, int id) {
                 if (response != null && response.getData() != null) {
                     certificateRecordAdapter.refreshData(response.getData());
-//                            binding.emptyView.setVisibility(adapter.getList().size() > 0 ? View.GONE : View.VISIBLE);
-//                            binding.emptyView.setText("暂无内容～");
+                    binding.emptyView.setVisibility(certificateRecordAdapter.getList().size() > 0 ? View.GONE : View.VISIBLE);
+                    binding.emptyView.setText("暂无内容～");
                 }
             }
         });
@@ -247,7 +248,7 @@ public class RecordFragment extends BaseFragment {
      * 免疫证办理记录列表
      */
     public void getDogImmuneStatusList() {
-        SendRequest.getDogImmuneStatusList(type, new GenericsCallback<ResultClient<List<RecordImmune>>>(new JsonGenericsSerializator()) {
+        SendRequest.getDogImmuneStatusList(id, new GenericsCallback<ResultClient<List<RecordImmune>>>(new JsonGenericsSerializator()) {
 
             @Override
             public void onAfter(int id) {
@@ -264,8 +265,8 @@ public class RecordFragment extends BaseFragment {
             public void onResponse(ResultClient<List<RecordImmune>> response, int id) {
                 if (response != null && response.getData() != null) {
                     certificateRecordAdapter.refreshData(response.getData());
-//                            binding.emptyView.setVisibility(adapter.getList().size() > 0 ? View.GONE : View.VISIBLE);
-//                            binding.emptyView.setText("暂无内容～");
+                    binding.emptyView.setVisibility(certificateRecordAdapter.getList().size() > 0 ? View.GONE : View.VISIBLE);
+                    binding.emptyView.setText("暂无内容～");
                 }
             }
         });

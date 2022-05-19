@@ -42,23 +42,28 @@ public class CertificateRecordAdapter extends BaseRecyclerAdapter<RecordImmune, 
     protected void onBindItem(ItemCertificateRecordBinding binding, RecordImmune dataBean, int position) {
 
         if (type == RecordActivity.type_certificate) {
+            //办理状态 0 全部 1：待审核 2：代缴费 3：审核驳回 4：已办结 5：已过期 6：已注销
             binding.titleView.setText("犬证办理");
             binding.bottomView.setVisibility(View.VISIBLE);
             binding.dogOwnerContainer.setVisibility(View.INVISIBLE);
             binding.contentView.setText(dataBean.getDogType() + "-" + dataBean.getDogAge() + "岁3个月");
             binding.createTimeView.setText(dataBean.getCreatedTime());
             binding.contentView.setTextColor(Color.parseColor("#999999"));
-            if (position == 1) {
+            if (dataBean.getLicenceStatus() == 1) {
+                binding.checkStatusView.setText("审核中");
+                binding.bottomView.setVisibility(View.GONE);
+
+            }else if (dataBean.getLicenceStatus() == 2) {
                 binding.checkStatusView.setText("审核通过");
                 binding.checkStatusView.setBackgroundResource(R.drawable.tag_g);
                 binding.detailsStatusView.setText("支付费用");
 
-            } else if (position == 2) {
+            } else if (dataBean.getLicenceStatus() == 3) {
                 binding.checkStatusView.setText("审核拒绝");
                 binding.checkStatusView.setBackgroundResource(R.drawable.tag_r);
                 binding.detailsStatusView.setText("查看详情");
 
-            } else if (position == 3) {
+            } else if (dataBean.getLicenceStatus() == 4) {
                 binding.checkStatusView.setText("已办结");
                 binding.checkStatusView.setBackgroundResource(R.drawable.tag_gray);
                 binding.detailsStatusView.setText("查看犬证");
@@ -70,21 +75,26 @@ public class CertificateRecordAdapter extends BaseRecyclerAdapter<RecordImmune, 
             }
 
         } else if (type == RecordActivity.type_immune) {
+            //办理状态 0 默认 1：未接种 2：已接种 3: 即将过期 4: 已过期
             binding.titleView.setText("免疫证办理");
             binding.dogOwnerContainer.setVisibility(View.INVISIBLE);
             binding.contentView.setText(dataBean.getDogType() + "-" + dataBean.getDogAge() + "岁3个月");
             binding.contentView.setTextColor(Color.parseColor("#999999"));
-            if (position == 1) {
+            if (dataBean.getLincenceStatus() == 1) {
+                binding.checkStatusView.setText("已预约");
+                binding.detailsStatusView.setText("查看信息");
+
+            }else if (dataBean.getLincenceStatus() == 2) {
                 binding.checkStatusView.setText("已办结");
                 binding.checkStatusView.setBackgroundResource(R.drawable.tag_g);
                 binding.detailsStatusView.setText("查看免疫证");
 
-            } else if (position == 2) {
+            } else if (dataBean.getLincenceStatus() == 3) {
                 binding.checkStatusView.setText("即将过期");
                 binding.checkStatusView.setBackgroundResource(R.drawable.tag_r);
                 binding.detailsStatusView.setText("办理年审");
 
-            } else if (position == 3) {
+            } else if (dataBean.getLincenceStatus() == 4) {
                 binding.checkStatusView.setText("已过期");
                 binding.checkStatusView.setBackgroundResource(R.drawable.tag_r);
                 binding.detailsStatusView.setText("办理年审");

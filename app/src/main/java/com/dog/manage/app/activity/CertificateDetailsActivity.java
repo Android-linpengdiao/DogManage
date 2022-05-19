@@ -8,6 +8,7 @@ import com.base.utils.ToastUtils;
 import com.dog.manage.app.R;
 import com.dog.manage.app.databinding.ActivityCertificateDetailsBinding;
 import com.dog.manage.app.model.Dog;
+import com.dog.manage.app.model.DogLicenceDetail;
 import com.okhttp.ResultClient;
 import com.okhttp.SendRequest;
 import com.okhttp.callbacks.GenericsCallback;
@@ -21,9 +22,8 @@ import okhttp3.Request;
 public class CertificateDetailsActivity extends BaseActivity {
 
     private ActivityCertificateDetailsBinding binding;
-    private int type;//1-审核通过 2-审核拒绝 3-已办结
     private int lincenceId;
-    private Dog dog;
+    private DogLicenceDetail dogLicenceDetail;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,24 +31,16 @@ public class CertificateDetailsActivity extends BaseActivity {
         binding = getViewData(R.layout.activity_certificate_details);
         addActivity(this);
 
-        type = getIntent().getIntExtra("type", 0);
         lincenceId = getIntent().getIntExtra("lincenceId", 0);
-
-        binding.auditStatusView.setText(type == 1 ? "审核通过" : type == 2 ? "审核拒绝" : type == 3 ? "已办结" : "审核中");
-        binding.payTypeView.setVisibility(type == 3 ? View.VISIBLE : View.GONE);
-        binding.auditReasonView.setVisibility(type == 2 ? View.VISIBLE : View.GONE);
-        binding.confirmView.setText(type == 1 ? "在线支付" : type == 2 ? "犬证年审" : type == 3 ? "查看犬证" : "在线支付");
-        binding.confirmView.setVisibility(type == 0 ? View.GONE : View.VISIBLE);
-        binding.confirmView.setBackgroundResource(type == 2 ? R.drawable.button_red : R.drawable.button_theme);
 
         binding.dogOwnerInfoView.binding.itemInfo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (dog == null) {
+                if (dogLicenceDetail == null) {
                     return;
                 }
                 Bundle bundle = new Bundle();
-                bundle.putInt("dogId", dog.getDogId());
+                bundle.putInt("dogId", dogLicenceDetail.getDogId());
                 bundle.putInt("type", DogCertificateEditDogOwnerActivity.type_details);
                 openActivity(DogCertificateEditDogOwnerActivity.class, bundle);
             }
@@ -56,11 +48,11 @@ public class CertificateDetailsActivity extends BaseActivity {
         binding.dogDetailsView.binding.itemInfo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (dog == null) {
+                if (dogLicenceDetail == null) {
                     return;
                 }
                 Bundle bundle = new Bundle();
-                bundle.putInt("dogId", dog.getDogId());
+                bundle.putInt("dogId", dogLicenceDetail.getDogId());
                 openActivity(DogDetailsActivity.class, bundle);
             }
         });
@@ -77,7 +69,7 @@ public class CertificateDetailsActivity extends BaseActivity {
      * 获取个人犬只免疫列表
      */
     private void getDogLicenceDetail() {
-        SendRequest.getDogLicenceDetail(lincenceId, new GenericsCallback<ResultClient<Dog>>(new JsonGenericsSerializator()) {
+        SendRequest.getDogLicenceDetail(lincenceId, new GenericsCallback<ResultClient<DogLicenceDetail>>(new JsonGenericsSerializator()) {
 
             @Override
             public void onBefore(Request request, int id) {
@@ -97,7 +89,7 @@ public class CertificateDetailsActivity extends BaseActivity {
             }
 
             @Override
-            public void onResponse(ResultClient<Dog> response, int id) {
+            public void onResponse(ResultClient<DogLicenceDetail> response, int id) {
                 if (response.isSuccess() && response.getData() != null) {
                     initView(response.getData());
 
@@ -108,8 +100,17 @@ public class CertificateDetailsActivity extends BaseActivity {
         });
     }
 
-    private void initView(Dog data) {
-        dog = data;
+    private void initView(DogLicenceDetail data) {
+        dogLicenceDetail = data;
+        //办理状态 0 全部 1：待审核 2：代缴费 3：审核驳回 4：已办结 5：已过期 6：已注销
+        Integer licenceStatus = data.getLicenceStatus();
+        binding.auditStatusView.setText(licenceStatus == 1 ? "审核中" :licenceStatus == 2 ? "审核通过" : licenceStatus == 3 ? "审核拒绝" : licenceStatus == 4 ? "已办结" :licenceStatus == 5 ? "已过期" :licenceStatus == 6 ? "已注销" : "审核中");
+        binding.payTypeView.setVisibility(licenceStatus == 4 ? View.VISIBLE : View.GONE);
+        binding.auditReasonView.setVisibility(licenceStatus == 3 ? View.VISIBLE : View.GONE);
+        binding.confirmView.setText(licenceStatus == 2 ? "在线支付" : licenceStatus == 3 ? "犬证年审" : licenceStatus == 4 ? "查看犬证" : "在线支付");
+        binding.confirmView.setVisibility(licenceStatus == 1 ? View.GONE : View.VISIBLE);
+        binding.confirmView.setBackgroundResource(licenceStatus == 3 ? R.drawable.button_red : R.drawable.button_theme);
+
         binding.contentView.setText(data.getDogType() + "-" + data.getDogAge() + "岁3个月");
         binding.createTimeView.setText(data.getCreatedTime());
         binding.dogOwnerInfoView.binding.itemContent.setText(data.getUserName());

@@ -9,6 +9,7 @@ import android.view.WindowManager;
 
 import com.base.manager.LoadingManager;
 import com.base.utils.GlideLoader;
+import com.base.utils.ToastUtils;
 import com.dog.manage.app.R;
 import com.dog.manage.app.databinding.ActivityDogDetailsBinding;
 import com.dog.manage.app.model.DogDetail;
@@ -87,6 +88,7 @@ public class DogDetailsActivity extends BaseActivity {
             @Override
             public void onResponse(ResultClient<DogDetail> response, int id) {
                 if (response.isSuccess() && response.getData() != null) {
+                    binding.container.setVisibility(View.VISIBLE);
                     DogDetail dogDetail = response.getData();
                     binding.dogNameView.setText(dogDetail.getDogName() + "|" + dogDetail.getDogColor() + "|" + dogDetail.getDogAge() + "岁3个月");
                     binding.leaveCenterView.setText(dogDetail.getLeaveCenter());
@@ -95,9 +97,9 @@ public class DogDetailsActivity extends BaseActivity {
                     binding.idNumView.setText("犬只编号：" + dogDetail.getIdNum());
                     binding.dogGenderView.setText("犬只性别：" + (dogDetail.getDogGender() == 0 ? "雌性" : "雄性"));
                     binding.dogShapeView.setText("犬只体型：" + (dogDetail.getDogShape() == 0 ? "小型" : "中型"));
-                    if (dogDetail.getImmuneStatus() == 1){
+                    if (dogDetail.getImmuneStatus() == 1) {
                         binding.immuneStatus.setText("免疫情况：已免疫" + "，" + dogDetail.getImmuneExprie() + "到期");
-                    }else {
+                    } else {
                         binding.immuneStatus.setText("免疫情况：未免疫");
                     }
                     binding.sterilizationView.setText("绝育情况：" + (dogDetail.getSterilization() == 0 ? "未绝育" : "已绝育"));
@@ -109,6 +111,8 @@ public class DogDetailsActivity extends BaseActivity {
                     } catch (Exception e) {
                         e.getMessage();
                     }
+                } else {
+                    ToastUtils.showShort(getApplicationContext(), "获取信息失败");
                 }
             }
         });

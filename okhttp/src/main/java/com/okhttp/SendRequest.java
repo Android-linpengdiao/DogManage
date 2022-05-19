@@ -372,7 +372,7 @@ public class SendRequest {
     }
 
     /**
-     * 犬证办理记录详情
+     * 免疫证办理记录详情
      *
      * @param immuneId 免疫证主键id
      * @param call

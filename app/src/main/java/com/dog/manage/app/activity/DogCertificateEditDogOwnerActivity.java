@@ -280,9 +280,8 @@ public class DogCertificateEditDogOwnerActivity extends BaseActivity {
 
             @Override
             public void onResponse(ResultClient<DogUser> response, int id) {
-                dogUser = response.getData();
                 if (response.isSuccess() && response.getData() != null) {
-                    DogUser dogUser = response.getData();
+                    dogUser = response.getData();
                     initDogUserView(dogUser);
                 }
             }
@@ -302,8 +301,14 @@ public class DogCertificateEditDogOwnerActivity extends BaseActivity {
             @Override
             public void onResponse(ResultClient<DogUser> response, int id) {
                 if (response.isSuccess() && response.getData() != null) {
-                    DogUser dogUser = response.getData();
+                    dogUser = response.getData();
                     initDogUserView(dogUser);
+                    if (dogUser.getUserType() == null) {
+                        binding.certificateContainer.setVisibility(View.GONE);
+                        ToastUtils.showShort(getApplicationContext(), "获取信息失败");
+                    }
+                } else {
+                    ToastUtils.showShort(getApplicationContext(), "获取信息失败");
                 }
             }
         });
@@ -311,7 +316,8 @@ public class DogCertificateEditDogOwnerActivity extends BaseActivity {
 
 
     private void initDogUserView(DogUser dogUser) {
-        if (dogUser.getUserType() != null && dogUser.getUserType() == 1 || dogUser.getUserType() == 2) {
+        binding.certificateContainer.setVisibility(View.VISIBLE);
+        if (dogUser.getUserType() != null && (dogUser.getUserType() == 1 || dogUser.getUserType() == 2)) {
             if (dogUser.getUserType() == DogUser.userType_personal) {
 
                 //个人办理
@@ -386,7 +392,7 @@ public class DogCertificateEditDogOwnerActivity extends BaseActivity {
 
 
             } else if (dogUser.getUserType() == DogUser.userType_organ) {
-                initOrganView();
+                binding.radioButtonOrgan.setChecked(true);
 
                 binding.radioButtonPersonal.setVisibility(View.GONE);
 

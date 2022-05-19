@@ -62,7 +62,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:gravity="center_vertical"
-                                android:text="犬只过户"
+                                android:text="犬只免疫"
                                 android:textColor="#333333"
                                 android:textSize="@dimen/sp_17" />
 
@@ -80,12 +80,13 @@
                                 android:textSize="@dimen/sp_12" />
 
                             <TextView
+                                android:id="@+id/createTimeView"
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
                                 android:layout_marginLeft="@dimen/dp_8"
                                 android:layout_weight="1"
                                 android:gravity="right"
-                                android:text="2022.03.09 10:00"
+                                tools:text="2022.03.09 10:00"
                                 android:textColor="#999999"
                                 android:textSize="@dimen/sp_14" />
 
@@ -99,10 +100,11 @@
                             android:orientation="horizontal">
 
                             <TextView
+                                android:id="@+id/contentView"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:gravity="center_vertical"
-                                android:text="萨摩耶-2岁3个月"
+                                tools:text="萨摩耶-2岁3个月"
                                 android:textColor="#999999"
                                 android:textSize="@dimen/sp_14" />
 
@@ -213,11 +215,12 @@
 
 
             <com.dog.manage.app.view.TextBoldView
+                android:id="@+id/hospitalNameView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:gravity="center_vertical"
-                android:text="北京爱牧家动物医院(西直门店)"
+                tools:text="北京爱牧家动物医院(西直门店)"
                 android:textColor="@color/colorAppTheme"
                 android:textSize="@dimen/sp_18" />
 
@@ -234,13 +237,14 @@
                     android:src="@drawable/dingwei_s" />
 
                 <TextView
+                    android:id="@+id/hospitalAddressView"
                     android:layout_width="@dimen/dp_0"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:ellipsize="end"
                     android:gravity="center_vertical"
                     android:maxLines="2"
-                    android:text="北京市海淀区西直门北大街1号办公楼一层"
+                    tools:text="北京市海淀区西直门北大街1号办公楼一层"
                     android:textColor="#333333"
                     android:textSize="@dimen/sp_14" />
 
@@ -267,13 +271,14 @@
                     android:background="@drawable/dianhua" />
 
                 <TextView
+                    android:id="@+id/hospitalPhoneView"
                     android:layout_width="@dimen/dp_0"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:ellipsize="end"
                     android:gravity="center_vertical"
                     android:maxLines="2"
-                    android:text="010-62259221"
+                    tools:text="010-62259221"
                     android:textColor="#333333"
                     android:textSize="@dimen/sp_14" />
 
@@ -283,6 +288,7 @@
                     android:layout_height="@dimen/dp_32"
                     android:background="@drawable/button_theme"
                     android:gravity="center"
+                    android:onClick="onClickNavigate"
                     android:orientation="horizontal">
 
                     <ImageView

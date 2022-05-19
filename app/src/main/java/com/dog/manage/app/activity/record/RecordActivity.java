@@ -43,9 +43,12 @@ public class RecordActivity extends BaseActivity {
             mainPagerAdapter.addFragment("审核中", RecordFragment.getInstance(type, 1));
             mainPagerAdapter.addFragment("审核通过", RecordFragment.getInstance(type, 2));
             mainPagerAdapter.addFragment("审核拒绝", RecordFragment.getInstance(type, 3));
-            mainPagerAdapter.addFragment("已办结", RecordFragment.getInstance(type, 3));
+            mainPagerAdapter.addFragment("已办结", RecordFragment.getInstance(type, 4));
+            mainPagerAdapter.addFragment("已过期", RecordFragment.getInstance(type, 5));
+            mainPagerAdapter.addFragment("已注销", RecordFragment.getInstance(type, 6));
 
         } else if (type == type_immune) {
+            //办理状态 0 默认 1：未接种 2：已接种 3: 即将过期 4: 已过期
             binding.titleView.binding.itemTitle.setText("免疫证办理记录");
             mainPagerAdapter.addFragment("已预约", RecordFragment.getInstance(type, 1));
             mainPagerAdapter.addFragment("已办结", RecordFragment.getInstance(type, 2));
