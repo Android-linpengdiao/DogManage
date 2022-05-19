@@ -57,7 +57,7 @@ public class DogDetailsActivity extends BaseActivity {
         binding.banner.setOnBannerListener(new OnBannerListener() {
             @Override
             public void OnBannerClick(int position) {
-                openActivity(AdvertiseActivity.class);
+
             }
         });
     }
