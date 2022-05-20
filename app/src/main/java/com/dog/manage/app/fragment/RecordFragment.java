@@ -102,7 +102,6 @@ public class RecordFragment extends BaseFragment {
 
                     }
                 });
-//                certificateRecordAdapter.refreshData(Arrays.asList("", "", "", "", "", "", "", "", ""));
 
             } else if (type == RecordActivity.type_immune) {
                 certificateRecordAdapter = new CertificateRecordAdapter(getActivity());
@@ -124,7 +123,6 @@ public class RecordFragment extends BaseFragment {
 
                     }
                 });
-//                certificateRecordAdapter.refreshData(Arrays.asList("", "", "", "", "", "", "", "", ""));
 
             } else if (type == RecordActivity.type_transfer) {
                 certificateRecordAdapter = new CertificateRecordAdapter(getActivity());
@@ -144,7 +142,7 @@ public class RecordFragment extends BaseFragment {
 
                     }
                 });
-//                certificateRecordAdapter.refreshData(Arrays.asList("", "", "", "", "", "", "", "", ""));
+                certificateRecordAdapter.refreshData(Arrays.asList(new RecordImmune(), new RecordImmune(), new RecordImmune(), new RecordImmune(), new RecordImmune(), new RecordImmune(), new RecordImmune(), new RecordImmune(), new RecordImmune()));
 
             } else if (type == RecordActivity.type_adoption) {
                 adoptionRecordAdapter = new AdoptionRecordAdapter(getActivity());
@@ -184,7 +182,7 @@ public class RecordFragment extends BaseFragment {
 
                     }
                 });
-//                certificateRecordAdapter.refreshData(Arrays.asList("", "", "", "", "", "", "", "", ""));
+                certificateRecordAdapter.refreshData(Arrays.asList(new RecordImmune(), new RecordImmune(), new RecordImmune(), new RecordImmune(), new RecordImmune(), new RecordImmune(), new RecordImmune(), new RecordImmune(), new RecordImmune()));
 
             }
 

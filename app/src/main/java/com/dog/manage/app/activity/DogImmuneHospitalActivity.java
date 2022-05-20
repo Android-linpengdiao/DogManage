@@ -55,7 +55,7 @@ public class DogImmuneHospitalActivity extends BaseActivity implements AMap.OnMa
 
     private ActivityDogImmuneHospitalBinding binding;
     private DogImmuneHospitalAdapter adapter;
-    private Map<String, String> paramsMap = new HashMap<>();
+    private int dogId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,12 +64,7 @@ public class DogImmuneHospitalActivity extends BaseActivity implements AMap.OnMa
         addActivity(this);
         binding.thirdStepView.setSelected(true);
 
-        String paramsJson = getIntent().getStringExtra("paramsJson");
-        if (!TextUtils.isEmpty(paramsJson)) {
-            Gson gson = new Gson();
-            paramsMap = gson.fromJson(paramsJson, new TypeToken<Map<String, Object>>() {
-            }.getType());
-        }
+        dogId = getIntent().getIntExtra("dogId", 0);
 
         initView();
         initMapView(savedInstanceState);
@@ -150,7 +145,7 @@ public class DogImmuneHospitalActivity extends BaseActivity implements AMap.OnMa
             ToastUtils.showShort(getApplicationContext(), "提交失败");
             return;
         }
-        SendRequest.saveImmune(8, dataBean.getId(), dataBean.getHospitalName(),
+        SendRequest.saveImmune(dogId, dataBean.getId(), dataBean.getHospitalName(),
                 new GenericsCallback<ResultClient<Boolean>>(new JsonGenericsSerializator()) {
                     @Override
                     public void onError(Call call, Exception e, int id) {

@@ -49,29 +49,31 @@ public class CertificateRecordAdapter extends BaseRecyclerAdapter<RecordImmune, 
             binding.contentView.setText(dataBean.getDogType() + "-" + dataBean.getDogAge() + "岁3个月");
             binding.createTimeView.setText(dataBean.getCreatedTime());
             binding.contentView.setTextColor(Color.parseColor("#999999"));
-            if (dataBean.getLicenceStatus() == 1) {
-                binding.checkStatusView.setText("审核中");
-                binding.bottomView.setVisibility(View.GONE);
+            if (dataBean.getLicenceStatus() != null) {
+                if (dataBean.getLicenceStatus() == 1) {
+                    binding.checkStatusView.setText("审核中");
+                    binding.bottomView.setVisibility(View.GONE);
 
-            }else if (dataBean.getLicenceStatus() == 2) {
-                binding.checkStatusView.setText("审核通过");
-                binding.checkStatusView.setBackgroundResource(R.drawable.tag_g);
-                binding.detailsStatusView.setText("支付费用");
+                } else if (dataBean.getLicenceStatus() == 2) {
+                    binding.checkStatusView.setText("审核通过");
+                    binding.checkStatusView.setBackgroundResource(R.drawable.tag_g);
+                    binding.detailsStatusView.setText("支付费用");
 
-            } else if (dataBean.getLicenceStatus() == 3) {
-                binding.checkStatusView.setText("审核拒绝");
-                binding.checkStatusView.setBackgroundResource(R.drawable.tag_r);
-                binding.detailsStatusView.setText("查看详情");
+                } else if (dataBean.getLicenceStatus() == 3) {
+                    binding.checkStatusView.setText("审核拒绝");
+                    binding.checkStatusView.setBackgroundResource(R.drawable.tag_r);
+                    binding.detailsStatusView.setText("查看详情");
 
-            } else if (dataBean.getLicenceStatus() == 4) {
-                binding.checkStatusView.setText("已办结");
-                binding.checkStatusView.setBackgroundResource(R.drawable.tag_gray);
-                binding.detailsStatusView.setText("查看犬证");
+                } else if (dataBean.getLicenceStatus() == 4) {
+                    binding.checkStatusView.setText("已办结");
+                    binding.checkStatusView.setBackgroundResource(R.drawable.tag_gray);
+                    binding.detailsStatusView.setText("查看犬证");
 
-            } else {
-                binding.checkStatusView.setText("审核中");
-                binding.bottomView.setVisibility(View.GONE);
+                } else {
+                    binding.checkStatusView.setText("审核中");
+                    binding.bottomView.setVisibility(View.GONE);
 
+                }
             }
 
         } else if (type == RecordActivity.type_immune) {
@@ -80,29 +82,31 @@ public class CertificateRecordAdapter extends BaseRecyclerAdapter<RecordImmune, 
             binding.dogOwnerContainer.setVisibility(View.INVISIBLE);
             binding.contentView.setText(dataBean.getDogType() + "-" + dataBean.getDogAge() + "岁3个月");
             binding.contentView.setTextColor(Color.parseColor("#999999"));
-            if (dataBean.getLincenceStatus() == 1) {
-                binding.checkStatusView.setText("已预约");
-                binding.detailsStatusView.setText("查看信息");
+            if (dataBean.getLicenceStatus() != null) {
+                if (dataBean.getLincenceStatus() == 1) {
+                    binding.checkStatusView.setText("已预约");
+                    binding.detailsStatusView.setText("查看信息");
 
-            }else if (dataBean.getLincenceStatus() == 2) {
-                binding.checkStatusView.setText("已办结");
-                binding.checkStatusView.setBackgroundResource(R.drawable.tag_g);
-                binding.detailsStatusView.setText("查看免疫证");
+                } else if (dataBean.getLincenceStatus() == 2) {
+                    binding.checkStatusView.setText("已办结");
+                    binding.checkStatusView.setBackgroundResource(R.drawable.tag_g);
+                    binding.detailsStatusView.setText("查看免疫证");
 
-            } else if (dataBean.getLincenceStatus() == 3) {
-                binding.checkStatusView.setText("即将过期");
-                binding.checkStatusView.setBackgroundResource(R.drawable.tag_r);
-                binding.detailsStatusView.setText("办理年审");
+                } else if (dataBean.getLincenceStatus() == 3) {
+                    binding.checkStatusView.setText("即将过期");
+                    binding.checkStatusView.setBackgroundResource(R.drawable.tag_r);
+                    binding.detailsStatusView.setText("办理年审");
 
-            } else if (dataBean.getLincenceStatus() == 4) {
-                binding.checkStatusView.setText("已过期");
-                binding.checkStatusView.setBackgroundResource(R.drawable.tag_r);
-                binding.detailsStatusView.setText("办理年审");
+                } else if (dataBean.getLincenceStatus() == 4) {
+                    binding.checkStatusView.setText("已过期");
+                    binding.checkStatusView.setBackgroundResource(R.drawable.tag_r);
+                    binding.detailsStatusView.setText("办理年审");
 
-            } else {
-                binding.checkStatusView.setText("已预约");
-                binding.detailsStatusView.setText("查看信息");
+                } else {
+                    binding.checkStatusView.setText("已预约");
+                    binding.detailsStatusView.setText("查看信息");
 
+                }
             }
 
         } else if (type == RecordActivity.type_transfer) {
@@ -153,7 +157,7 @@ public class CertificateRecordAdapter extends BaseRecyclerAdapter<RecordImmune, 
                     if (type == RecordActivity.type_certificate) {
                         onClickListener.onClick(view, dataBean);
 
-                    }else if (type == RecordActivity.type_immune) {
+                    } else if (type == RecordActivity.type_immune) {
                         onClickListener.onClick(view, dataBean);
 
                     } else {

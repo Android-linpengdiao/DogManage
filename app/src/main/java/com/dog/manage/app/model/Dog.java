@@ -13,7 +13,7 @@ public class Dog implements Serializable {
     private Integer lincenceId;
     private Integer licenceStatus;
     private String dogType;
-    private Integer dogAge;
+    private Integer dogAge = 0;
     private String createdTime;
     private Integer userId;
     private String userName;
@@ -31,7 +31,7 @@ public class Dog implements Serializable {
     private String sterilizationProve;
     private String dogPhoto;
     private String noseprint;
-    private Integer leaveId;
+    private Integer leaveId = 0;
 
     public Dog(Integer dogId, String dogType, String idNum) {
         this.dogId = dogId;

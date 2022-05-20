@@ -135,10 +135,10 @@ public class DogCertificateExaminedActivity extends BaseActivity {
     }
 
     /**
-     * 获取个人犬只免疫列表
+     * 获取犬证列表
      */
     private void getDogImmuneList() {
-        SendRequest.getDogImmuneList(new GenericsCallback<ResultClient<List<Dog>>>(new JsonGenericsSerializator()) {
+        SendRequest.getDogLicenceList(new GenericsCallback<ResultClient<List<Dog>>>(new JsonGenericsSerializator()) {
             @Override
             public void onError(Call call, Exception e, int id) {
             }

@@ -296,10 +296,12 @@ public class DogCertificateEditDogActivity extends BaseActivity {
             dog.setDogGender(0);
         }
 
-        int bearCheckedRadioButtonId = binding.radioGroupSterilization.getCheckedRadioButtonId();
-        if (bearCheckedRadioButtonId == R.id.radioButtonSterilization0) {//未绝育
-
-        } else if (bearCheckedRadioButtonId == R.id.radioButtonSterilization1) {//已绝育
+        //是否绝育;0：否 1：是
+        int sterilizationCheckedRadioButtonId = binding.radioGroupSterilization.getCheckedRadioButtonId();
+        if (sterilizationCheckedRadioButtonId == R.id.radioButtonSterilization0) {//未绝育
+            dog.setSterilization(0);
+        } else if (sterilizationCheckedRadioButtonId == R.id.radioButtonSterilization1) {//已绝育
+            dog.setSterilization(1);
             if (CommonUtil.isBlank(dog.getSterilizationProve())) {
                 ToastUtils.showShort(getApplicationContext(), "请上传绝育证明");
                 return;
@@ -307,7 +309,7 @@ public class DogCertificateEditDogActivity extends BaseActivity {
 
         }
 
-        if (dog.getDogAge() <= 0) {
+        if (dog.getDogAge() < 0) {
             ToastUtils.showShort(getApplicationContext(), "选择犬只年龄");
             return;
         }
@@ -366,7 +368,7 @@ public class DogCertificateEditDogActivity extends BaseActivity {
 
                     } else if (type == type_immune) {
                         Bundle bundle = new Bundle();
-                        bundle.putString("paramsJson", GsonUtils.toJson(map));
+                        bundle.putInt("dogId", response.getData().getDogId());
                         openActivity(DogImmuneHospitalActivity.class, bundle);
 
                     }
@@ -486,20 +488,21 @@ public class DogCertificateEditDogActivity extends BaseActivity {
 
                                     @Override
                                     public void onSuccess(File file) {
+                                        String url = "https://img0.baidu.com/it/u=3282676189,411395798&fm=253&fmt=auto&app=138&f=JPEG?w=564&h=500";
                                         if (requestCode == request_Testify) {
-                                            dog.setSterilizationProve(file.getAbsolutePath());
+                                            dog.setSterilizationProve(url);
                                             GlideLoader.LoderImage(DogCertificateEditDogActivity.this, dog.getSterilizationProve(), binding.testifyView, 6);
 
                                         } else if (requestCode == request_LeftFace) {
-                                            leftFace = file.getAbsolutePath();
+                                            leftFace = url;
                                             GlideLoader.LoderImage(DogCertificateEditDogActivity.this, leftFace, binding.leftFaceView, 6);
 
                                         } else if (requestCode == request_CenterFace) {
-                                            centerFace = file.getAbsolutePath();
+                                            centerFace = url;
                                             GlideLoader.LoderImage(DogCertificateEditDogActivity.this, centerFace, binding.centerFaceView, 6);
 
                                         } else if (requestCode == request_RightFace) {
-                                            rightFace = file.getAbsolutePath();
+                                            rightFace = url;
                                             GlideLoader.LoderImage(DogCertificateEditDogActivity.this, rightFace, binding.rightFaceView, 6);
 
                                         }

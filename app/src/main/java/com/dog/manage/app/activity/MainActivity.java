@@ -220,9 +220,7 @@ public class MainActivity extends BaseActivity {
 
     public void onClickMessage(View view) {
         if (checkUserRank(getApplicationContext(), true)) {
-//            openActivity(MessageActivity.class);
-//            openActivity(DogCertificateEditSubmitActivity.class);
-            openActivity(DogCertificateEditDogActivity.class);
+            openActivity(MessageActivity.class);
         }
     }
 

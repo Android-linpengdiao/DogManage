@@ -368,16 +368,25 @@ public class DogCertificateEditDogOwnerActivity extends BaseActivity {
                     binding.oldManContainer.setVisibility(View.VISIBLE);
                     binding.oldManOrDisabledCertificateHintView.setText("鳏寡老人证明");
                     //是否鳏寡老人（个人）;0：否 1：是
-                    if (dogUser.getAged() == 1) {
+                    if (dogUser.getAged() == 0) {
+                        binding.radioButtonOldMan0.setChecked(true);
+                    } else if (dogUser.getAged() == 1) {
                         GlideLoader.LoderUploadImage(DogCertificateEditDogOwnerActivity.this, dogUser.getAgedProve(), binding.oldManOrDisabledCertificateView, 6);
                     }
 
                     if (type == type_details) {
-                        binding.radioButtonDisabled.setVisibility(View.GONE);
+                        //犬只类型提示
+                        binding.radioButtonDisabled.setVisibility(dogType == 1 ? View.VISIBLE : View.GONE);
+                        binding.radioButtonOldMan.setVisibility(dogType == 2 ? View.VISIBLE : View.GONE);
                         binding.radioButtonOldMan0.setChecked(dogUser.getAged() == 0 ? true : false);
                         binding.radioButtonOldMan0.setVisibility(dogUser.getAged() == 0 ? View.VISIBLE : View.GONE);
                         binding.radioButtonOldMan1.setChecked(dogUser.getAged() == 1 ? true : false);
                         binding.radioButtonOldMan1.setVisibility(dogUser.getAged() == 1 ? View.VISIBLE : View.GONE);
+
+                        //犬只类型提示
+                        binding.dogTypeHintView.setVisibility(View.GONE);
+                        binding.oldManHintView.setVisibility(View.GONE);
+                        binding.oldManOrDisabledCertificateContainer.setVisibility(dogType == 2 && dogUser.getAged() == 0 ? View.GONE : View.VISIBLE);
                     }
 
                 }
