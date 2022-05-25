@@ -94,7 +94,7 @@ public class WelcomeActivity extends BaseActivity {
 //                        openActivity(MainActivity.class);
 //                        finish();
 //                    } else {
-//                        ToastUtils.showShort(WelcomeActivity.this, response.getMsg());
+//                        ToastUtils.showShort(WelcomeActivity.this, response.getMessage());
 //                    }
 //                }
 //            });

@@ -50,7 +50,7 @@ public class PoliciesDetailsActivity extends BaseActivity {
                             binding.noticeTimeView.setText(dataBean.getCreateTime());
                             binding.noticeContentView.setText(dataBean.getNoticeTitle());
                         } else {
-                            ToastUtils.showShort(getApplicationContext(), response.getMsg());
+                            ToastUtils.showShort(getApplicationContext(), response.getMessage());
                         }
                     }
                 });

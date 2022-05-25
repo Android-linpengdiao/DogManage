@@ -93,7 +93,7 @@ public class DogCertificateEditSubmitActivity extends BaseActivity implements AM
                     binding.handleUnitAddressView.setText(response.getData().getHandleUnitAddress());
                     binding.costValueView.binding.itemContent.setText("￥" + response.getData().getCostValue());
                 } else {
-                    ToastUtils.showShort(getApplicationContext(), response.getMsg());
+                    ToastUtils.showShort(getApplicationContext(), response.getMessage());
                 }
             }
         });
@@ -152,7 +152,7 @@ public class DogCertificateEditSubmitActivity extends BaseActivity implements AM
                     finishActivity(DogCertificateEditDogActivity.class);
                     finish();
                 } else {
-                    ToastUtils.showShort(getApplicationContext(), response.getMsg());
+                    ToastUtils.showShort(getApplicationContext(), response.getMessage());
                 }
             }
         });

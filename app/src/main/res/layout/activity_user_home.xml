@@ -26,6 +26,10 @@
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/dp_216"
                     android:background="@drawable/bk"
+                    android:layout_marginLeft="@dimen/dp_m_2"
+                    android:layout_marginRight="@dimen/dp_m_2"
+                    android:paddingRight="@dimen/dp_m_2"
+                    android:paddingLeft="@dimen/dp_m_2"
                     android:gravity="center"
                     android:orientation="vertical">
 

@@ -93,7 +93,7 @@ public class ImmuneDetailsActivity extends BaseActivity {
                     initView(response.getData());
 
                 } else {
-                    ToastUtils.showShort(getApplicationContext(), response.getMsg());
+                    ToastUtils.showShort(getApplicationContext(), response.getMessage());
                 }
             }
         });

@@ -114,7 +114,7 @@ dependencies {
 }
 
 def getProductName() {//获取产品的名字
-    return "manage"
+    return "犬只管理"
 }
 
 def releaseTime() {//获取当前系统的时间

@@ -20,12 +20,21 @@ public class ResultClient<T> implements Serializable {
     /**
      * 响应描述
      */
+    private String message;
     private String msg;
 
     /**
      * 响应代码
      */
     private int code;
+
+    public int getCode() {
+        return code;
+    }
+
+    public void setCode(int code) {
+        this.code = code;
+    }
 
     public boolean isSuccess() {
         return code == 200;
@@ -43,19 +52,19 @@ public class ResultClient<T> implements Serializable {
         this.data = data;
     }
 
+    public String getMessage() {
+        return message;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
+    }
+
     public String getMsg() {
         return msg;
     }
 
     public void setMsg(String msg) {
         this.msg = msg;
-    }
-
-    public int getCode() {
-        return code;
-    }
-
-    public void setCode(int code) {
-        this.code = code;
     }
 }

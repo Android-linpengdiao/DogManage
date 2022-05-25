@@ -373,7 +373,7 @@ public class DogCertificateEditDogActivity extends BaseActivity {
 
                     }
                 } else {
-                    ToastUtils.showShort(getApplicationContext(), response.getMsg());
+                    ToastUtils.showShort(getApplicationContext(), response.getMessage());
                 }
             }
         });

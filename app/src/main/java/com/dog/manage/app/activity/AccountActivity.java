@@ -94,7 +94,7 @@ public class AccountActivity extends BaseActivity {
                     });
                 } else {
                     binding.sendCodeView.setEnabled(true);
-                    ToastUtils.showShort(getApplicationContext(), response.getMsg());
+                    ToastUtils.showShort(getApplicationContext(), response.getMessage());
                 }
 
             }

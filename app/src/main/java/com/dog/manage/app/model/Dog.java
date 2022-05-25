@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 public class Dog implements Serializable {
 
     private Integer dogId;
-    private Integer lincenceId;
+    private Integer lincenceId = 0;
     private Integer licenceStatus;
     private String dogType;
     private Integer dogAge = 0;

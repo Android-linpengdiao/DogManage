@@ -14,6 +14,7 @@ import com.base.utils.GsonUtils;
 import com.base.utils.LogUtil;
 import com.base.utils.PermissionUtils;
 import com.base.utils.ToastUtils;
+import com.dog.manage.app.Config;
 import com.dog.manage.app.R;
 import com.dog.manage.app.databinding.ActivityUpdateDogOwnerInfoBinding;
 import com.dog.manage.app.media.MediaFile;
@@ -22,6 +23,8 @@ import com.dog.manage.app.media.MediaUtils;
 import com.dog.manage.app.utils.UploadFileManager;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import com.obs.services.ObsClient;
+import com.obs.services.exception.ObsException;
 import com.obs.services.model.ProgressListener;
 import com.obs.services.model.ProgressStatus;
 import com.obs.services.model.PutObjectRequest;
@@ -30,6 +33,7 @@ import com.okhttp.callbacks.GenericsCallback;
 import com.okhttp.sample_okhttp.JsonGenericsSerializator;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -229,6 +233,12 @@ public class UpdateDogOwnerInfoActivity extends BaseActivity {
                                             personaHouseProprietaryCertificate = file.getAbsolutePath();
                                             GlideLoader.LoderImage(UpdateDogOwnerInfoActivity.this, file.getAbsolutePath(), binding.houseProprietaryCertificateView, 6);
 
+                                            new Thread(new Runnable() {
+                                                @Override
+                                                public void run() {
+                                                    uploadFile(file.getAbsolutePath());
+                                                }
+                                            }).start();
                                         }
                                     }
 
@@ -250,40 +260,40 @@ public class UpdateDogOwnerInfoActivity extends BaseActivity {
      * @param filePath
      */
     private void uploadFile(String filePath) {
+        Log.i(TAG, "uploadFile: "+filePath);
+//        PutObjectRequest request = new PutObjectRequest();
+//        request.setBucketName(Config.huaweiBucketName);
+//        request.setObjectKey(Config.huaweiObjectKey);
+//        request.setFile(new File(filePath));
+//        request.setProgressListener(new ProgressListener() {
+//            @Override
+//            public void progressChanged(ProgressStatus status) {
+//                // 获取上传平均速率
+//                Log.i("PutObject", "AverageSpeed:" + status.getAverageSpeed());
+//                // 获取上传进度百分比
+//                Log.i("PutObject", "TransferPercentage:" + status.getTransferPercentage());
+//            }
+//        });
+//        //每上传1MB数据反馈上传进度
+//        request.setProgressInterval(1024 * 1024L);
+//        UploadFileManager.getInstance().getObsClient().putObject(request);
 
-        PutObjectRequest request = new PutObjectRequest();
-        request.setBucketName("bucketName");
-        request.setObjectKey("objectKey");
-        request.setFile(new File(filePath));
-        request.setProgressListener(new ProgressListener() {
-            @Override
-            public void progressChanged(ProgressStatus status) {
-                // 获取上传平均速率
-                Log.i("PutObject", "AverageSpeed:" + status.getAverageSpeed());
-                // 获取上传进度百分比
-                Log.i("PutObject", "TransferPercentage:" + status.getTransferPercentage());
-            }
-        });
-        //每上传1MB数据反馈上传进度
-        request.setProgressInterval(1024 * 1024L);
-        UploadFileManager.getInstance().getObsClient().putObject(request);
 
+        ObsClient obsClient = null;
+        try {
+            // 创建ObsClient实例
+            obsClient = new ObsClient(Config.huaweiCloudAccessKey, Config.huaweiCloudSecretKey, Config.huaweiCloudEndPoint);
 
-//        ObsClient obsClient = null;
-//        try {
-//            // 创建ObsClient实例
-//            obsClient = new ObsClient(Config.huaweiCloudAccessKey, Config.huaweiCloudSecretKey, Config.huaweiCloudEndPoint);
-//
-//            //创建桶
-//            //obsClient.createBucket("bucketname");
-//
-//            // localfile为待上传的本地文件路径，需要指定到具体的文件名
-//            obsClient.putObject("bucketname", "objectname", new File("localfile"));
-//            // localfile2 为待上传的本地文件路径，需要指定到具体的文件名
+            //创建桶
+            //obsClient.createBucket("bucketname");
+
+            // localfile为待上传的本地文件路径，需要指定到具体的文件名
+            obsClient.putObject(Config.huaweiBucketName, Config.huaweiObjectKey, new File(filePath));
+            // localfile2 为待上传的本地文件路径，需要指定到具体的文件名
 //            PutObjectRequest request = new PutObjectRequest();
-//            request.setBucketName("bucketname");
-//            request.setObjectKey("objectname2");
-//            request.setFile(new File("localfile2"));
+//            request.setBucketName(Config.huaweiBucketName);
+//            request.setObjectKey(Config.huaweiObjectKey+"_"+System.currentTimeMillis());
+//            request.setFile(new File(filePath));
 //            request.setProgressListener(new ProgressListener() {
 //                @Override
 //                public void progressChanged(ProgressStatus status) {
@@ -294,28 +304,28 @@ public class UpdateDogOwnerInfoActivity extends BaseActivity {
 //                }
 //            });
 //            obsClient.putObject(request);
-//
-//            // 使用访问OBS
-//
-//
-//        } catch (ObsException e) {
-//            Log.e("PutObject", "Response Code: " + e.getResponseCode());
-//            Log.e("PutObject", "Error Message: " + e.getErrorMessage());
-//            Log.e("PutObject", "Error Code:       " + e.getErrorCode());
-//            Log.e("PutObject", "Request ID:      " + e.getErrorRequestId());
-//            Log.e("PutObject", "Host ID:           " + e.getErrorHostId());
-//        } finally {
-//            // 关闭ObsClient实例，如果是全局ObsClient实例，可以不在每个方法调用完成后关闭
-//            // ObsClient在调用ObsClient.close方法关闭后不能再次使用
-//            if (obsClient != null) {
-//                try {
-//                    // 关闭obsClient
-//                    obsClient.close();
-//                } catch (IOException e) {
-//                    e.getMessage();
-//                }
-//            }
-//        }
+
+            // 使用访问OBS
+
+
+        } catch (ObsException e) {
+            Log.e("PutObject", "Response Code: " + e.getResponseCode());
+            Log.e("PutObject", "Error Message: " + e.getErrorMessage());
+            Log.e("PutObject", "Error Code:       " + e.getErrorCode());
+            Log.e("PutObject", "Request ID:      " + e.getErrorRequestId());
+            Log.e("PutObject", "Host ID:           " + e.getErrorHostId());
+        } finally {
+            // 关闭ObsClient实例，如果是全局ObsClient实例，可以不在每个方法调用完成后关闭
+            // ObsClient在调用ObsClient.close方法关闭后不能再次使用
+            if (obsClient != null) {
+                try {
+                    // 关闭obsClient
+                    obsClient.close();
+                } catch (IOException e) {
+                    e.getMessage();
+                }
+            }
+        }
 
     }
 }

@@ -94,7 +94,7 @@ public class LoginActivity extends BaseActivity {
                     finishActivity(LoginActivity.class);
                     finish();
                 } else {
-                    ToastUtils.showShort(getApplicationContext(), response.getMsg());
+                    ToastUtils.showShort(getApplicationContext(), response.getMessage());
                 }
             }
         });
@@ -153,7 +153,7 @@ public class LoginActivity extends BaseActivity {
                     });
                 } else {
                     binding.sendCodeView.setEnabled(true);
-                    ToastUtils.showShort(getApplicationContext(), response.getMsg());
+                    ToastUtils.showShort(getApplicationContext(), response.getMessage());
                 }
 
             }

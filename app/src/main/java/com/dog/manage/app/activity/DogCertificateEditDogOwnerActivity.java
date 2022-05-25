@@ -6,6 +6,7 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.RadioGroup;
 
@@ -171,7 +172,7 @@ public class DogCertificateEditDogOwnerActivity extends BaseActivity {
             public void onClick(View view) {
 //                openActivity(AreaSelectActivity.class, request_City);
 
-                View contentView = View.inflate(DogCertificateEditDogOwnerActivity.this, R.layout.dialog_address, null);
+                View contentView = LayoutInflater.from(DogCertificateEditDogOwnerActivity.this).inflate(R.layout.dialog_address, null);
                 DialogAddressBinding addressBinding = DataBindingUtil.bind(contentView);
                 BaseBottomSheetDialog bottomSheetDialog = new BaseBottomSheetDialog(DogCertificateEditDogOwnerActivity.this) {
                     @Override
@@ -249,7 +250,7 @@ public class DogCertificateEditDogOwnerActivity extends BaseActivity {
                     binding.container.setVisibility(View.VISIBLE);
                     binding.confirmView.setVisibility(View.VISIBLE);
                     getDogUser();
-                } else {
+                } else if (response.isSuccess() && !response.getData()) {
                     DialogManager.showConfirmDialog(DogCertificateEditDogOwnerActivity.this, "请先完善个人信息", new DialogManager.Listener() {
                         @Override
                         public void onItemLeft() {
@@ -264,6 +265,8 @@ public class DogCertificateEditDogOwnerActivity extends BaseActivity {
                             finish();
                         }
                     });
+                } else {
+                    ToastUtils.showShort(getApplicationContext(), response.getMessage());
                 }
             }
         });
@@ -283,6 +286,8 @@ public class DogCertificateEditDogOwnerActivity extends BaseActivity {
                 if (response.isSuccess() && response.getData() != null) {
                     dogUser = response.getData();
                     initDogUserView(dogUser);
+                } else {
+                    ToastUtils.showShort(getApplicationContext(), response.getMessage());
                 }
             }
         });
@@ -317,7 +322,7 @@ public class DogCertificateEditDogOwnerActivity extends BaseActivity {
 
     private void initDogUserView(DogUser dogUser) {
         binding.certificateContainer.setVisibility(View.VISIBLE);
-        if (dogUser.getUserType() != null && (dogUser.getUserType() == 1 || dogUser.getUserType() == 2)) {
+        if (dogUser.getUserType() != null && (dogUser.getUserType() == DogUser.userType_personal || dogUser.getUserType() == DogUser.userType_organ)) {
             if (dogUser.getUserType() == DogUser.userType_personal) {
 
                 //个人办理
@@ -904,7 +909,7 @@ public class DogCertificateEditDogOwnerActivity extends BaseActivity {
 
                         }
                     } else {
-                        ToastUtils.showShort(getApplicationContext(), response.getMsg());
+                        ToastUtils.showShort(getApplicationContext(), response.getMessage());
                     }
                 }
             });

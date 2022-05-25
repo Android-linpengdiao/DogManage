@@ -62,7 +62,7 @@ public class Pager<T> implements Serializable {
         this.success = success;
     }
 
-    public String getMsg() {
+    public String getMessage() {
         return msg;
     }
 

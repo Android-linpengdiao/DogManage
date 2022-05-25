@@ -91,7 +91,7 @@ public class DogImmuneHospitalActivity extends BaseActivity implements AMap.OnMa
                         if (response.isSuccess() && response.getData() != null) {
                             adapter.refreshData(response.getData());
                         } else {
-                            ToastUtils.showShort(getApplicationContext(), response.getMsg());
+                            ToastUtils.showShort(getApplicationContext(), response.getMessage());
                         }
                     }
                 });
@@ -164,7 +164,7 @@ public class DogImmuneHospitalActivity extends BaseActivity implements AMap.OnMa
                             finishActivity(DogCertificateEditDogActivity.class);
                             finish();
                         } else {
-                            ToastUtils.showShort(getApplicationContext(), response.getMsg());
+                            ToastUtils.showShort(getApplicationContext(), response.getMessage());
                         }
                     }
                 });

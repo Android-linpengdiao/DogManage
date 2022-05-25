@@ -46,7 +46,7 @@ public class PayActivity extends BaseActivity {
                         if (response.isSuccess()) {
                             orderCreateOrderAboutVip(response.getData().getId());
                         } else {
-                            ToastUtils.showShort(PayActivity.this, response.getMsg());
+                            ToastUtils.showShort(PayActivity.this, response.getMessage());
                         }
 
                     }
@@ -117,7 +117,7 @@ public class PayActivity extends BaseActivity {
                                         });
 
                             } else {
-                                ToastUtils.showShort(PayActivity.this, response.getMsg());
+                                ToastUtils.showShort(PayActivity.this, response.getMessage());
 
                             }
                         }
@@ -169,7 +169,7 @@ public class PayActivity extends BaseActivity {
                                         });
 
                             } else {
-                                ToastUtils.showShort(PayActivity.this, response.getMsg());
+                                ToastUtils.showShort(PayActivity.this, response.getMessage());
 
                             }
                         }

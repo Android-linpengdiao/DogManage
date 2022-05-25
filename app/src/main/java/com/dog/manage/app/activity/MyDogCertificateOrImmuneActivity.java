@@ -112,7 +112,7 @@ public class MyDogCertificateOrImmuneActivity extends BaseActivity {
                 if (response.isSuccess() && response.getData() != null) {
 
                 } else {
-                    ToastUtils.showShort(getApplicationContext(), response.getMsg());
+                    ToastUtils.showShort(getApplicationContext(), response.getMessage());
                 }
             }
         });
@@ -146,7 +146,7 @@ public class MyDogCertificateOrImmuneActivity extends BaseActivity {
                 if (response.isSuccess() && response.getData() != null) {
 
                 } else {
-                    ToastUtils.showShort(getApplicationContext(), response.getMsg());
+                    ToastUtils.showShort(getApplicationContext(), response.getMessage());
                 }
             }
         });

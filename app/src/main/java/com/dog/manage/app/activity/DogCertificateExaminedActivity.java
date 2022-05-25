@@ -171,7 +171,7 @@ public class DogCertificateExaminedActivity extends BaseActivity {
                 if (response.isSuccess() && response.getData() != null) {
 
                 } else {
-                    ToastUtils.showShort(getApplicationContext(), response.getMsg());
+                    ToastUtils.showShort(getApplicationContext(), response.getMessage());
                 }
             }
         });

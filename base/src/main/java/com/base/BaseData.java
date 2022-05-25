@@ -30,7 +30,7 @@ public class BaseData implements Serializable {
         this.code = code;
     }
 
-    public String getMsg() {
+    public String getMessage() {
         return msg;
     }
 
