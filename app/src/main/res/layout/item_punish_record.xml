@@ -29,7 +29,6 @@
             android:paddingTop="@dimen/dp_15">
 
             <com.dog.manage.app.view.TextBoldView
-                android:id="@+id/titleView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="center_vertical"
@@ -38,28 +37,31 @@
                 android:textSize="@dimen/sp_17" />
 
             <TextView
+                android:id="@+id/illegalTypeView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/dp_17"
                 android:layout_weight="1"
-                android:text="违法类型:逼狗不栓狗绳"
+                android:text="违法类型:"
                 android:textColor="#999999"
                 android:textSize="@dimen/sp_14" />
 
             <TextView
+                android:id="@+id/illegalMeasureView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/dp_4"
                 android:layout_weight="1"
-                android:text="处罚措施:罚款1000元,扣押犬只10日!"
+                android:text="处罚措施:"
                 android:textColor="#999999"
                 android:textSize="@dimen/sp_14" />
             <TextView
+                android:id="@+id/illegalTimeView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/dp_4"
                 android:layout_weight="1"
-                android:text="处罚时间: 2022.03.03 18:30"
+                android:text="处罚时间: "
                 android:textColor="#999999"
                 android:textSize="@dimen/sp_14" />
 

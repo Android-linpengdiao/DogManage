@@ -2,11 +2,14 @@ package com.dog.manage.app.activity;
 
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 
+import com.base.BaseData;
+import com.base.manager.LoadingManager;
 import com.base.utils.CommonUtil;
 import com.base.utils.FileUtils;
 import com.base.utils.GlideLoader;
@@ -20,6 +23,8 @@ import com.dog.manage.app.databinding.ActivityUpdateDogOwnerInfoBinding;
 import com.dog.manage.app.media.MediaFile;
 import com.dog.manage.app.media.MediaSelectActivity;
 import com.dog.manage.app.media.MediaUtils;
+import com.dog.manage.app.model.Dog;
+import com.dog.manage.app.model.HandleInfo;
 import com.dog.manage.app.utils.UploadFileManager;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -28,6 +33,7 @@ import com.obs.services.exception.ObsException;
 import com.obs.services.model.ProgressListener;
 import com.obs.services.model.ProgressStatus;
 import com.obs.services.model.PutObjectRequest;
+import com.okhttp.ResultClient;
 import com.okhttp.SendRequest;
 import com.okhttp.callbacks.GenericsCallback;
 import com.okhttp.sample_okhttp.JsonGenericsSerializator;
@@ -37,8 +43,12 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 
+import io.reactivex.rxjava3.core.Observable;
+import io.reactivex.rxjava3.functions.Consumer;
 import okhttp3.Call;
+import okhttp3.Request;
 import top.zibin.luban.Luban;
 import top.zibin.luban.OnCompressListener;
 
@@ -52,7 +62,8 @@ public class UpdateDogOwnerInfoActivity extends BaseActivity {
     public static final int type_submit = 1;//提交
 
     private int type = 0;
-    private Map<String, String> paramsMap = new HashMap<>();
+    private Dog dogDetail = null;
+    private int newAddressId = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,49 +76,69 @@ public class UpdateDogOwnerInfoActivity extends BaseActivity {
         setTypeface(binding.houseHintView);
 
         type = getIntent().getIntExtra("type", 0);
-        String paramsJson = getIntent().getStringExtra("paramsJson");
-        if (!TextUtils.isEmpty(paramsJson)) {
-            Gson gson = new Gson();
-            paramsMap = gson.fromJson(paramsJson, new TypeToken<Map<String, Object>>() {
-            }.getType());
+
+        dogDetail = (Dog) getIntent().getSerializableExtra("DogDetail");
+        newAddressId = getIntent().getIntExtra("newAddressId", 0);
+        if (dogDetail != null) {
+            if (type == type_details) {
+                binding.firstStepView.setSelected(true);
+                binding.addressView.binding.itemContent.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        openActivity(AreaSelectActivity.class, request_City);
+                    }
+                });
+
+            } else if (type == type_submit) {
+                binding.secondStepView.setSelected(true);
+
+                binding.confirmView.setText("提交审核");
+                binding.submitContainer.setVisibility(View.VISIBLE);
+                binding.dogOwnerContainer.setVisibility(View.GONE);
+
+                getHandleInfo();
+            }
         }
 
+    }
 
-        if (type == type_details) {
-            binding.firstStepView.setSelected(true);
-            binding.addressView.binding.itemContent.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    openActivity(AreaSelectActivity.class, request_City);
-                }
-            });
+    private HandleInfo handleInfo;
 
-        } else if (type == type_submit) {
-            binding.secondStepView.setSelected(true);
-
-            binding.confirmView.setText("提交审核");
-            binding.submitContainer.setVisibility(View.VISIBLE);
-            binding.dogOwnerContainer.setVisibility(View.GONE);
-        }
-
-        SendRequest.getObsFormInfo(new GenericsCallback(new JsonGenericsSerializator()) {
+    private void getHandleInfo() {
+        /**
+         * dogId
+         * integer
+         * 犬只id
+         * addressId
+         * integer
+         * 地址id
+         */
+        Map<String, String> map = new HashMap<>();
+        map.put("dogId", String.valueOf(dogDetail.getDogId()));
+        map.put("addressId", String.valueOf(newAddressId));
+        SendRequest.getHandleInfo(map, new GenericsCallback<ResultClient<HandleInfo>>(new JsonGenericsSerializator()) {
             @Override
             public void onError(Call call, Exception e, int id) {
 
             }
 
             @Override
-            public void onResponse(Object response, int id) {
-
+            public void onResponse(ResultClient<HandleInfo> response, int id) {
+                if (response.isSuccess() && response.getData() != null) {
+                    handleInfo = response.getData();
+                    binding.handleUnitAddressView.setText(response.getData().getHandleUnitAddress());
+                } else {
+                    ToastUtils.showShort(getApplicationContext(), response.getMessage());
+                }
             }
         });
-
     }
 
     private String address = null;
     private String detailedAddress = null;
-    private String personaHouseNumber = null;
-    private String personaHouseProprietaryCertificate = null;
+    private String houseNum = null;
+    private String housePhoto = null;
+    private String addressArea = null;
 
     public void onClickConfirm(View view) {
         if (type == type_details) {
@@ -123,48 +154,138 @@ public class UpdateDogOwnerInfoActivity extends BaseActivity {
                 return;
             }
 
-            personaHouseNumber = binding.houseNumberView.binding.itemEdit.getText().toString();
-            if (CommonUtil.isBlank(personaHouseNumber)) {
+            houseNum = binding.houseNumberView.binding.itemEdit.getText().toString();
+            if (CommonUtil.isBlank(houseNum)) {
                 ToastUtils.showShort(getApplicationContext(), "请输入房本编号");
                 return;
             }
 
-            if (CommonUtil.isBlank(personaHouseProprietaryCertificate)) {
+            if (CommonUtil.isBlank(housePhoto)) {
                 ToastUtils.showShort(getApplicationContext(), "请上传房产证或房屋租赁合同");
                 return;
             }
 
-            Map<String, String> paramsMap = new HashMap<>();
-            paramsMap.put("address", address);
-            paramsMap.put("detailedAddress", detailedAddress);
-            paramsMap.put("personaHouseNumber", personaHouseNumber);
-            paramsMap.put("personaHouseProprietaryCertificate", personaHouseProprietaryCertificate);
-
-            Bundle bundle = new Bundle();
-            bundle.putInt("type", type_submit);
-            bundle.putString("paramsJson", GsonUtils.toJson(paramsMap));
-            openActivity(UpdateDogOwnerInfoActivity.class, bundle);
-
-        } else if (type == type_submit) {
-            Bundle bundle = new Bundle();
-            bundle.putInt("type", SubmitSuccessActivity.type_update);
-            openActivity(SubmitSuccessActivity.class, bundle);
-
-            finishActivity(DogManageWorkflowActivity.class);
-            finishActivity(UpdateDogCertificateActivity.class);
-            finish();
-
-            if (LogUtil.isDebug) {
+            if (dogDetail == null) {
+                ToastUtils.showShort(getApplicationContext(), "提交失败,犬只信息有误");
                 return;
             }
-            SendRequest.UpdateDogInfo(getUserInfo().getAuthorization(), paramsMap, new GenericsCallback(new JsonGenericsSerializator()) {
+
+            /**
+             * lincenceId
+             * integer
+             * 犬证编号
+             * address
+             * string
+             * 居住地址
+             * detailedAddress
+             * string
+             * 详细地址
+             * houseNum
+             * string
+             * 房本编号
+             * housePhoto
+             * string
+             * 房产证或租赁合同照片
+             * addressArea
+             * string
+             * 所在区域
+             */
+            Map<String, String> paramsMap = new HashMap<>();
+            paramsMap.put("lincenceId", String.valueOf(dogDetail.getLincenceId()));
+            paramsMap.put("address", address);
+            paramsMap.put("detailedAddress", detailedAddress);
+            paramsMap.put("houseNum", houseNum);
+            paramsMap.put("housePhoto", housePhoto);
+            if (addressArea != null)
+                paramsMap.put("addressArea", addressArea);
+
+            SendRequest.saveCancelAddress(paramsMap, new GenericsCallback<BaseData>(new JsonGenericsSerializator()) {
+
+                @Override
+                public void onBefore(Request request, int id) {
+                    super.onBefore(request, id);
+                    LoadingManager.showLoadingDialog(UpdateDogOwnerInfoActivity.this);
+                }
+
+                @Override
+                public void onAfter(int id) {
+                    super.onAfter(id);
+                    LoadingManager.hideLoadingDialog(UpdateDogOwnerInfoActivity.this);
+                }
+
+                @Override
+                public void onError(Call call, Exception e, int id) {
+                }
+
+                @Override
+                public void onResponse(BaseData response, int id) {
+                    if (response.isSuccess()) {
+                        Bundle bundle = new Bundle();
+                        bundle.putInt("type", type_submit);
+                        bundle.putInt("newAddressId", 0);
+                        bundle.putSerializable("DogDetail", dogDetail);
+                        openActivity(UpdateDogOwnerInfoActivity.class, bundle);
+
+                    } else {
+                        ToastUtils.showShort(getApplicationContext(), response.getMessage());
+
+                    }
+
+                }
+            });
+
+        } else if (type == type_submit) {
+
+            if (handleInfo == null) {
+                ToastUtils.showShort(getApplicationContext(), "提交失败,受理单位信息有误");
+                return;
+            }
+            if (dogDetail == null) {
+                ToastUtils.showShort(getApplicationContext(), "提交失败,犬只信息有误");
+                return;
+            }
+
+            /**
+             * lincenceId
+             * integer
+             * 犬只id
+             * newAddressId
+             * integer
+             * 新地址id
+             * acceptUnit
+             * string
+             * 受理单位
+             * unitId
+             * integer
+             */
+            Map<String, String> paramsMap = new HashMap<>();
+            paramsMap.put("lincenceId", String.valueOf(dogDetail.getLincenceId()));
+            paramsMap.put("newAddressId", String.valueOf(newAddressId));
+            paramsMap.put("acceptUnit", handleInfo.getHandleUnitAddress());
+            paramsMap.put("unitId", String.valueOf(handleInfo.getHandleUnitId()));
+            paramsMap.put("housePhoto", housePhoto);
+            if (addressArea != null)
+                paramsMap.put("addressArea", addressArea);
+            SendRequest.approveCancelAddress(paramsMap, new GenericsCallback<BaseData>(new JsonGenericsSerializator()) {
                 @Override
                 public void onError(Call call, Exception e, int id) {
 
                 }
 
                 @Override
-                public void onResponse(Object response, int id) {
+                public void onResponse(BaseData response, int id) {
+                    if (response.isSuccess()) {
+                        Bundle bundle = new Bundle();
+                        bundle.putInt("type", SubmitSuccessActivity.type_update);
+                        openActivity(SubmitSuccessActivity.class, bundle);
+
+                        finishActivity(DogManageWorkflowActivity.class);
+                        finishActivity(UpdateDogCertificateActivity.class);
+                        finish();
+
+                    } else {
+                        ToastUtils.showShort(getApplicationContext(), response.getMessage());
+                    }
 
                 }
             });
@@ -230,7 +351,7 @@ public class UpdateDogOwnerInfoActivity extends BaseActivity {
                                     @Override
                                     public void onSuccess(File file) {
                                         if (requestCode == request_HouseProprietaryCertificate) {
-                                            personaHouseProprietaryCertificate = file.getAbsolutePath();
+                                            housePhoto = file.getAbsolutePath();
                                             GlideLoader.LoderImage(UpdateDogOwnerInfoActivity.this, file.getAbsolutePath(), binding.houseProprietaryCertificateView, 6);
 
                                             new Thread(new Runnable() {
@@ -260,7 +381,7 @@ public class UpdateDogOwnerInfoActivity extends BaseActivity {
      * @param filePath
      */
     private void uploadFile(String filePath) {
-        Log.i(TAG, "uploadFile: "+filePath);
+        Log.i(TAG, "uploadFile: " + filePath);
 //        PutObjectRequest request = new PutObjectRequest();
 //        request.setBucketName(Config.huaweiBucketName);
 //        request.setObjectKey(Config.huaweiObjectKey);

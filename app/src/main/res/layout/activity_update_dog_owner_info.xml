@@ -272,11 +272,12 @@
                                 android:src="@drawable/dingwei" />
 
                             <TextView
+                                android:id="@+id/handleUnitAddressView"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginLeft="@dimen/dp_5"
                                 android:gravity="center_vertical"
-                                android:text="北京市西城区天桥街道派出所"
+                                android:text=""
                                 android:textColor="#333333"
                                 android:textSize="@dimen/sp_14"
                                 tools:text="北京市西城区天桥街道派出所" />

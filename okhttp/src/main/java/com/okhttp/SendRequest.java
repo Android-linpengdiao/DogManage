@@ -242,9 +242,32 @@ public class SendRequest {
 
     }
 
-
     // ==================================== 犬证年审 =============================================
 
+
+    // ==================================== 信息变更 =============================================
+
+    /**
+     * 信息变更-保存变更地址
+     */
+    public static void saveCancelAddress(Map<String, String> map, Callback call) {
+        Map<String, String> headers = new HashMap<>();
+        headers.put("Authorization", BaseApplication.getInstance().getUserInfo().getAuthorization());
+        OkHttpUtils.post().headers(headers).params(map).url(APIUrls.saveCancelAddress).build().execute(call);
+
+    }
+
+    /**
+     * 信息变更 -提交审核
+     */
+    public static void approveCancelAddress(Map<String, String> map, Callback call) {
+        Map<String, String> headers = new HashMap<>();
+        headers.put("Authorization", BaseApplication.getInstance().getUserInfo().getAuthorization());
+        OkHttpUtils.post().headers(headers).params(map).url(APIUrls.approveCancelAddress).build().execute(call);
+
+    }
+
+    // ==================================== 信息变更 =============================================
 
     /**
      * 获取犬只信息列表
@@ -384,6 +407,80 @@ public class SendRequest {
         Map<String, String> map = new HashMap<>();
         map.put("immuneId", String.valueOf(immuneId));
         OkHttpUtils.post().headers(headers).params(map).url(APIUrls.getDogImmuneApproveDetail).build().execute(call);
+
+    }
+
+    /**
+     * 设置-变更手机号 - 获取用户手机号
+     *
+     * @param call
+     */
+    public static void getUserPhone(Callback call) {
+        Map<String, String> headers = new HashMap<>();
+        headers.put("Authorization", BaseApplication.getInstance().getUserInfo().getAuthorization());
+        OkHttpUtils.post().headers(headers).url(APIUrls.getUserPhone).build().execute(call);
+
+    }
+
+    /**
+     * 变更手机号-验证当前手机号
+     *
+     * @param call
+     */
+    public static void verifyUserPhone(String loginPhone, String code, Callback call) {
+        Map<String, String> headers = new HashMap<>();
+        headers.put("Authorization", BaseApplication.getInstance().getUserInfo().getAuthorization());
+        Map<String, String> map = new HashMap<>();
+        map.put("loginPhone", loginPhone);
+        map.put("code", code);
+        OkHttpUtils.post().headers(headers).params(map).url(APIUrls.verifyUserPhone).build().execute(call);
+
+    }
+
+    /**
+     * 变更手机号-修改登录手机号
+     *
+     * @param call
+     */
+    public static void editUserPhone(String loginPhone, String code, Callback call) {
+        Map<String, String> headers = new HashMap<>();
+        headers.put("Authorization", BaseApplication.getInstance().getUserInfo().getAuthorization());
+        Map<String, String> map = new HashMap<>();
+        map.put("loginPhone", loginPhone);
+        map.put("code", code);
+        OkHttpUtils.post().headers(headers).params(map).url(APIUrls.editUserPhone).build().execute(call);
+
+    }
+
+    /**
+     * 处罚-处罚记录列表
+     *
+     * @param pageNum
+     * @param pageSize
+     * @param call
+     */
+    public static void getIllegalList(int pageNum, int pageSize, Callback call) {
+        Map<String, String> headers = new HashMap<>();
+        headers.put("Authorization", BaseApplication.getInstance().getUserInfo().getAuthorization());
+        Map<String, String> map = new HashMap<>();
+        map.put("pageNum", String.valueOf(pageNum));
+        map.put("pageSize", String.valueOf(pageSize));
+        OkHttpUtils.post().headers(headers).params(map).url(APIUrls.getIllegalList).build().execute(call);
+
+    }
+
+    /**
+     * 处罚-处罚记录详情
+     *
+     * @param id
+     * @param call
+     */
+    public static void getIllegalDetails(int id, Callback call) {
+        Map<String, String> headers = new HashMap<>();
+        headers.put("Authorization", BaseApplication.getInstance().getUserInfo().getAuthorization());
+        Map<String, String> map = new HashMap<>();
+        map.put("pageNum", String.valueOf(id));
+        OkHttpUtils.post().headers(headers).params(map).url(APIUrls.getIllegalDetails).build().execute(call);
 
     }
 

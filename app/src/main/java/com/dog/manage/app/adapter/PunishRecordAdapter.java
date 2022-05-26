@@ -7,8 +7,9 @@ import com.base.BaseRecyclerAdapter;
 import com.base.view.OnClickListener;
 import com.dog.manage.app.R;
 import com.dog.manage.app.databinding.ItemPunishRecordBinding;
+import com.dog.manage.app.model.PunishRecord;
 
-public class PunishRecordAdapter extends BaseRecyclerAdapter<String, ItemPunishRecordBinding> {
+public class PunishRecordAdapter extends BaseRecyclerAdapter<PunishRecord, ItemPunishRecordBinding> {
 
 
     private OnClickListener onClickListener;
@@ -38,7 +39,15 @@ public class PunishRecordAdapter extends BaseRecyclerAdapter<String, ItemPunishR
     }
 
     @Override
-    protected void onBindItem(ItemPunishRecordBinding binding, String dataBean, int position) {
+    protected void onBindItem(ItemPunishRecordBinding binding, PunishRecord dataBean, int position) {
+        //处罚类型 1 犬只伤人 2 犬吠 3 未牵狗绳 4 其他
+        binding.illegalTypeView.setText("违法类型: "+"违法类型: " +
+                (dataBean.getIllegalTypeId() == 1 ? "犬只伤人" :
+                        dataBean.getIllegalTypeId() == 2 ? "犬吠" :
+                                dataBean.getIllegalTypeId() == 3 ? "未牵狗绳" :
+                                        dataBean.getIllegalTypeId() == 4 ? "其他" : "其他"));
+        binding.illegalMeasureView.setText("处罚措施: "+dataBean.getIllegalMeasure());
+        binding.illegalTimeView.setText("处罚时间: "+dataBean.getIllegalTime());
         binding.getRoot().setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

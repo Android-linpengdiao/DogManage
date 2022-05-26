@@ -42,7 +42,7 @@
                 android:textSize="@dimen/sp_17" />
 
             <EditText
-                android:id="@+id/phoneEditView"
+                android:id="@+id/phoneEditText"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:background="@drawable/button_radius_white_8"

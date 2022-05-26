@@ -38,4 +38,10 @@ public class Dog implements Serializable {
         this.dogType = dogType;
         this.idNum = idNum;
     }
+
+    public Dog(Integer dogId, Integer lincenceId, String dogType) {
+        this.dogId = dogId;
+        this.lincenceId = lincenceId;
+        this.dogType = dogType;
+    }
 }

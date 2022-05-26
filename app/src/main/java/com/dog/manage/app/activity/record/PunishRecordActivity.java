@@ -8,12 +8,15 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.base.BaseData;
 import com.base.utils.CommonUtil;
+import com.base.utils.ToastUtils;
 import com.base.view.OnClickListener;
 import com.base.view.RecycleViewDivider;
 import com.dog.manage.app.R;
 import com.dog.manage.app.activity.BaseActivity;
 import com.dog.manage.app.adapter.PunishRecordAdapter;
 import com.dog.manage.app.databinding.ActivityPunishRecordBinding;
+import com.dog.manage.app.model.Dog;
+import com.dog.manage.app.model.PunishRecord;
 import com.okhttp.Pager;
 import com.okhttp.SendRequest;
 import com.okhttp.callbacks.GenericsCallback;
@@ -49,11 +52,13 @@ public class PunishRecordActivity extends BaseActivity {
         binding.recyclerView.addItemDecoration(divider);
         adapter = new PunishRecordAdapter(getApplicationContext());
         binding.recyclerView.setAdapter(adapter);
-        adapter.refreshData(Arrays.asList("", "", "", "", "", "", "", "", ""));
         adapter.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view, Object object) {
-                openActivity(PunishDetailsActivity.class);
+                PunishRecord dataBean = (PunishRecord) object;
+                Bundle bundle = new Bundle();
+                bundle.putSerializable("dataBean",dataBean);
+                openActivity(PunishDetailsActivity.class,bundle);
             }
 
             @Override
@@ -65,24 +70,30 @@ public class PunishRecordActivity extends BaseActivity {
         setRefresh();
     }
 
-    private Pager<BaseData> creationPager = new Pager<>();
+    private Pager<PunishRecord> pager = new Pager<>();
 
     private void setRefresh() {
         binding.refreshLayout.setOnRefreshListener(new OnRefreshListener() {
             @Override
             public void onRefresh(RefreshLayout refreshlayout) {
-                creationPager = new Pager<>();
-//                loadData(true);
+                pager = new Pager<>();
+                loadData(true);
             }
         });
-        binding.refreshLayout.setEnableLoadMore(false);
-//        binding.refreshLayout.autoRefresh();
+        binding.refreshLayout.setOnLoadMoreListener(new OnLoadMoreListener() {
+            @Override
+            public void onLoadMore(RefreshLayout refreshlayout) {
+                loadData(false);
+
+            }
+        });
+        binding.refreshLayout.autoRefresh();
 
     }
 
     public void loadData(boolean isRefresh) {
-        SendRequest.getPager(getUserInfo().getAuthorization(), 11, "creationPager.getCursor()",
-                new GenericsCallback<Pager<BaseData>>(new JsonGenericsSerializator()) {
+        SendRequest.getIllegalList(pager.getCursor(), pager.getSize(),
+                new GenericsCallback<Pager<PunishRecord>>(new JsonGenericsSerializator()) {
 
                     @Override
                     public void onAfter(int id) {
@@ -101,22 +112,26 @@ public class PunishRecordActivity extends BaseActivity {
                         } else {
                             binding.refreshLayout.finishLoadMore(false);
                         }
+                        ToastUtils.showShort(getApplicationContext(),"获取信息失败");
                     }
 
                     @Override
-                    public void onResponse(Pager<BaseData> response, int id) {
-                        creationPager = response;
+                    public void onResponse(Pager<PunishRecord> response, int id) {
+                        pager = response;
                         if (response != null && response.getRows() != null) {
-//                            if (isRefresh) {
-//                                adapter.refreshData(response.getData());
-//                            } else {
-//                                adapter.loadMoreData(response.getData());
-//                            }
-//                            if (!response.isHasnext()) {
-//                                binding.refreshLayout.setNoMoreData(true);
-//                            }
+                            if (isRefresh) {
+                                adapter.refreshData(response.getRows());
+                            } else {
+                                adapter.loadMoreData(response.getRows());
+                                if (adapter.getList().size() < response.getTotal()) {
+                                    pager.setCursor(pager.getCursor() + 1);
+                                }
+                            }
+                            if (adapter.getList().size() == response.getTotal()) {
+                                binding.refreshLayout.setNoMoreData(true);
+                            }
                             binding.emptyView.setVisibility(adapter.getList().size() > 0 ? View.GONE : View.VISIBLE);
-                            binding.emptyView.setText("暂无内容～");
+                            binding.emptyView.setText("暂无犬只～");
                         }
                     }
                 });

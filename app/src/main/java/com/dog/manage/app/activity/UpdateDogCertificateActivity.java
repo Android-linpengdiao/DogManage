@@ -13,6 +13,7 @@ import com.base.view.RecycleViewDivider;
 import com.dog.manage.app.R;
 import com.dog.manage.app.adapter.DogCertificateAdapter;
 import com.dog.manage.app.databinding.ActivityUpdateDogCertificateBinding;
+import com.dog.manage.app.model.Dog;
 
 import java.util.Arrays;
 
@@ -52,6 +53,7 @@ public class UpdateDogCertificateActivity extends BaseActivity {
         }
         Bundle bundle = new Bundle();
         bundle.putInt("type", UpdateDogOwnerInfoActivity.type_details);
+        bundle.putSerializable("DogDetail", new Dog(0,0,"哈士奇"));
         openActivity(UpdateDogOwnerInfoActivity.class, bundle);
     }
 }
