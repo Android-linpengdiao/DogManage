@@ -9,6 +9,7 @@ import android.view.WindowManager;
 
 import com.base.manager.LoadingManager;
 import com.base.utils.GlideLoader;
+import com.base.utils.ToastUtils;
 import com.dog.manage.app.R;
 import com.dog.manage.app.databinding.ActivityDogDetailsThemeBinding;
 import com.dog.manage.app.model.Dog;
@@ -33,6 +34,7 @@ public class DogDetailsThemeActivity extends BaseActivity {
 
     private ActivityDogDetailsThemeBinding binding;
     private int leaveId;
+    private DogDetail dogDetail;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -92,7 +94,7 @@ public class DogDetailsThemeActivity extends BaseActivity {
             @Override
             public void onResponse(ResultClient<DogDetail> response, int id) {
                 if (response.isSuccess() && response.getData() != null) {
-                    DogDetail dogDetail = response.getData();
+                    dogDetail = response.getData();
                     binding.dogNameView.setText(dogDetail.getDogName() + "|" + dogDetail.getDogColor() + "|" + dogDetail.getDogAge() + "岁3个月");
                     binding.leaveCenterView.setText(dogDetail.getLeaveCenter());
                     binding.centerAddressView.setText(dogDetail.getCenterAddress());
@@ -110,6 +112,8 @@ public class DogDetailsThemeActivity extends BaseActivity {
                     } catch (Exception e) {
                         e.getMessage();
                     }
+                } else {
+                    ToastUtils.showShort(getApplicationContext(), "获取信息失败");
                 }
             }
         });
@@ -120,6 +124,9 @@ public class DogDetailsThemeActivity extends BaseActivity {
     }
 
     public void onClickConfirm(View view) {
+        if (dogDetail == null) {
+            return;
+        }
         Bundle bundle = new Bundle();
         bundle.putInt("leaveId", leaveId);
         bundle.putInt("type", DogCertificateEditDogOwnerActivity.type_adoption);

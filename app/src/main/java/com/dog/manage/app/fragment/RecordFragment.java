@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.base.BaseData;
 import com.base.utils.CommonUtil;
+import com.base.utils.ToastUtils;
 import com.base.view.OnClickListener;
 import com.base.view.RecycleViewDivider;
 import com.dog.manage.app.R;
@@ -236,6 +237,8 @@ public class RecordFragment extends BaseFragment {
                     certificateRecordAdapter.refreshData(response.getData());
                     binding.emptyView.setVisibility(certificateRecordAdapter.getList().size() > 0 ? View.GONE : View.VISIBLE);
                     binding.emptyView.setText("暂无内容～");
+                } else {
+                    ToastUtils.showShort(getActivity(), response.getMsg());
                 }
             }
         });
@@ -265,6 +268,8 @@ public class RecordFragment extends BaseFragment {
                     certificateRecordAdapter.refreshData(response.getData());
                     binding.emptyView.setVisibility(certificateRecordAdapter.getList().size() > 0 ? View.GONE : View.VISIBLE);
                     binding.emptyView.setText("暂无内容～");
+                } else {
+                    ToastUtils.showShort(getActivity(), response.getMsg());
                 }
             }
         });

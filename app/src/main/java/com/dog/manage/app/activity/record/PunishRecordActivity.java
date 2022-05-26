@@ -57,8 +57,8 @@ public class PunishRecordActivity extends BaseActivity {
             public void onClick(View view, Object object) {
                 PunishRecord dataBean = (PunishRecord) object;
                 Bundle bundle = new Bundle();
-                bundle.putSerializable("dataBean",dataBean);
-                openActivity(PunishDetailsActivity.class,bundle);
+                bundle.putSerializable("dataBean", dataBean);
+                openActivity(PunishDetailsActivity.class, bundle);
             }
 
             @Override
@@ -112,7 +112,7 @@ public class PunishRecordActivity extends BaseActivity {
                         } else {
                             binding.refreshLayout.finishLoadMore(false);
                         }
-                        ToastUtils.showShort(getApplicationContext(),"获取信息失败");
+                        ToastUtils.showShort(getApplicationContext(), "获取信息失败");
                     }
 
                     @Override
@@ -132,6 +132,8 @@ public class PunishRecordActivity extends BaseActivity {
                             }
                             binding.emptyView.setVisibility(adapter.getList().size() > 0 ? View.GONE : View.VISIBLE);
                             binding.emptyView.setText("暂无犬只～");
+                        } else {
+                            ToastUtils.showShort(getApplicationContext(), response.getMessage());
                         }
                     }
                 });

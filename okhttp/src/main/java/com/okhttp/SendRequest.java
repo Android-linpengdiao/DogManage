@@ -245,6 +245,24 @@ public class SendRequest {
     // ==================================== 犬证年审 =============================================
 
 
+    // ==================================== 犬只注销 =============================================
+
+    /**
+     * 犬只注销-提交
+     *
+     * @param call
+     * @paramlincenceId 犬证id
+     */
+    public static void saveCancelDogInfo(Map<String, String> map, Callback call) {
+        Map<String, String> headers = new HashMap<>();
+        headers.put("Authorization", BaseApplication.getInstance().getUserInfo().getAuthorization());
+        OkHttpUtils.post().headers(headers).params(map).url(APIUrls.saveCancelDogInfo).build().execute(call);
+
+    }
+
+    // ==================================== 犬只注销 =============================================
+
+
     // ==================================== 信息变更 =============================================
 
     /**

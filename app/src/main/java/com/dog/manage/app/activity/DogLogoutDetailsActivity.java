@@ -8,9 +8,12 @@ import android.view.ViewGroup;
 import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
 
+import com.base.BaseData;
+import com.base.manager.LoadingManager;
 import com.base.utils.CommonUtil;
 import com.base.utils.FileUtils;
 import com.base.utils.GlideLoader;
+import com.base.utils.GsonUtils;
 import com.base.utils.LogUtil;
 import com.base.utils.PermissionUtils;
 import com.base.utils.ToastUtils;
@@ -20,8 +23,11 @@ import com.dog.manage.app.databinding.ActivityDogLogoutDetailsBinding;
 import com.dog.manage.app.media.MediaFile;
 import com.dog.manage.app.media.MediaSelectActivity;
 import com.dog.manage.app.media.MediaUtils;
+import com.dog.manage.app.model.Dog;
+import com.dog.manage.app.model.DogDetail;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import com.okhttp.ResultClient;
 import com.okhttp.SendRequest;
 import com.okhttp.callbacks.GenericsCallback;
 import com.okhttp.sample_okhttp.JsonGenericsSerializator;
@@ -33,6 +39,7 @@ import java.util.List;
 import java.util.Map;
 
 import okhttp3.Call;
+import okhttp3.Request;
 import top.zibin.luban.Luban;
 import top.zibin.luban.OnCompressListener;
 
@@ -47,7 +54,13 @@ public class DogLogoutDetailsActivity extends BaseActivity {
     private int type = 0;
     private int auditType = 0;//1-审核通过 2-审核拒绝
 
-    private List<String> dogList = Arrays.asList("萨摩耶", "柯基", "泰迪", "哈士奇");
+    private List<Dog> dogList = Arrays.asList(
+            new Dog(1, "萨摩耶", "000000000"),
+            new Dog(1, "柯基", "000000000"),
+            new Dog(1, "泰迪", "000000000"),
+            new Dog(1, "哈士奇", "000000000"));
+
+    private Dog dogDetail;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -97,19 +110,20 @@ public class DogLogoutDetailsActivity extends BaseActivity {
         binding.dogCertificateView.binding.itemContent.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                onClickDogCertificate(DogLogoutDetailsActivity.this, null, dogList.indexOf(binding.dogCertificateView.binding.itemContent.getText().toString()), new OnClickListener() {
-                    @Override
-                    public void onClick(View view, Object object) {
-                        String content = (String) object;
-                        dogCertificate = dogList.indexOf(content);
-                        binding.dogCertificateView.binding.itemContent.setText(content);
-                    }
+                onClickDogCertificate(DogLogoutDetailsActivity.this,
+                        dogList, dogList.indexOf(binding.dogCertificateView.binding.itemContent.getText().toString()),
+                        new OnClickListener() {
+                            @Override
+                            public void onClick(View view, Object object) {
+                                dogDetail = (Dog) object;
+                                binding.dogCertificateView.binding.itemContent.setText(dogDetail.getDogType());
+                            }
 
-                    @Override
-                    public void onLongClick(View view, Object object) {
+                            @Override
+                            public void onLongClick(View view, Object object) {
 
-                    }
-                });
+                            }
+                        });
             }
         });
         binding.radioGroupView.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
@@ -146,61 +160,93 @@ public class DogLogoutDetailsActivity extends BaseActivity {
 
     }
 
-    private int dogCertificate = -1;
+    /**
+     * dogLicenceId
+     * integer
+     * 犬证id
+     * dogLicenceNum
+     * string
+     * 犬证编号
+     * cancelReason
+     * string
+     * 注销理由
+     * cancelType
+     * integer
+     * 办理类型 1 死亡 2 丢失
+     * cancelImageUrl
+     * string
+     * 图片地址，与之前多张格式一致
+     */
+
     private String picture1 = null;
     private String picture2 = null;
     private String picture3 = null;
-    private String description = null;
 
     public void onClickConfirm(View view) {
 
         Map<String, String> paramsMap = new HashMap<>();
-        if (dogCertificate < 0) {
+        if (dogDetail == null) {
             ToastUtils.showShort(getApplicationContext(), "请选择犬只");
             return;
         }
-        paramsMap.put("dogCertificate", String.valueOf(dogCertificate));
+        paramsMap.put("dogLicenceId", String.valueOf(dogDetail.getLincenceId()));
+        paramsMap.put("dogLicenceNum", String.valueOf(dogDetail.getIdNum()));
+
         int checkedRadioButtonId = binding.radioGroupView.getCheckedRadioButtonId();
         if (checkedRadioButtonId == R.id.radioButton0) {//犬只死亡
             if (CommonUtil.isBlank(picture1) || CommonUtil.isBlank(picture2) || CommonUtil.isBlank(picture3)) {
                 ToastUtils.showShort(getApplicationContext(), "请上传无害化处理过程图片3张");
                 return;
             }
-            paramsMap.put("picture1", String.valueOf(picture1));
-            paramsMap.put("picture2", String.valueOf(picture2));
-            paramsMap.put("picture3", String.valueOf(picture3));
+            paramsMap.put("cancelImageUrl", GsonUtils.toJson(Arrays.asList(picture1, picture2, picture3)));
+            paramsMap.put("cancelType", String.valueOf(1));
 
         } else if (checkedRadioButtonId == R.id.radioButton1) {//犬只丢失
-            description = binding.descriptionView.getText().toString();
+            String description = binding.descriptionView.getText().toString();
             if (CommonUtil.isBlank(description)) {
                 ToastUtils.showShort(getApplicationContext(), "请输入简要说明");
                 return;
             }
-            paramsMap.put("description", String.valueOf(description));
+            paramsMap.put("cancelReason", description);
+            paramsMap.put("cancelType", String.valueOf(2));
 
         }
 
-        Bundle bundle = new Bundle();
-        bundle.putInt("type", SubmitSuccessActivity.type_logout);
-        openActivity(SubmitSuccessActivity.class, bundle);
+        SendRequest.saveCancelDogInfo(paramsMap,
+                new GenericsCallback<ResultClient<BaseData>>(new JsonGenericsSerializator()) {
 
-        finishActivity(DogManageWorkflowActivity.class);
-        finish();
+                    @Override
+                    public void onBefore(Request request, int id) {
+                        super.onBefore(request, id);
+                        LoadingManager.showLoadingDialog(DogLogoutDetailsActivity.this);
+                    }
 
-        if (LogUtil.isDebug) {
-            return;
-        }
-        SendRequest.DogLogout(getUserInfo().getAuthorization(), paramsMap, new GenericsCallback(new JsonGenericsSerializator()) {
-            @Override
-            public void onError(Call call, Exception e, int id) {
+                    @Override
+                    public void onAfter(int id) {
+                        super.onAfter(id);
+                        LoadingManager.hideLoadingDialog(DogLogoutDetailsActivity.this);
+                    }
 
-            }
+                    @Override
+                    public void onError(Call call, Exception e, int id) {
 
-            @Override
-            public void onResponse(Object response, int id) {
+                    }
 
-            }
-        });
+                    @Override
+                    public void onResponse(ResultClient<BaseData> response, int id) {
+                        if (response.isSuccess() && response.getData() != null) {
+                            Bundle bundle = new Bundle();
+                            bundle.putInt("type", SubmitSuccessActivity.type_logout);
+                            openActivity(SubmitSuccessActivity.class, bundle);
+                            finishActivity(DogManageWorkflowActivity.class);
+                            finish();
+
+                        } else {
+                            ToastUtils.showShort(getApplicationContext(), !CommonUtil.isBlank(response.getMsg()) ? response.getMsg() : "提交失败");
+
+                        }
+                    }
+                });
     }
 
 
@@ -284,7 +330,7 @@ public class DogLogoutDetailsActivity extends BaseActivity {
                         String path = imageList.get(0).getPath();
                         Luban.with(this)
                                 .load(path)// 传人要压缩的图片列表
-                                .ignoreBy(100)// 忽略不压缩图片的大小
+                                .ignoreBy(500)// 忽略不压缩图片的大小
                                 .setTargetDir(FileUtils.getMediaPath())// 设置压缩后文件存储位置
                                 .setCompressListener(new OnCompressListener() { //设置回调
                                     @Override
@@ -293,17 +339,21 @@ public class DogLogoutDetailsActivity extends BaseActivity {
 
                                     @Override
                                     public void onSuccess(File file) {
+                                        String url = "https://img0.baidu.com/it/u=3282676189,411395798&fm=253&fmt=auto&app=138&f=JPEG?w=564&h=500";
                                         if (requestCode == request_Image1) {
                                             picture1 = file.getAbsolutePath();
-                                            GlideLoader.LoderImage(DogLogoutDetailsActivity.this, file.getAbsolutePath(), binding.pictureView1, 6);
+                                            picture1 = url;
+                                            GlideLoader.LoderImage(DogLogoutDetailsActivity.this, picture1, binding.pictureView1, 6);
 
                                         } else if (requestCode == request_Image2) {
                                             picture2 = file.getAbsolutePath();
-                                            GlideLoader.LoderImage(DogLogoutDetailsActivity.this, file.getAbsolutePath(), binding.pictureView2, 6);
+                                            picture2 = url;
+                                            GlideLoader.LoderImage(DogLogoutDetailsActivity.this, picture2, binding.pictureView2, 6);
 
                                         } else if (requestCode == request_Image3) {
                                             picture3 = file.getAbsolutePath();
-                                            GlideLoader.LoderImage(DogLogoutDetailsActivity.this, file.getAbsolutePath(), binding.pictureView3, 6);
+                                            picture3 = url;
+                                            GlideLoader.LoderImage(DogLogoutDetailsActivity.this, picture3, binding.pictureView3, 6);
 
                                         }
                                     }

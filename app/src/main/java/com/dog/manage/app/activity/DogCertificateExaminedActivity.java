@@ -228,7 +228,7 @@ public class DogCertificateExaminedActivity extends BaseActivity {
                         String path = imageList.get(0).getPath();
                         Luban.with(this)
                                 .load(path)// 传人要压缩的图片列表
-                                .ignoreBy(100)// 忽略不压缩图片的大小
+                                .ignoreBy(500)// 忽略不压缩图片的大小
                                 .setTargetDir(FileUtils.getMediaPath())// 设置压缩后文件存储位置
                                 .setCompressListener(new OnCompressListener() { //设置回调
                                     @Override
