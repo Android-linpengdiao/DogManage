@@ -223,6 +223,12 @@ public class MainActivity extends BaseActivity {
         if (checkUserRank(getApplicationContext(), true)) {
             openActivity(MessageActivity.class);
 //            openActivity(UpdateDogOwnerInfoActivity.class);
+
+//            if (checkPermissions(PermissionUtils.CAMERA, 100)) {
+//                Bundle bundle = new Bundle();
+//                bundle.putInt("type", CameraActivity.type_petArchives);
+//                openActivity(CameraActivity.class, bundle);
+//            }
         }
     }
 

@@ -123,10 +123,19 @@ public class CameraActivity extends BaseActivity {
                 if (bitmap != null) {
                     String path = FileUtils.saveFirstFrameBitmap(bitmap);
                     Log.i(TAG, "run: path " + path);
+                    if (!CommonUtil.isBlank(path)) {
+//                        if (type == type_petType) {
+//                            petType(path);
+//
+//                        } else if (type == type_petArchives) {
+//                            createPetArchives(path);
+//
+//                        }
+                    }
                 }
             }
         };
-        timer.schedule(timerTask, 0, 1000);
+        timer.schedule(timerTask, 5000, 5000);
 
     }
 
