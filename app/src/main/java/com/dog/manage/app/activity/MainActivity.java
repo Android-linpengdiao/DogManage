@@ -55,6 +55,7 @@ public class MainActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = getViewData(R.layout.activity_main);
+        setStatusBarHeight();
         addActivity(this);
 
 
@@ -220,8 +221,8 @@ public class MainActivity extends BaseActivity {
 
     public void onClickMessage(View view) {
         if (checkUserRank(getApplicationContext(), true)) {
-//            openActivity(MessageActivity.class);
-            openActivity(UpdateDogOwnerInfoActivity.class);
+            openActivity(MessageActivity.class);
+//            openActivity(UpdateDogOwnerInfoActivity.class);
         }
     }
 

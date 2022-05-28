@@ -63,10 +63,17 @@
         android:theme="@style/AppTheme">
         <activity
             android:name=".activity.CameraActivity"
+            android:screenOrientation="portrait"
             android:theme="@style/LoginTheme"></activity>
-        <activity android:name=".activity.AreaSelectActivity" />
-        <activity android:name=".activity.PayActivity" />
-        <activity android:name=".media.MediaSelectActivity" />
+        <activity
+            android:name=".activity.AreaSelectActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.PayActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".media.MediaSelectActivity"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".activity.ImmuneDetailsActivity"
             android:screenOrientation="portrait" />

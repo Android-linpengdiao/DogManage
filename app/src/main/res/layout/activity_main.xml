@@ -101,10 +101,13 @@
             </LinearLayout>
         </ScrollView>
 
+        <include layout="@layout/status_bar" />
+
         <RelativeLayout
             android:id="@+id/topView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_below="@+id/status_bar"
             android:visibility="gone"
             tools:visibility="visible">
 

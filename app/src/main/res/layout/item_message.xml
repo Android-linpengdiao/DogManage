@@ -23,12 +23,12 @@
                 android:id="@+id/coverView"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="@drawable/circle_gray" />
+                android:background="@drawable/notice" />
 
             <TextView
                 android:id="@+id/unreadMessageView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="@dimen/dp_10"
+                android:layout_height="@dimen/dp_10"
                 android:layout_alignParentRight="true"
                 android:background="@drawable/unread"
                 android:gravity="center"
@@ -36,7 +36,6 @@
                 android:paddingTop="@dimen/dp_1"
                 android:paddingRight="@dimen/dp_5"
                 android:paddingBottom="@dimen/dp_1"
-                android:text="1"
                 android:textColor="@color/white"
                 android:textSize="@dimen/sp_12"
                 android:visibility="gone"

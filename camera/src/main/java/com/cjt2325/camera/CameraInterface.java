@@ -460,6 +460,16 @@ public class CameraInterface implements Camera.PreviewCallback {
         if (!isPreviewing){
             return null;
         }
+
+        switch (cameraAngle) {
+            case 90:
+                nowAngle = Math.abs(angle + cameraAngle) % 360;
+                break;
+            case 270:
+                nowAngle = Math.abs(cameraAngle - angle);
+                break;
+        }
+
         Camera.Parameters parameters = mCamera.getParameters();
         int width = parameters.getPreviewSize().width;
         int height = parameters.getPreviewSize().height;
@@ -472,10 +482,12 @@ public class CameraInterface implements Camera.PreviewCallback {
         if (SELECTED_CAMERA == CAMERA_POST_POSITION) {
             matrix.setRotate(nowAngle);
         } else if (SELECTED_CAMERA == CAMERA_FRONT_POSITION) {
-            matrix.setRotate(270);
+            matrix.setRotate(360 - nowAngle);
+            matrix.postScale(-1, 1);
         }
-        firstFrameBitmap = createBitmap(firstFrameBitmap, 0, 0, firstFrameBitmap.getWidth(), firstFrameBitmap
-                .getHeight(), matrix, true);
+        firstFrameBitmap = createBitmap(firstFrameBitmap, 0, 0, firstFrameBitmap.getWidth(), firstFrameBitmap.getHeight(), matrix, true);
+
+
         return firstFrameBitmap;
     }
 
