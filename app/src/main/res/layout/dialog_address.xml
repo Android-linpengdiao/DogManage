@@ -52,11 +52,18 @@
             android:layout_height="@dimen/dividerHeight"
             android:background="@color/colorDivider" />
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recyclerView"
+        <com.scwang.smart.refresh.layout.SmartRefreshLayout
+            android:id="@+id/refreshLayout"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/dp_268"
-            android:overScrollMode="never" />
+            android:layout_height="@dimen/dp_268">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:overScrollMode="never" />
+
+        </com.scwang.smart.refresh.layout.SmartRefreshLayout>
 
         <View
             android:layout_width="match_parent"

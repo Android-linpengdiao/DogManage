@@ -33,6 +33,7 @@ import com.okhttp.callbacks.GenericsCallback;
 import com.okhttp.sample_okhttp.JsonGenericsSerializator;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
@@ -54,11 +55,7 @@ public class DogLogoutDetailsActivity extends BaseActivity {
     private int type = 0;
     private int auditType = 0;//1-审核通过 2-审核拒绝
 
-    private List<Dog> dogList = Arrays.asList(
-            new Dog(1, "萨摩耶", "000000000"),
-            new Dog(1, "柯基", "000000000"),
-            new Dog(1, "泰迪", "000000000"),
-            new Dog(1, "哈士奇", "000000000"));
+    private List<Dog> dogList = new ArrayList<>();
 
     private Dog dogDetail;
 
@@ -110,6 +107,10 @@ public class DogLogoutDetailsActivity extends BaseActivity {
         binding.dogCertificateView.binding.itemContent.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                if (dogList.size() == 0) {
+                    ToastUtils.showShort(getApplicationContext(), "暂无犬只");
+                    return;
+                }
                 onClickDogCertificate(DogLogoutDetailsActivity.this,
                         dogList, dogList.indexOf(binding.dogCertificateView.binding.itemContent.getText().toString()),
                         new OnClickListener() {
@@ -158,6 +159,31 @@ public class DogLogoutDetailsActivity extends BaseActivity {
             }
         });
 
+        getDogLicenceList();
+
+    }
+
+    /**
+     * 获取犬证列表
+     */
+    private void getDogLicenceList() {
+        SendRequest.getDogLicenceList(new GenericsCallback<ResultClient<List<Dog>>>(new JsonGenericsSerializator()) {
+            @Override
+            public void onError(Call call, Exception e, int id) {
+            }
+
+            @Override
+            public void onResponse(ResultClient<List<Dog>> response, int id) {
+                if (response.isSuccess() && response.getData() != null) {
+                    if (response.getData().size() > 0) {
+                        dogList = response.getData();
+                        dogDetail = dogList.get(0);
+                        binding.dogCertificateView.binding.itemContent.setText(dogDetail.getDogType());
+                    }
+
+                }
+            }
+        });
     }
 
     /**

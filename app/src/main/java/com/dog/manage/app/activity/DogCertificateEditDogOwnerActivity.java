@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.RadioGroup;
@@ -32,13 +31,18 @@ import com.dog.manage.app.databinding.DialogAddressBinding;
 import com.dog.manage.app.media.MediaFile;
 import com.dog.manage.app.media.MediaSelectActivity;
 import com.dog.manage.app.media.MediaUtils;
+import com.dog.manage.app.model.AddressBean;
 import com.dog.manage.app.model.DogUser;
+import com.dog.manage.app.model.PunishRecord;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import com.okhttp.Pager;
 import com.okhttp.ResultClient;
 import com.okhttp.SendRequest;
 import com.okhttp.callbacks.GenericsCallback;
 import com.okhttp.sample_okhttp.JsonGenericsSerializator;
+import com.scwang.smart.refresh.layout.api.RefreshLayout;
+import com.scwang.smart.refresh.layout.listener.OnLoadMoreListener;
 
 import java.io.File;
 import java.util.Arrays;
@@ -173,7 +177,7 @@ public class DogCertificateEditDogOwnerActivity extends BaseActivity {
 //                openActivity(AreaSelectActivity.class, request_City);
 
                 View contentView = LayoutInflater.from(DogCertificateEditDogOwnerActivity.this).inflate(R.layout.dialog_address, null);
-                DialogAddressBinding addressBinding = DataBindingUtil.bind(contentView);
+                addressBinding = DataBindingUtil.bind(contentView);
                 BaseBottomSheetDialog bottomSheetDialog = new BaseBottomSheetDialog(DogCertificateEditDogOwnerActivity.this) {
                     @Override
                     protected View initContentView() {
@@ -190,26 +194,38 @@ public class DogCertificateEditDogOwnerActivity extends BaseActivity {
                         Color.parseColor("#E1E1E1"));
                 addressBinding.recyclerView.addItemDecoration(divider);
                 addressBinding.recyclerView.setNestedScrollingEnabled(false);
-                AreaSelectAdapter areaSelectAdapter = new AreaSelectAdapter(getApplicationContext());
+                areaSelectAdapter = new AreaSelectAdapter(getApplicationContext());
                 addressBinding.recyclerView.setAdapter(areaSelectAdapter);
 
-                List<CityData> cities = CityManager.getInstance().getCityDataList();
-                if (cities.size() > 0) {
-                    for (CityData cityData : cities) {
-                        if (cityData.getName().equals("北京市")) {
-                            areaSelectAdapter.refreshData(cityData.getChildren().get(0).getChildren());
-                            break;
-                        }
+                addressBinding.refreshLayout.setEnableRefresh(false);
+                addressBinding.refreshLayout.setOnLoadMoreListener(new OnLoadMoreListener() {
+                    @Override
+                    public void onLoadMore(RefreshLayout refreshlayout) {
+                        getAddressAreas(false);
                     }
-                }
+                });
+                getAddressAreas(true);
+
+//                List<CityData> cities = CityManager.getInstance().getCityDataList();
+//                if (cities.size() > 0) {
+//                    for (CityData cityData : cities) {
+//                        if (cityData.getName().equals("北京市")) {
+//                            areaSelectAdapter.refreshData(cityData.getChildren().get(0).getChildren());
+//                            break;
+//                        }
+//                    }
+//                }
                 addressBinding.confirmView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        CityData.FirstChildrenBean.SecondChildrenBean dataBean = areaSelectAdapter.getList().get(areaSelectAdapter.getSelect());
-                        String address = dataBean.getName();
-                        dogUser.setAddress(address);
-                        binding.addressView.binding.itemContent.setText(address);
-                        bottomSheetDialog.cancel();
+                        if (areaSelectAdapter.getList().size() > 0) {
+//                          CityData.FirstChildrenBean.SecondChildrenBean dataBean = areaSelectAdapter.getList().get(areaSelectAdapter.getSelect());
+                            AddressBean dataBean = areaSelectAdapter.getList().get(areaSelectAdapter.getSelect());
+                            String address = dataBean.getAreaName();
+                            dogUser.setAddress(address);
+                            binding.addressView.binding.itemContent.setText(address);
+                            bottomSheetDialog.cancel();
+                        }
                     }
                 });
 
@@ -217,7 +233,59 @@ public class DogCertificateEditDogOwnerActivity extends BaseActivity {
             }
         });
 
+    }
 
+    private DialogAddressBinding addressBinding;
+    private AreaSelectAdapter areaSelectAdapter;
+    private Pager<AddressBean> pager = new Pager<>();
+
+    private void getAddressAreas(boolean isRefresh) {
+        //省110000 、市110100
+        SendRequest.getAddressAreas(3, 110100, pager.getCursor(), pager.getSize(),
+                new GenericsCallback<Pager<AddressBean>>(new JsonGenericsSerializator()) {
+
+                    @Override
+                    public void onAfter(int id) {
+                        super.onAfter(id);
+                        if (isRefresh) {
+                            addressBinding.refreshLayout.finishRefresh();
+                        } else {
+                            addressBinding.refreshLayout.finishLoadMore();
+                        }
+                    }
+
+                    @Override
+                    public void onError(Call call, Exception e, int id) {
+                        if (isRefresh) {
+                            addressBinding.refreshLayout.finishRefresh(false);
+                        } else {
+                            addressBinding.refreshLayout.finishLoadMore(false);
+                        }
+                        ToastUtils.showShort(getApplicationContext(), "获取信息失败");
+                    }
+
+                    @Override
+                    public void onResponse(Pager<AddressBean> response, int id) {
+                        pager = response;
+                        if (response != null && response.getRows() != null) {
+                            if (isRefresh) {
+                                areaSelectAdapter.refreshData(response.getRows());
+                            } else {
+                                areaSelectAdapter.loadMoreData(response.getRows());
+                                if (areaSelectAdapter.getList().size() < response.getTotal()) {
+                                    pager.setCursor(pager.getCursor() + 1);
+                                }
+                            }
+                            if (areaSelectAdapter.getList().size() == response.getTotal()) {
+                                addressBinding.refreshLayout.setNoMoreData(true);
+                            }
+//                            binding.emptyView.setVisibility(adapter.getList().size() > 0 ? View.GONE : View.VISIBLE);
+//                            binding.emptyView.setText("暂无犬只～");
+                        } else {
+                            ToastUtils.showShort(getApplicationContext(), response.getMessage());
+                        }
+                    }
+                });
     }
 
     private void checkingDogUser() {
@@ -909,7 +977,7 @@ public class DogCertificateEditDogOwnerActivity extends BaseActivity {
 
                         }
                     } else {
-                        ToastUtils.showShort(getApplicationContext(), response.getMessage());
+                        ToastUtils.showShort(getApplicationContext(), response.getMsg());
                     }
                 }
             });

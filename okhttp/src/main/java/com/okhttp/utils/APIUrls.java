@@ -61,6 +61,11 @@ public class APIUrls {
     //获取犬只信息列表
     public final static String getDogList = URL_DOMAIN + "/user/dog/getDogList";
 
+    //保存犬主-获取省市区
+    public final static String addressAreas = URL_DOMAIN + "/user/address/areas";
+    //保存犬主-根据省市区查询社区列表
+    public final static String addressList = URL_DOMAIN + "/user/address/list";
+
 
     /**
      * 犬证年审
@@ -73,6 +78,15 @@ public class APIUrls {
     public final static String getAnnualDogLicense = URL_DOMAIN + "/user/dog/getAnnualDogLicense";
     //年审-提交审批
     public final static String saveAnnualDogLicense = URL_DOMAIN + "/user/dog/saveAnnualDogLicense";
+
+    /**
+     * 犬只过户
+     */
+    //犬只过户-狗证过户列表
+    public final static String transferDogList = URL_DOMAIN + "/user/dog/transferDogList";
+    //犬只过户-狗证过户提交
+    public final static String saveTransferDog = URL_DOMAIN + "/user/dog/saveTransferDog";
+
 
     /**
      * 犬只注销-提交

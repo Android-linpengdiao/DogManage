@@ -9,8 +9,9 @@ import com.base.view.OnClickListener;
 import com.dog.manage.app.R;
 import com.dog.manage.app.area.CityData;
 import com.dog.manage.app.databinding.ItemAreaSelectBinding;
+import com.dog.manage.app.model.AddressBean;
 
-public class AreaSelectAdapter extends BaseRecyclerAdapter<CityData.FirstChildrenBean.SecondChildrenBean, ItemAreaSelectBinding> {
+public class AreaSelectAdapter extends BaseRecyclerAdapter<AddressBean, ItemAreaSelectBinding> {
 
     private OnClickListener onClickListener;
 
@@ -34,8 +35,8 @@ public class AreaSelectAdapter extends BaseRecyclerAdapter<CityData.FirstChildre
     }
 
     @Override
-    protected void onBindItem(ItemAreaSelectBinding binding, CityData.FirstChildrenBean.SecondChildrenBean dataBean, int position) {
-        binding.titleView.setText(dataBean.getName());
+    protected void onBindItem(ItemAreaSelectBinding binding, AddressBean dataBean, int position) {
+        binding.titleView.setText(dataBean.getAreaName());
         binding.selectedView.setVisibility(select == position ? View.VISIBLE : View.GONE);
         binding.getRoot().setOnClickListener(new View.OnClickListener() {
             @Override

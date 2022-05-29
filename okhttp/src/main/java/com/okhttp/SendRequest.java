@@ -227,7 +227,51 @@ public class SendRequest {
     }
 
 
-    // ==================================== 犬证年审 =============================================
+    /**
+     * level 级别 1 省 2 市 3 区
+     * parentId 父级id 省 0
+     * pageNum 页数
+     * pageSize 每页显示数量
+     *
+     * @param call
+     */
+    public static void getAddressAreas(int level, int parentId, int pageNum, int pageSize, Callback call) {
+        Map<String, String> headers = new HashMap<>();
+        headers.put("Authorization", BaseApplication.getInstance().getUserInfo().getAuthorization());
+
+        Map<String, String> map = new HashMap<>();
+        map.put("level", String.valueOf(level));
+        map.put("parentId", String.valueOf(parentId));
+        map.put("pageNum", String.valueOf(pageNum));
+        map.put("pageSize", String.valueOf(pageSize));
+        OkHttpUtils.post().headers(headers).params(map).url(APIUrls.addressAreas).build().execute(call);
+
+    }
+
+    /**
+     * 保存犬主-根据省市区查询社区列表
+     * communityName 社区名称
+     * provinceId 省份
+     * cityId 城市
+     * areaId 社区
+     *
+     * @param call
+     */
+    public static void getAddressList(String communityName, int provinceId, int cityId, int areaId, Callback call) {
+        Map<String, String> headers = new HashMap<>();
+        headers.put("Authorization", BaseApplication.getInstance().getUserInfo().getAuthorization());
+
+        Map<String, String> map = new HashMap<>();
+        map.put("level", communityName);
+        map.put("provinceId", String.valueOf(provinceId));
+        map.put("cityId", String.valueOf(cityId));
+        map.put("areaId", String.valueOf(areaId));
+        OkHttpUtils.post().headers(headers).params(map).url(APIUrls.addressList).build().execute(call);
+
+    }
+
+
+    // ==================================== 犬证年审 开始=============================================
 
     /**
      * 获取犬证列表
@@ -286,10 +330,51 @@ public class SendRequest {
 
     }
 
-    // ==================================== 犬证年审 =============================================
+    // ==================================== 犬证年审 结束=============================================
 
 
-    // ==================================== 犬只注销 =============================================
+    // ==================================== 犬只过户 开始 =============================================
+
+    /**
+     * 犬只过户-狗证过户列表
+     *
+     * @param pageNum
+     * @param pageSize
+     * @param call
+     */
+    public static void saveCancelDogInfo(int pageNum, int pageSize, Callback call) {
+        Map<String, String> headers = new HashMap<>();
+        headers.put("Authorization", BaseApplication.getInstance().getUserInfo().getAuthorization());
+        Map<String, String> map = new HashMap<>();
+        map.put("pageNum", String.valueOf(pageNum));
+        map.put("pageSize", String.valueOf(pageSize));
+        OkHttpUtils.post().headers(headers).params(map).url(APIUrls.transferDogList).build().execute(call);
+
+    }
+
+    /**
+     * lincenceId 犬证id
+     * userPhone 手机号
+     * userName 新主姓名
+     *
+     * @param lincenceId
+     * @param call
+     */
+    public static void saveTransferDog(int lincenceId, String userPhone, String userName, Callback call) {
+        Map<String, String> headers = new HashMap<>();
+        headers.put("Authorization", BaseApplication.getInstance().getUserInfo().getAuthorization());
+        Map<String, String> map = new HashMap<>();
+        map.put("lincenceId", String.valueOf(lincenceId));
+        map.put("userPhone", userPhone);
+        map.put("userName", userName);
+        OkHttpUtils.post().headers(headers).params(map).url(APIUrls.saveTransferDog).build().execute(call);
+
+    }
+
+    // ==================================== 犬证年审 结束=============================================
+
+
+    // ==================================== 犬只注销 开始=============================================
 
     /**
      * 犬只注销-提交
@@ -304,10 +389,10 @@ public class SendRequest {
 
     }
 
-    // ==================================== 犬只注销 =============================================
+    // ==================================== 犬只注销 结束=============================================
 
 
-    // ==================================== 信息变更 =============================================
+    // ==================================== 信息变更 开始=============================================
 
     /**
      * 信息变更-保存变更地址
@@ -329,7 +414,7 @@ public class SendRequest {
 
     }
 
-    // ==================================== 信息变更 =============================================
+    // ==================================== 信息变更 结束=============================================
 
     /**
      * 获取犬只信息列表

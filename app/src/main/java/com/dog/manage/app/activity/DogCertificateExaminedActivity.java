@@ -132,14 +132,14 @@ public class DogCertificateExaminedActivity extends BaseActivity {
             }
         });
 
-        getDogImmuneList();
+        getDogLicenceList();
 
     }
 
     /**
      * 获取犬证列表
      */
-    private void getDogImmuneList() {
+    private void getDogLicenceList() {
         SendRequest.getDogLicenceList(new GenericsCallback<ResultClient<List<Dog>>>(new JsonGenericsSerializator()) {
             @Override
             public void onError(Call call, Exception e, int id) {

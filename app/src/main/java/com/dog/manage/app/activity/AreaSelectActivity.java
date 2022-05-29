@@ -51,7 +51,7 @@ public class AreaSelectActivity extends BaseActivity {
         if (cities.size() > 0) {
             for (CityData cityData : cities) {
                 if (cityData.getName().equals("北京市")) {
-                    adapter.refreshData(cityData.getChildren().get(0).getChildren());
+//                    adapter.refreshData(cityData.getChildren().get(0).getChildren());
                     break;
                 }
             }
