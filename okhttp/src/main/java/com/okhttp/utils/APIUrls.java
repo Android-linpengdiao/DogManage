@@ -65,8 +65,14 @@ public class APIUrls {
     /**
      * 犬证年审
      */
+    //获取犬证列表
+    public final static String getDogLicenceList = URL_DOMAIN + "/user/dog/getDogLicenceList";
     //犬证年审-选择我的犬只详情
     public final static String getDogLicenseDetail = URL_DOMAIN + "/user/dog/getDogLicenseDetail";
+    //年审-获取价格
+    public final static String getAnnualDogLicense = URL_DOMAIN + "/user/dog/getAnnualDogLicense";
+    //年审-提交审批
+    public final static String saveAnnualDogLicense = URL_DOMAIN + "/user/dog/saveAnnualDogLicense";
 
     /**
      * 犬只注销-提交
@@ -89,7 +95,7 @@ public class APIUrls {
      * 我的
      */
     //获取犬证列表
-    public final static String getDogLicenceList = URL_DOMAIN + "/user/dog/getDogLicenceList";
+    public final static String getMyLicenceList = URL_DOMAIN + "/user/dog/getMyLicenceList";
     //获取个人犬只免疫列表
     public final static String getDogImmuneList = URL_DOMAIN + "/user/dog/getDogImmuneList";
     //犬证办理记录

@@ -246,8 +246,8 @@ public class BaseActivity extends AppCompatActivity {
                 new DogDialogManager.OnClickListener() {
                     @Override
                     public void onClick(View view, Object object) {
-                        if (listener!=null)
-                        listener.onClick(view,object);
+                        if (listener != null)
+                            listener.onClick(view, object);
                     }
                 });
     }

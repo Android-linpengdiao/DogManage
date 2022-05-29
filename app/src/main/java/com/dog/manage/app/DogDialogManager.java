@@ -82,7 +82,7 @@ public class DogDialogManager {
 
     }
 
-    public void showDogColorDialog(Activity activity, List<String> list,  OnClickListener listener) {
+    public void showDogColorDialog(Activity activity, List<String> list, OnClickListener listener) {
         final AlertDialog dialog = new AlertDialog.Builder(activity, AlertDialog.THEME_HOLO_DARK).create();
         dialog.setCancelable(true);
         dialog.show();

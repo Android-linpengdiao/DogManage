@@ -10,11 +10,18 @@ import com.amap.api.location.AMapLocation;
 import com.amap.api.location.AMapLocationClient;
 import com.amap.api.location.AMapLocationClientOption;
 import com.amap.api.location.AMapLocationListener;
+import com.base.BaseData;
+import com.base.utils.CommonUtil;
 import com.base.utils.LogUtil;
+import com.base.utils.ToastUtils;
 import com.dog.manage.app.R;
 import com.dog.manage.app.databinding.ActivityDogCertificateExaminedSubmitBinding;
+import com.dog.manage.app.model.Dog;
+import com.dog.manage.app.model.DogLicenseDetail;
+import com.dog.manage.app.model.HandleInfo;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import com.okhttp.ResultClient;
 import com.okhttp.SendRequest;
 import com.okhttp.callbacks.GenericsCallback;
 import com.okhttp.sample_okhttp.JsonGenericsSerializator;
@@ -29,7 +36,7 @@ import pub.devrel.easypermissions.EasyPermissions;
 public class DogCertificateExaminedSubmitActivity extends BaseActivity implements AMapLocationListener {
 
     private ActivityDogCertificateExaminedSubmitBinding binding;
-    private Map<String, String> paramsMap = new HashMap<>();
+    private Dog dogDetail;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,42 +44,66 @@ public class DogCertificateExaminedSubmitActivity extends BaseActivity implement
         binding = getViewData(R.layout.activity_dog_certificate_examined_submit);
         addActivity(this);
 
-        String paramsJson = getIntent().getStringExtra("paramsJson");
-        if (!TextUtils.isEmpty(paramsJson)) {
-            Gson gson = new Gson();
-            paramsMap = gson.fromJson(paramsJson, new TypeToken<Map<String, Object>>() {
-            }.getType());
+        dogDetail = (Dog) getIntent().getSerializableExtra("dataBean");
+        if (dogDetail != null) {
+            binding.dogTypeView.binding.itemContent.setText(dogDetail.getDogType());
+            getAnnualDogLicense(dogDetail.getLincenceId());
         }
-
-        setTypeface(binding.acceptUnitsHintView);
-
-        permissionsManager();
+//        permissionsManager();
     }
 
-    public void onClickConfirm(View view) {
-        Bundle bundle = new Bundle();
-        bundle.putInt("type", SubmitSuccessActivity.type_examined);
-        openActivity(SubmitSuccessActivity.class, bundle);
-
-        finishActivity(DogManageWorkflowActivity.class);
-        finishActivity(DogCertificateExaminedActivity.class);
-        finish();
-
-        if (LogUtil.isDebug){
-            return;
-        }
-        Map<String, String> paramsMap = new HashMap<>();
-        SendRequest.CertificateExamined(getUserInfo().getAuthorization(), paramsMap, new GenericsCallback(new JsonGenericsSerializator()) {
+    /**
+     * 犬证年审-选择我的犬只详情
+     */
+    private void getAnnualDogLicense(int lincenceId) {
+        SendRequest.getAnnualDogLicense(lincenceId,
+                new GenericsCallback<ResultClient<HandleInfo>>(new JsonGenericsSerializator()) {
             @Override
             public void onError(Call call, Exception e, int id) {
 
             }
 
             @Override
-            public void onResponse(Object response, int id) {
+            public void onResponse(ResultClient<HandleInfo> response, int id) {
+                if (response.isSuccess() && response.getData() != null) {
+                    binding.handleUnitAddressView.setText(response.getData().getHandleUnitAddress());
+                    binding.costValueView.binding.itemContent.setText("￥" + response.getData().getCostValue());
 
+                } else {
+                    ToastUtils.showShort(getApplicationContext(), !CommonUtil.isBlank(response.getMsg()) ? response.getMsg() : "获取信息失败");
+                }
             }
         });
+    }
+
+    public void onClickConfirm(View view) {
+        if (dogDetail == null) {
+            ToastUtils.showShort(getApplicationContext(), "信息有误");
+            return;
+        }
+        SendRequest.saveAnnualDogLicense(dogDetail.getLincenceId(),
+                new GenericsCallback<ResultClient<BaseData>>(new JsonGenericsSerializator()) {
+                    @Override
+                    public void onError(Call call, Exception e, int id) {
+
+                    }
+
+                    @Override
+                    public void onResponse(ResultClient<BaseData> response, int id) {
+                        if (response.isSuccess() && response.getData() != null) {
+                            Bundle bundle = new Bundle();
+                            bundle.putInt("type", SubmitSuccessActivity.type_examined);
+                            openActivity(SubmitSuccessActivity.class, bundle);
+
+                            finishActivity(DogManageWorkflowActivity.class);
+                            finishActivity(DogCertificateExaminedActivity.class);
+                            finish();
+
+                        } else {
+                            ToastUtils.showShort(getApplicationContext(), !CommonUtil.isBlank(response.getMsg()) ? response.getMsg() : "获取信息失败");
+                        }
+                    }
+                });
     }
 
     private String[] permissions = {
@@ -126,14 +157,14 @@ public class DogCertificateExaminedSubmitActivity extends BaseActivity implement
     @Override
     public void onLocationChanged(AMapLocation amapLocation) {
         if (amapLocation != null) {
-            Log.i(TAG, "onLocationChanged: getErrorCode "+amapLocation.getErrorCode());
+            Log.i(TAG, "onLocationChanged: getErrorCode " + amapLocation.getErrorCode());
             if (amapLocation.getErrorCode() == 0) {
                 //定位成功回调信息，设置相关消息
                 amapLocation.getLocationType();//获取当前定位结果来源，如网络定位结果，详见定位类型表
                 double latitude = amapLocation.getLatitude();//获取纬度
                 double longitude = amapLocation.getLongitude();//获取经度
                 String address = amapLocation.getAoiName();
-                Log.i(TAG, "onLocationChanged: latitude = "+latitude+" ; longitude = "+longitude+" ; address = "+address);
+                Log.i(TAG, "onLocationChanged: latitude = " + latitude + " ; longitude = " + longitude + " ; address = " + address);
             } else {
             }
         }

@@ -111,11 +111,12 @@
                                         android:textSize="@dimen/certificateSize" />
 
                                     <TextView
+                                        android:id="@+id/idNumView"
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
                                         android:layout_marginLeft="@dimen/dp_8"
                                         android:gravity="center_vertical"
-                                        android:text="0100000 "
+                                        tools:text="0100000 "
                                         android:textColor="#000000"
                                         android:textSize="@dimen/certificateSize" />
 
@@ -137,11 +138,12 @@
                                         android:textSize="@dimen/certificateSize" />
 
                                     <TextView
+                                        android:id="@+id/dogTypeView"
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
                                         android:layout_marginLeft="@dimen/dp_8"
                                         android:gravity="center_vertical"
-                                        android:text="萨摩耶"
+                                        tools:text="萨摩耶"
                                         android:textColor="#000000"
                                         android:textSize="@dimen/certificateSize" />
 
@@ -163,11 +165,12 @@
                                         android:textSize="@dimen/certificateSize" />
 
                                     <TextView
+                                        android:id="@+id/dogColorView"
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
                                         android:layout_marginLeft="@dimen/dp_8"
                                         android:gravity="center_vertical"
-                                        android:text="白色"
+                                        tools:text="白色"
                                         android:textColor="#000000"
                                         android:textSize="@dimen/certificateSize" />
 
@@ -189,6 +192,7 @@
                                         android:textSize="@dimen/certificateSize" />
 
                                     <TextView
+                                        android:id="@+id/dogGenderView"
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
                                         android:layout_marginLeft="@dimen/dp_8"
@@ -215,11 +219,12 @@
                                         android:textSize="@dimen/certificateSize" />
 
                                     <TextView
+                                        android:id="@+id/orgNameView"
                                         android:layout_width="wrap_content"
                                         android:layout_height="match_parent"
                                         android:layout_marginLeft="@dimen/dp_8"
                                         android:gravity="center_vertical"
-                                        android:text="张三"
+                                        tools:text="张三"
                                         android:textColor="#000000"
                                         android:textSize="@dimen/certificateSize" />
 
@@ -241,11 +246,12 @@
                                         android:textSize="@dimen/certificateSize" />
 
                                     <TextView
+                                        android:id="@+id/awardTimeView"
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
                                         android:layout_marginLeft="@dimen/dp_8"
                                         android:gravity="center_vertical"
-                                        android:text="2021年3月31日"
+                                        tools:text="2021年3月31日"
                                         android:textColor="#000000"
                                         android:textSize="@dimen/certificateSize" />
 
@@ -267,11 +273,12 @@
                                         android:textSize="@dimen/certificateSize" />
 
                                     <TextView
+                                        android:id="@+id/detailedAddressView"
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
                                         android:layout_marginLeft="@dimen/dp_8"
                                         android:gravity="center_vertical"
-                                        android:text="北京市西城区天桥街道"
+                                        tools:text="北京市西城区天桥街道"
                                         android:textColor="#000000"
                                         android:textSize="@dimen/certificateSize" />
 
@@ -336,6 +343,7 @@
                             android:orientation="vertical">
 
                             <LinearLayout
+                                android:id="@+id/dogUserTopView"
                                 android:layout_width="match_parent"
                                 android:layout_height="@dimen/dp_45"
                                 android:layout_marginLeft="@dimen/dp_16"
@@ -367,6 +375,7 @@
                                 android:layout_height="wrap_content"
                                 android:orientation="vertical"
                                 android:paddingBottom="@dimen/dp_15"
+                                tools:visibility="visible"
                                 android:visibility="gone">
 
                                 <View
@@ -391,11 +400,12 @@
                                         android:textSize="@dimen/sp_15" />
 
                                     <TextView
+                                        android:id="@+id/userNameView"
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
                                         android:layout_marginLeft="@dimen/dp_8"
                                         android:gravity="center_vertical"
-                                        android:text="张三"
+                                        tools:text="张三"
                                         android:textColor="#666666"
                                         android:textSize="@dimen/sp_15" />
 
@@ -418,11 +428,12 @@
                                         android:textSize="@dimen/sp_15" />
 
                                     <TextView
+                                        android:id="@+id/userIdNumView"
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
                                         android:layout_marginLeft="@dimen/dp_8"
                                         android:gravity="center_vertical"
-                                        android:text="232126198009090987"
+                                        tools:text="232126198009090987"
                                         android:textColor="#666666"
                                         android:textSize="@dimen/sp_15" />
 
@@ -445,11 +456,12 @@
                                         android:textSize="@dimen/sp_15" />
 
                                     <TextView
+                                        android:id="@+id/contactPhoneNumView"
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
                                         android:layout_marginLeft="@dimen/dp_8"
                                         android:gravity="center_vertical"
-                                        android:text="13600009090"
+                                        tools:text="13600009090"
                                         android:textColor="#666666"
                                         android:textSize="@dimen/sp_15" />
 
@@ -470,10 +482,11 @@
                                         android:textSize="@dimen/sp_15" />
 
                                     <TextView
+                                        android:id="@+id/userDetailedAddressView"
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
                                         android:layout_marginLeft="@dimen/dp_8"
-                                        android:text="北京市西城区天桥街道某小区1单元133 "
+                                        tools:text="北京市西城区天桥街道某小区1单元133 "
                                         android:textColor="#666666"
                                         android:textSize="@dimen/sp_15" />
 
@@ -536,11 +549,12 @@
                                     android:textSize="@dimen/sp_15" />
 
                                 <TextView
+                                    android:id="@+id/expireTimeView"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_marginLeft="@dimen/dp_8"
                                     android:gravity="center_vertical"
-                                    android:text="2022年3月31日"
+                                    tools:text="2022年3月31日"
                                     android:textColor="#666666"
                                     android:textSize="@dimen/sp_15" />
 
@@ -563,11 +577,12 @@
                                     android:textSize="@dimen/sp_15" />
 
                                 <TextView
+                                    android:id="@+id/acceptUnitView"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_marginLeft="@dimen/dp_8"
                                     android:gravity="center_vertical"
-                                    android:text="北京天桥派出所"
+                                    tools:text="北京天桥派出所"
                                     android:textColor="#666666"
                                     android:textSize="@dimen/sp_15" />
 
@@ -590,11 +605,12 @@
                                     android:textSize="@dimen/sp_15" />
 
                                 <TextView
+                                    android:id="@+id/approveUserNameView"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_marginLeft="@dimen/dp_8"
                                     android:gravity="center_vertical"
-                                    android:text="XXXX "
+                                    tools:text=" "
                                     android:textColor="#666666"
                                     android:textSize="@dimen/sp_15" />
 

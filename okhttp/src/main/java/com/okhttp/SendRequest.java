@@ -227,6 +227,20 @@ public class SendRequest {
     }
 
 
+    // ==================================== 犬证年审 =============================================
+
+    /**
+     * 获取犬证列表
+     *
+     * @param call
+     */
+    public static void getDogLicenceList(Callback call) {
+        Map<String, String> headers = new HashMap<>();
+        headers.put("Authorization", BaseApplication.getInstance().getUserInfo().getAuthorization());
+        OkHttpUtils.post().headers(headers).url(APIUrls.getDogLicenceList).build().execute(call);
+
+    }
+
     /**
      * 犬证年审-选择我的犬只详情
      *
@@ -239,6 +253,36 @@ public class SendRequest {
         Map<String, String> map = new HashMap<>();
         map.put("lincenceId", String.valueOf(lincenceId));
         OkHttpUtils.post().headers(headers).params(map).url(APIUrls.getDogLicenseDetail).build().execute(call);
+
+    }
+
+    /**
+     * 年审-获取价格
+     *
+     * @param lincenceId
+     * @param call
+     */
+    public static void getAnnualDogLicense(int lincenceId, Callback call) {
+        Map<String, String> headers = new HashMap<>();
+        headers.put("Authorization", BaseApplication.getInstance().getUserInfo().getAuthorization());
+        Map<String, String> map = new HashMap<>();
+        map.put("lincenceId", String.valueOf(lincenceId));
+        OkHttpUtils.post().headers(headers).params(map).url(APIUrls.getAnnualDogLicense).build().execute(call);
+
+    }
+
+    /**
+     * 年审-提交审批
+     *
+     * @param lincenceId
+     * @param call
+     */
+    public static void saveAnnualDogLicense(int lincenceId, Callback call) {
+        Map<String, String> headers = new HashMap<>();
+        headers.put("Authorization", BaseApplication.getInstance().getUserInfo().getAuthorization());
+        Map<String, String> map = new HashMap<>();
+        map.put("lincenceId", String.valueOf(lincenceId));
+        OkHttpUtils.post().headers(headers).params(map).url(APIUrls.saveAnnualDogLicense).build().execute(call);
 
     }
 
@@ -308,10 +352,10 @@ public class SendRequest {
      *
      * @param call
      */
-    public static void getDogLicenceList(Callback call) {
+    public static void getMyLicenceList(Callback call) {
         Map<String, String> headers = new HashMap<>();
         headers.put("Authorization", BaseApplication.getInstance().getUserInfo().getAuthorization());
-        OkHttpUtils.post().headers(headers).url(APIUrls.getDogLicenceList).build().execute(call);
+        OkHttpUtils.post().headers(headers).url(APIUrls.getMyLicenceList).build().execute(call);
 
     }
 

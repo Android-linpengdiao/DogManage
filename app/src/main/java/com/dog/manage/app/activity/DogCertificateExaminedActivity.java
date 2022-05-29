@@ -4,6 +4,7 @@ package com.dog.manage.app.activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 
 import com.base.utils.CommonUtil;
@@ -20,6 +21,8 @@ import com.dog.manage.app.media.MediaFile;
 import com.dog.manage.app.media.MediaSelectActivity;
 import com.dog.manage.app.media.MediaUtils;
 import com.dog.manage.app.model.Dog;
+import com.dog.manage.app.model.DogDetail;
+import com.dog.manage.app.model.DogLicenseDetail;
 import com.dog.manage.app.model.PoliciesBean;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -29,6 +32,7 @@ import com.okhttp.callbacks.GenericsCallback;
 import com.okhttp.sample_okhttp.JsonGenericsSerializator;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
@@ -44,17 +48,13 @@ import top.zibin.luban.OnCompressListener;
 public class DogCertificateExaminedActivity extends BaseActivity {
 
     private ActivityDogCertificateExaminedBinding binding;
-    private List<Dog> dogList = Arrays.asList(
-            new Dog(1, "萨摩耶", "000000000"),
-            new Dog(1, "柯基", "000000000"),
-            new Dog(1, "泰迪", "000000000"),
-            new Dog(1, "哈士奇", "000000000"),
-            new Dog(0, "纸质凭证", null));
+    private List<Dog> dogList = new ArrayList<>();
     private final int request_DogCertificate = 100;
     private final int request_ImmuneCertificate = 200;
 
     private String dogCertificate = null;
     private String immuneCertificate = null;
+    private Dog dogDetail;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -79,16 +79,18 @@ public class DogCertificateExaminedActivity extends BaseActivity {
                         new OnClickListener() {
                             @Override
                             public void onClick(View view, Object object) {
-                                Dog dataBean = (Dog) object;
-                                binding.dogCertificateView.binding.itemContent.setText(dataBean.getDogType());
-                                if (dataBean.getDogId() == 0) {
+                                Log.i(TAG, "onClick: " + object);
+                                dogDetail = (Dog) object;
+                                binding.dogCertificateView.binding.itemContent.setText(dogDetail.getDogType());
+                                if (dogDetail.getLincenceId() == 0) {
                                     binding.dianZhiContainer.setVisibility(View.GONE);
                                     binding.zhiZhiContainer.setVisibility(View.VISIBLE);
                                 } else {
                                     binding.dianZhiContainer.setVisibility(View.VISIBLE);
                                     binding.zhiZhiContainer.setVisibility(View.GONE);
-                                    getDogLicenseDetail(dataBean.getLincenceId());
+                                    getDogLicenseDetail(dogDetail.getLincenceId());
                                 }
+
                             }
 
                             @Override
@@ -99,7 +101,7 @@ public class DogCertificateExaminedActivity extends BaseActivity {
             }
         });
 
-        binding.spreadView.setOnClickListener(new View.OnClickListener() {
+        binding.dogUserTopView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 binding.dogOwnerContainer.setVisibility(binding.dogOwnerContainer.isShown() ? View.GONE : View.VISIBLE);
@@ -148,7 +150,18 @@ public class DogCertificateExaminedActivity extends BaseActivity {
                 if (response.isSuccess() && response.getData() != null) {
                     if (response.getData().size() > 0) {
                         dogList = response.getData();
-                        getDogLicenseDetail(dogList.get(0).getLincenceId());
+                    }
+                    Dog newDog = new Dog();
+                    newDog.setLincenceId(0);
+                    newDog.setDogType("纸质犬证-新建年审");
+                    dogList.add(newDog);
+
+                    dogDetail = dogList.get(0);
+                    binding.dogCertificateView.binding.itemContent.setText(dogDetail.getDogType());
+                    if (dogDetail.getLincenceId() != 0) {
+                        getDogLicenseDetail(dogDetail.getLincenceId());
+                    } else {
+                        initView(null);
                     }
 
                 }
@@ -160,26 +173,104 @@ public class DogCertificateExaminedActivity extends BaseActivity {
      * 犬证年审-选择我的犬只详情
      */
     private void getDogLicenseDetail(int lincenceId) {
-        SendRequest.getDogLicenseDetail(lincenceId, new GenericsCallback<ResultClient<PoliciesBean>>(new JsonGenericsSerializator()) {
+        SendRequest.getDogLicenseDetail(lincenceId,
+                new GenericsCallback<ResultClient<DogLicenseDetail>>(new JsonGenericsSerializator()) {
             @Override
             public void onError(Call call, Exception e, int id) {
 
             }
 
             @Override
-            public void onResponse(ResultClient<PoliciesBean> response, int id) {
+            public void onResponse(ResultClient<DogLicenseDetail> response, int id) {
                 if (response.isSuccess() && response.getData() != null) {
+                    initView(response.getData());
 
                 } else {
-                    ToastUtils.showShort(getApplicationContext(), response.getMessage());
+                    initView(null);
+                    ToastUtils.showShort(getApplicationContext(), !CommonUtil.isBlank(response.getMsg()) ? response.getMsg() : "获取信息失败");
+
                 }
             }
         });
     }
 
+    private void initView(DogLicenseDetail data) {
+
+        if (data != null) {
+            binding.dianZhiContainer.setVisibility(View.VISIBLE);
+            binding.zhiZhiContainer.setVisibility(View.GONE);
+            //北京市养犬登记证
+            if (data.getDetailResultRespVo() != null) {
+                binding.idNumView.setText(data.getDetailResultRespVo().getIdNum());
+                binding.dogTypeView.setText(data.getDetailResultRespVo().getDogType());
+                binding.dogColorView.setText(data.getDetailResultRespVo().getDogColor());
+                binding.dogGenderView.setText(data.getDetailResultRespVo().getDogGender() == 0 ? "雌性" : "雄性");
+                binding.orgNameView.setText(data.getDetailResultRespVo().getOrgName());
+                binding.detailedAddressView.setText(data.getDetailResultRespVo().getDetailedAddress());
+                binding.awardTimeView.setText(data.getDetailResultRespVo().getAwardTime());
+
+            } else {
+                binding.idNumView.setText("");
+                binding.dogTypeView.setText("");
+                binding.dogColorView.setText("");
+                binding.dogGenderView.setText("");
+                binding.orgNameView.setText("");
+                binding.detailedAddressView.setText("");
+                binding.awardTimeView.setText("");
+            }
+
+            //犬主详细信息
+            if (data.getDogLicenseUserDetailVo() != null) {
+                binding.userNameView.setText(data.getDogLicenseUserDetailVo().getUserName());
+                binding.userIdNumView.setText(data.getDogLicenseUserDetailVo().getIdNum());
+                binding.contactPhoneNumView.setText(data.getDogLicenseUserDetailVo().getContactPhoneNum());
+                binding.userDetailedAddressView.setText(data.getDogLicenseUserDetailVo().getDetailedAddress());
+            } else {
+                binding.userNameView.setText("");
+                binding.userIdNumView.setText("");
+                binding.contactPhoneNumView.setText("");
+                binding.userDetailedAddressView.setText("");
+            }
+
+            //犬证年审信息
+            if (data.getBizLicenseApproveDetailVo() != null) {
+                binding.expireTimeView.setText(data.getBizLicenseApproveDetailVo().getExpireTime());
+                binding.acceptUnitView.setText(data.getBizLicenseApproveDetailVo().getAcceptUnit());
+                binding.approveUserNameView.setText(data.getBizLicenseApproveDetailVo().getApproveUserName());
+            } else {
+                binding.expireTimeView.setText("");
+                binding.acceptUnitView.setText("");
+                binding.approveUserNameView.setText("");
+            }
+        } else {
+            binding.dianZhiContainer.setVisibility(View.GONE);
+
+            binding.idNumView.setText("");
+            binding.dogTypeView.setText("");
+            binding.dogColorView.setText("");
+            binding.dogGenderView.setText("");
+            binding.orgNameView.setText("");
+            binding.detailedAddressView.setText("");
+            binding.awardTimeView.setText("");
+
+            binding.userNameView.setText("");
+            binding.userIdNumView.setText("");
+            binding.contactPhoneNumView.setText("");
+            binding.userDetailedAddressView.setText("");
+
+            binding.expireTimeView.setText("");
+            binding.acceptUnitView.setText("");
+            binding.approveUserNameView.setText("");
+        }
+    }
+
 
     public void onClickConfirm(View view) {
-        if (binding.dogCertificateView.binding.itemContent.getText().toString().trim().equals("纸质凭证")) {
+        if (dogDetail == null) {
+            ToastUtils.showShort(getApplicationContext(), "信息有误");
+            return;
+        }
+        if (dogDetail.getLincenceId() == 0) {
             if (CommonUtil.isBlank(dogCertificate)) {
                 ToastUtils.showShort(getApplicationContext(), "请上传纸质犬证");
                 return;
@@ -191,11 +282,12 @@ public class DogCertificateExaminedActivity extends BaseActivity {
             Bundle bundle = new Bundle();
             bundle.putInt("type", DogCertificateEditDogOwnerActivity.type_examined);
             openActivity(DogCertificateEditDogOwnerActivity.class, bundle);
+
         } else {
-            Map<String, String> paramsMap = new HashMap<>();
             Bundle bundle = new Bundle();
-            bundle.putString("paramsJson", GsonUtils.toJson(paramsMap));
+            bundle.putSerializable("dataBean", dogDetail);
             openActivity(DogCertificateExaminedSubmitActivity.class, bundle);
+
         }
     }
 

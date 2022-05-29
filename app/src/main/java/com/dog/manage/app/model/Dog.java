@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @Data
 public class Dog implements Serializable {
 
-    private Integer dogId;
+    private Integer dogId  = 0;
     private Integer lincenceId = 0;
     private Integer licenceStatus;
     private String dogType;
