@@ -24,14 +24,17 @@ import com.base.view.BaseBottomSheetDialog;
 import com.base.view.RecycleViewDivider;
 import com.dog.manage.app.R;
 import com.dog.manage.app.adapter.AreaSelectAdapter;
+import com.dog.manage.app.adapter.CommunitySelectAdapter;
 import com.dog.manage.app.area.CityData;
 import com.dog.manage.app.area.CityManager;
 import com.dog.manage.app.databinding.ActivityDogCertificateEditDogOwnerBinding;
 import com.dog.manage.app.databinding.DialogAddressBinding;
+import com.dog.manage.app.databinding.DialogCommunityBinding;
 import com.dog.manage.app.media.MediaFile;
 import com.dog.manage.app.media.MediaSelectActivity;
 import com.dog.manage.app.media.MediaUtils;
 import com.dog.manage.app.model.AddressBean;
+import com.dog.manage.app.model.CommunityBean;
 import com.dog.manage.app.model.DogUser;
 import com.dog.manage.app.model.PunishRecord;
 import com.google.gson.Gson;
@@ -174,7 +177,6 @@ public class DogCertificateEditDogOwnerActivity extends BaseActivity {
         binding.addressView.binding.itemContent.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                openActivity(AreaSelectActivity.class, request_City);
 
                 View contentView = LayoutInflater.from(DogCertificateEditDogOwnerActivity.this).inflate(R.layout.dialog_address, null);
                 addressBinding = DataBindingUtil.bind(contentView);
@@ -206,22 +208,12 @@ public class DogCertificateEditDogOwnerActivity extends BaseActivity {
                 });
                 getAddressAreas(true);
 
-//                List<CityData> cities = CityManager.getInstance().getCityDataList();
-//                if (cities.size() > 0) {
-//                    for (CityData cityData : cities) {
-//                        if (cityData.getName().equals("北京市")) {
-//                            areaSelectAdapter.refreshData(cityData.getChildren().get(0).getChildren());
-//                            break;
-//                        }
-//                    }
-//                }
                 addressBinding.confirmView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
                         if (areaSelectAdapter.getList().size() > 0) {
-//                          CityData.FirstChildrenBean.SecondChildrenBean dataBean = areaSelectAdapter.getList().get(areaSelectAdapter.getSelect());
-                            AddressBean dataBean = areaSelectAdapter.getList().get(areaSelectAdapter.getSelect());
-                            String address = dataBean.getAreaName();
+                            addressBean = areaSelectAdapter.getList().get(areaSelectAdapter.getSelect());
+                            String address = addressBean.getAreaName();
                             dogUser.setAddress(address);
                             binding.addressView.binding.itemContent.setText(address);
                             bottomSheetDialog.cancel();
@@ -233,15 +225,125 @@ public class DogCertificateEditDogOwnerActivity extends BaseActivity {
             }
         });
 
+        binding.detailedAddressView.binding.itemContent.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                View contentView = LayoutInflater.from(DogCertificateEditDogOwnerActivity.this).inflate(R.layout.dialog_community, null);
+                communityBinding = DataBindingUtil.bind(contentView);
+                BaseBottomSheetDialog bottomSheetDialog = new BaseBottomSheetDialog(DogCertificateEditDogOwnerActivity.this) {
+                    @Override
+                    protected View initContentView() {
+                        return communityBinding.getRoot();
+                    }
+                };
+                bottomSheetDialog.show();
+
+                communityBinding.recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
+                communityBinding.recyclerView.setNestedScrollingEnabled(false);
+                RecycleViewDivider divider = new RecycleViewDivider(getApplicationContext(),
+                        LinearLayoutManager.VERTICAL,
+                        CommonUtil.dip2px(getApplicationContext(), 0.5f),
+                        Color.parseColor("#E1E1E1"));
+                communityBinding.recyclerView.addItemDecoration(divider);
+                communityBinding.recyclerView.setNestedScrollingEnabled(false);
+                communitySelectAdapter = new CommunitySelectAdapter(getApplicationContext());
+                communityBinding.recyclerView.setAdapter(communitySelectAdapter);
+
+                communityBinding.refreshLayout.setEnableRefresh(false);
+                communityBinding.refreshLayout.setOnLoadMoreListener(new OnLoadMoreListener() {
+                    @Override
+                    public void onLoadMore(RefreshLayout refreshlayout) {
+                        getAddressList(false);
+                    }
+                });
+                getAddressList(true);
+
+                communityBinding.confirmView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        if (communitySelectAdapter.getList().size() > 0) {
+                            communityBean = communitySelectAdapter.getList().get(communitySelectAdapter.getSelect());
+                            String detailedAddress = communityBean.getCommunityName();
+                            dogUser.setDetailedAddress(detailedAddress);
+                            binding.detailedAddressView.binding.itemContent.setText(detailedAddress);
+                            bottomSheetDialog.cancel();
+                        }
+                    }
+                });
+
+
+            }
+        });
+
+
+    }
+
+    private DialogCommunityBinding communityBinding;
+    private CommunitySelectAdapter communitySelectAdapter;
+    private Pager<CommunityBean> communityPager = new Pager<>();
+    private CommunityBean communityBean;
+
+    private void getAddressList(boolean isRefresh) {
+        if (addressBean == null) {
+            return;
+        }
+        //省110000 、市110100
+        SendRequest.getAddressList("天桥小区", 110000, 110100, addressBean.getId(),
+                communityPager.getCursor(), communityPager.getSize(),
+                new GenericsCallback<Pager<CommunityBean>>(new JsonGenericsSerializator()) {
+
+                    @Override
+                    public void onAfter(int id) {
+                        super.onAfter(id);
+                        if (isRefresh) {
+                            communityBinding.refreshLayout.finishRefresh();
+                        } else {
+                            communityBinding.refreshLayout.finishLoadMore();
+                        }
+                    }
+
+                    @Override
+                    public void onError(Call call, Exception e, int id) {
+                        if (isRefresh) {
+                            communityBinding.refreshLayout.finishRefresh(false);
+                        } else {
+                            communityBinding.refreshLayout.finishLoadMore(false);
+                        }
+                    }
+
+                    @Override
+                    public void onResponse(Pager<CommunityBean> response, int id) {
+                        communityPager = response;
+                        if (response != null && response.getRows() != null) {
+                            if (isRefresh) {
+                                communitySelectAdapter.refreshData(response.getRows());
+                            } else {
+                                communitySelectAdapter.loadMoreData(response.getRows());
+                                if (communitySelectAdapter.getList().size() < response.getTotal()) {
+                                    communityPager.setCursor(communityPager.getCursor() + 1);
+                                }
+                            }
+                            if (communitySelectAdapter.getList().size() == response.getTotal()) {
+                                communityBinding.refreshLayout.setNoMoreData(true);
+                            }
+//                            binding.emptyView.setVisibility(adapter.getList().size() > 0 ? View.GONE : View.VISIBLE);
+//                            binding.emptyView.setText("暂无犬只～");
+                        } else {
+                            ToastUtils.showShort(getApplicationContext(), response.getMessage());
+                        }
+                    }
+                });
     }
 
     private DialogAddressBinding addressBinding;
     private AreaSelectAdapter areaSelectAdapter;
-    private Pager<AddressBean> pager = new Pager<>();
+    private Pager<AddressBean> areasPager = new Pager<>();
+    private AddressBean addressBean;
 
     private void getAddressAreas(boolean isRefresh) {
         //省110000 、市110100
-        SendRequest.getAddressAreas(3, 110100, pager.getCursor(), pager.getSize(),
+        SendRequest.getAddressAreas(3, 110100, areasPager.getCursor(), areasPager.getSize(),
                 new GenericsCallback<Pager<AddressBean>>(new JsonGenericsSerializator()) {
 
                     @Override
@@ -266,14 +368,14 @@ public class DogCertificateEditDogOwnerActivity extends BaseActivity {
 
                     @Override
                     public void onResponse(Pager<AddressBean> response, int id) {
-                        pager = response;
+                        areasPager = response;
                         if (response != null && response.getRows() != null) {
                             if (isRefresh) {
                                 areaSelectAdapter.refreshData(response.getRows());
                             } else {
                                 areaSelectAdapter.loadMoreData(response.getRows());
                                 if (areaSelectAdapter.getList().size() < response.getTotal()) {
-                                    pager.setCursor(pager.getCursor() + 1);
+                                    areasPager.setCursor(areasPager.getCursor() + 1);
                                 }
                             }
                             if (areaSelectAdapter.getList().size() == response.getTotal()) {
@@ -467,7 +569,7 @@ public class DogCertificateEditDogOwnerActivity extends BaseActivity {
                 //居住地址（全）例：012/02/31
                 binding.addressView.binding.itemContent.setText(dogUser.getAddress());
                 //详细地址（全）
-                binding.detailedAddressView.setText(dogUser.getDetailedAddress());
+                binding.detailedAddressView.binding.itemContent.setText(dogUser.getDetailedAddress());
 
                 binding.houseNumberView.binding.itemEdit.setText(dogUser.getHouseNum());
                 GlideLoader.LoderUploadImage(DogCertificateEditDogOwnerActivity.this, dogUser.getHousePhoto(), binding.houseProprietaryCertificateView, 6);
@@ -511,7 +613,7 @@ public class DogCertificateEditDogOwnerActivity extends BaseActivity {
                 //居住地址（全）例：012/02/31
                 binding.addressView.binding.itemContent.setText(dogUser.getAddress());
                 //详细地址（全）
-                binding.detailedAddressView.setText(dogUser.getDetailedAddress());
+                binding.detailedAddressView.binding.itemContent.setText(dogUser.getDetailedAddress());
 
                 //养犬管理制度（单位）
                 GlideLoader.LoderUploadImage(DogCertificateEditDogOwnerActivity.this, dogUser.getDogManagement(), binding.managementSystemView, 6);
@@ -788,7 +890,7 @@ public class DogCertificateEditDogOwnerActivity extends BaseActivity {
                     return;
                 }
 
-                String detailedAddress = binding.detailedAddressView.getText().toString();
+                String detailedAddress = binding.detailedAddressView.binding.itemContent.getText().toString();
                 if (CommonUtil.isBlank(detailedAddress)) {
                     ToastUtils.showShort(getApplicationContext(), "请输入详细地址");
                     return;
@@ -899,7 +1001,7 @@ public class DogCertificateEditDogOwnerActivity extends BaseActivity {
                     return;
                 }
 
-                String detailedAddress = binding.detailedAddressView.getText().toString();
+                String detailedAddress = binding.detailedAddressView.binding.itemContent.getText().toString();
                 if (CommonUtil.isBlank(detailedAddress)) {
                     ToastUtils.showShort(getApplicationContext(), "请输入详细地址");
                     return;
@@ -940,6 +1042,11 @@ public class DogCertificateEditDogOwnerActivity extends BaseActivity {
                 map.put("houseNum", dogUser.getHouseNum());//房本编号
                 map.put("housePhoto", dogUser.getHousePhoto());//房产证或租赁合同照片
 
+            }
+
+            if (communityBean!=null){
+                map.put("communityDept", String.valueOf(communityBean.getCommunityDept()));//社区所属机构（新增）
+                map.put("villageId", String.valueOf(communityBean.getId()));//社区id
             }
 
             if (type == type_certificate || type == type_immune) {

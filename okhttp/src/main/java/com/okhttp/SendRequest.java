@@ -257,15 +257,17 @@ public class SendRequest {
      *
      * @param call
      */
-    public static void getAddressList(String communityName, int provinceId, int cityId, int areaId, Callback call) {
+    public static void getAddressList(String communityName, int provinceId, int cityId, int areaId,int pageNum,int pageSize, Callback call) {
         Map<String, String> headers = new HashMap<>();
         headers.put("Authorization", BaseApplication.getInstance().getUserInfo().getAuthorization());
 
         Map<String, String> map = new HashMap<>();
-        map.put("level", communityName);
+        map.put("communityName", communityName);
         map.put("provinceId", String.valueOf(provinceId));
         map.put("cityId", String.valueOf(cityId));
         map.put("areaId", String.valueOf(areaId));
+        map.put("pageNum", String.valueOf(pageNum));
+        map.put("pageSize", String.valueOf(pageSize));
         OkHttpUtils.post().headers(headers).params(map).url(APIUrls.addressList).build().execute(call);
 
     }
