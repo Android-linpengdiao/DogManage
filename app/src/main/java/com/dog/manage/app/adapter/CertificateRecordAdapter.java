@@ -84,7 +84,7 @@ public class CertificateRecordAdapter extends BaseRecyclerAdapter<RecordImmune, 
             binding.dogOwnerContainer.setVisibility(View.INVISIBLE);
             binding.contentView.setText(dataBean.getDogType() + "-" + dataBean.getDogAge() + "岁3个月");
             binding.contentView.setTextColor(Color.parseColor("#999999"));
-            if (dataBean.getLicenceStatus() != null) {
+            if (dataBean.getLincenceStatus() != null) {
                 if (dataBean.getLincenceStatus() == 1) {
                     binding.checkStatusView.setText("已预约");
                     binding.detailsStatusView.setText("查看信息");

@@ -131,7 +131,7 @@ public class PunishRecordActivity extends BaseActivity {
                                 binding.refreshLayout.setNoMoreData(true);
                             }
                             binding.emptyView.setVisibility(adapter.getList().size() > 0 ? View.GONE : View.VISIBLE);
-                            binding.emptyView.setText("暂无犬只～");
+                            binding.emptyView.setText("暂无内容～");
                         } else {
                             ToastUtils.showShort(getApplicationContext(), response.getMessage());
                         }

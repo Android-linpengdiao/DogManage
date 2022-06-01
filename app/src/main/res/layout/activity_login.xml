@@ -42,7 +42,7 @@
             android:background="@drawable/button_gray"
             android:gravity="center_vertical"
             android:hint="手机号"
-            android:text="13521614827"
+            android:text="13521614868"
             android:maxLength="16"
             android:minHeight="@dimen/dp_56"
             android:paddingLeft="@dimen/dp_27"

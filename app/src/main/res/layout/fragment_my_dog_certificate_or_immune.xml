@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
 
@@ -16,7 +17,8 @@
             android:layout_height="match_parent"
             android:background="@color/white"
             android:orientation="vertical"
-            android:visibility="gone">
+            android:visibility="gone"
+            tools:visibility="gone">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -65,11 +67,12 @@
                                 android:textSize="@dimen/certificateSize" />
 
                             <TextView
+                                android:id="@+id/idNumView"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginLeft="@dimen/dp_8"
                                 android:gravity="center_vertical"
-                                android:text="0100000 "
+                                android:text=" "
                                 android:textColor="#000000"
                                 android:textSize="@dimen/certificateSize" />
 
@@ -91,11 +94,12 @@
                                 android:textSize="@dimen/certificateSize" />
 
                             <TextView
+                                android:id="@+id/dogTypeView"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginLeft="@dimen/dp_8"
                                 android:gravity="center_vertical"
-                                android:text="萨摩耶"
+                                tools:text="萨摩耶"
                                 android:textColor="#000000"
                                 android:textSize="@dimen/certificateSize" />
 
@@ -117,11 +121,12 @@
                                 android:textSize="@dimen/certificateSize" />
 
                             <TextView
+                                android:id="@+id/dogColorView"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginLeft="@dimen/dp_8"
                                 android:gravity="center_vertical"
-                                android:text="白色"
+                                tools:text="白色"
                                 android:textColor="#000000"
                                 android:textSize="@dimen/certificateSize" />
 
@@ -143,11 +148,12 @@
                                 android:textSize="@dimen/certificateSize" />
 
                             <TextView
+                                android:id="@+id/dogGenderView"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginLeft="@dimen/dp_8"
                                 android:gravity="center_vertical"
-                                android:text="雄性"
+                                tools:text="雄性"
                                 android:textColor="#000000"
                                 android:textSize="@dimen/certificateSize" />
 
@@ -169,11 +175,12 @@
                                 android:textSize="@dimen/certificateSize" />
 
                             <TextView
+                                android:id="@+id/orgNameView"
                                 android:layout_width="wrap_content"
                                 android:layout_height="match_parent"
                                 android:layout_marginLeft="@dimen/dp_8"
                                 android:gravity="center_vertical"
-                                android:text="张三"
+                                tools:text="张三"
                                 android:textColor="#000000"
                                 android:textSize="@dimen/certificateSize" />
 
@@ -195,11 +202,12 @@
                                 android:textSize="@dimen/certificateSize" />
 
                             <TextView
+                                android:id="@+id/awardTimeView"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginLeft="@dimen/dp_8"
                                 android:gravity="center_vertical"
-                                android:text="2021年3月31日"
+                                tools:text="2021年3月31日"
                                 android:textColor="#000000"
                                 android:textSize="@dimen/certificateSize" />
 
@@ -221,11 +229,12 @@
                                 android:textSize="@dimen/certificateSize" />
 
                             <TextView
+                                android:id="@+id/detailedAddressView"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginLeft="@dimen/dp_8"
                                 android:gravity="center_vertical"
-                                android:text="北京市西城区天桥街道"
+                                tools:text="北京市西城区天桥街道"
                                 android:textColor="#000000"
                                 android:textSize="@dimen/certificateSize" />
 
@@ -285,7 +294,7 @@
                 android:paddingRight="@dimen/viewPadding"
                 app:item_container_height="@dimen/dp_50"
                 app:item_content_color="@color/colorAppTheme"
-                app:item_content="张三"
+                app:item_content=""
                 app:item_content_size="@dimen/sp_14"
                 app:item_info="查看详情"
                 app:item_info_size="@dimen/sp_14"
@@ -309,7 +318,7 @@
                 android:paddingRight="@dimen/viewPadding"
                 app:item_container_height="@dimen/dp_50"
                 app:item_content_color="@color/colorAppTheme"
-                app:item_content="柴犬"
+                app:item_content=""
                 app:item_content_size="@dimen/sp_14"
                 app:item_info="查看详情"
                 app:item_info_size="@dimen/sp_14"
@@ -342,7 +351,7 @@
                 android:layout_marginTop="@dimen/dp_18"
                 android:layout_marginRight="@dimen/dp_28"
                 android:layout_marginBottom="@dimen/sp_24"
-                android:background="@drawable/button_theme"
+                android:background="@drawable/button_blue"
                 android:gravity="center"
                 android:text="犬证年审 "
                 android:textColor="#ffffff"
@@ -356,7 +365,8 @@
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/dp_16"
             android:background="@color/white"
-            android:visibility="visible"
+            android:visibility="gone"
+            tools:visibility="gone"
             app:cardCornerRadius="@dimen/dp_8"
             app:cardElevation="@dimen/dp_6"
             app:cardPreventCornerOverlap="false">

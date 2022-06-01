@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
+import android.widget.LinearLayout;
 
 import com.base.UserInfo;
 import com.base.utils.CommonUtil;
@@ -63,6 +64,9 @@ public class CameraActivity extends BaseActivity {
         }
 
         initCamera();
+
+        LinearLayout.LayoutParams layoutParams = (LinearLayout.LayoutParams) binding.hintView.getLayoutParams();
+        layoutParams.topMargin = CommonUtil.getScreenWidth(this) / 2 + getResources().getDimensionPixelSize(R.dimen.dp_78);
 
     }
 

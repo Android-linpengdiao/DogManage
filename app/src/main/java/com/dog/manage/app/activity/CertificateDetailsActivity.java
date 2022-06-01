@@ -130,9 +130,9 @@ public class CertificateDetailsActivity extends BaseActivity {
         binding.auditStatusView.setText(licenceStatus == 1 ? "审核中" : licenceStatus == 2 ? "审核通过" : licenceStatus == 3 ? "审核拒绝" : licenceStatus == 4 ? "已办结" : licenceStatus == 5 ? "已过期" : licenceStatus == 6 ? "已注销" : "审核中");
         binding.payTypeView.setVisibility(licenceStatus == 4 ? View.VISIBLE : View.GONE);
         binding.auditReasonView.setVisibility(licenceStatus == 3 ? View.VISIBLE : View.GONE);
-        binding.confirmView.setText(licenceStatus == 2 ? "在线支付" : licenceStatus == 3 ? "犬证年审" : licenceStatus == 4 ? "查看犬证" : "在线支付");
+        binding.confirmView.setText(licenceStatus == 2 ? "在线支付" : licenceStatus == 3 ? "重新提交" : licenceStatus == 4 ? "查看犬证" :licenceStatus == 5 ? "犬证年审" : "在线支付");
         binding.confirmView.setVisibility(licenceStatus == 1 ? View.GONE : View.VISIBLE);
-        binding.confirmView.setBackgroundResource(licenceStatus == 3 ? R.drawable.button_red : R.drawable.button_theme);
+        binding.confirmView.setBackgroundResource(licenceStatus == 5 ? R.drawable.button_red : R.drawable.button_theme);
 
         binding.contentView.setText(data.getDogType() + "-" + data.getDogAge() + "岁3个月");
         binding.createTimeView.setText(data.getCreatedTime());

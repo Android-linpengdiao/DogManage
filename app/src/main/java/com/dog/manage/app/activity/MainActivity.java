@@ -23,6 +23,7 @@ import com.dog.manage.app.login.ConfigUtils;
 import com.dog.manage.app.media.MediaFile;
 import com.dog.manage.app.model.BannerBean;
 import com.dog.manage.app.model.PoliciesBean;
+import com.dog.manage.app.utils.GlideBannerLoader;
 import com.dog.manage.app.utils.GlideImageLoader;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -117,7 +118,7 @@ public class MainActivity extends BaseActivity {
     }
 
     private void intBanner() {
-        binding.mainBanner.setImageLoader(new GlideImageLoader(0));
+        binding.mainBanner.setImageLoader(new GlideBannerLoader(0));
         binding.mainBanner.isAutoPlay(true);
         binding.mainBanner.setBannerStyle(BannerConfig.CIRCLE_INDICATOR);
         binding.mainBanner.setBannerAnimation(Transformer.Default);
@@ -130,7 +131,7 @@ public class MainActivity extends BaseActivity {
             }
         });
 
-        binding.banner.setImageLoader(new GlideImageLoader(8));
+        binding.banner.setImageLoader(new GlideBannerLoader(8));
         binding.banner.isAutoPlay(true);
         binding.banner.setBannerStyle(BannerConfig.CIRCLE_INDICATOR);
         binding.banner.setBannerAnimation(Transformer.Default);
@@ -221,14 +222,14 @@ public class MainActivity extends BaseActivity {
 
     public void onClickMessage(View view) {
         if (checkUserRank(getApplicationContext(), true)) {
-//            openActivity(MessageActivity.class);
+            openActivity(MessageActivity.class);
 
 //            openActivity(UpdateDogOwnerInfoActivity.class);
-            if (checkPermissions(PermissionUtils.CAMERA, 100)) {
-                Bundle bundle = new Bundle();
-                bundle.putInt("type", CameraActivity.type_petArchives);
-                openActivity(CameraActivity.class, bundle);
-            }
+//            if (checkPermissions(PermissionUtils.CAMERA, 100)) {
+//                Bundle bundle = new Bundle();
+//                bundle.putInt("type", CameraActivity.type_petArchives);
+//                openActivity(CameraActivity.class, bundle);
+//            }
         }
     }
 

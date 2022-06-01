@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
 
+import com.base.utils.CommonUtil;
 import com.base.utils.FileUtils;
 import com.base.utils.GlideLoader;
 import com.dog.manage.app.R;
@@ -37,7 +38,12 @@ public class UserHomeActivity extends BaseActivity {
         binding = getViewData(R.layout.activity_user_home);
         addActivity(this);
 
-        binding.userNameView.setText(getUserInfo().getLoginPhone());
+        if (!CommonUtil.isBlank(getUserInfo().getLoginPhone()) && getUserInfo().getLoginPhone().length() >= 11) {
+            String phone = getUserInfo().getLoginPhone();
+            binding.userNameView.setText(phone.substring(0, 3) + "****" + phone.substring(7));
+        } else {
+            binding.userNameView.setText(getUserInfo().getLoginPhone());
+        }
     }
 
     public void onClickHead(View view) {

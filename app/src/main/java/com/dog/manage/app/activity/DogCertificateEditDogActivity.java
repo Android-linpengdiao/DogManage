@@ -141,15 +141,15 @@ public class DogCertificateEditDogActivity extends BaseActivity {
         binding.petTypeView.binding.itemInfo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                dog.setDogType("柴犬");
-//                binding.petTypeView.binding.itemContent.setText(dog.getDogType());
-//                verificationDog(dog.getDogType());
+                dog.setDogType("泰迪");
+                binding.petTypeView.binding.itemContent.setText(dog.getDogType());
+                verificationDog(dog.getDogType());
 
-                if (checkPermissions(PermissionUtils.CAMERA, 100)) {
-                    Bundle bundle = new Bundle();
-                    bundle.putInt("type", CameraActivity.type_petType);
-                    openActivity(CameraActivity.class, bundle,request_petType);
-                }
+//                if (checkPermissions(PermissionUtils.CAMERA, 100)) {
+//                    Bundle bundle = new Bundle();
+//                    bundle.putInt("type", CameraActivity.type_petType);
+//                    openActivity(CameraActivity.class, bundle,request_petType);
+//                }
             }
         });
         binding.createPetArchivesView.binding.itemInfo.setOnClickListener(new View.OnClickListener() {
@@ -397,6 +397,7 @@ public class DogCertificateEditDogActivity extends BaseActivity {
                     } else if (type == type_immune) {
                         Bundle bundle = new Bundle();
                         bundle.putInt("dogId", response.getData().getDogId());
+                        bundle.putInt("addressId", addressId);
                         openActivity(DogImmuneHospitalActivity.class, bundle);
 
                     }

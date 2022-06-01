@@ -214,12 +214,13 @@ public class SendRequest {
      * @param unitName 医院名称
      * @param call
      */
-    public static void saveImmune(int dogId, int unitId, String unitName, Callback call) {
+    public static void saveImmune(int dogId,int addressId, int unitId, String unitName, Callback call) {
         Map<String, String> headers = new HashMap<>();
         headers.put("Authorization", BaseApplication.getInstance().getUserInfo().getAuthorization());
 
         Map<String, String> map = new HashMap<>();
         map.put("dogId", String.valueOf(dogId));
+        map.put("addressId", String.valueOf(addressId));
         map.put("unitId", String.valueOf(unitId));
         map.put("unitName", unitName);
         OkHttpUtils.post().headers(headers).params(map).url(APIUrls.saveImmune).build().execute(call);

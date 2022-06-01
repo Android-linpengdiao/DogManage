@@ -3,6 +3,7 @@ package com.dog.manage.app.activity;
 import androidx.viewpager.widget.ViewPager;
 
 import android.os.Bundle;
+import android.view.View;
 
 import com.base.BaseData;
 import com.base.manager.LoadingManager;
@@ -13,6 +14,7 @@ import com.dog.manage.app.adapter.MainPagerAdapter;
 import com.dog.manage.app.databinding.ActivityMyDogCertificateOrImmuneBinding;
 import com.dog.manage.app.fragment.MyDogCertificateOrImmuneFragment;
 import com.dog.manage.app.model.Dog;
+import com.dog.manage.app.model.LicenceBean;
 import com.okhttp.ResultClient;
 import com.okhttp.SendRequest;
 import com.okhttp.callbacks.GenericsCallback;
@@ -47,48 +49,17 @@ public class MyDogCertificateOrImmuneActivity extends BaseActivity {
 
         } else if (type == type_immune) {
             getDogImmuneList();
+            initImmuneTabLayout();
 
         }
 
-
-        initTabLayout();
-
-    }
-
-    private void initTabLayout() {
-        MainPagerAdapter mainPagerAdapter = new MainPagerAdapter(getSupportFragmentManager());
-        mainPagerAdapter.addFragment("萨摩耶", MyDogCertificateOrImmuneFragment.getInstance(type, 0));
-        mainPagerAdapter.addFragment("柯基", MyDogCertificateOrImmuneFragment.getInstance(type, 1));
-        mainPagerAdapter.addFragment("泰迪", MyDogCertificateOrImmuneFragment.getInstance(type, 2));
-        mainPagerAdapter.addFragment("哈士奇", MyDogCertificateOrImmuneFragment.getInstance(type, 3));
-
-        binding.viewPager.setAdapter(mainPagerAdapter);
-        binding.viewPager.setOffscreenPageLimit(4);
-        binding.viewPager.setCurrentItem(0);
-        binding.tabLayout.setupWithViewPager(binding.viewPager);
-        binding.viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
-            @Override
-            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-
-            }
-
-            @Override
-            public void onPageSelected(int position) {
-
-            }
-
-            @Override
-            public void onPageScrollStateChanged(int state) {
-
-            }
-        });
     }
 
     /**
      * 我的-我的犬证
      */
     private void getMyLicenceList() {
-        SendRequest.getMyLicenceList(new GenericsCallback<ResultClient<List<BaseData>>>(new JsonGenericsSerializator()) {
+        SendRequest.getMyLicenceList(new GenericsCallback<ResultClient<List<LicenceBean>>>(new JsonGenericsSerializator()) {
 
             @Override
             public void onBefore(Request request, int id) {
@@ -108,11 +79,16 @@ public class MyDogCertificateOrImmuneActivity extends BaseActivity {
             }
 
             @Override
-            public void onResponse(ResultClient<List<BaseData>> response, int id) {
+            public void onResponse(ResultClient<List<LicenceBean>> response, int id) {
                 if (response.isSuccess() && response.getData() != null) {
-
+                    if (response.getData().size() > 0) {
+                        initLicenceTabLayout(response.getData());
+                    } else {
+                        binding.emptyView.setVisibility(View.VISIBLE);
+                        binding.emptyView.setText("暂无犬证～");
+                    }
                 } else {
-                    ToastUtils.showShort(getApplicationContext(), response.getMessage());
+                    ToastUtils.showShort(getApplicationContext(), response.getMsg());
                 }
             }
         });
@@ -144,10 +120,87 @@ public class MyDogCertificateOrImmuneActivity extends BaseActivity {
             @Override
             public void onResponse(ResultClient<List<Dog>> response, int id) {
                 if (response.isSuccess() && response.getData() != null) {
+                    if (response.getData().size() > 0) {
+//                        initImmuneTabLayout(response.getData());
 
+                    } else {
+                        binding.emptyView.setVisibility(View.GONE);
+                        binding.emptyView.setText("暂无免疫证～");
+
+                    }
                 } else {
-                    ToastUtils.showShort(getApplicationContext(), response.getMessage());
+                    ToastUtils.showShort(getApplicationContext(), response.getMsg());
                 }
+            }
+        });
+    }
+
+    private void initLicenceTabLayout(List<LicenceBean> data) {
+        MainPagerAdapter mainPagerAdapter = new MainPagerAdapter(getSupportFragmentManager());
+
+        for (LicenceBean licenceBean : data) {
+            mainPagerAdapter.addFragment(licenceBean.getDogType(), MyDogCertificateOrImmuneFragment.getInstanceLicence(type, licenceBean));
+
+        }
+
+//        mainPagerAdapter.addFragment("萨摩耶", MyDogCertificateOrImmuneFragment.getInstance(type, 0));
+//        mainPagerAdapter.addFragment("柯基", MyDogCertificateOrImmuneFragment.getInstance(type, 1));
+//        mainPagerAdapter.addFragment("泰迪", MyDogCertificateOrImmuneFragment.getInstance(type, 2));
+//        mainPagerAdapter.addFragment("哈士奇", MyDogCertificateOrImmuneFragment.getInstance(type, 3));
+
+        binding.viewPager.setAdapter(mainPagerAdapter);
+        binding.viewPager.setOffscreenPageLimit(4);
+        binding.viewPager.setCurrentItem(0);
+        binding.tabLayout.setupWithViewPager(binding.viewPager);
+        binding.viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
+    }
+
+    private void initImmuneTabLayout() {
+        MainPagerAdapter mainPagerAdapter = new MainPagerAdapter(getSupportFragmentManager());
+
+//        for (LicenceBean licenceBean : data) {
+//            mainPagerAdapter.addFragment(licenceBean.getDogType(), MyDogCertificateOrImmuneFragment.getInstanceLicence(type, licenceBean));
+//
+//        }
+
+        mainPagerAdapter.addFragment("萨摩耶", MyDogCertificateOrImmuneFragment.getInstance(type, 0));
+        mainPagerAdapter.addFragment("柯基", MyDogCertificateOrImmuneFragment.getInstance(type, 1));
+        mainPagerAdapter.addFragment("泰迪", MyDogCertificateOrImmuneFragment.getInstance(type, 2));
+        mainPagerAdapter.addFragment("哈士奇", MyDogCertificateOrImmuneFragment.getInstance(type, 3));
+
+        binding.viewPager.setAdapter(mainPagerAdapter);
+        binding.viewPager.setOffscreenPageLimit(4);
+        binding.viewPager.setCurrentItem(0);
+        binding.tabLayout.setupWithViewPager(binding.viewPager);
+        binding.viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
             }
         });
     }

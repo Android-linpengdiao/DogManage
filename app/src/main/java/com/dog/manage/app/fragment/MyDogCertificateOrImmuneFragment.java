@@ -14,6 +14,7 @@ import com.dog.manage.app.activity.DogCertificateEditDogOwnerActivity;
 import com.dog.manage.app.activity.DogCertificateExaminedActivity;
 import com.dog.manage.app.activity.DogDetailsActivity;
 import com.dog.manage.app.databinding.FragmentMyDogCertificateOrImmuneBinding;
+import com.dog.manage.app.model.LicenceBean;
 
 /**
  * 我的犬证、免疫证明
@@ -25,6 +26,16 @@ public class MyDogCertificateOrImmuneFragment extends BaseFragment {
     public static final int type_immune = 2;//免疫证
     private int type;
     private int id;
+
+    public static MyDogCertificateOrImmuneFragment getInstanceLicence(int type, LicenceBean licenceBean) {
+        MyDogCertificateOrImmuneFragment fragment = new MyDogCertificateOrImmuneFragment();
+        Bundle bundle = new Bundle();
+        bundle.putInt("type", type);
+        bundle.putSerializable("dataBean", licenceBean);
+        fragment.setArguments(bundle);
+        return fragment;
+
+    }
 
     public static MyDogCertificateOrImmuneFragment getInstance(int type, int id) {
         MyDogCertificateOrImmuneFragment fragment = new MyDogCertificateOrImmuneFragment();
@@ -43,33 +54,51 @@ public class MyDogCertificateOrImmuneFragment extends BaseFragment {
 
         if (getArguments() != null) {
             type = getArguments().getInt("type");
-            id = getArguments().getInt("id");
+//            id = getArguments().getInt("id");
 
             binding.certificateContainer.setVisibility(type == type_certificate ? View.VISIBLE : View.GONE);
             binding.immuneContainer.setVisibility(type == type_immune ? View.VISIBLE : View.GONE);
 
             if (type == type_certificate) {
-                GlideLoader.LoderImage(getActivity(), "https://pics7.baidu.com/feed/6c224f4a20a446236fb6db0ac3bf5d040df3d785.jpeg", binding.certificateCoverView, 5);
-                binding.dogOwnerInfoView.binding.itemInfo.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        Bundle bundle = new Bundle();
-                        bundle.putInt("type", DogCertificateEditDogOwnerActivity.type_details);
-                        openActivity(DogCertificateEditDogOwnerActivity.class, bundle);
-                    }
-                });
-                binding.dogDetailsView.binding.itemInfo.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        openActivity(DogDetailsActivity.class);
-                    }
-                });
-                binding.examinedView.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        openActivity(DogCertificateExaminedActivity.class);
-                    }
-                });
+                LicenceBean licenceBean = (LicenceBean) getArguments().getSerializable("dataBean");
+                if (licenceBean != null) {
+                    binding.idNumView.setText(licenceBean.getIdNum());
+                    binding.dogTypeView.setText(licenceBean.getDogType());
+                    binding.dogColorView.setText(licenceBean.getDogColor());
+                    binding.dogGenderView.setText(licenceBean.getDogGender() == 0 ? "雌性" : "雄性");
+                    binding.orgNameView.setText(licenceBean.getOrgName());
+                    binding.awardTimeView.setText(licenceBean.getAwardTime());
+                    binding.detailedAddressView.setText(licenceBean.getDetailedAddress());
+
+                    GlideLoader.LoderImage(getActivity(), "https://pics7.baidu.com/feed/6c224f4a20a446236fb6db0ac3bf5d040df3d785.jpeg", binding.certificateCoverView, 5);
+
+                    binding.dogOwnerInfoView.binding.itemContent.setText(licenceBean.getOrgName());
+                    binding.dogDetailsView.binding.itemContent.setText(licenceBean.getDogType());
+
+                    binding.dogOwnerInfoView.binding.itemInfo.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            Bundle bundle = new Bundle();
+                            bundle.putInt("dogId", licenceBean.getDogId());
+                            bundle.putInt("type", DogCertificateEditDogOwnerActivity.type_details);
+                            openActivity(DogCertificateEditDogOwnerActivity.class, bundle);
+                        }
+                    });
+                    binding.dogDetailsView.binding.itemInfo.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            Bundle bundle = new Bundle();
+                            bundle.putInt("dogId", licenceBean.getDogId());
+                            openActivity(DogDetailsActivity.class, bundle);
+                        }
+                    });
+                    binding.examinedView.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            openActivity(DogCertificateExaminedActivity.class);
+                        }
+                    });
+                }
 
             } else if (type == type_immune) {
                 GlideLoader.LoderImage(getActivity(), "https://pics7.baidu.com/feed/6c224f4a20a446236fb6db0ac3bf5d040df3d785.jpeg", binding.coverView, 5);
