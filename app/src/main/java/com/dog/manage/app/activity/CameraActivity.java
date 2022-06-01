@@ -11,6 +11,7 @@ import android.view.View;
 import com.base.UserInfo;
 import com.base.utils.CommonUtil;
 import com.base.utils.FileUtils;
+import com.base.utils.GsonUtils;
 import com.base.utils.ToastUtils;
 import com.cjt2325.camera.JCameraView;
 import com.cjt2325.camera.listener.JCameraListener;
@@ -124,18 +125,18 @@ public class CameraActivity extends BaseActivity {
                     String path = FileUtils.saveFirstFrameBitmap(bitmap);
                     Log.i(TAG, "run: path " + path);
                     if (!CommonUtil.isBlank(path)) {
-//                        if (type == type_petType) {
-//                            petType(path);
-//
-//                        } else if (type == type_petArchives) {
-//                            createPetArchives(path);
-//
-//                        }
+                        if (type == type_petType) {
+                            petType(path);
+
+                        } else if (type == type_petArchives) {
+                            createPetArchives(path);
+
+                        }
                     }
                 }
             }
         };
-        timer.schedule(timerTask, 5000, 5000);
+        timer.schedule(timerTask, 3000, 3000);
 
     }
 
@@ -153,6 +154,7 @@ public class CameraActivity extends BaseActivity {
     public void onClickCapture(View view) {
         isCapture = !isCapture;
         binding.captureView.setText(isCapture ? "停止采集" : "开始采集");
+        ToastUtils.showShort(CameraActivity.this, isCapture ? "开始采集" : "停止采集");
         executorService.submit(new Runnable() {
             @Override
             public void run() {
@@ -252,7 +254,11 @@ public class CameraActivity extends BaseActivity {
                                 String english_name = response.getData().getPet().get(0).getIdentification().get(0).getEnglish_name();
                                 String chinese_name = response.getData().getPet().get(0).getIdentification().get(0).getChinese_name();
                                 Double confidence = response.getData().getPet().get(0).getIdentification().get(0).getConfidence();
-                                ToastUtils.showShort(CameraActivity.this, chinese_name);
+//                                ToastUtils.showShort(CameraActivity.this, chinese_name);
+                                Intent intent = new Intent();
+                                intent.putExtra("dogType", chinese_name);
+                                setResult(RESULT_OK, intent);
+                                finish();
 
                             } else {
                                 startTimer();

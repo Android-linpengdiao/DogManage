@@ -87,7 +87,7 @@ public class UserHomeActivity extends BaseActivity {
                                 }.getType());
                                 if (imageList != null && imageList.size() > 0) {
                                     String path = imageList.get(0).getPath();
-                                    GlideLoader.LoderCircleImage(UserHomeActivity.this, path, binding.iconView);
+                                    GlideLoader.LoderCircleImage(UserHomeActivity.this, path, binding.userIconView);
                                     Luban.with(this)
                                             .load(path)// 传人要压缩的图片列表
                                             .ignoreBy(500)// 忽略不压缩图片的大小
@@ -99,7 +99,7 @@ public class UserHomeActivity extends BaseActivity {
 
                                                 @Override
                                                 public void onSuccess(File file) {
-                                                    GlideLoader.LoderCircleImage(UserHomeActivity.this, file.getAbsolutePath(), binding.iconView);
+                                                    GlideLoader.LoderCircleImage(UserHomeActivity.this, file.getAbsolutePath(), binding.userIconView);
                                                 }
 
                                                 @Override

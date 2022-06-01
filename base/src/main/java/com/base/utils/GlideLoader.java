@@ -118,6 +118,15 @@ public class GlideLoader {
                 .into(view);
     }
 
+    public static void LoderDrawable(Context context, int drawable, ImageView view, int round) {
+        Glide.with(context)
+                .load(drawable)
+                .fitCenter()
+                .transform(new GlideRoundTransform(context, round))
+                .diskCacheStrategy(DiskCacheStrategy.ALL)
+                .into(view);
+    }
+
     public static Bitmap load(Context context, String url) {
         try {
             return Glide.with(context)

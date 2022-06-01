@@ -82,14 +82,14 @@ public class DogCertificateExaminedSubmitActivity extends BaseActivity implement
             return;
         }
         SendRequest.saveAnnualDogLicense(dogDetail.getLincenceId(),
-                new GenericsCallback<ResultClient<BaseData>>(new JsonGenericsSerializator()) {
+                new GenericsCallback<ResultClient<Boolean>>(new JsonGenericsSerializator()) {
                     @Override
                     public void onError(Call call, Exception e, int id) {
 
                     }
 
                     @Override
-                    public void onResponse(ResultClient<BaseData> response, int id) {
+                    public void onResponse(ResultClient<Boolean> response, int id) {
                         if (response.isSuccess() && response.getData() != null) {
                             Bundle bundle = new Bundle();
                             bundle.putInt("type", SubmitSuccessActivity.type_examined);

@@ -4,6 +4,7 @@ package com.dog.manage.app.activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 
 import com.base.utils.CommonUtil;
@@ -13,6 +14,7 @@ import com.base.utils.GsonUtils;
 import com.base.utils.PermissionUtils;
 import com.base.utils.ToastUtils;
 import com.base.view.OnClickListener;
+import com.dog.manage.app.Config;
 import com.dog.manage.app.DogDialogManager;
 import com.dog.manage.app.R;
 import com.dog.manage.app.databinding.ActivityDogCertificateEditDogBinding;
@@ -20,8 +22,13 @@ import com.dog.manage.app.media.MediaFile;
 import com.dog.manage.app.media.MediaSelectActivity;
 import com.dog.manage.app.media.MediaUtils;
 import com.dog.manage.app.model.Dog;
+import com.dog.manage.app.utils.UploadFileManager;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import com.obs.services.model.ProgressListener;
+import com.obs.services.model.ProgressStatus;
+import com.obs.services.model.PutObjectRequest;
+import com.obs.services.model.PutObjectResult;
 import com.okhttp.ResultClient;
 import com.okhttp.SendRequest;
 import com.okhttp.callbacks.GenericsCallback;
@@ -53,6 +60,9 @@ public class DogCertificateEditDogActivity extends BaseActivity {
 
     private List<Dog> dogList = new ArrayList<>();
     private List<String> dogColors = Arrays.asList("金黄色", "黑色", "棕色");
+
+    private final int request_petType = 1100;
+    private final int request_petArchive = 1200;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -131,14 +141,15 @@ public class DogCertificateEditDogActivity extends BaseActivity {
         binding.petTypeView.binding.itemInfo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                dog.setDogType("柴犬");
-                binding.petTypeView.binding.itemContent.setText(dog.getDogType());
+//                dog.setDogType("柴犬");
+//                binding.petTypeView.binding.itemContent.setText(dog.getDogType());
+//                verificationDog(dog.getDogType());
 
-//                if (checkPermissions(PermissionUtils.CAMERA, 100)) {
-//                    Bundle bundle = new Bundle();
-//                    bundle.putInt("type", CameraActivity.type_petType);
-//                    openActivity(CameraActivity.class, bundle);
-//                }
+                if (checkPermissions(PermissionUtils.CAMERA, 100)) {
+                    Bundle bundle = new Bundle();
+                    bundle.putInt("type", CameraActivity.type_petType);
+                    openActivity(CameraActivity.class, bundle,request_petType);
+                }
             }
         });
         binding.createPetArchivesView.binding.itemInfo.setOnClickListener(new View.OnClickListener() {
@@ -150,13 +161,30 @@ public class DogCertificateEditDogActivity extends BaseActivity {
 //                if (checkPermissions(PermissionUtils.CAMERA, 100)) {
 //                    Bundle bundle = new Bundle();
 //                    bundle.putInt("type", CameraActivity.type_petArchives);
-//                    openActivity(CameraActivity.class, bundle);
+//                    openActivity(CameraActivity.class, bundle,request_petArchive);
 //                }
             }
         });
 
         getDogImmuneList();
 
+    }
+
+    private void verificationDog(String dogType) {
+        SendRequest.verificationDog(dogType, new GenericsCallback<ResultClient<Boolean>>(new JsonGenericsSerializator()) {
+            @Override
+            public void onError(Call call, Exception e, int id) {
+            }
+
+            @Override
+            public void onResponse(ResultClient<Boolean> response, int id) {
+                if (response.isSuccess() && response.getData()) {
+                    binding.petTypeView.binding.itemContent.setText(dog.getDogType() + "（可养犬）");
+                } else {
+                    binding.petTypeView.binding.itemContent.setText(dog.getDogType() + "（不可养犬）");
+                }
+            }
+        });
     }
 
     private void getDogImmuneList() {
@@ -178,7 +206,7 @@ public class DogCertificateEditDogActivity extends BaseActivity {
                     dog = dogList.get(0);
                     binding.dogCertificateView.binding.itemContent.setText(dog.getDogType());
                     if (dog.getDogId() != 0) {
-                        intiView();
+//                        intiView();
                     }
 
                 }
@@ -373,7 +401,7 @@ public class DogCertificateEditDogActivity extends BaseActivity {
 
                     }
                 } else {
-                    ToastUtils.showShort(getApplicationContext(), response.getMessage());
+                    ToastUtils.showShort(getApplicationContext(), response.getMsg());
                 }
             }
         });
@@ -447,6 +475,14 @@ public class DogCertificateEditDogActivity extends BaseActivity {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == RESULT_OK) {
             switch (requestCode) {
+                case request_petType:
+                    if (data != null) {
+                        String dogType = data.getStringExtra("dogType");
+                        dog.setDogType(dogType);
+                        binding.petTypeView.binding.itemContent.setText(dog.getDogType());
+                        verificationDog(dog.getDogType());
+                    }
+                    break;
                 case request_Testify:
                     compressImage(data, request_Testify);
 
@@ -488,24 +524,32 @@ public class DogCertificateEditDogActivity extends BaseActivity {
 
                                     @Override
                                     public void onSuccess(File file) {
-                                        String url = "https://img0.baidu.com/it/u=3282676189,411395798&fm=253&fmt=auto&app=138&f=JPEG?w=564&h=500";
-                                        if (requestCode == request_Testify) {
-                                            dog.setSterilizationProve(url);
-                                            GlideLoader.LoderImage(DogCertificateEditDogActivity.this, dog.getSterilizationProve(), binding.testifyView, 6);
 
-                                        } else if (requestCode == request_LeftFace) {
-                                            leftFace = url;
-                                            GlideLoader.LoderImage(DogCertificateEditDogActivity.this, leftFace, binding.leftFaceView, 6);
+                                        new Thread(new Runnable() {
+                                            @Override
+                                            public void run() {
+                                                uploadFile(requestCode, file.getAbsolutePath());
+                                            }
+                                        }).start();
 
-                                        } else if (requestCode == request_CenterFace) {
-                                            centerFace = url;
-                                            GlideLoader.LoderImage(DogCertificateEditDogActivity.this, centerFace, binding.centerFaceView, 6);
-
-                                        } else if (requestCode == request_RightFace) {
-                                            rightFace = url;
-                                            GlideLoader.LoderImage(DogCertificateEditDogActivity.this, rightFace, binding.rightFaceView, 6);
-
-                                        }
+//                                        String url = "https://img0.baidu.com/it/u=3282676189,411395798&fm=253&fmt=auto&app=138&f=JPEG?w=564&h=500";
+//                                        if (requestCode == request_Testify) {
+//                                            dog.setSterilizationProve(url);
+//                                            GlideLoader.LoderImage(DogCertificateEditDogActivity.this, dog.getSterilizationProve(), binding.testifyView, 6);
+//
+//                                        } else if (requestCode == request_LeftFace) {
+//                                            leftFace = url;
+//                                            GlideLoader.LoderImage(DogCertificateEditDogActivity.this, leftFace, binding.leftFaceView, 6);
+//
+//                                        } else if (requestCode == request_CenterFace) {
+//                                            centerFace = url;
+//                                            GlideLoader.LoderImage(DogCertificateEditDogActivity.this, centerFace, binding.centerFaceView, 6);
+//
+//                                        } else if (requestCode == request_RightFace) {
+//                                            rightFace = url;
+//                                            GlideLoader.LoderImage(DogCertificateEditDogActivity.this, rightFace, binding.rightFaceView, 6);
+//
+//                                        }
                                     }
 
                                     @Override
@@ -518,5 +562,63 @@ public class DogCertificateEditDogActivity extends BaseActivity {
         } catch (Exception e) {
             e.getMessage();
         }
+    }
+
+    /**
+     * 华为云 上传文件
+     *
+     * @param requestCode
+     * @param filePath
+     */
+    private void uploadFile(int requestCode, String filePath) {
+        Log.i(TAG, "uploadFile: filePath = " + filePath);
+        String fileName = filePath.substring(filePath.lastIndexOf("/") + 1);
+        Log.i(TAG, "uploadFile: fileName = " + fileName);
+        PutObjectRequest request = new PutObjectRequest();
+        request.setBucketName(Config.huaweiBucketName);
+        request.setObjectKey(fileName);
+        request.setFile(new File(filePath));
+        request.setProgressListener(new ProgressListener() {
+            @Override
+            public void progressChanged(ProgressStatus status) {
+                // 获取上传平均速率
+                Log.i(TAG, "uploadFile: AverageSpeed:" + status.getAverageSpeed());
+                // 获取上传进度百分比
+                Log.i(TAG, "uploadFile: TransferPercentage:" + status.getTransferPercentage());
+            }
+        });
+        //每上传1MB数据反馈上传进度
+        request.setProgressInterval(1024 * 1024L);
+        PutObjectResult result = UploadFileManager.getInstance().getObsClient().putObject(request);
+        Log.i(TAG, "uploadFile: getObjectUrl = " + result.getObjectUrl());
+        String url = "http://" + Config.huaweiBucketName + "." + Config.huaweiCloudEndPoint + "/" + fileName;
+        Log.i(TAG, "uploadFile: url = " + url);
+
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+
+                if (requestCode == request_Testify) {
+                    dog.setSterilizationProve(url);
+                    GlideLoader.LoderImage(DogCertificateEditDogActivity.this, dog.getSterilizationProve(), binding.testifyView, 6);
+
+                } else if (requestCode == request_LeftFace) {
+                    leftFace = url;
+                    GlideLoader.LoderImage(DogCertificateEditDogActivity.this, leftFace, binding.leftFaceView, 6);
+
+                } else if (requestCode == request_CenterFace) {
+                    centerFace = url;
+                    GlideLoader.LoderImage(DogCertificateEditDogActivity.this, centerFace, binding.centerFaceView, 6);
+
+                } else if (requestCode == request_RightFace) {
+                    rightFace = url;
+                    GlideLoader.LoderImage(DogCertificateEditDogActivity.this, rightFace, binding.rightFaceView, 6);
+
+                }
+
+            }
+        });
+
+
     }
 }

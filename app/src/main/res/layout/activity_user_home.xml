@@ -34,7 +34,7 @@
                     android:orientation="vertical">
 
                     <ImageView
-                        android:id="@+id/iconView"
+                        android:id="@+id/userIconView"
                         android:layout_width="@dimen/dp_80"
                         android:layout_height="@dimen/dp_80"
                         android:background="@drawable/head"

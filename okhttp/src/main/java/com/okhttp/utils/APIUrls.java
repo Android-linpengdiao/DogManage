@@ -108,7 +108,7 @@ public class APIUrls {
     /**
      * 我的
      */
-    //获取犬证列表
+    //我的-我的犬证
     public final static String getMyLicenceList = URL_DOMAIN + "/user/dog/getMyLicenceList";
     //获取个人犬只免疫列表
     public final static String getDogImmuneList = URL_DOMAIN + "/user/dog/getDogImmuneList";
@@ -169,6 +169,9 @@ public class APIUrls {
     public final static String orderCreateWxOrderAboutVip = URL_DOMAIN + "/order/createWxOrderAboutVip";
     public final static String order_aliOrderPayParam = URL_DOMAIN + "/order/aliOrderPayParam";//支付包支付 oid
     public final static String order_wxOrderPayParam = URL_DOMAIN + "/order/wxOrderPayParam";//微信支付 oid
+
+    //
+    public final static String payment = URL_DOMAIN + "/user/dog/licence/payment";
 
     // ==================================== 犬只管理 =============================================
 

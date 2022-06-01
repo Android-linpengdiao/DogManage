@@ -435,7 +435,7 @@ public class SendRequest {
 
 
     /**
-     * 获取犬证列表
+     * 我的-我的犬证
      *
      * @param call
      */
@@ -806,6 +806,17 @@ public class SendRequest {
     }
 
     /*====================================    支付      ==========================================*/
+
+    public static void payment(int licenceId, int payType, Callback call) {
+        Map<String, String> headers = new HashMap<>();
+        headers.put("Authorization", BaseApplication.getInstance().getUserInfo().getAuthorization());
+
+        Map<String, String> map = new HashMap<>();
+        map.put("licenceId", String.valueOf(licenceId));
+        map.put("payType", String.valueOf(payType));
+        OkHttpUtils.post().headers(headers).params(map).url(APIUrls.payment).build().execute(call);
+
+    }
 
     public static void viporder_createOrder(String token, int month, int rewardId, Callback call) {
         Map<String, String> map = new HashMap<>();

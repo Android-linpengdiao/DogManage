@@ -44,6 +44,7 @@ public class CertificateRecordAdapter extends BaseRecyclerAdapter<RecordImmune, 
         if (type == RecordActivity.type_certificate) {
             //办理状态 0 全部 1：待审核 2：代缴费 3：审核驳回 4：已办结 5：已过期 6：已注销
             binding.titleView.setText("犬证办理");
+            binding.descView.setVisibility(View.GONE);
             binding.bottomView.setVisibility(View.VISIBLE);
             binding.dogOwnerContainer.setVisibility(View.INVISIBLE);
             binding.contentView.setText(dataBean.getDogType() + "-" + dataBean.getDogAge() + "岁3个月");
@@ -79,6 +80,7 @@ public class CertificateRecordAdapter extends BaseRecyclerAdapter<RecordImmune, 
         } else if (type == RecordActivity.type_immune) {
             //办理状态 0 默认 1：未接种 2：已接种 3: 即将过期 4: 已过期
             binding.titleView.setText("免疫证办理");
+            binding.descView.setVisibility(View.GONE);
             binding.dogOwnerContainer.setVisibility(View.INVISIBLE);
             binding.contentView.setText(dataBean.getDogType() + "-" + dataBean.getDogAge() + "岁3个月");
             binding.contentView.setTextColor(Color.parseColor("#999999"));

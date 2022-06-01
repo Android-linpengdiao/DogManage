@@ -2,8 +2,11 @@ package com.dog.manage.app.activity;
 
 
 import android.os.Bundle;
+import android.view.View;
 
 import com.base.BaseData;
+import com.base.manager.LoadingManager;
+import com.base.utils.CommonUtil;
 import com.base.utils.ToastUtils;
 import com.dog.manage.app.Callback;
 import com.dog.manage.app.R;
@@ -19,16 +22,62 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import okhttp3.Call;
+import okhttp3.Request;
 
 public class PayActivity extends BaseActivity {
 
     private ActivityPayBinding binding;
+    private int licenceId;
+    private int payType = 0;
+    private int price;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = getViewData(R.layout.activity_pay);
         addActivity(this);
+
+        licenceId = getIntent().getIntExtra("licenceId", 0);
+        price = getIntent().getIntExtra("price", 0);
+        binding.moneyView.binding.itemContent.setText("￥" + price);
+
+        binding.wxPayView.setSelected(true);
+
+    }
+
+    public void onClickConfirm(View view) {
+        SendRequest.payment(licenceId, payType, new GenericsCallback<ResultClient<Boolean>>(new JsonGenericsSerializator()) {
+
+            @Override
+            public void onBefore(Request request, int id) {
+                super.onBefore(request, id);
+                LoadingManager.showLoadingDialog(PayActivity.this);
+            }
+
+            @Override
+            public void onAfter(int id) {
+                super.onAfter(id);
+                LoadingManager.hideLoadingDialog(PayActivity.this);
+            }
+
+            @Override
+            public void onError(Call call, Exception e, int id) {
+
+            }
+
+            @Override
+            public void onResponse(ResultClient<Boolean> response, int id) {
+                if (response.isSuccess()) {
+                    finishActivity(CertificateDetailsActivity.class);
+                    finish();
+
+                } else {
+                    ToastUtils.showShort(getApplicationContext(), !CommonUtil.isBlank(response.getMsg()) ? response.getMsg() : "支付失败");
+
+                }
+            }
+        });
     }
 
     private int month = 1;
@@ -196,4 +245,6 @@ public class PayActivity extends BaseActivity {
     private void payFail(String content) {
         ToastUtils.showShort(PayActivity.this, content);
     }
+
+
 }

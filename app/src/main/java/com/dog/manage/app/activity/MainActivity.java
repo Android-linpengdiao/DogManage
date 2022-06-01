@@ -221,14 +221,14 @@ public class MainActivity extends BaseActivity {
 
     public void onClickMessage(View view) {
         if (checkUserRank(getApplicationContext(), true)) {
-            openActivity(MessageActivity.class);
-//            openActivity(UpdateDogOwnerInfoActivity.class);
+//            openActivity(MessageActivity.class);
 
-//            if (checkPermissions(PermissionUtils.CAMERA, 100)) {
-//                Bundle bundle = new Bundle();
-//                bundle.putInt("type", CameraActivity.type_petArchives);
-//                openActivity(CameraActivity.class, bundle);
-//            }
+//            openActivity(UpdateDogOwnerInfoActivity.class);
+            if (checkPermissions(PermissionUtils.CAMERA, 100)) {
+                Bundle bundle = new Bundle();
+                bundle.putInt("type", CameraActivity.type_petArchives);
+                openActivity(CameraActivity.class, bundle);
+            }
         }
     }
 

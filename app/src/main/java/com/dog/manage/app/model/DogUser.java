@@ -67,6 +67,9 @@ public class DogUser {
      * busTypeId
      * string
      * 业务类型 1 个人信息 0 犬证、疫苗
+     * "villageId":1,
+     * "communityDept":103,
+     * "villageName":"天桥小区"
      */
     private Integer id;
     private Integer userType = 0;
@@ -86,6 +89,9 @@ public class DogUser {
     private String housePhoto;
     private String dogManagement;
     private String dogDevice;
+    private Integer villageId = 0;
+    private String villageName;
+    private Integer communityDept = 0;
 
     private Integer addressId;
 }

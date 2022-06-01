@@ -84,7 +84,7 @@
                 android:textSize="@dimen/sp_15" />
 
             <ImageView
-                android:id="@+id/sendCodeView"
+                android:id="@+id/wxPayView"
                 android:layout_width="@dimen/dp_26"
                 android:layout_height="@dimen/dp_26"
                 android:layout_marginRight="@dimen/dp_12"
@@ -122,6 +122,7 @@
                 android:textSize="@dimen/sp_15" />
 
             <ImageView
+                android:id="@+id/aliPayView"
                 android:layout_width="@dimen/dp_26"
                 android:layout_height="@dimen/dp_26"
                 android:layout_marginRight="@dimen/dp_12"

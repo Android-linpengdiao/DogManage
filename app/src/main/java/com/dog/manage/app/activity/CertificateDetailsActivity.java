@@ -62,7 +62,30 @@ public class CertificateDetailsActivity extends BaseActivity {
     }
 
     public void onClickConfirm(View view) {
-        openActivity(PayActivity.class);
+        if (dogLicenceDetail == null) {
+            return;
+        }
+        //办理状态 0 全部 1：待审核 2：代缴费 3：审核驳回 4：已办结 5：已过期 6：已注销
+        Integer licenceStatus = dogLicenceDetail.getLicenceStatus();
+        if (licenceStatus == 2) {
+            Bundle bundle = new Bundle();
+            bundle.putInt("licenceId", dogLicenceDetail.getLincenceId());
+            bundle.putInt("price", dogLicenceDetail.getPrice());
+            openActivity(PayActivity.class, bundle);
+
+        } else if (licenceStatus == 3) {
+            Bundle bundle = new Bundle();
+            bundle.putInt("type", DogCertificateEditDogOwnerActivity.type_certificate);
+            openActivity(DogCertificateEditDogOwnerActivity.class, bundle);
+
+        } else if (licenceStatus == 4) {
+            Bundle bundle = new Bundle();
+            bundle.putInt("type", MyDogCertificateOrImmuneActivity.type_certificate);
+            openActivity(MyDogCertificateOrImmuneActivity.class, bundle);
+
+        } else {
+
+        }
     }
 
     /**
@@ -104,7 +127,7 @@ public class CertificateDetailsActivity extends BaseActivity {
         dogLicenceDetail = data;
         //办理状态 0 全部 1：待审核 2：代缴费 3：审核驳回 4：已办结 5：已过期 6：已注销
         Integer licenceStatus = data.getLicenceStatus();
-        binding.auditStatusView.setText(licenceStatus == 1 ? "审核中" :licenceStatus == 2 ? "审核通过" : licenceStatus == 3 ? "审核拒绝" : licenceStatus == 4 ? "已办结" :licenceStatus == 5 ? "已过期" :licenceStatus == 6 ? "已注销" : "审核中");
+        binding.auditStatusView.setText(licenceStatus == 1 ? "审核中" : licenceStatus == 2 ? "审核通过" : licenceStatus == 3 ? "审核拒绝" : licenceStatus == 4 ? "已办结" : licenceStatus == 5 ? "已过期" : licenceStatus == 6 ? "已注销" : "审核中");
         binding.payTypeView.setVisibility(licenceStatus == 4 ? View.VISIBLE : View.GONE);
         binding.auditReasonView.setVisibility(licenceStatus == 3 ? View.VISIBLE : View.GONE);
         binding.confirmView.setText(licenceStatus == 2 ? "在线支付" : licenceStatus == 3 ? "犬证年审" : licenceStatus == 4 ? "查看犬证" : "在线支付");

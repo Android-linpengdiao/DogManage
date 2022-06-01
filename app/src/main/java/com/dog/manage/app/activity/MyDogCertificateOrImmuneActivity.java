@@ -43,7 +43,7 @@ public class MyDogCertificateOrImmuneActivity extends BaseActivity {
         binding.titleView.binding.itemTitle.setText(type == type_certificate ? "我的犬证" : "免疫证明");
 
         if (type == type_certificate) {
-            getDogLicenceList();
+            getMyLicenceList();
 
         } else if (type == type_immune) {
             getDogImmuneList();
@@ -85,10 +85,10 @@ public class MyDogCertificateOrImmuneActivity extends BaseActivity {
     }
 
     /**
-     * 获取犬证列表
+     * 我的-我的犬证
      */
-    private void getDogLicenceList() {
-        SendRequest.getDogLicenceList(new GenericsCallback<ResultClient<List<BaseData>>>(new JsonGenericsSerializator()) {
+    private void getMyLicenceList() {
+        SendRequest.getMyLicenceList(new GenericsCallback<ResultClient<List<BaseData>>>(new JsonGenericsSerializator()) {
 
             @Override
             public void onBefore(Request request, int id) {

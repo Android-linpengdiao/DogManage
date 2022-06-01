@@ -523,11 +523,17 @@
                             android:layout_weight="1"
                             android:orientation="vertical">
 
-                            <ImageView
-                                android:layout_width="match_parent"
-                                android:layout_height="@dimen/dp_108"
-                                android:layout_weight="1"
-                                android:background="@drawable/image" />
+                            <androidx.cardview.widget.CardView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                app:cardCornerRadius="@dimen/dp_6">
+                                <ImageView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="@dimen/dp_108"
+                                    android:layout_weight="1"
+                                    android:src="@drawable/ic_left_face"
+                                    android:scaleType="centerCrop"/>
+                            </androidx.cardview.widget.CardView>
 
                             <TextView
                                 android:layout_width="match_parent"
@@ -548,11 +554,17 @@
                             android:layout_weight="1"
                             android:orientation="vertical">
 
-                            <ImageView
-                                android:layout_width="match_parent"
-                                android:layout_height="@dimen/dp_108"
-                                android:layout_weight="1"
-                                android:background="@drawable/image" />
+                            <androidx.cardview.widget.CardView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                app:cardCornerRadius="@dimen/dp_6">
+                                <ImageView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="@dimen/dp_108"
+                                    android:layout_weight="1"
+                                    android:src="@drawable/ic_center_face"
+                                    android:scaleType="centerCrop"/>
+                            </androidx.cardview.widget.CardView>
 
                             <TextView
                                 android:layout_width="match_parent"
@@ -571,11 +583,17 @@
                             android:layout_weight="1"
                             android:orientation="vertical">
 
-                            <ImageView
-                                android:layout_width="match_parent"
-                                android:layout_height="@dimen/dp_108"
-                                android:layout_weight="1"
-                                android:background="@drawable/image" />
+                            <androidx.cardview.widget.CardView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                app:cardCornerRadius="@dimen/dp_6">
+                                <ImageView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="@dimen/dp_108"
+                                    android:layout_weight="1"
+                                    android:src="@drawable/ic_right_face"
+                                    android:scaleType="centerCrop"/>
+                            </androidx.cardview.widget.CardView>
 
                             <TextView
                                 android:layout_width="match_parent"
