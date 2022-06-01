@@ -217,15 +217,23 @@ public class CameraActivity extends BaseActivity {
                 new GenericsCallback<PetArchives>(new JsonGenericsSerializator()) {
                     @Override
                     public void onError(Call call, Exception e, int id) {
-
+                        startTimer();
                     }
 
                     @Override
                     public void onResponse(PetArchives response, int id) {
-                        if (response.getStatus() == 200 && response.getData() != null) {
-
+                        if (response.getStatus() == 200) {
+                            if (response.getData() != null &&
+                                    response.getData().getPetId() != null) {
+                                Intent intent = new Intent();
+                                intent.putExtra("petId", response.getData().getPetId());
+                                setResult(RESULT_OK, intent);
+                                finish();
+                            }
                         } else {
+                            startTimer();
                             ToastUtils.showShort(CameraActivity.this, response.getMessage());
+                            binding.testView.setVisibility(View.VISIBLE);
                         }
 
                     }
@@ -275,5 +283,12 @@ public class CameraActivity extends BaseActivity {
 
                     }
                 });
+    }
+
+    public void onClickTest(View view) {
+        Intent intent = new Intent();
+        intent.putExtra("petId", "23325059-b2c1-11eb-1Vu7hqwN6");
+        setResult(RESULT_OK, intent);
+        finish();
     }
 }

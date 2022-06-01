@@ -202,7 +202,6 @@ public class DogCertificateEditDogOwnerActivity extends BaseActivity {
                         CommonUtil.dip2px(getApplicationContext(), 0.5f),
                         Color.parseColor("#E1E1E1"));
                 addressBinding.recyclerView.addItemDecoration(divider);
-                addressBinding.recyclerView.setNestedScrollingEnabled(false);
                 areaSelectAdapter = new AreaSelectAdapter(getApplicationContext());
                 addressBinding.recyclerView.setAdapter(areaSelectAdapter);
 
@@ -256,7 +255,6 @@ public class DogCertificateEditDogOwnerActivity extends BaseActivity {
                         CommonUtil.dip2px(getApplicationContext(), 0.5f),
                         Color.parseColor("#E1E1E1"));
                 communityBinding.recyclerView.addItemDecoration(divider);
-                communityBinding.recyclerView.setNestedScrollingEnabled(false);
                 communitySelectAdapter = new CommunitySelectAdapter(getApplicationContext());
                 communityBinding.recyclerView.setAdapter(communitySelectAdapter);
 
@@ -264,10 +262,10 @@ public class DogCertificateEditDogOwnerActivity extends BaseActivity {
                 communityBinding.refreshLayout.setOnLoadMoreListener(new OnLoadMoreListener() {
                     @Override
                     public void onLoadMore(RefreshLayout refreshlayout) {
-                        getAddressList(false);
+                        getAddressList(false,"");
                     }
                 });
-                getAddressList(true);
+                getAddressList(true,"");
 
                 communityBinding.confirmView.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -298,12 +296,13 @@ public class DogCertificateEditDogOwnerActivity extends BaseActivity {
     private Pager<CommunityBean> communityPager = new Pager<>();
     private CommunityBean communityBean;
 
-    private void getAddressList(boolean isRefresh) {
+    private void getAddressList(boolean isRefresh,String communityName) {
         if (addressBean == null) {
+            ToastUtils.showShort(getApplicationContext(),"请先选择居住地址");
             return;
         }
         //省110000 、市110100
-        SendRequest.getAddressList("天桥小区", 110000, 110100, addressBean.getId(),
+        SendRequest.getAddressList(communityName, 110000, 110100, addressBean.getId(),
                 communityPager.getCursor(), communityPager.getSize(),
                 new GenericsCallback<Pager<CommunityBean>>(new JsonGenericsSerializator()) {
 

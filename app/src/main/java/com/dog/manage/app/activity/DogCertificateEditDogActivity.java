@@ -141,28 +141,28 @@ public class DogCertificateEditDogActivity extends BaseActivity {
         binding.petTypeView.binding.itemInfo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                dog.setDogType("泰迪");
-                binding.petTypeView.binding.itemContent.setText(dog.getDogType());
-                verificationDog(dog.getDogType());
+//                dog.setDogType("泰迪");
+//                binding.petTypeView.binding.itemContent.setText(dog.getDogType());
+//                verificationDog(dog.getDogType());
 
-//                if (checkPermissions(PermissionUtils.CAMERA, 100)) {
-//                    Bundle bundle = new Bundle();
-//                    bundle.putInt("type", CameraActivity.type_petType);
-//                    openActivity(CameraActivity.class, bundle,request_petType);
-//                }
+                if (checkPermissions(PermissionUtils.CAMERA, 100)) {
+                    Bundle bundle = new Bundle();
+                    bundle.putInt("type", CameraActivity.type_petType);
+                    openActivity(CameraActivity.class, bundle, request_petType);
+                }
             }
         });
         binding.createPetArchivesView.binding.itemInfo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                dog.setNoseprint("23325059-b2c1-11eb-1Vu7hqwN6");
-                binding.createPetArchivesView.binding.itemContent.setText("已完成采集");
+//                dog.setNoseprint("23325059-b2c1-11eb-1Vu7hqwN6");
+//                binding.createPetArchivesView.binding.itemContent.setText("已完成采集");
 
-//                if (checkPermissions(PermissionUtils.CAMERA, 100)) {
-//                    Bundle bundle = new Bundle();
-//                    bundle.putInt("type", CameraActivity.type_petArchives);
-//                    openActivity(CameraActivity.class, bundle,request_petArchive);
-//                }
+                if (checkPermissions(PermissionUtils.CAMERA, 100)) {
+                    Bundle bundle = new Bundle();
+                    bundle.putInt("type", CameraActivity.type_petArchives);
+                    openActivity(CameraActivity.class, bundle, request_petArchive);
+                }
             }
         });
 
@@ -482,6 +482,13 @@ public class DogCertificateEditDogActivity extends BaseActivity {
                         dog.setDogType(dogType);
                         binding.petTypeView.binding.itemContent.setText(dog.getDogType());
                         verificationDog(dog.getDogType());
+                    }
+                    break;
+                case request_petArchive:
+                    if (data != null) {
+                        String petId = data.getStringExtra("petId");
+                        dog.setNoseprint(petId);
+                        binding.createPetArchivesView.binding.itemContent.setText("已完成采集");
                     }
                     break;
                 case request_Testify:
