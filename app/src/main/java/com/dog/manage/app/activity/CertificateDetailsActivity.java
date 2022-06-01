@@ -53,7 +53,7 @@ public class CertificateDetailsActivity extends BaseActivity {
                 }
                 Bundle bundle = new Bundle();
                 bundle.putInt("dogId", dogLicenceDetail.getDogId());
-                openActivity(DogDetailsActivity.class, bundle);
+                openActivity(DogInfoActivity.class, bundle);
             }
         });
 

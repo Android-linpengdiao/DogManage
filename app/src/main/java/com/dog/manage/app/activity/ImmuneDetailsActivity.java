@@ -56,7 +56,7 @@ public class ImmuneDetailsActivity extends BaseActivity {
                 }
                 Bundle bundle = new Bundle();
                 bundle.putInt("dogId", immuneApproveDetail.getDogId());
-                openActivity(DogDetailsActivity.class, bundle);
+                openActivity(DogInfoActivity.class, bundle);
             }
         });
 
