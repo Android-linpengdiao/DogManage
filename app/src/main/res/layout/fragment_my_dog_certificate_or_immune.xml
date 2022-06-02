@@ -257,6 +257,7 @@
                         android:layout_height="@dimen/dp_78"
                         android:layout_alignParentRight="true"
                         android:layout_marginRight="@dimen/dp_40"
+                        android:scaleType="fitCenter"
                         android:background="@drawable/image_8" />
 
                     <TextView

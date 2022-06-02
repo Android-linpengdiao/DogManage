@@ -10,6 +10,7 @@ import com.base.manager.LoadingManager;
 import com.base.utils.GsonUtils;
 import com.base.utils.ToastUtils;
 import com.dog.manage.app.R;
+import com.dog.manage.app.adapter.CustomPagerAdapter;
 import com.dog.manage.app.adapter.MainPagerAdapter;
 import com.dog.manage.app.databinding.ActivityMyDogCertificateOrImmuneBinding;
 import com.dog.manage.app.fragment.MyDogCertificateOrImmuneFragment;
@@ -136,10 +137,10 @@ public class MyDogCertificateOrImmuneActivity extends BaseActivity {
     }
 
     private void initLicenceTabLayout(List<LicenceBean> data) {
-        MainPagerAdapter mainPagerAdapter = new MainPagerAdapter(getSupportFragmentManager());
+        CustomPagerAdapter customPagerAdapter = new CustomPagerAdapter(getSupportFragmentManager());
 
         for (LicenceBean licenceBean : data) {
-            mainPagerAdapter.addFragment(licenceBean.getDogType(), MyDogCertificateOrImmuneFragment.getInstanceLicence(type, licenceBean));
+            customPagerAdapter.addFragment(licenceBean.getDogType(), MyDogCertificateOrImmuneFragment.getInstanceLicence(type, licenceBean));
 
         }
 
@@ -148,8 +149,8 @@ public class MyDogCertificateOrImmuneActivity extends BaseActivity {
 //        mainPagerAdapter.addFragment("泰迪", MyDogCertificateOrImmuneFragment.getInstance(type, 2));
 //        mainPagerAdapter.addFragment("哈士奇", MyDogCertificateOrImmuneFragment.getInstance(type, 3));
 
-        binding.viewPager.setAdapter(mainPagerAdapter);
-        binding.viewPager.setOffscreenPageLimit(4);
+        binding.viewPager.setAdapter(customPagerAdapter);
+        binding.viewPager.setOffscreenPageLimit(10);
         binding.viewPager.setCurrentItem(0);
         binding.tabLayout.setupWithViewPager(binding.viewPager);
         binding.viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
@@ -171,20 +172,20 @@ public class MyDogCertificateOrImmuneActivity extends BaseActivity {
     }
 
     private void initImmuneTabLayout() {
-        MainPagerAdapter mainPagerAdapter = new MainPagerAdapter(getSupportFragmentManager());
+        CustomPagerAdapter customPagerAdapter = new CustomPagerAdapter(getSupportFragmentManager());
 
 //        for (LicenceBean licenceBean : data) {
 //            mainPagerAdapter.addFragment(licenceBean.getDogType(), MyDogCertificateOrImmuneFragment.getInstanceLicence(type, licenceBean));
 //
 //        }
 
-        mainPagerAdapter.addFragment("萨摩耶", MyDogCertificateOrImmuneFragment.getInstance(type, 0));
-        mainPagerAdapter.addFragment("柯基", MyDogCertificateOrImmuneFragment.getInstance(type, 1));
-        mainPagerAdapter.addFragment("泰迪", MyDogCertificateOrImmuneFragment.getInstance(type, 2));
-        mainPagerAdapter.addFragment("哈士奇", MyDogCertificateOrImmuneFragment.getInstance(type, 3));
+        customPagerAdapter.addFragment("萨摩耶", MyDogCertificateOrImmuneFragment.getInstance(type, 0));
+        customPagerAdapter.addFragment("柯基", MyDogCertificateOrImmuneFragment.getInstance(type, 1));
+        customPagerAdapter.addFragment("泰迪", MyDogCertificateOrImmuneFragment.getInstance(type, 2));
+        customPagerAdapter.addFragment("哈士奇", MyDogCertificateOrImmuneFragment.getInstance(type, 3));
 
-        binding.viewPager.setAdapter(mainPagerAdapter);
-        binding.viewPager.setOffscreenPageLimit(4);
+        binding.viewPager.setAdapter(customPagerAdapter);
+        binding.viewPager.setOffscreenPageLimit(10);
         binding.viewPager.setCurrentItem(0);
         binding.tabLayout.setupWithViewPager(binding.viewPager);
         binding.viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
