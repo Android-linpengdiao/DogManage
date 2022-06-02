@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
+import android.widget.RadioGroup;
 
 import com.base.utils.CommonUtil;
 import com.base.utils.FileUtils;
@@ -138,6 +139,23 @@ public class DogCertificateEditDogActivity extends BaseActivity {
                         });
             }
         });
+        binding.radioGroupSterilization.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup radioGroup, int i) {
+                switch (i) {
+                    case R.id.radioButtonSterilization1:
+                        binding.sterilizationProveContainer.setVisibility(View.VISIBLE);
+
+                        break;
+                    case R.id.radioButtonSterilization0:
+                        binding.sterilizationProveContainer.setVisibility(View.GONE);
+
+                        break;
+                    default:
+                        break;
+                }
+            }
+        });
         binding.petTypeView.binding.itemInfo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -230,6 +248,8 @@ public class DogCertificateEditDogActivity extends BaseActivity {
         //是否绝育;0：否 1：是
         if (dog.getSterilization() == 1) {
             binding.radioButtonSterilization1.setChecked(true);
+            binding.sterilizationProveContainer.setVisibility(View.VISIBLE);
+            GlideLoader.LoderImage(DogCertificateEditDogActivity.this, dog.getSterilizationProve(), binding.testifyView);
         }
 
         binding.petTypeView.binding.itemContent.setText(dog.getDogType());//犬只品种

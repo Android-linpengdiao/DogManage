@@ -270,10 +270,13 @@
                     android:background="@color/colorDivider" />
 
                 <LinearLayout
+                    android:id="@+id/sterilizationProveContainer"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center_vertical"
                     android:orientation="vertical"
+                    android:visibility="gone"
+                    tools:visibility="visible"
                     android:paddingLeft="@dimen/viewPadding"
                     android:paddingRight="@dimen/viewPadding">
 
