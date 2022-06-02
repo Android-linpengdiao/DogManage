@@ -60,6 +60,7 @@
             android:layout_marginTop="@dimen/dp_32"
             android:layout_marginRight="@dimen/viewPadding"
             android:background="@drawable/button_radius_white_8"
+            android:onClick="onClickWxPay"
             android:gravity="center_vertical"
             android:orientation="horizontal"
             android:paddingLeft="@dimen/dp_14">
@@ -100,6 +101,7 @@
             android:layout_marginRight="@dimen/viewPadding"
             android:background="@drawable/button_radius_white_8"
             android:gravity="center_vertical"
+            android:onClick="onClickAliPay"
             android:orientation="horizontal"
             android:paddingLeft="@dimen/dp_14">
 

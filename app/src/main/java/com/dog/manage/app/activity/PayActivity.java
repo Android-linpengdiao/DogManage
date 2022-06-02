@@ -46,6 +46,16 @@ public class PayActivity extends BaseActivity {
 
     }
 
+    public void onClickWxPay(View view) {
+        binding.wxPayView.setSelected(true);
+        binding.aliPayView.setSelected(false);
+    }
+
+    public void onClickAliPay(View view) {
+        binding.wxPayView.setSelected(false);
+        binding.aliPayView.setSelected(true);
+    }
+
     public void onClickConfirm(View view) {
         SendRequest.payment(licenceId, payType, new GenericsCallback<ResultClient<Boolean>>(new JsonGenericsSerializator()) {
 
@@ -245,6 +255,5 @@ public class PayActivity extends BaseActivity {
     private void payFail(String content) {
         ToastUtils.showShort(PayActivity.this, content);
     }
-
 
 }

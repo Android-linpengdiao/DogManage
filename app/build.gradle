@@ -92,6 +92,7 @@ dependencies {
 
     implementation smartrefresh
     implementation smartrefreshHeaderClassics
+    implementation smartrefreshHeaderMaterial
     implementation smartrefreshFooterClassics
     implementation cardview
     implementation externalBuglyCrashreport
