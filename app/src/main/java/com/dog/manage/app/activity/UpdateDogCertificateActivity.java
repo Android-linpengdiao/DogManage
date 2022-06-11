@@ -34,6 +34,7 @@ public class UpdateDogCertificateActivity extends BaseActivity {
 
     private ActivityUpdateDogCertificateBinding binding;
     private DogCertificateAdapter adapter;
+    private LicenceBean licenceBean;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,6 +53,17 @@ public class UpdateDogCertificateActivity extends BaseActivity {
         binding.recyclerView.setNestedScrollingEnabled(false);
         adapter = new DogCertificateAdapter(getApplicationContext());
         binding.recyclerView.setAdapter(adapter);
+        adapter.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view, Object object) {
+                licenceBean = (LicenceBean) object;
+            }
+
+            @Override
+            public void onLongClick(View view, Object object) {
+
+            }
+        });
 
         getMyLicenceList();
     }
@@ -96,13 +108,13 @@ public class UpdateDogCertificateActivity extends BaseActivity {
     }
 
     public void onClickConfirm(View view) {
-        if (adapter.getSelect() < 0) {
+        if (licenceBean == null) {
             ToastUtils.showShort(getApplicationContext(), "选择1个要变更的犬证");
             return;
         }
         Bundle bundle = new Bundle();
         bundle.putInt("type", UpdateDogOwnerInfoActivity.type_details);
-        bundle.putSerializable("LicenceBean", new Dog(0,0,"哈士奇"));
+        bundle.putSerializable("LicenceBean", licenceBean);
         openActivity(UpdateDogOwnerInfoActivity.class, bundle);
     }
 }

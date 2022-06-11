@@ -13,7 +13,7 @@ import com.dog.manage.app.model.LicenceBean;
 
 public class DogCertificateAdapter extends BaseRecyclerAdapter<LicenceBean, ItemDongCertificateBinding> {
 
-    private int select = -1;
+    private int select = 0;
     private OnClickListener onClickListener;
 
     public int getSelect() {
@@ -50,17 +50,12 @@ public class DogCertificateAdapter extends BaseRecyclerAdapter<LicenceBean, Item
         binding.detailedAddressView.setText(licenceBean.getDetailedAddress());
         GlideLoader.LoderImage(mContext, "https://pics7.baidu.com/feed/6c224f4a20a446236fb6db0ac3bf5d040df3d785.jpeg", binding.certificateCoverView, 5);
 
-        binding.selectedView.setSelected(select == position ? true : false);
+        binding.selectedView.setSelected(select == licenceBean.getLincenceId() ? true : false);
         binding.selectedView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                select = position;
+                select = licenceBean.getLincenceId();
                 notifyDataSetChanged();
-            }
-        });
-        binding.getRoot().setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
                 if (onClickListener != null)
                     onClickListener.onClick(view, licenceBean);
             }

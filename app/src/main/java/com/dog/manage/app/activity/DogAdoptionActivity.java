@@ -56,7 +56,7 @@ public class DogAdoptionActivity extends BaseActivity {
             public void onClick(View view, Object object) {
                 Dog dataBean = (Dog) object;
                 Bundle bundle = new Bundle();
-                bundle.putInt("leaveId", dataBean.getLeaveId());
+                bundle.putInt("leaveId", dataBean.getId());
                 openActivity(DogDetailsThemeActivity.class, bundle);
 
             }
