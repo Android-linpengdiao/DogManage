@@ -86,6 +86,8 @@ public class APIUrls {
     public final static String transferDogList = URL_DOMAIN + "/user/dog/transferDogList";
     //犬只过户-狗证过户提交
     public final static String saveTransferDog = URL_DOMAIN + "/user/dog/saveTransferDog";
+    //犬只过户-过户详情
+    public final static String getTransferDog = URL_DOMAIN + "/user/dog/getTransferDog";
 
 
     /**

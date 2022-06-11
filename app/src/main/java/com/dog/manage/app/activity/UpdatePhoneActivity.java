@@ -83,7 +83,7 @@ public class UpdatePhoneActivity extends BaseActivity {
                     });
                 } else {
                     binding.sendCodeView.setEnabled(true);
-                    ToastUtils.showShort(getApplicationContext(), response.getMessage());
+                    ToastUtils.showShort(getApplicationContext(), response.getMsg());
                 }
 
             }
@@ -124,7 +124,7 @@ public class UpdatePhoneActivity extends BaseActivity {
                 if (response.isSuccess()) {
                     openActivity(UpdatePhoneActivity.class);
                 } else {
-                    ToastUtils.showShort(getApplicationContext(), response.getMessage());
+                    ToastUtils.showShort(getApplicationContext(), response.getMsg());
                 }
 
             }
