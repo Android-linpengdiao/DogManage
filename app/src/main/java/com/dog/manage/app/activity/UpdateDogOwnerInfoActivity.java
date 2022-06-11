@@ -25,6 +25,7 @@ import com.dog.manage.app.media.MediaSelectActivity;
 import com.dog.manage.app.media.MediaUtils;
 import com.dog.manage.app.model.Dog;
 import com.dog.manage.app.model.HandleInfo;
+import com.dog.manage.app.model.LicenceBean;
 import com.dog.manage.app.utils.UploadFileManager;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -63,7 +64,7 @@ public class UpdateDogOwnerInfoActivity extends BaseActivity {
     public static final int type_submit = 1;//提交
 
     private int type = 0;
-    private Dog dogDetail = null;
+    private LicenceBean dogDetail = null;
     private int newAddressId = 0;
 
     @Override
@@ -78,7 +79,7 @@ public class UpdateDogOwnerInfoActivity extends BaseActivity {
 
         type = getIntent().getIntExtra("type", 0);
 
-        dogDetail = (Dog) getIntent().getSerializableExtra("DogDetail");
+        dogDetail = (LicenceBean) getIntent().getSerializableExtra("LicenceBean");
         newAddressId = getIntent().getIntExtra("newAddressId", 0);
         if (dogDetail != null) {
             if (type == type_details) {
