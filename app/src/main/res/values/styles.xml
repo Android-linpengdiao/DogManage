@@ -41,9 +41,15 @@
         <!-- 没有windowActionBar-->
         <item name="windowActionBar">false</item>
         <item name="android:windowContentOverlay">@null</item>
-        <!-- <item name="android:windowAnimationStyle">@android:style/Animation.Translucent</item> -->
+        <!-- 动画 -->
+         <item name="android:windowAnimationStyle">@style/PopupAnimation</item>
 
         <!-- <item name="android:backgroundDimEnabled">false</item> -->
+    </style>
+
+    <style name="PopupAnimation" mce_bogus="1" parent="android:Animation">
+        <item name="android:windowEnterAnimation">@anim/popup_enter</item>
+        <item name="android:windowExitAnimation">@anim/popup_exit</item>
     </style>
 
     <declare-styleable name="TitleView">

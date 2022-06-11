@@ -687,6 +687,18 @@ public class SendRequest {
 
     }
 
+    /**
+     * 犬只领养-保存
+     * @param map
+     * @param call
+     */
+    public static void saveLeaveDogUser(Map<String, String> map, Callback call) {
+        Map<String, String> headers = new HashMap<>();
+        headers.put("Authorization", BaseApplication.getInstance().getUserInfo().getAuthorization());
+        OkHttpUtils.post().headers(headers).params(map).url(APIUrls.saveLeaveDogUser).build().execute(call);
+
+    }
+
 
     // ==================================== 练琴帮 =============================================
 

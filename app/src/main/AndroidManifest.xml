@@ -59,7 +59,9 @@
         android:roundIcon="@mipmap/ic_icon"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".activity.DogInfoActivity"></activity>
+        <activity
+            android:name=".activity.DogInfoActivity"
+            android:screenOrientation="portrait"></activity>
         <activity
             android:name=".activity.CameraActivity"
             android:screenOrientation="portrait"

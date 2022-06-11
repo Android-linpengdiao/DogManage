@@ -8,8 +8,9 @@ import com.base.utils.GlideLoader;
 import com.base.view.OnClickListener;
 import com.dog.manage.app.R;
 import com.dog.manage.app.databinding.ItemMessageBinding;
+import com.dog.manage.app.model.Message;
 
-public class MessageAdapter extends BaseRecyclerAdapter<String, ItemMessageBinding> {
+public class MessageAdapter extends BaseRecyclerAdapter<Message, ItemMessageBinding> {
 
 
     private OnClickListener onClickListener;
@@ -33,7 +34,10 @@ public class MessageAdapter extends BaseRecyclerAdapter<String, ItemMessageBindi
     }
 
     @Override
-    protected void onBindItem(ItemMessageBinding binding, String dataBean, int position) {
+    protected void onBindItem(ItemMessageBinding binding, Message dataBean, int position) {
+        binding.noticeTitleView.setText(dataBean.getNoticeTitle());
+        binding.noticeContentView.setText(dataBean.getNoticeContent());
+        binding.createTimeView.setText(dataBean.getCreateTime());
         GlideLoader.LoderCircleImage(mContext, "https://pics7.baidu.com/feed/6c224f4a20a446236fb6db0ac3bf5d040df3d785.jpeg", binding.coverView);
         binding.getRoot().setOnClickListener(new View.OnClickListener() {
             @Override

@@ -10,6 +10,7 @@ import com.base.utils.LogUtil;
 import com.base.utils.ToastUtils;
 import com.dog.manage.app.R;
 import com.dog.manage.app.databinding.ActivityDogAdoptionSubmitBinding;
+import com.dog.manage.app.model.DogDetail;
 import com.dog.manage.app.model.DogUser;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -19,6 +20,7 @@ import com.okhttp.callbacks.GenericsCallback;
 import com.okhttp.sample_okhttp.JsonGenericsSerializator;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import okhttp3.Call;
@@ -26,9 +28,7 @@ import okhttp3.Call;
 public class DogAdoptionSubmitActivity extends BaseActivity {
 
     private ActivityDogAdoptionSubmitBinding binding;
-    private Map<String, String> paramsMap = new HashMap<>();
-    private int leaveId = 0;
-    private int addressId = 0;
+    private DogDetail dogDetail;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,24 +37,32 @@ public class DogAdoptionSubmitActivity extends BaseActivity {
         addActivity(this);
 
 
-        leaveId = getIntent().getIntExtra("leaveId", 0);
-        addressId = getIntent().getIntExtra("addressId", 0);
+        dogDetail = (DogDetail) getIntent().getSerializableExtra("dogDetail");
 
-//        String paramsJson = getIntent().getStringExtra("paramsJson");
-//        if (!TextUtils.isEmpty(paramsJson)) {
-//            Gson gson = new Gson();
-//            paramsMap = gson.fromJson(paramsJson, new TypeToken<Map<String, Object>>() {
-//            }.getType());
-//        }
+        if (dogDetail != null) {
+            binding.dogNameView.setText(dogDetail.getDogName() + "|" + dogDetail.getDogColor() + "|" + dogDetail.getDogAge() + "岁3个月");
+            binding.leaveCenterView.setText(dogDetail.getLeaveCenter());
+            binding.centerAddressView.setText(dogDetail.getCenterAddress());
+            try {
+                List<String> dogPhotos = new Gson().fromJson(dogDetail.getDogPhoto(), new TypeToken<List<String>>() {
+                }.getType());
+                if (dogPhotos != null && dogPhotos.size() > 0)
+                    GlideLoader.LoderImage(this, dogPhotos.get(0), binding.coverView);
+            } catch (Exception e) {
+                e.getMessage();
+            }
 
-//        binding.dogNameView.setText(dogDetail.getDogName() + "|" + dogDetail.getDogColor() + "|" + dogDetail.getDogAge() + "岁3个月");
-//        binding.leaveCenterView.setText(dogDetail.getLeaveCenter());
-        
-        GlideLoader.LoderImage(this, "https://pics7.baidu.com/feed/6c224f4a20a446236fb6db0ac3bf5d040df3d785.jpeg", binding.coverView);
+        }
+
 
     }
 
     public void onClickConfirm(View view) {
+        if (dogDetail == null) {
+            ToastUtils.showShort(getApplicationContext(), "提交申请失败");
+            return;
+        }
+        Map<String, String> paramsMap = new HashMap<>();
         SendRequest.CertificateExamined(getUserInfo().getAuthorization(), paramsMap,
                 new GenericsCallback<ResultClient<DogUser>>(new JsonGenericsSerializator()) {
                     @Override

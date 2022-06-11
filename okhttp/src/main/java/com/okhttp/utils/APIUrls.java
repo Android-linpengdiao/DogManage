@@ -108,6 +108,13 @@ public class APIUrls {
 
 
     /**
+     * 系统消息
+     */
+    //系统消息
+    public final static String sysNoticeList = URL_DOMAIN + "/sysNotice/sysNoticeList";
+
+
+    /**
      * 我的
      */
     //我的-我的犬证
@@ -147,6 +154,8 @@ public class APIUrls {
     public final static String getLeaveDogPageList = URL_DOMAIN + "/user/dog/getLeaveDogPageList";
     //犬只领养-犬只详情
     public final static String getLeaveDogDetail = URL_DOMAIN + "/user/dog/getLeaveDogDetail";
+    //犬只领养-保存
+    public final static String saveLeaveDogUser = URL_DOMAIN + "/user/saveLeaveDogUser";
 
 
     /**

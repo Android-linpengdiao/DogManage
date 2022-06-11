@@ -10,6 +10,7 @@ import com.base.utils.CommonUtil;
 import com.base.utils.ToastUtils;
 import com.dog.manage.app.R;
 import com.dog.manage.app.databinding.ActivityAccountBinding;
+import com.dog.manage.app.model.UserPhone;
 import com.okhttp.ResultClient;
 import com.okhttp.SendRequest;
 import com.okhttp.callbacks.GenericsCallback;
@@ -25,6 +26,7 @@ import okhttp3.Request;
 public class AccountActivity extends BaseActivity {
 
     private ActivityAccountBinding binding;
+    private String phone;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,35 +34,42 @@ public class AccountActivity extends BaseActivity {
         binding = getViewData(R.layout.activity_account);
         addActivity(this);
 
-        String phone = binding.phoneView.getText().toString();
-        if (phone != null && phone.length() >= 7)
-            binding.phoneView.setText(phone.substring(0, 3) + "****" + phone.substring(7));
-
-//        if (!CommonUtil.isBlank(getUserInfo().getPhone()) && getUserInfo().getPhone().length() >= 11) {
-//            String phone = getUserInfo().getPhone();
-//            binding.phoneView.setText(phone.substring(0, 3) + "****" + phone.substring(7));
-//        }
-
         getUserPhone();
 
     }
 
     private void getUserPhone() {
-        SendRequest.getUserPhone(new GenericsCallback<ResultClient<String>>(new JsonGenericsSerializator()) {
+        SendRequest.getUserPhone(new GenericsCallback<ResultClient<UserPhone>>(new JsonGenericsSerializator()) {
+
+            @Override
+            public void onBefore(Request request, int id) {
+                super.onBefore(request, id);
+                LoadingManager.showLoadingDialog(AccountActivity.this);
+            }
+
+            @Override
+            public void onAfter(int id) {
+                super.onAfter(id);
+                LoadingManager.hideLoadingDialog(AccountActivity.this);
+            }
+
             @Override
             public void onError(Call call, Exception e, int id) {
 
             }
 
             @Override
-            public void onResponse(ResultClient<String> response, int id) {
-
+            public void onResponse(ResultClient<UserPhone> response, int id) {
+                if (response.isSuccess() && response.getData() != null) {
+                    phone = response.getData().getUserPhone();
+                    if (phone != null && phone.length() >= 7)
+                        binding.phoneView.setText(phone.substring(0, 3) + "****" + phone.substring(7));
+                }
             }
         });
     }
 
     public void onClickSendCode(View view) {
-        String phone = binding.phoneView.getText().toString().trim();
         if (CommonUtil.isBlank(phone)) {
             ToastUtils.showShort(getApplicationContext(), "请输入手机号");
             return;
@@ -123,14 +132,14 @@ public class AccountActivity extends BaseActivity {
         String phone = binding.phoneView.getText().toString().trim();
         String code = binding.codeEditText.getText().toString().trim();
         if (CommonUtil.isBlank(phone)) {
-            ToastUtils.showShort(getApplicationContext(), "请输入手机号");
+            ToastUtils.showShort(getApplicationContext(), "手机号有误");
             return;
         }
         if (CommonUtil.isBlank(code)) {
             ToastUtils.showShort(getApplicationContext(), "请输入验证码");
             return;
         }
-        SendRequest.verifyUserPhone(phone,code, new GenericsCallback<BaseData>(new JsonGenericsSerializator()) {
+        SendRequest.verifyUserPhone(phone, code, new GenericsCallback<BaseData>(new JsonGenericsSerializator()) {
 
             @Override
             public void onBefore(Request request, int id) {

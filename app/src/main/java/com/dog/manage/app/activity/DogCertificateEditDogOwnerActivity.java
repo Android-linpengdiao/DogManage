@@ -37,6 +37,7 @@ import com.dog.manage.app.media.MediaSelectActivity;
 import com.dog.manage.app.media.MediaUtils;
 import com.dog.manage.app.model.AddressBean;
 import com.dog.manage.app.model.CommunityBean;
+import com.dog.manage.app.model.DogDetail;
 import com.dog.manage.app.model.DogUser;
 import com.dog.manage.app.model.PunishRecord;
 import com.dog.manage.app.utils.UploadFileManager;
@@ -262,10 +263,10 @@ public class DogCertificateEditDogOwnerActivity extends BaseActivity {
                 communityBinding.refreshLayout.setOnLoadMoreListener(new OnLoadMoreListener() {
                     @Override
                     public void onLoadMore(RefreshLayout refreshlayout) {
-                        getAddressList(false,"");
+                        getAddressList(false, "");
                     }
                 });
-                getAddressList(true,"");
+                getAddressList(true, "");
 
                 communityBinding.confirmView.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -296,9 +297,9 @@ public class DogCertificateEditDogOwnerActivity extends BaseActivity {
     private Pager<CommunityBean> communityPager = new Pager<>();
     private CommunityBean communityBean;
 
-    private void getAddressList(boolean isRefresh,String communityName) {
+    private void getAddressList(boolean isRefresh, String communityName) {
         if (addressBean == null) {
-            ToastUtils.showShort(getApplicationContext(),"请先选择居住地址");
+            ToastUtils.showShort(getApplicationContext(), "请先选择居住地址");
             return;
         }
         //省110000 、市110100
@@ -1079,7 +1080,7 @@ public class DogCertificateEditDogOwnerActivity extends BaseActivity {
             map.put("communityDept", dogUser.getCommunityDept() + "");//社区所属机构（新增）
             map.put("villageId", dogUser.getVillageId() + "");//社区id
 
-            if (type == type_certificate || type == type_immune) {
+            if (type == type_certificate || type == type_immune || type == type_adoption) {
                 map.put("busTypeId", String.valueOf(0));//业务类型 1 个人信息 0 犬证、疫苗
 
             } else if (type == type_userInfo) {
@@ -1087,37 +1088,62 @@ public class DogCertificateEditDogOwnerActivity extends BaseActivity {
 
             }
 
-            SendRequest.editDogUser(map, new GenericsCallback<ResultClient<DogUser>>(new JsonGenericsSerializator()) {
-                @Override
-                public void onError(Call call, Exception e, int id) {
+            if (type == type_adoption) {
+                map.put("leaveId", String.valueOf(leaveId));//领养id
+            }
 
-                }
+            if (type == type_adoption) {
+                SendRequest.saveLeaveDogUser(map, new GenericsCallback<ResultClient<DogDetail>>(new JsonGenericsSerializator()) {
+                    @Override
+                    public void onError(Call call, Exception e, int id) {
 
-                @Override
-                public void onResponse(ResultClient<DogUser> response, int id) {
-                    if (response.isSuccess() && response.getData() != null) {
-                        Bundle bundle = new Bundle();
-                        bundle.putInt("type", type);
-                        if (type == type_certificate || type == type_immune || type == type_examined) {
-                            bundle.putInt("addressId", response.getData().getAddressId());
-                            openActivity(DogCertificateEditDogActivity.class, bundle);
-
-                        } else if (type == type_adoption) {
-                            bundle.putInt("leaveId", leaveId);
-                            bundle.putInt("addressId", response.getData().getAddressId());
-                            openActivity(DogAdoptionSubmitActivity.class);
-
-
-                        } else if (type == type_userInfo) {
-                            ToastUtils.showShort(getApplicationContext(), "保存成功");
-                            finish();
-
-                        }
-                    } else {
-                        ToastUtils.showShort(getApplicationContext(), response.getMsg());
                     }
-                }
-            });
+
+                    @Override
+                    public void onResponse(ResultClient<DogDetail> response, int id) {
+                        if (response.isSuccess() && response.getData() != null) {
+                            Bundle bundle = new Bundle();
+                            bundle.putSerializable("dogDetail", response.getData());
+                            openActivity(DogAdoptionSubmitActivity.class,bundle);
+
+                        } else {
+                            ToastUtils.showShort(getApplicationContext(), response.getMsg());
+                        }
+                    }
+                });
+            } else {
+                SendRequest.editDogUser(map, new GenericsCallback<ResultClient<DogUser>>(new JsonGenericsSerializator()) {
+                    @Override
+                    public void onError(Call call, Exception e, int id) {
+
+                    }
+
+                    @Override
+                    public void onResponse(ResultClient<DogUser> response, int id) {
+                        if (response.isSuccess() && response.getData() != null) {
+                            Bundle bundle = new Bundle();
+                            bundle.putInt("type", type);
+                            if (type == type_certificate || type == type_immune || type == type_examined) {
+                                bundle.putInt("addressId", response.getData().getAddressId());
+                                openActivity(DogCertificateEditDogActivity.class, bundle);
+
+                            } else if (type == type_adoption) {
+                                bundle.putInt("leaveId", leaveId);
+                                bundle.putInt("addressId", response.getData().getAddressId());
+                                openActivity(DogAdoptionSubmitActivity.class);
+
+
+                            } else if (type == type_userInfo) {
+                                ToastUtils.showShort(getApplicationContext(), "保存成功");
+                                finish();
+
+                            }
+                        } else {
+                            ToastUtils.showShort(getApplicationContext(), response.getMsg());
+                        }
+                    }
+                });
+            }
 
         }
 

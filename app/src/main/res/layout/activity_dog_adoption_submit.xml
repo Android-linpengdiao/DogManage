@@ -184,10 +184,11 @@
                                     android:src="@drawable/dingwei_s" />
 
                                 <TextView
+                                    android:id="@+id/centerAddressView"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:gravity="center"
-                                    android:text="北京市昌平区七里渠甲1号"
+                                    tools:text="北京市昌平区七里渠甲1号"
                                     android:textColor="#999999"
                                     android:textSize="@dimen/sp_13" />
                             </LinearLayout>
@@ -218,6 +219,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:gravity="center_vertical"
+                    android:layout_marginTop="@dimen/dp_30"
                     android:paddingLeft="@dimen/viewPadding"
                     android:paddingRight="@dimen/viewPadding"
                     android:text="温馨提示：

@@ -48,7 +48,7 @@
             android:gravity="center_vertical"
             android:paddingLeft="@dimen/dp_16"
             android:paddingRight="@dimen/dp_16"
-            android:text="13521614827"
+            android:text=""
             android:textColor="#000000"
             android:textSize="@dimen/sp_15" />
 
@@ -83,6 +83,7 @@
                 android:background="@null"
                 android:gravity="center_vertical"
                 android:hint="请输入验证码"
+                android:text="111111"
                 android:maxLength="16"
                 android:paddingLeft="@dimen/dp_16"
                 android:paddingRight="@dimen/dp_16"

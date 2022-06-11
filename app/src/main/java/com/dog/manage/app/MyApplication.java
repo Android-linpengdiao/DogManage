@@ -12,6 +12,7 @@ import com.okhttp.utils.HttpsUtils;
 import com.okhttp.utils.OkHttpUtils;
 import com.scwang.smart.refresh.footer.ClassicsFooter;
 import com.scwang.smart.refresh.header.ClassicsHeader;
+import com.scwang.smart.refresh.header.MaterialHeader;
 import com.scwang.smart.refresh.layout.SmartRefreshLayout;
 import com.scwang.smart.refresh.layout.api.RefreshFooter;
 import com.scwang.smart.refresh.layout.api.RefreshHeader;
@@ -133,14 +134,17 @@ public class MyApplication extends BaseApplication {
 //                header.setSpinnerStyle(SpinnerStyle.Translate);//设置移动样式（不支持：MatchLayout）
 //                return header;
 
-                return new ClassicsHeader(context)
+//                return new ClassicsHeader(context)
 //                        .setTextSizeTitle(0)
 //                        .setTextSizeTime(0)
 //                        .setDrawableMarginRightPx(getResources().getDimensionPixelSize(R.dimen.dp_m_12))
 //                        .setDrawableSizePx(getResources().getDimensionPixelSize(R.dimen.dp_24))
 //                        .setProgressResource(R.drawable.ic_loading)
 //                        .setArrowResource(R.drawable.ic_loading)
-                        .setSpinnerStyle(SpinnerStyle.Translate);
+//                        .setSpinnerStyle(SpinnerStyle.Translate);
+
+                return new MaterialHeader(context);
+
             }
 
         });

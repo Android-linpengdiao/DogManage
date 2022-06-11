@@ -101,7 +101,7 @@ public class UpdatePhoneActivity extends BaseActivity {
             ToastUtils.showShort(getApplicationContext(), "请输入验证码");
             return;
         }
-        SendRequest.editUserPhone(phone,code, new GenericsCallback<BaseData>(new JsonGenericsSerializator()) {
+        SendRequest.editUserPhone(phone, code, new GenericsCallback<BaseData>(new JsonGenericsSerializator()) {
 
             @Override
             public void onBefore(Request request, int id) {
@@ -122,7 +122,8 @@ public class UpdatePhoneActivity extends BaseActivity {
             @Override
             public void onResponse(BaseData response, int id) {
                 if (response.isSuccess()) {
-                    openActivity(UpdatePhoneActivity.class);
+                    finishActivity(AccountActivity.class);
+                    finish();
                 } else {
                     ToastUtils.showShort(getApplicationContext(), response.getMsg());
                 }
