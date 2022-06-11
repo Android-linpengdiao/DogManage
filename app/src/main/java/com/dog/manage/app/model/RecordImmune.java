@@ -33,4 +33,58 @@ public class RecordImmune {
     private String createTime;
     private Integer dogAge;
     private Integer lincenceStatus;
+
+    //
+    /**
+     * id
+     * integer
+     * 主键
+     * dogLicenceId
+     * integer
+     * 犬证id
+     * dogLicenceNum
+     * string
+     * 犬证编号
+     * oldOwnerId
+     * integer
+     * 老用户
+     * oldUserName
+     * string
+     * 老用户名称
+     * newOwnerId
+     * integer
+     * 新用户
+     * newUserName
+     * string
+     * 新用户名称
+     * newUserPhone
+     * null
+     * 新用户手机号
+     * acceptUnit
+     * string
+     * 受理单位
+     * status
+     * integer
+     * 状态
+     * applyTime
+     * null
+     * 受理时间
+     * dogAge
+     * integer
+     * 犬只年龄
+     */
+
+    private Integer id;
+    private Integer dogLicenceId;
+    private String dogLicenceNum;
+    private Integer oldOwnerId;
+    private String oldUserName;
+    private Integer newOwnerId;
+    private String newUserName;
+    private String newUserPhone;
+    private String acceptUnit;
+    private Integer status;
+    private String applyTime;
+//    private Integer dogAge;
+
 }

@@ -112,21 +112,33 @@ public class CertificateRecordAdapter extends BaseRecyclerAdapter<RecordImmune, 
             }
 
         } else if (type == RecordActivity.type_transfer) {
+            //办理状态 0 是未审核的 1 成功的 2 是失败的
             binding.titleView.setText("犬只过户");
-            if (position == 1) {
-                binding.checkStatusView.setText("过户成功");
-                binding.checkStatusView.setBackgroundResource(R.drawable.tag_g);
-                binding.detailsStatusView.setVisibility(View.GONE);
+            binding.contentView.setText(dataBean.getDogType() + "-" + dataBean.getDogAge() + "岁3个月");
+            binding.createTimeView.setText(dataBean.getCreatedTime());
+            binding.descView.setText("犬证:"+dataBean.getDogLicenceNum());
+            binding.oldUserNameView.setText("原犬主:"+dataBean.getOldUserName());
+            binding.newUserNameView.setText("新犬主:"+dataBean.getNewUserName());
+            if (dataBean.getStatus() != null) {
+                if (dataBean.getStatus() == 0) {
+                    binding.checkStatusView.setText("审核中");
+                    binding.detailsStatusView.setVisibility(View.GONE);
 
-            } else if (position == 2) {
-                binding.checkStatusView.setText("过户失败");
-                binding.checkStatusView.setBackgroundResource(R.drawable.tag_r);
-                binding.detailsStatusView.setVisibility(View.VISIBLE);
+                } else if (dataBean.getStatus() == 1) {
+                    binding.checkStatusView.setText("过户成功");
+                    binding.checkStatusView.setBackgroundResource(R.drawable.tag_g);
+                    binding.detailsStatusView.setVisibility(View.GONE);
 
-            } else {
-                binding.checkStatusView.setText("审核中");
-                binding.detailsStatusView.setVisibility(View.GONE);
+                } else if (dataBean.getStatus() == 2) {
+                    binding.checkStatusView.setText("过户失败");
+                    binding.checkStatusView.setBackgroundResource(R.drawable.tag_r);
+                    binding.detailsStatusView.setVisibility(View.VISIBLE);
 
+                } else {
+                    binding.checkStatusView.setText("审核中");
+                    binding.detailsStatusView.setVisibility(View.GONE);
+
+                }
             }
 
         } else if (type == RecordActivity.type_logout) {
@@ -160,6 +172,9 @@ public class CertificateRecordAdapter extends BaseRecyclerAdapter<RecordImmune, 
                         onClickListener.onClick(view, dataBean);
 
                     } else if (type == RecordActivity.type_immune) {
+                        onClickListener.onClick(view, dataBean);
+
+                    }  else if (type == RecordActivity.type_transfer) {
                         onClickListener.onClick(view, dataBean);
 
                     } else {

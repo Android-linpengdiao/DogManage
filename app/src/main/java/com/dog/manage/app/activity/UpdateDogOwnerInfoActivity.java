@@ -228,7 +228,7 @@ public class UpdateDogOwnerInfoActivity extends BaseActivity {
                         openActivity(UpdateDogOwnerInfoActivity.class, bundle);
 
                     } else {
-                        ToastUtils.showShort(getApplicationContext(), response.getMessage());
+                        ToastUtils.showShort(getApplicationContext(), response.getMsg());
 
                     }
 
@@ -285,7 +285,7 @@ public class UpdateDogOwnerInfoActivity extends BaseActivity {
                         finish();
 
                     } else {
-                        ToastUtils.showShort(getApplicationContext(), response.getMessage());
+                        ToastUtils.showShort(getApplicationContext(), response.getMsg());
                     }
 
                 }

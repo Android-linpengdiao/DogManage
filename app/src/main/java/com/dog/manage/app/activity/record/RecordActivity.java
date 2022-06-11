@@ -35,11 +35,11 @@ public class RecordActivity extends BaseActivity {
         int type = getIntent().getIntExtra("type", 0);
 
         MainPagerAdapter mainPagerAdapter = new MainPagerAdapter(getSupportFragmentManager());
-        mainPagerAdapter.addFragment("全部", RecordFragment.getInstance(type, 0));
 
         if (type == type_certificate) {
             binding.titleView.binding.itemTitle.setText("犬证办理记录");
             //办理状态 0 全部 1：待审核 2：代缴费 3：审核驳回 4：已办结 5：已过期 6：已注销
+            mainPagerAdapter.addFragment("全部", RecordFragment.getInstance(type, 0));
             mainPagerAdapter.addFragment("审核中", RecordFragment.getInstance(type, 1));
             mainPagerAdapter.addFragment("审核通过", RecordFragment.getInstance(type, 2));
             mainPagerAdapter.addFragment("审核拒绝", RecordFragment.getInstance(type, 3));
@@ -48,8 +48,9 @@ public class RecordActivity extends BaseActivity {
             mainPagerAdapter.addFragment("已注销", RecordFragment.getInstance(type, 6));
 
         } else if (type == type_immune) {
-            //办理状态 0 默认 1：未接种 2：已接种 3: 即将过期 4: 已过期
             binding.titleView.binding.itemTitle.setText("免疫证办理记录");
+            //办理状态 0 默认 1：未接种 2：已接种 3: 即将过期 4: 已过期
+            mainPagerAdapter.addFragment("全部", RecordFragment.getInstance(type, 0));
             mainPagerAdapter.addFragment("已预约", RecordFragment.getInstance(type, 1));
             mainPagerAdapter.addFragment("已办结", RecordFragment.getInstance(type, 2));
             mainPagerAdapter.addFragment("即将过期", RecordFragment.getInstance(type, 3));
@@ -58,9 +59,11 @@ public class RecordActivity extends BaseActivity {
         } else if (type == type_transfer) {
             binding.titleView.binding.itemTitle.setText("过户记录");
             binding.tabLayout.setTabMode(TopTabLayout.MODE_FIXED);
-            mainPagerAdapter.addFragment("审核中", RecordFragment.getInstance(type, 1));
-            mainPagerAdapter.addFragment("过户成功", RecordFragment.getInstance(type, 2));
-            mainPagerAdapter.addFragment("过户失败", RecordFragment.getInstance(type, 3));
+            //办理状态 0 是未审核的 1 成功的 2 是失败的
+            mainPagerAdapter.addFragment("全部", RecordFragment.getInstance(type, -1));
+            mainPagerAdapter.addFragment("审核中", RecordFragment.getInstance(type, 0));
+            mainPagerAdapter.addFragment("过户成功", RecordFragment.getInstance(type, 1));
+            mainPagerAdapter.addFragment("过户失败", RecordFragment.getInstance(type, 2));
 
         } else if (type == type_adoption) {
             binding.titleView.binding.itemTitle.setText("领养记录");

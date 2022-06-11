@@ -166,7 +166,7 @@ public class PayActivity extends BaseActivity {
                                         });
 
                             } else {
-                                ToastUtils.showShort(PayActivity.this, response.getMessage());
+                                ToastUtils.showShort(PayActivity.this, response.getMsg());
 
                             }
                         }
@@ -218,7 +218,7 @@ public class PayActivity extends BaseActivity {
                                         });
 
                             } else {
-                                ToastUtils.showShort(PayActivity.this, response.getMessage());
+                                ToastUtils.showShort(PayActivity.this, response.getMsg());
 
                             }
                         }

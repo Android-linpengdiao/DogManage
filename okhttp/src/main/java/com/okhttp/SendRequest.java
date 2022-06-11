@@ -214,7 +214,7 @@ public class SendRequest {
      * @param unitName 医院名称
      * @param call
      */
-    public static void saveImmune(int dogId,int addressId, int unitId, String unitName, Callback call) {
+    public static void saveImmune(int dogId, int addressId, int unitId, String unitName, Callback call) {
         Map<String, String> headers = new HashMap<>();
         headers.put("Authorization", BaseApplication.getInstance().getUserInfo().getAuthorization());
 
@@ -258,7 +258,7 @@ public class SendRequest {
      *
      * @param call
      */
-    public static void getAddressList(String communityName, int provinceId, int cityId, int areaId,int pageNum,int pageSize, Callback call) {
+    public static void getAddressList(String communityName, int provinceId, int cityId, int areaId, int pageNum, int pageSize, Callback call) {
         Map<String, String> headers = new HashMap<>();
         headers.put("Authorization", BaseApplication.getInstance().getUserInfo().getAuthorization());
 
@@ -341,14 +341,18 @@ public class SendRequest {
     /**
      * 犬只过户-狗证过户列表
      *
+     * @param status   办理状态 0 是未审核的 1 成功的 2 是失败的
      * @param pageNum
      * @param pageSize
      * @param call
      */
-    public static void saveCancelDogInfo(int pageNum, int pageSize, Callback call) {
+    public static void transferDogList(int status, int pageNum, int pageSize, Callback call) {
         Map<String, String> headers = new HashMap<>();
         headers.put("Authorization", BaseApplication.getInstance().getUserInfo().getAuthorization());
         Map<String, String> map = new HashMap<>();
+        if (status >= 0) {
+            map.put("status", String.valueOf(status));
+        }
         map.put("pageNum", String.valueOf(pageNum));
         map.put("pageSize", String.valueOf(pageSize));
         OkHttpUtils.post().headers(headers).params(map).url(APIUrls.transferDogList).build().execute(call);
@@ -363,14 +367,29 @@ public class SendRequest {
      * @param lincenceId
      * @param call
      */
-    public static void saveTransferDog(int lincenceId, String userPhone, String userName, Callback call) {
+    public static void saveTransferDog(int lincenceId, String userName, String userPhone, Callback call) {
         Map<String, String> headers = new HashMap<>();
         headers.put("Authorization", BaseApplication.getInstance().getUserInfo().getAuthorization());
         Map<String, String> map = new HashMap<>();
         map.put("lincenceId", String.valueOf(lincenceId));
-        map.put("userPhone", userPhone);
         map.put("userName", userName);
+        map.put("userPhone", userPhone);
         OkHttpUtils.post().headers(headers).params(map).url(APIUrls.saveTransferDog).build().execute(call);
+
+    }
+
+    /**
+     * 犬只过户-过户详情
+     *
+     * @param id
+     * @param call
+     */
+    public static void getTransferDog(int id, Callback call) {
+        Map<String, String> headers = new HashMap<>();
+        headers.put("Authorization", BaseApplication.getInstance().getUserInfo().getAuthorization());
+        Map<String, String> map = new HashMap<>();
+        map.put("id", String.valueOf(id));
+        OkHttpUtils.post().headers(headers).params(map).url(APIUrls.getTransferDog).build().execute(call);
 
     }
 
