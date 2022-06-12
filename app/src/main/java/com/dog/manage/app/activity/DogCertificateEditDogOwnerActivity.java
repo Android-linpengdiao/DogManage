@@ -1102,6 +1102,7 @@ public class DogCertificateEditDogOwnerActivity extends BaseActivity {
                     @Override
                     public void onResponse(ResultClient<DogDetail> response, int id) {
                         if (response.isSuccess() && response.getData() != null) {
+                            response.getData().setLeaveId(leaveId);
                             Bundle bundle = new Bundle();
                             bundle.putSerializable("dogDetail", response.getData());
                             openActivity(DogAdoptionSubmitActivity.class,bundle);

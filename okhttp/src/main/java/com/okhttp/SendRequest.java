@@ -411,6 +411,27 @@ public class SendRequest {
 
     }
 
+    /**
+     * 犬只注销-犬只注销列表
+     *
+     * @param status
+     * @param pageNum
+     * @param pageSize
+     * @param call
+     */
+    public static void getCancelDogList(int status, int pageNum, int pageSize, Callback call) {
+        Map<String, String> headers = new HashMap<>();
+        headers.put("Authorization", BaseApplication.getInstance().getUserInfo().getAuthorization());
+        Map<String, String> map = new HashMap<>();
+        if (status >= 0) {
+            map.put("status", String.valueOf(status));
+        }
+        map.put("pageNum", String.valueOf(pageNum));
+        map.put("pageSize", String.valueOf(pageSize));
+        OkHttpUtils.post().headers(headers).params(map).url(APIUrls.getCancelDogList).build().execute(call);
+
+    }
+
     // ==================================== 犬只注销 结束=============================================
 
 
@@ -689,6 +710,7 @@ public class SendRequest {
 
     /**
      * 犬只领养-保存
+     *
      * @param map
      * @param call
      */
@@ -696,6 +718,19 @@ public class SendRequest {
         Map<String, String> headers = new HashMap<>();
         headers.put("Authorization", BaseApplication.getInstance().getUserInfo().getAuthorization());
         OkHttpUtils.post().headers(headers).params(map).url(APIUrls.saveLeaveDogUser).build().execute(call);
+
+    }
+
+    /**
+     * 犬只领养 -提交申请
+     *
+     * @param map
+     * @param call
+     */
+    public static void saveLeaveDog(Map<String, String> map, Callback call) {
+        Map<String, String> headers = new HashMap<>();
+        headers.put("Authorization", BaseApplication.getInstance().getUserInfo().getAuthorization());
+        OkHttpUtils.post().headers(headers).params(map).url(APIUrls.saveLeaveDog).build().execute(call);
 
     }
 

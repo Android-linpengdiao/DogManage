@@ -95,6 +95,8 @@ public class APIUrls {
      */
     //犬证年审-选择我的犬只详情
     public final static String saveCancelDogInfo = URL_DOMAIN + "/user/canelDog/saveCancelDogInfo";
+    //犬只注销-犬只注销列表
+    public final static String getCancelDogList = URL_DOMAIN + "/user/canelDog/getCancelDogList";
 
 
 
@@ -156,6 +158,8 @@ public class APIUrls {
     public final static String getLeaveDogDetail = URL_DOMAIN + "/user/dog/getLeaveDogDetail";
     //犬只领养-保存
     public final static String saveLeaveDogUser = URL_DOMAIN + "/user/saveLeaveDogUser";
+    //犬只领养 -提交申请
+    public final static String saveLeaveDog = URL_DOMAIN + "/user/saveLeaveDog";
 
 
     /**

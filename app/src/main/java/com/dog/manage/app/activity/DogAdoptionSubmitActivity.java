@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
 
+import com.base.BaseData;
 import com.base.utils.GlideLoader;
 import com.base.utils.LogUtil;
 import com.base.utils.ToastUtils;
@@ -53,40 +54,62 @@ public class DogAdoptionSubmitActivity extends BaseActivity {
             }
 
         }
+        binding.selectedView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                binding.selectedView.setSelected(!binding.selectedView.isSelected());
+            }
+        });
 
 
     }
 
+    /**
+     * addressId
+     * integer
+     * 地址id
+     * leaveId
+     * integer
+     * 领养id
+     *
+     * @param view
+     */
     public void onClickConfirm(View view) {
+        if (!binding.selectedView.isSelected()) {
+            ToastUtils.showShort(getApplicationContext(), "请同意领养承诺书");
+            return;
+        }
         if (dogDetail == null) {
             ToastUtils.showShort(getApplicationContext(), "提交申请失败");
             return;
         }
         Map<String, String> paramsMap = new HashMap<>();
-        SendRequest.CertificateExamined(getUserInfo().getAuthorization(), paramsMap,
-                new GenericsCallback<ResultClient<DogUser>>(new JsonGenericsSerializator()) {
-                    @Override
-                    public void onError(Call call, Exception e, int id) {
+        paramsMap.put("addressId", String.valueOf(dogDetail.getAddressId()));
+        paramsMap.put("leaveId", String.valueOf(dogDetail.getLeaveId()));
+        SendRequest.saveLeaveDog(paramsMap, new GenericsCallback<BaseData>(new JsonGenericsSerializator()) {
+            @Override
+            public void onError(Call call, Exception e, int id) {
 
-                    }
+            }
 
-                    @Override
-                    public void onResponse(ResultClient<DogUser> response, int id) {
-                        if (response.isSuccess() && response.getData() != null) {
-                            Bundle bundle = new Bundle();
-                            bundle.putInt("type", SubmitSuccessActivity.type_adoption);
-                            openActivity(SubmitSuccessActivity.class, bundle);
+            @Override
+            public void onResponse(BaseData response, int id) {
+                if (response.isSuccess()) {
+                    Bundle bundle = new Bundle();
+                    bundle.putInt("type", SubmitSuccessActivity.type_adoption);
+                    openActivity(SubmitSuccessActivity.class, bundle);
 
-                            finishActivity(DogManageWorkflowActivity.class);
-                            finishActivity(DogAdoptionActivity.class);
-                            finishActivity(DogDetailsThemeActivity.class);
-                            finishActivity(DogCertificateEditDogOwnerActivity.class);
-                            finish();
+                    finishActivity(DogManageWorkflowActivity.class);
+                    finishActivity(DogAdoptionActivity.class);
+                    finishActivity(DogDetailsThemeActivity.class);
+                    finishActivity(DogCertificateEditDogOwnerActivity.class);
+                    finish();
 
-                        } else {
-                            ToastUtils.showShort(getApplicationContext(), response.getMessage());
-                        }
-                    }
-                });
+                } else {
+                    ToastUtils.showShort(getApplicationContext(), response.getMsg());
+                }
+            }
+        });
+
     }
 }

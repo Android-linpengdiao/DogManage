@@ -28,6 +28,7 @@ import com.dog.manage.app.adapter.CertificateRecordAdapter;
 import com.dog.manage.app.adapter.PunishRecordAdapter;
 import com.dog.manage.app.databinding.FragmentRecordBinding;
 import com.dog.manage.app.model.PunishRecord;
+import com.dog.manage.app.model.RecordAdoption;
 import com.dog.manage.app.model.RecordImmune;
 import com.okhttp.Pager;
 import com.okhttp.ResultClient;
@@ -166,7 +167,6 @@ public class RecordFragment extends BaseFragment {
 
                     }
                 });
-                adoptionRecordAdapter.refreshData(Arrays.asList("", "", "", "", "", "", "", "", ""));
 
             } else if (type == RecordActivity.type_logout) {
                 certificateRecordAdapter = new CertificateRecordAdapter(getActivity());
@@ -200,6 +200,7 @@ public class RecordFragment extends BaseFragment {
     }
 
     private Pager<RecordImmune> transferPager = new Pager<>();
+    private Pager<RecordAdoption> adoptionPager = new Pager<>();
 
     private void setRefresh() {
         binding.refreshLayout.setOnRefreshListener(new OnRefreshListener() {
@@ -215,17 +216,26 @@ public class RecordFragment extends BaseFragment {
                     transferPager = new Pager<>();
                     transferDogList(true);
 
+                } else if (type == RecordActivity.type_adoption) {
+                    adoptionPager = new Pager<>();
+                    getCancelDogList(true);
+
                 }
             }
         });
+
         if (type == RecordActivity.type_certificate || type == RecordActivity.type_immune) {
             binding.refreshLayout.setEnableLoadMore(false);
+
         } else if (type == RecordActivity.type_transfer) {
             binding.refreshLayout.setOnLoadMoreListener(new OnLoadMoreListener() {
                 @Override
                 public void onLoadMore(@NonNull @NotNull RefreshLayout refreshLayout) {
                     if (type == RecordActivity.type_transfer) {
                         transferDogList(false);
+
+                    } else if (type == RecordActivity.type_adoption) {
+                        getCancelDogList(false);
 
                     }
                 }
@@ -301,7 +311,7 @@ public class RecordFragment extends BaseFragment {
      * 犬只过户-狗证过户列表
      */
     public void transferDogList(boolean isRefresh) {
-        SendRequest.transferDogList(id,transferPager.getCursor(), transferPager.getSize(),
+        SendRequest.transferDogList(id, transferPager.getCursor(), transferPager.getSize(),
                 new GenericsCallback<Pager<RecordImmune>>(new JsonGenericsSerializator()) {
 
                     @Override
@@ -340,6 +350,59 @@ public class RecordFragment extends BaseFragment {
                                 binding.refreshLayout.setNoMoreData(true);
                             }
                             binding.emptyView.setVisibility(certificateRecordAdapter.getList().size() > 0 ? View.GONE : View.VISIBLE);
+                            binding.emptyView.setText("暂无内容～");
+                        } else {
+                            ToastUtils.showShort(getActivity(), response.getMessage());
+                        }
+                    }
+                });
+
+    }
+
+
+    /**
+     * 犬只过户-狗证过户列表
+     */
+    public void getCancelDogList(boolean isRefresh) {
+        SendRequest.getCancelDogList(id, adoptionPager.getCursor(), adoptionPager.getSize(),
+                new GenericsCallback<Pager<RecordAdoption>>(new JsonGenericsSerializator()) {
+
+                    @Override
+                    public void onAfter(int id) {
+                        super.onAfter(id);
+                        if (isRefresh) {
+                            binding.refreshLayout.finishRefresh();
+                        } else {
+                            binding.refreshLayout.finishLoadMore();
+                        }
+                    }
+
+                    @Override
+                    public void onError(Call call, Exception e, int id) {
+                        if (isRefresh) {
+                            binding.refreshLayout.finishRefresh(false);
+                        } else {
+                            binding.refreshLayout.finishLoadMore(false);
+                        }
+                        ToastUtils.showShort(getActivity(), "获取信息失败");
+                    }
+
+                    @Override
+                    public void onResponse(Pager<RecordAdoption> response, int id) {
+                        adoptionPager = response;
+                        if (response != null && response.getRows() != null) {
+                            if (isRefresh) {
+                                adoptionRecordAdapter.refreshData(response.getRows());
+                            } else {
+                                adoptionRecordAdapter.loadMoreData(response.getRows());
+                                if (adoptionRecordAdapter.getList().size() < response.getTotal()) {
+                                    adoptionPager.setCursor(adoptionPager.getCursor() + 1);
+                                }
+                            }
+                            if (adoptionRecordAdapter.getList().size() == response.getTotal()) {
+                                binding.refreshLayout.setNoMoreData(true);
+                            }
+                            binding.emptyView.setVisibility(adoptionRecordAdapter.getList().size() > 0 ? View.GONE : View.VISIBLE);
                             binding.emptyView.setText("暂无内容～");
                         } else {
                             ToastUtils.showShort(getActivity(), response.getMessage());

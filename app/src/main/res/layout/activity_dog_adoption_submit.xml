@@ -242,7 +242,7 @@
             android:orientation="horizontal">
 
             <ImageView
-                android:id="@+id/checkView"
+                android:id="@+id/selectedView"
                 android:layout_width="@dimen/dp_42"
                 android:layout_height="@dimen/dp_42"
                 android:padding="@dimen/dp_10"

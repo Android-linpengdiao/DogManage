@@ -13,8 +13,9 @@ import com.base.utils.GlideLoader;
 import com.base.view.OnClickListener;
 import com.dog.manage.app.R;
 import com.dog.manage.app.databinding.ItemAdoptionRecordBinding;
+import com.dog.manage.app.model.RecordAdoption;
 
-public class AdoptionRecordAdapter extends BaseRecyclerAdapter<String, ItemAdoptionRecordBinding> {
+public class AdoptionRecordAdapter extends BaseRecyclerAdapter<RecordAdoption, ItemAdoptionRecordBinding> {
 
 
     private OnClickListener onClickListener;
@@ -44,7 +45,7 @@ public class AdoptionRecordAdapter extends BaseRecyclerAdapter<String, ItemAdopt
     }
 
     @Override
-    protected void onBindItem(ItemAdoptionRecordBinding binding, String dataBean, int position) {
+    protected void onBindItem(ItemAdoptionRecordBinding binding, RecordAdoption dataBean, int position) {
         GlideLoader.LoderImage(mContext, "https://pics7.baidu.com/feed/6c224f4a20a446236fb6db0ac3bf5d040df3d785.jpeg", binding.coverView,8);
         binding.bottomView.setVisibility(position == 0 ? View.GONE : View.VISIBLE);
         if (position == 1) {

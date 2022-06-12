@@ -97,6 +97,9 @@ public class DogDetail implements Serializable {
     private Integer immuneStatus = 0;//免疫状态 0未免疫 1 已免疫
     private String immuneExprie;//免疫到期时间
 
+    private Integer addressId;//地址id
+    private Integer leaveId;//领养犬只id
+
     @NoArgsConstructor
     @Data
     public static class ParamsBean {

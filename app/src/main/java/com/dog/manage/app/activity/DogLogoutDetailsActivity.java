@@ -3,6 +3,7 @@ package com.dog.manage.app.activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RadioGroup;
@@ -18,6 +19,7 @@ import com.base.utils.LogUtil;
 import com.base.utils.PermissionUtils;
 import com.base.utils.ToastUtils;
 import com.base.view.OnClickListener;
+import com.dog.manage.app.Config;
 import com.dog.manage.app.R;
 import com.dog.manage.app.databinding.ActivityDogLogoutDetailsBinding;
 import com.dog.manage.app.media.MediaFile;
@@ -25,8 +27,13 @@ import com.dog.manage.app.media.MediaSelectActivity;
 import com.dog.manage.app.media.MediaUtils;
 import com.dog.manage.app.model.Dog;
 import com.dog.manage.app.model.DogDetail;
+import com.dog.manage.app.utils.UploadFileManager;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import com.obs.services.model.ProgressListener;
+import com.obs.services.model.ProgressStatus;
+import com.obs.services.model.PutObjectRequest;
+import com.obs.services.model.PutObjectResult;
 import com.okhttp.ResultClient;
 import com.okhttp.SendRequest;
 import com.okhttp.callbacks.GenericsCallback;
@@ -100,7 +107,19 @@ public class DogLogoutDetailsActivity extends BaseActivity {
 
     }
 
+
+    //=====================================     提交   ==============================================
+
     private void initSubmitView() {
+
+        picture1 = "http://dogmanage.file.obs.cn-north-4.myhuaweicloud.com/828adcb2-c53c-446f-ae04-4f1f653a7561.webp";
+        picture2 = "http://dogmanage.file.obs.cn-north-4.myhuaweicloud.com/828adcb2-c53c-446f-ae04-4f1f653a7561.webp";
+        picture3 = "http://dogmanage.file.obs.cn-north-4.myhuaweicloud.com/828adcb2-c53c-446f-ae04-4f1f653a7561.webp";
+        GlideLoader.LoderImage(DogLogoutDetailsActivity.this, "http://dogmanage.file.obs.cn-north-4.myhuaweicloud.com/828adcb2-c53c-446f-ae04-4f1f653a7561.webp", binding.pictureView1, 6);
+        GlideLoader.LoderImage(DogLogoutDetailsActivity.this, "http://dogmanage.file.obs.cn-north-4.myhuaweicloud.com/828adcb2-c53c-446f-ae04-4f1f653a7561.webp", binding.pictureView2, 6);
+        GlideLoader.LoderImage(DogLogoutDetailsActivity.this, "http://dogmanage.file.obs.cn-north-4.myhuaweicloud.com/828adcb2-c53c-446f-ae04-4f1f653a7561.webp", binding.pictureView3, 6);
+
+
         binding.titleView.binding.itemTitle.setText("犬只注销");
         binding.descriptionHintView.setText("简要说明(非必填)");
         binding.dogCertificateView.setItemArrowVisible(true);
@@ -215,6 +234,7 @@ public class DogLogoutDetailsActivity extends BaseActivity {
             ToastUtils.showShort(getApplicationContext(), "请选择犬只");
             return;
         }
+
         paramsMap.put("dogLicenceId", String.valueOf(dogDetail.getLincenceId()));
         paramsMap.put("dogLicenceNum", String.valueOf(dogDetail.getIdNum()));
 
@@ -225,9 +245,17 @@ public class DogLogoutDetailsActivity extends BaseActivity {
                 return;
             }
             paramsMap.put("cancelImageUrl", GsonUtils.toJson(Arrays.asList(picture1, picture2, picture3)));
+
+            String description = binding.descriptionView.getText().toString();
+            if (!CommonUtil.isBlank(description)) {
+                paramsMap.put("cancelReason", description);
+            }
             paramsMap.put("cancelType", String.valueOf(1));
 
         } else if (checkedRadioButtonId == R.id.radioButton1) {//犬只丢失
+
+            paramsMap.put("cancelImageUrl", GsonUtils.toJson(Arrays.asList(picture1)));
+
             String description = binding.descriptionView.getText().toString();
             if (CommonUtil.isBlank(description)) {
                 ToastUtils.showShort(getApplicationContext(), "请输入简要说明");
@@ -238,41 +266,40 @@ public class DogLogoutDetailsActivity extends BaseActivity {
 
         }
 
-        SendRequest.saveCancelDogInfo(paramsMap,
-                new GenericsCallback<ResultClient<BaseData>>(new JsonGenericsSerializator()) {
+        SendRequest.saveCancelDogInfo(paramsMap, new GenericsCallback<BaseData>(new JsonGenericsSerializator()) {
 
-                    @Override
-                    public void onBefore(Request request, int id) {
-                        super.onBefore(request, id);
-                        LoadingManager.showLoadingDialog(DogLogoutDetailsActivity.this);
-                    }
+            @Override
+            public void onBefore(Request request, int id) {
+                super.onBefore(request, id);
+                LoadingManager.showLoadingDialog(DogLogoutDetailsActivity.this);
+            }
 
-                    @Override
-                    public void onAfter(int id) {
-                        super.onAfter(id);
-                        LoadingManager.hideLoadingDialog(DogLogoutDetailsActivity.this);
-                    }
+            @Override
+            public void onAfter(int id) {
+                super.onAfter(id);
+                LoadingManager.hideLoadingDialog(DogLogoutDetailsActivity.this);
+            }
 
-                    @Override
-                    public void onError(Call call, Exception e, int id) {
+            @Override
+            public void onError(Call call, Exception e, int id) {
 
-                    }
+            }
 
-                    @Override
-                    public void onResponse(ResultClient<BaseData> response, int id) {
-                        if (response.isSuccess() && response.getData() != null) {
-                            Bundle bundle = new Bundle();
-                            bundle.putInt("type", SubmitSuccessActivity.type_logout);
-                            openActivity(SubmitSuccessActivity.class, bundle);
-                            finishActivity(DogManageWorkflowActivity.class);
-                            finish();
+            @Override
+            public void onResponse(BaseData response, int id) {
+                if (response.isSuccess()) {
+                    Bundle bundle = new Bundle();
+                    bundle.putInt("type", SubmitSuccessActivity.type_logout);
+                    openActivity(SubmitSuccessActivity.class, bundle);
+                    finishActivity(DogManageWorkflowActivity.class);
+                    finish();
 
-                        } else {
-                            ToastUtils.showShort(getApplicationContext(), !CommonUtil.isBlank(response.getMsg()) ? response.getMsg() : "提交失败");
+                } else {
+                    ToastUtils.showShort(getApplicationContext(), !CommonUtil.isBlank(response.getMsg()) ? response.getMsg() : "提交失败");
 
-                        }
-                    }
-                });
+                }
+            }
+        });
     }
 
 
@@ -365,23 +392,31 @@ public class DogLogoutDetailsActivity extends BaseActivity {
 
                                     @Override
                                     public void onSuccess(File file) {
-                                        String url = "https://img0.baidu.com/it/u=3282676189,411395798&fm=253&fmt=auto&app=138&f=JPEG?w=564&h=500";
-                                        if (requestCode == request_Image1) {
-                                            picture1 = file.getAbsolutePath();
-                                            picture1 = url;
-                                            GlideLoader.LoderImage(DogLogoutDetailsActivity.this, picture1, binding.pictureView1, 6);
 
-                                        } else if (requestCode == request_Image2) {
-                                            picture2 = file.getAbsolutePath();
-                                            picture2 = url;
-                                            GlideLoader.LoderImage(DogLogoutDetailsActivity.this, picture2, binding.pictureView2, 6);
+                                        new Thread(new Runnable() {
+                                            @Override
+                                            public void run() {
+                                                uploadFile(requestCode, file.getAbsolutePath());
+                                            }
+                                        }).start();
 
-                                        } else if (requestCode == request_Image3) {
-                                            picture3 = file.getAbsolutePath();
-                                            picture3 = url;
-                                            GlideLoader.LoderImage(DogLogoutDetailsActivity.this, picture3, binding.pictureView3, 6);
-
-                                        }
+//                                        String url = "https://img0.baidu.com/it/u=3282676189,411395798&fm=253&fmt=auto&app=138&f=JPEG?w=564&h=500";
+//                                        if (requestCode == request_Image1) {
+//                                            picture1 = file.getAbsolutePath();
+//                                            picture1 = url;
+//                                            GlideLoader.LoderImage(DogLogoutDetailsActivity.this, picture1, binding.pictureView1, 6);
+//
+//                                        } else if (requestCode == request_Image2) {
+//                                            picture2 = file.getAbsolutePath();
+//                                            picture2 = url;
+//                                            GlideLoader.LoderImage(DogLogoutDetailsActivity.this, picture2, binding.pictureView2, 6);
+//
+//                                        } else if (requestCode == request_Image3) {
+//                                            picture3 = file.getAbsolutePath();
+//                                            picture3 = url;
+//                                            GlideLoader.LoderImage(DogLogoutDetailsActivity.this, picture3, binding.pictureView3, 6);
+//
+//                                        }
                                     }
 
                                     @Override
@@ -395,4 +430,59 @@ public class DogLogoutDetailsActivity extends BaseActivity {
             e.getMessage();
         }
     }
+
+    /**
+     * 华为云 上传文件
+     *
+     * @param requestCode
+     * @param filePath
+     */
+    private void uploadFile(int requestCode, String filePath) {
+        Log.i(TAG, "uploadFile: filePath = " + filePath);
+        String fileName = filePath.substring(filePath.lastIndexOf("/") + 1);
+        Log.i(TAG, "uploadFile: fileName = " + fileName);
+        PutObjectRequest request = new PutObjectRequest();
+        request.setBucketName(Config.huaweiBucketName);
+        request.setObjectKey(fileName);
+        request.setFile(new File(filePath));
+        request.setProgressListener(new ProgressListener() {
+            @Override
+            public void progressChanged(ProgressStatus status) {
+                // 获取上传平均速率
+                Log.i(TAG, "uploadFile: AverageSpeed:" + status.getAverageSpeed());
+                // 获取上传进度百分比
+                Log.i(TAG, "uploadFile: TransferPercentage:" + status.getTransferPercentage());
+            }
+        });
+        //每上传1MB数据反馈上传进度
+        request.setProgressInterval(1024 * 1024L);
+        PutObjectResult result = UploadFileManager.getInstance().getObsClient().putObject(request);
+        Log.i(TAG, "uploadFile: getObjectUrl = " + result.getObjectUrl());
+        String url = "http://" + Config.huaweiBucketName + "." + Config.huaweiCloudEndPoint + "/" + fileName;
+        Log.i(TAG, "uploadFile: url = " + url);
+
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+
+                if (requestCode == request_Image1) {
+                    picture1 = url;
+                    GlideLoader.LoderImage(DogLogoutDetailsActivity.this, picture1, binding.pictureView1, 6);
+
+                } else if (requestCode == request_Image2) {
+                    picture2 = url;
+                    GlideLoader.LoderImage(DogLogoutDetailsActivity.this, picture2, binding.pictureView2, 6);
+
+                } else if (requestCode == request_Image3) {
+                    picture3 = url;
+                    GlideLoader.LoderImage(DogLogoutDetailsActivity.this, picture3, binding.pictureView3, 6);
+
+                }
+
+            }
+        });
+
+
+    }
+
 }

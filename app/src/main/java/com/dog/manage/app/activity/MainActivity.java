@@ -71,6 +71,14 @@ public class MainActivity extends BaseActivity {
 
     }
 
+    /**
+     * http://dogmanage.file.obs.cn-north-4.myhuaweicloud.com/828adcb2-c53c-446f-ae04-4f1f653a7561.webp
+     * http://dogmanage.file.obs.cn-north-4.myhuaweicloud.com/ef02820b-5d40-457d-97e2-adb29ccbecba.jpg
+     *http://dogmanage.file.obs.cn-north-4.myhuaweicloud.com/aaef08a2-e4ee-4802-9875-14755e6b4af8.webp
+     *
+     * http://dogmanage.file.obs.cn-north-4.myhuaweicloud.com/54577243b9b38770.jpg
+     */
+
     @Override
     protected void onResume() {
         if (checkUserRank(getApplicationContext())) {
