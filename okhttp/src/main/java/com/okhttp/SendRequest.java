@@ -414,7 +414,7 @@ public class SendRequest {
     /**
      * 犬只注销-犬只注销列表
      *
-     * @param status
+     * @param status 办理状态 null （不传） 全部 0 未办理 1 已办理 2 驳回
      * @param pageNum
      * @param pageSize
      * @param call

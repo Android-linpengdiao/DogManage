@@ -116,9 +116,9 @@ public class CertificateRecordAdapter extends BaseRecyclerAdapter<RecordImmune, 
             binding.titleView.setText("犬只过户");
             binding.contentView.setText(dataBean.getDogType() + "-" + dataBean.getDogAge() + "岁3个月");
             binding.createTimeView.setText(dataBean.getCreatedTime());
-            binding.descView.setText("犬证:"+dataBean.getDogLicenceNum());
-            binding.oldUserNameView.setText("原犬主:"+dataBean.getOldUserName());
-            binding.newUserNameView.setText("新犬主:"+dataBean.getNewUserName());
+            binding.descView.setText("犬证:" + dataBean.getDogLicenceNum());
+            binding.oldUserNameView.setText("原犬主:" + dataBean.getOldUserName());
+            binding.newUserNameView.setText("新犬主:" + dataBean.getNewUserName());
             if (dataBean.getStatus() != null) {
                 if (dataBean.getStatus() == 0) {
                     binding.checkStatusView.setText("审核中");
@@ -142,24 +142,33 @@ public class CertificateRecordAdapter extends BaseRecyclerAdapter<RecordImmune, 
             }
 
         } else if (type == RecordActivity.type_logout) {
+            //status 办理状态 null （不传） 全部 0 未办理 1 已办理 2 驳回
             binding.titleView.setText("犬只注销");
             binding.bottomView.setVisibility(View.GONE);
-            binding.contentView.setText("萨摩耶-2岁3个月");
             binding.contentView.setTextColor(Color.parseColor("#999999"));
-            if (position == 1) {
-                binding.checkStatusView.setText("审核通过");
-                binding.checkStatusView.setBackgroundResource(R.drawable.tag_g);
-                binding.detailsStatusView.setVisibility(View.GONE);
+            binding.contentView.setText(dataBean.getDogType() + "-" + dataBean.getDogAge() + "岁3个月");
+            binding.createTimeView.setText(dataBean.getCreatedTime());
+            binding.descView.setText("犬证:" + dataBean.getDogLicenceNum());
+            if (dataBean.getStatus() != null) {
+                if (dataBean.getStatus() == 0) {
+                    binding.checkStatusView.setText("审核中");
+                    binding.detailsStatusView.setVisibility(View.GONE);
 
-            } else if (position == 2) {
-                binding.checkStatusView.setText("审核拒绝");
-                binding.checkStatusView.setBackgroundResource(R.drawable.tag_r);
-                binding.detailsStatusView.setVisibility(View.VISIBLE);
+                } else if (dataBean.getStatus() == 1) {
+                    binding.checkStatusView.setText("审核通过");
+                    binding.checkStatusView.setBackgroundResource(R.drawable.tag_g);
+                    binding.detailsStatusView.setVisibility(View.GONE);
 
-            } else {
-                binding.checkStatusView.setText("审核中");
-                binding.detailsStatusView.setVisibility(View.GONE);
+                } else if (dataBean.getStatus() == 2) {
+                    binding.checkStatusView.setText("审核拒绝");
+                    binding.checkStatusView.setBackgroundResource(R.drawable.tag_r);
+                    binding.detailsStatusView.setVisibility(View.VISIBLE);
 
+                } else {
+                    binding.checkStatusView.setText("审核中");
+                    binding.detailsStatusView.setVisibility(View.GONE);
+
+                }
             }
 
         }
@@ -174,7 +183,10 @@ public class CertificateRecordAdapter extends BaseRecyclerAdapter<RecordImmune, 
                     } else if (type == RecordActivity.type_immune) {
                         onClickListener.onClick(view, dataBean);
 
-                    }  else if (type == RecordActivity.type_transfer) {
+                    } else if (type == RecordActivity.type_transfer) {
+                        onClickListener.onClick(view, dataBean);
+
+                    }else if (type == RecordActivity.type_logout) {
                         onClickListener.onClick(view, dataBean);
 
                     } else {

@@ -27,6 +27,7 @@ import com.dog.manage.app.media.MediaSelectActivity;
 import com.dog.manage.app.media.MediaUtils;
 import com.dog.manage.app.model.Dog;
 import com.dog.manage.app.model.DogDetail;
+import com.dog.manage.app.model.RecordImmune;
 import com.dog.manage.app.utils.UploadFileManager;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -60,11 +61,11 @@ public class DogLogoutDetailsActivity extends BaseActivity {
     public static final int type_submit = 0;//0-提交注销
     public static final int type_details = 1;//1-注销详情
     private int type = 0;
-    private int auditType = 0;//1-审核通过 2-审核拒绝
 
     private List<Dog> dogList = new ArrayList<>();
 
     private Dog dogDetail;
+    private RecordImmune recordImmune;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,8 +74,6 @@ public class DogLogoutDetailsActivity extends BaseActivity {
         addActivity(this);
 
         type = getIntent().getIntExtra("type", 0);
-        auditType = getIntent().getIntExtra("auditType", 0);
-        binding.auditStatusView.setText(auditType == 1 ? "审核通过" : auditType == 2 ? "审核拒绝" : "审核中");
 
         if (type == type_submit) {
             initSubmitView();
@@ -89,21 +88,46 @@ public class DogLogoutDetailsActivity extends BaseActivity {
     private void initDetailsView() {
         binding.dogInfoView.setVisibility(View.VISIBLE);
         binding.acceptUnitsHintView.setVisibility(View.VISIBLE);
-        binding.auditReasonView.setVisibility(auditType == 2 ? View.VISIBLE : View.GONE);
-        binding.confirmView.setVisibility(auditType == 2 ? View.VISIBLE : View.GONE);
 
-        binding.radioButton1.setTextColor(getResources().getColor(R.color.black));
-        binding.radioButton1.getLayoutParams().width = ViewGroup.LayoutParams.WRAP_CONTENT;
-        binding.radioButton1.setPadding(0, 0, 0, 0);
-        binding.radioButton1.setBackgroundColor(getResources().getColor(R.color.transparent));
-        binding.radioButton0.setVisibility(View.GONE);
+        recordImmune = (RecordImmune) getIntent().getSerializableExtra("recordImmune");
+        if (recordImmune != null) {
+            //status 办理状态 null （不传） 全部 0 未办理 1 已办理 2 驳回
+            binding.auditReasonView.setVisibility(recordImmune.getStatus() == 2 ? View.VISIBLE : View.GONE);
+            binding.confirmView.setVisibility(recordImmune.getStatus() == 2 ? View.VISIBLE : View.GONE);
+            binding.auditStatusView.setText(recordImmune.getStatus() == 1 ? "审核通过" : recordImmune.getStatus() == 2 ? "审核拒绝" : "审核中");
 
-        binding.descriptionView.setEnabled(false);
-        binding.descriptionView.setText("丢失了");
-        GlideLoader.LoderImage(DogLogoutDetailsActivity.this, "https://pics7.baidu.com/feed/6c224f4a20a446236fb6db0ac3bf5d040df3d785.jpeg", binding.pictureView1, 6);
-        GlideLoader.LoderImage(DogLogoutDetailsActivity.this, "https://pics7.baidu.com/feed/6c224f4a20a446236fb6db0ac3bf5d040df3d785.jpeg", binding.pictureView2, 6);
-        GlideLoader.LoderImage(DogLogoutDetailsActivity.this, "https://pics7.baidu.com/feed/6c224f4a20a446236fb6db0ac3bf5d040df3d785.jpeg", binding.pictureView3, 6);
+            //cancelType 办理类型 1 死亡 2 丢失
+            if (recordImmune.getCancelType() == 1) {
+                binding.radioButton1.setVisibility(View.GONE);
+            } else if (recordImmune.getCancelType() == 1) {
+                binding.radioButton1.setTextColor(getResources().getColor(R.color.black));
+                binding.radioButton1.getLayoutParams().width = ViewGroup.LayoutParams.WRAP_CONTENT;
+                binding.radioButton1.setPadding(0, 0, 0, 0);
+                binding.radioButton1.setBackgroundColor(getResources().getColor(R.color.transparent));
+                binding.radioButton0.setVisibility(View.GONE);
+            }
 
+            binding.descriptionView.setEnabled(false);
+            binding.descriptionView.setText(recordImmune.getCancelReason());
+
+            try {
+                //犬只照片
+                List<String> idPhotos = new Gson().fromJson(recordImmune.getCancelImageUrl(), new TypeToken<List<String>>() {
+                }.getType());
+                if (idPhotos.size() > 0) {
+                    GlideLoader.LoderImage(DogLogoutDetailsActivity.this, idPhotos.size() > 0 ? idPhotos.get(0) : "", binding.pictureView1, 6);
+                }
+                if (idPhotos.size() > 1) {
+                    GlideLoader.LoderImage(DogLogoutDetailsActivity.this, idPhotos.size() > 1 ? idPhotos.get(1) : "", binding.pictureView2, 6);
+                }
+                if (idPhotos.size() > 2) {
+                    GlideLoader.LoderImage(DogLogoutDetailsActivity.this, idPhotos.size() > 2 ? idPhotos.get(2) : "", binding.pictureView3, 6);
+                }
+            } catch (Exception e) {
+                e.getMessage();
+            }
+
+        }
 
     }
 

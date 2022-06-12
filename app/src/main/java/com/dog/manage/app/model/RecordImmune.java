@@ -1,11 +1,13 @@
 package com.dog.manage.app.model;
 
+import java.io.Serializable;
+
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @NoArgsConstructor
 @Data
-public class RecordImmune {
+public class RecordImmune implements Serializable {
 
     //犬证办理
     /**
@@ -86,5 +88,10 @@ public class RecordImmune {
     private Integer status;
     private String applyTime;
 //    private Integer dogAge;
+
+    //犬只注销
+    private Integer cancelType;
+    private String cancelReason;
+    private String cancelImageUrl;
 
 }
