@@ -233,7 +233,7 @@
 
         <meta-data
             android:name="com.amap.api.v2.apikey"
-            android:value="fa9a7de3c68d0ea7645e32f13c924506" /> <!-- 闪验 -->
+            android:value="e5395270042cc72930fba59d3745fc76" /> <!-- 闪验 -->
         <activity
             android:name="com.chuanglan.shanyan_sdk.view.CmccLoginActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"

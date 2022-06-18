@@ -68,10 +68,10 @@ public class RecordActivity extends BaseActivity {
         } else if (type == type_adoption) {
             binding.titleView.binding.itemTitle.setText("领养记录");
             binding.tabLayout.changedTableUI(R.drawable.tab_indicator_l, Color.parseColor("#4DACEF"), Color.parseColor("#999999"));
-            //办理状态 null （不传） 全部 0 未办理 1 已办理 2 驳回
-            mainPagerAdapter.addFragment("全部", RecordFragment.getInstance(type, -1));
-            mainPagerAdapter.addFragment("待审核", RecordFragment.getInstance(type, 0));
-            mainPagerAdapter.addFragment("待支付", RecordFragment.getInstance(type, 1));
+            //办理状态 1 待审核 0 待支付 2 领养完成 3 拒绝 4 全部
+            mainPagerAdapter.addFragment("全部", RecordFragment.getInstance(type, 4));
+            mainPagerAdapter.addFragment("待审核", RecordFragment.getInstance(type, 1));
+            mainPagerAdapter.addFragment("待支付", RecordFragment.getInstance(type, 0));
             mainPagerAdapter.addFragment("完成领养", RecordFragment.getInstance(type, 2));
             mainPagerAdapter.addFragment("审核拒绝", RecordFragment.getInstance(type, 3));
 

@@ -414,7 +414,7 @@ public class SendRequest {
     /**
      * 犬只注销-犬只注销列表
      *
-     * @param status 办理状态 null （不传） 全部 0 未办理 1 已办理 2 驳回
+     * @param status   办理状态 null （不传） 全部 0 未办理 1 已办理 2 驳回
      * @param pageNum
      * @param pageSize
      * @param call
@@ -731,6 +731,38 @@ public class SendRequest {
         Map<String, String> headers = new HashMap<>();
         headers.put("Authorization", BaseApplication.getInstance().getUserInfo().getAuthorization());
         OkHttpUtils.post().headers(headers).params(map).url(APIUrls.saveLeaveDog).build().execute(call);
+
+    }
+
+    /**
+     * 犬只领养-个人领养列表
+     *
+     * @param status 办理状态 1 待审核 0 待支付 2 领养完成 3 拒绝 4 全部
+     * @param call
+     */
+    public static void dogAdoptList(int status, Callback call) {
+        Map<String, String> headers = new HashMap<>();
+        headers.put("Authorization", BaseApplication.getInstance().getUserInfo().getAuthorization());
+
+        Map<String, String> map = new HashMap<>();
+        map.put("status", String.valueOf(status));
+        OkHttpUtils.post().headers(headers).params(map).url(APIUrls.dogAdoptList).build().execute(call);
+
+    }
+
+    /**
+     * 犬只领养-个人领养详情
+     *
+     * @param id
+     * @param call
+     */
+    public static void dogAdoptDetails(int id, Callback call) {
+        Map<String, String> headers = new HashMap<>();
+        headers.put("Authorization", BaseApplication.getInstance().getUserInfo().getAuthorization());
+
+        Map<String, String> map = new HashMap<>();
+        map.put("id", String.valueOf(id));
+        OkHttpUtils.post().headers(headers).params(map).url(APIUrls.dogAdoptDetails).build().execute(call);
 
     }
 

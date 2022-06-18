@@ -42,10 +42,11 @@
                     android:orientation="vertical">
 
                     <com.dog.manage.app.view.TextBoldView
+                        android:id="@+id/dogNameView"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:gravity="center"
-                        android:text="柯基犬|白色|1岁2个月"
+                        tools:text="柯基犬|白色|1岁2个月"
                         android:textColor="@color/black"
                         android:textSize="@dimen/sp_15" />
 
@@ -65,10 +66,11 @@
                             app:tint="@color/blue" />
 
                         <TextView
+                            android:id="@+id/acceptUnitView"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:gravity="center"
-                            android:text="北京市公安局犬类留检所"
+                            tools:text="北京市公安局犬类留检所"
                             android:textColor="#999999"
                             android:textSize="@dimen/sp_13" />
                     </LinearLayout>
@@ -89,6 +91,7 @@
                             app:tint="@color/blue" />
 
                         <TextView
+                            android:id="@+id/acceptUnitAddressView"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:gravity="center"

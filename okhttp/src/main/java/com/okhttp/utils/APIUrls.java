@@ -160,6 +160,10 @@ public class APIUrls {
     public final static String saveLeaveDogUser = URL_DOMAIN + "/user/saveLeaveDogUser";
     //犬只领养 -提交申请
     public final static String saveLeaveDog = URL_DOMAIN + "/user/saveLeaveDog";
+    //犬只领养-个人领养列表
+    public final static String dogAdoptList = URL_DOMAIN + "/user/dog/dogAdoptList";
+    //犬只领养-个人领养详情
+    public final static String dogAdoptDetails = URL_DOMAIN + "/user/dog/dogAdoptDetails";
 
 
     /**

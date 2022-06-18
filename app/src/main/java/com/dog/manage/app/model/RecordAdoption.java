@@ -7,84 +7,46 @@ import lombok.NoArgsConstructor;
 @Data
 public class RecordAdoption {
 
-    //犬证办理
+    //领养记录
     /**
-     * "lincenceId":6,
-     * "licenceStatus":1,
-     * "dogType":"柴犬",
-     * "dogAge":1,
-     * "createdTime":"2022-05-09"
-     */
-    private Integer lincenceId;
-    private Integer licenceStatus;
-    private String createdTime;
-
-    //犬只免疫证
-    /**
-     * immuneId : 1
-     * dogType : 哈士奇
-     * createTime : null
-     * dogAge : 1
-     * lincenceStatus : 2
-     */
-
-    private Integer immuneId;
-    private String dogType;
-    private String createTime;
-    private Integer dogAge;
-    private Integer lincenceStatus;
-
-    //
-    /**
-     * id
-     * integer
-     * 主键
-     * dogLicenceId
-     * integer
-     * 犬证id
-     * dogLicenceNum
-     * string
-     * 犬证编号
-     * oldOwnerId
-     * integer
-     * 老用户
-     * oldUserName
-     * string
-     * 老用户名称
-     * newOwnerId
-     * integer
-     * 新用户
-     * newUserName
-     * string
-     * 新用户名称
-     * newUserPhone
-     * null
-     * 新用户手机号
-     * acceptUnit
-     * string
-     * 受理单位
-     * status
-     * integer
-     * 状态
-     * applyTime
-     * null
-     * 受理时间
-     * dogAge
-     * integer
-     * 犬只年龄
+     * "id":3,
+     * "adoptNum":"LY16550043156770",
+     * "leaveDogId":1,
+     * "useId":19,
+     * "orderId":null,
+     * "acceptUnit":"留检所",
+     * "status":1,
+     * "rejectionReason":null,
+     * "applyTime":"2022-05-28 14:48:36",
+     * "dogName":"牧羊犬",
+     * "dogColor":"白色",
+     * "dogGender":0,
+     * "leaveId":null,
+     * "price":null,
+     * "payType":null,
+     * "acceptUnitAddress":"北京市"
      */
 
     private Integer id;
-    private Integer dogLicenceId;
-    private String dogLicenceNum;
-    private Integer oldOwnerId;
-    private String oldUserName;
-    private Integer newOwnerId;
-    private String newUserName;
-    private String newUserPhone;
+    private String adoptNum;
+    private Integer leaveDogId;
+    private Integer useId = 0;
+    private Integer dogId = 0;
+    private Integer orderId;
     private String acceptUnit;
     private Integer status;
+    private String rejectionReason;
     private String applyTime;
-//    private Integer dogAge;
+    private String userName;
+    private String dogType;
+    private String dogName;
+    private String dogColor;
+    private Integer dogGender;
+    private Integer dogAge;
+    private String dogPhoto;
+    private Integer leaveId;
+    private String price;
+    private Integer payType;
+    private String acceptUnitAddress;
 
 }

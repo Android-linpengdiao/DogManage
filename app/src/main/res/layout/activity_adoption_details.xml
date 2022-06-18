@@ -65,12 +65,13 @@
                             android:orientation="vertical">
 
                             <com.dog.manage.app.view.TextBoldView
+                                android:id="@+id/dogNameView"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:gravity="center"
-                                android:text="柯基犬|白色|1岁2个月"
                                 android:textColor="@color/black"
-                                android:textSize="@dimen/sp_15"/>
+                                android:textSize="@dimen/sp_15"
+                                tools:text="柯基犬|白色|1岁2个月" />
 
                             <LinearLayout
                                 android:layout_width="match_parent"
@@ -88,6 +89,7 @@
                                     app:tint="@color/blue" />
 
                                 <TextView
+                                    android:id="@+id/acceptUnitView"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:gravity="center"
@@ -112,6 +114,7 @@
                                     app:tint="@color/blue" />
 
                                 <TextView
+                                    android:id="@+id/acceptUnitAddressView"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:gravity="center"
@@ -121,7 +124,7 @@
                             </LinearLayout>
 
                             <TextView
-                                android:id="@+id/auditStatusView"
+                                android:id="@+id/statusView"
                                 android:layout_width="wrap_content"
                                 android:layout_height="@dimen/dp_22"
                                 android:layout_marginTop="@dimen/dp_10"
@@ -148,7 +151,7 @@
                     android:paddingLeft="@dimen/viewPadding"
                     android:paddingRight="@dimen/viewPadding"
                     app:item_container_height="@dimen/dp_50"
-                    app:item_content="张三"
+                    app:item_content=""
                     app:item_content_color="@color/colorAppTheme"
                     app:item_content_size="@dimen/sp_14"
                     app:item_info="查看详情"
@@ -172,7 +175,7 @@
                     android:paddingLeft="@dimen/viewPadding"
                     android:paddingRight="@dimen/viewPadding"
                     app:item_container_height="@dimen/dp_50"
-                    app:item_content="柴犬"
+                    app:item_content=""
                     app:item_content_color="@color/colorAppTheme"
                     app:item_content_size="@dimen/sp_14"
                     app:item_info="查看详情"
@@ -220,6 +223,7 @@
                             android:src="@drawable/dingwei" />
 
                         <TextView
+                            android:id="@+id/auditAcceptUnitView"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="@dimen/dp_5"
@@ -239,21 +243,23 @@
                     android:background="@color/colorDivider" />
 
                 <com.dog.manage.app.view.ViewItemLayout
-                    android:id="@+id/moneyView"
+                    android:id="@+id/priceView"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@color/app_background"
                     android:paddingLeft="@dimen/viewPadding"
                     android:paddingRight="@dimen/viewPadding"
+                    android:visibility="gone"
                     app:item_container_height="@dimen/dp_60"
-                    app:item_content="￥200"
+                    app:item_content=""
+                    app:item_content_bold="true"
                     app:item_content_color="@color/blue"
                     app:item_content_size="@dimen/sp_18"
-                    app:item_title_bold="true"
-                    app:item_title="办理费用"
-                    app:item_content_bold="true"
                     app:item_divider_visible="true"
-                    app:item_title_size="@dimen/sp_14" />
+                    app:item_title="办理费用"
+                    app:item_title_bold="true"
+                    app:item_title_size="@dimen/sp_14"
+                    tools:visibility="visible" />
 
                 <com.dog.manage.app.view.ViewItemLayout
                     android:id="@+id/payTypeView"
@@ -262,13 +268,15 @@
                     android:background="@color/app_background"
                     android:paddingLeft="@dimen/viewPadding"
                     android:paddingRight="@dimen/viewPadding"
+                    android:visibility="gone"
                     app:item_container_height="@dimen/dp_50"
                     app:item_content="支付宝"
                     app:item_content_size="@dimen/sp_14"
-                    app:item_title_bold="true"
-                    app:item_title="支付方式"
                     app:item_divider_visible="true"
-                    app:item_title_size="@dimen/sp_14" />
+                    app:item_title="支付方式"
+                    app:item_title_bold="true"
+                    app:item_title_size="@dimen/sp_14"
+                    tools:visibility="visible" />
 
                 <com.dog.manage.app.view.ViewItemLayout
                     android:id="@+id/auditReasonView"
@@ -277,13 +285,15 @@
                     android:background="@color/app_background"
                     android:paddingLeft="@dimen/viewPadding"
                     android:paddingRight="@dimen/viewPadding"
+                    android:visibility="gone"
+                    tools:visibility="visible"
                     app:item_container_height="@dimen/dp_50"
                     app:item_desc="犬只信息有误，无法领养，请选择其他犬只"
+                    app:item_desc_color="#999999"
                     app:item_desc_size="@dimen/sp_14"
                     app:item_desc_visible="true"
-                    app:item_desc_color="#999999"
-                    app:item_title="审核拒接理由"
                     app:item_divider_visible="true"
+                    app:item_title="审核拒接理由"
                     app:item_title_bold="true"
                     app:item_title_size="@dimen/sp_14" />
 
@@ -306,18 +316,22 @@
                 android:gravity="center"
                 android:text="请到留检所现场查看犬只，
 \n确认无误后在线支付，即可完成犬只的领养。"
-                android:textSize="@dimen/sp_16" />
+                android:textSize="@dimen/sp_16"
+                android:visibility="gone"
+                tools:visibility="visible" />
 
             <TextView
                 android:id="@+id/confirmView"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/dp_48"
                 android:background="@drawable/button_theme"
-                android:onClick="onClickConfirm"
                 android:gravity="center"
+                android:onClick="onClickConfirm"
                 android:text="在线支付"
                 android:textColor="@color/white"
-                android:textSize="@dimen/sp_16" />
+                android:textSize="@dimen/sp_16"
+                android:visibility="gone"
+                tools:visibility="visible" />
 
         </LinearLayout>
 

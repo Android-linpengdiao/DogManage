@@ -3,13 +3,30 @@ package com.dog.manage.app.activity.record;
 import android.os.Bundle;
 import android.view.View;
 
+import com.base.manager.LoadingManager;
 import com.base.utils.GlideLoader;
+import com.base.utils.ToastUtils;
 import com.dog.manage.app.R;
 import com.dog.manage.app.activity.BaseActivity;
 import com.dog.manage.app.activity.DogCertificateEditDogOwnerActivity;
 import com.dog.manage.app.activity.DogDetailsActivity;
+import com.dog.manage.app.activity.DogInfoActivity;
 import com.dog.manage.app.activity.PayActivity;
+import com.dog.manage.app.activity.TransferDetailsActivity;
 import com.dog.manage.app.databinding.ActivityAdoptionDetailsBinding;
+import com.dog.manage.app.model.RecordAdoption;
+import com.dog.manage.app.model.RecordImmune;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+import com.okhttp.ResultClient;
+import com.okhttp.SendRequest;
+import com.okhttp.callbacks.GenericsCallback;
+import com.okhttp.sample_okhttp.JsonGenericsSerializator;
+
+import java.util.List;
+
+import okhttp3.Call;
+import okhttp3.Request;
 
 /**
  * 领养记录详情
@@ -17,7 +34,8 @@ import com.dog.manage.app.databinding.ActivityAdoptionDetailsBinding;
 public class AdoptionDetailsActivity extends BaseActivity {
 
     private ActivityAdoptionDetailsBinding binding;
-    private int type;//1-待支付 2-完成领养 3-审核拒绝
+    private RecordAdoption recordAdoption;
+    private int id;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,21 +43,103 @@ public class AdoptionDetailsActivity extends BaseActivity {
         binding = getViewData(R.layout.activity_adoption_details);
         addActivity(this);
 
-        type = getIntent().getIntExtra("type", 0);
-        binding.auditStatusView.setText(type == 1 ? "待支付" : type == 2 ? "完成领养" : type == 3 ? "审核拒绝" : "审核中");
-        binding.moneyView.setVisibility(type == 0 ? View.GONE : View.VISIBLE);
-        binding.payTypeView.setVisibility(type == 2 ? View.VISIBLE : View.GONE);
-        binding.auditReasonView.setVisibility(type == 3 ? View.VISIBLE : View.GONE);
-        binding.confirmView.setVisibility(type == 1 || type == 3 ? View.VISIBLE : View.GONE);
-        binding.confirmView.setText(type == 1 ? "在线支付" : type == 3 ? "重新提交" : "在线支付");
-        binding.hintView.setVisibility(type == 1 ? View.VISIBLE : View.GONE);
+        id = getIntent().getIntExtra("id", 0);
+        dogAdoptDetails();
 
-        GlideLoader.LoderImage(this, "https://pics7.baidu.com/feed/6c224f4a20a446236fb6db0ac3bf5d040df3d785.jpeg", binding.coverView, 8);
+    }
+
+    /**
+     * 获取个人犬只免疫列表
+     */
+    private void dogAdoptDetails() {
+        SendRequest.dogAdoptDetails(id, new GenericsCallback<ResultClient<RecordAdoption>>(new JsonGenericsSerializator()) {
+
+            @Override
+            public void onBefore(Request request, int id) {
+                super.onBefore(request, id);
+                LoadingManager.showLoadingDialog(AdoptionDetailsActivity.this);
+            }
+
+            @Override
+            public void onAfter(int id) {
+                super.onAfter(id);
+                LoadingManager.hideLoadingDialog(AdoptionDetailsActivity.this);
+            }
+
+            @Override
+            public void onError(Call call, Exception e, int id) {
+
+            }
+
+            @Override
+            public void onResponse(ResultClient<RecordAdoption> response, int id) {
+                if (response.isSuccess() && response.getData() != null) {
+                    initView(response.getData());
+
+                } else {
+                    ToastUtils.showShort(getApplicationContext(), response.getMessage());
+                }
+            }
+        });
+    }
+
+    private void initView(RecordAdoption dataBean) {
+        recordAdoption = dataBean;
+        binding.dogNameView.setText(dataBean.getDogName() + "|" + dataBean.getDogColor() + "|" + dataBean.getDogAge() + "岁3个月");
+        binding.acceptUnitView.setText(dataBean.getAcceptUnit());
+        binding.acceptUnitAddressView.setText(dataBean.getAcceptUnitAddress());
+        try {
+            List<String> dogPhotos = new Gson().fromJson(dataBean.getDogPhoto(), new TypeToken<List<String>>() {
+            }.getType());
+            if (dogPhotos != null && dogPhotos.size() > 0)
+                GlideLoader.LoderImage(this, dogPhotos.get(0), binding.coverView, 8);
+        } catch (Exception e) {
+            e.getMessage();
+        }
+
+        binding.dogOwnerInfoView.binding.itemContent.setText(dataBean.getUserName());
+        binding.dogDetailsView.binding.itemContent.setText(dataBean.getDogType());
+        binding.auditAcceptUnitView.setText(dataBean.getAcceptUnit());
+        binding.priceView.binding.itemContent.setText("￥" + dataBean.getPrice());
+        //办理状态 1 待审核 0 待支付 2 领养完成 3 拒绝 4 全部
+        if (dataBean.getStatus() != null) {
+            if (dataBean.getStatus() == 1) {
+                binding.statusView.setText("待审核");
+
+            } else if (dataBean.getStatus() == 0) {
+                binding.statusView.setText("待支付");
+                binding.confirmView.setText("在线支付");
+                binding.priceView.setVisibility(View.VISIBLE);
+                binding.hintView.setVisibility(View.VISIBLE);
+                binding.confirmView.setVisibility(View.VISIBLE);
+                binding.statusView.setText("在线支付");
+
+            } else if (dataBean.getStatus() == 2) {
+                binding.statusView.setText("完成领养");
+                binding.priceView.setVisibility(View.VISIBLE);
+                binding.payTypeView.setVisibility(View.VISIBLE);
+
+            } else if (dataBean.getStatus() == 3) {
+                binding.statusView.setText("审核拒绝");
+                binding.priceView.setVisibility(View.VISIBLE);
+                binding.confirmView.setVisibility(View.VISIBLE);
+                binding.statusView.setText("重新提交");
+
+            } else {
+                binding.statusView.setText("待审核");
+                binding.confirmView.setVisibility(View.GONE);
+
+            }
+        }
 
         binding.dogOwnerInfoView.binding.itemInfo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                if (recordAdoption == null) {
+                    return;
+                }
                 Bundle bundle = new Bundle();
+                bundle.putInt("dogId", recordAdoption.getDogId());
                 bundle.putInt("type", DogCertificateEditDogOwnerActivity.type_details);
                 openActivity(DogCertificateEditDogOwnerActivity.class, bundle);
             }
@@ -47,15 +147,21 @@ public class AdoptionDetailsActivity extends BaseActivity {
         binding.dogDetailsView.binding.itemInfo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                openActivity(DogDetailsActivity.class);
+                if (recordAdoption == null) {
+                    return;
+                }
+                Bundle bundle = new Bundle();
+                bundle.putInt("dogId", recordAdoption.getDogId());
+                openActivity(DogInfoActivity.class, bundle);
             }
         });
-
     }
 
     public void onClickConfirm(View view) {
-        if (type == 1) {
-            openActivity(PayActivity.class);
+        if (recordAdoption != null && recordAdoption.getStatus() != null) {
+            if (recordAdoption.getStatus() == 0) {
+                openActivity(PayActivity.class);
+            }
         }
     }
 }

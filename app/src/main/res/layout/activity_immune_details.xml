@@ -227,6 +227,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:minHeight="@dimen/dp_24"
                 android:layout_marginTop="@dimen/dp_13"
                 android:orientation="horizontal">
 
@@ -249,11 +250,12 @@
                     android:textSize="@dimen/sp_14" />
 
                 <TextView
+                    android:id="@+id/locationTextView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/dp_50"
                     android:gravity="center"
-                    android:text="距离2km"
+                    tools:text="距离2km"
                     android:textColor="@color/colorAppTheme"
                     android:textSize="@dimen/sp_15" />
             </LinearLayout>

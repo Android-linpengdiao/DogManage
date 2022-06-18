@@ -5,6 +5,7 @@ import android.Manifest;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -147,7 +148,7 @@ public class DogImmuneHospitalActivity extends BaseActivity implements AMap.OnMa
             ToastUtils.showShort(getApplicationContext(), "提交失败");
             return;
         }
-        SendRequest.saveImmune(dogId,addressId, dataBean.getId(), dataBean.getHospitalName(),
+        SendRequest.saveImmune(dogId, addressId, dataBean.getId(), dataBean.getHospitalName(),
                 new GenericsCallback<ResultClient<Boolean>>(new JsonGenericsSerializator()) {
                     @Override
                     public void onError(Call call, Exception e, int id) {
@@ -285,15 +286,22 @@ public class DogImmuneHospitalActivity extends BaseActivity implements AMap.OnMa
 
     @Override
     public void onLocationChanged(AMapLocation amapLocation) {
+        Log.i(TAG, "onLocationChanged: ");
         if (amapLocation != null) {
+            Log.i(TAG, "onLocationChanged: getErrorCode = " + amapLocation.getErrorCode());
             if (amapLocation.getErrorCode() == 0) {
                 //定位成功回调信息，设置相关消息
                 amapLocation.getLocationType();//获取当前定位结果来源，如网络定位结果，详见定位类型表
                 double latitude = amapLocation.getLatitude();//获取纬度
                 double longitude = amapLocation.getLongitude();//获取经度
                 String address = amapLocation.getAoiName();
-
+                Log.i(TAG, "onLocationChanged: latitude " + latitude);
+                Log.i(TAG, "onLocationChanged: longitude " + longitude);
+                LatLng startLatLng = new LatLng(latitude, longitude);
+                if (adapter!=null)
+                    adapter.setStartLatLng(startLatLng);
             } else {
+
             }
         }
     }
