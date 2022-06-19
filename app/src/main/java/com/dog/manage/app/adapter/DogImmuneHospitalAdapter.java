@@ -48,7 +48,6 @@ public class DogImmuneHospitalAdapter extends BaseRecyclerAdapter<Hospital, Item
         return position;
     }
 
-    private static final String TAG = "DogImmuneHospitalAdapte";
 
     @Override
     protected void onBindItem(ItemDogImmuneHospitalBinding binding, Hospital dataBean, int position) {

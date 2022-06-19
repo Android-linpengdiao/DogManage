@@ -1,8 +1,10 @@
 package com.base.utils;
 
 import android.annotation.SuppressLint;
+import android.util.Log;
 
 import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
@@ -42,6 +44,19 @@ public class TimeUtils {
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy年 MM月dd日 HH:mm", Locale.getDefault());
         return formatter.format(date);
 
+    }
+
+    public static long getTimeExamined(String time) {
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        Date date;
+        try {
+            date = dateFormat.parse(time);
+            long dateTime = date.getTime();
+            return dateTime;
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return 0;
     }
 
     public static String getMessageTime(long time) {

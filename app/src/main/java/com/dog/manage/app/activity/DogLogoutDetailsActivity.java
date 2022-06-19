@@ -89,17 +89,24 @@ public class DogLogoutDetailsActivity extends BaseActivity {
         binding.dogInfoView.setVisibility(View.VISIBLE);
         binding.acceptUnitsHintView.setVisibility(View.VISIBLE);
 
-        recordImmune = (RecordImmune) getIntent().getSerializableExtra("recordImmune");
+        recordImmune = (RecordImmune) getIntent().getSerializableExtra("dataBean");
         if (recordImmune != null) {
             //status 办理状态 null （不传） 全部 0 未办理 1 已办理 2 驳回
+            binding.auditStatusView.setText(recordImmune.getStatus() == 1 ? "审核通过" : recordImmune.getStatus() == 2 ? "审核拒绝" : "审核中");
+            binding.contentView.setText(recordImmune.getDogType() + "-编号：" + recordImmune.getDogLicenceNum()
+                    + "（" + (recordImmune.getCancelType() == 1 ? "犬只死亡" : "犬只丢失") + "）");
+            binding.createTimeView.setText(recordImmune.getCreatedTime());
+
+            binding.dogCertificateView.binding.itemTitle.setText("选择犬只");
+            binding.dogCertificateView.binding.itemContent.setText(recordImmune.getDogType() + "（犬证编号：）" + recordImmune.getDogLicenceNum());
+
             binding.auditReasonView.setVisibility(recordImmune.getStatus() == 2 ? View.VISIBLE : View.GONE);
             binding.confirmView.setVisibility(recordImmune.getStatus() == 2 ? View.VISIBLE : View.GONE);
-            binding.auditStatusView.setText(recordImmune.getStatus() == 1 ? "审核通过" : recordImmune.getStatus() == 2 ? "审核拒绝" : "审核中");
 
             //cancelType 办理类型 1 死亡 2 丢失
             if (recordImmune.getCancelType() == 1) {
                 binding.radioButton1.setVisibility(View.GONE);
-            } else if (recordImmune.getCancelType() == 1) {
+            } else if (recordImmune.getCancelType() == 2) {
                 binding.radioButton1.setTextColor(getResources().getColor(R.color.black));
                 binding.radioButton1.getLayoutParams().width = ViewGroup.LayoutParams.WRAP_CONTENT;
                 binding.radioButton1.setPadding(0, 0, 0, 0);
@@ -107,21 +114,35 @@ public class DogLogoutDetailsActivity extends BaseActivity {
                 binding.radioButton0.setVisibility(View.GONE);
             }
 
-            binding.descriptionView.setEnabled(false);
-            binding.descriptionView.setText(recordImmune.getCancelReason());
+            if (!CommonUtil.isBlank(recordImmune.getCancelReason())) {
+                binding.descriptionView.setEnabled(false);
+                binding.descriptionView.setText(recordImmune.getCancelReason());
+            } else {
+                binding.descriptionContainer.setVisibility(View.GONE);
+            }
+
+            binding.acceptUnitView.setText(recordImmune.getAcceptUnit());
 
             try {
+                binding.pictureHintView.setText("无害化处理过程图片");
                 //犬只照片
                 List<String> idPhotos = new Gson().fromJson(recordImmune.getCancelImageUrl(), new TypeToken<List<String>>() {
                 }.getType());
                 if (idPhotos.size() > 0) {
                     GlideLoader.LoderImage(DogLogoutDetailsActivity.this, idPhotos.size() > 0 ? idPhotos.get(0) : "", binding.pictureView1, 6);
+                } else {
+                    binding.pictureContainer.setVisibility(View.GONE);
                 }
                 if (idPhotos.size() > 1) {
                     GlideLoader.LoderImage(DogLogoutDetailsActivity.this, idPhotos.size() > 1 ? idPhotos.get(1) : "", binding.pictureView2, 6);
+                } else {
+                    binding.pictureContainer2.setVisibility(View.INVISIBLE);
+                    binding.pictureContainer3.setVisibility(View.INVISIBLE);
                 }
                 if (idPhotos.size() > 2) {
                     GlideLoader.LoderImage(DogLogoutDetailsActivity.this, idPhotos.size() > 2 ? idPhotos.get(2) : "", binding.pictureView3, 6);
+                } else {
+                    binding.pictureContainer3.setVisibility(View.INVISIBLE);
                 }
             } catch (Exception e) {
                 e.getMessage();

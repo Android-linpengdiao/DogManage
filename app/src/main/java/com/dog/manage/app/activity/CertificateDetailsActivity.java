@@ -70,7 +70,7 @@ public class CertificateDetailsActivity extends BaseActivity {
         if (licenceStatus == 2) {
             Bundle bundle = new Bundle();
             bundle.putInt("licenceId", dogLicenceDetail.getLincenceId());
-            bundle.putInt("price", dogLicenceDetail.getPrice());
+            bundle.putString("price", dogLicenceDetail.getPrice()+"");
             openActivity(PayActivity.class, bundle);
 
         } else if (licenceStatus == 3) {

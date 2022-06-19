@@ -2,6 +2,7 @@ package com.dog.manage.app.fragment;
 
 import android.graphics.Color;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -378,6 +379,7 @@ public class RecordFragment extends BaseFragment {
             @Override
             public void onError(Call call, Exception e, int id) {
                 binding.refreshLayout.finishRefresh(false);
+                Log.i(TAG, "onError: "+e.getMessage());
             }
 
             @Override

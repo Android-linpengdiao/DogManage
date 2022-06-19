@@ -18,7 +18,7 @@
             android:background="@color/white"
             android:orientation="vertical"
             android:visibility="gone"
-            tools:visibility="gone">
+            tools:visibility="visible">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -335,12 +335,13 @@
                 android:background="@color/colorDivider" />
 
             <com.dog.manage.app.view.TextBoldView
+                android:id="@+id/examinedTimeView"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="1"
                 android:gravity="center_horizontal|bottom"
                 android:singleLine="true"
-                android:text="距离年审还有300天"
+                tools:text="距离年审还有300天"
                 android:textColor="@color/colorAppTheme"
                 android:textSize="@dimen/sp_15" />
 
@@ -367,7 +368,7 @@
             android:layout_margin="@dimen/dp_16"
             android:background="@color/white"
             android:visibility="gone"
-            tools:visibility="gone"
+            tools:visibility="visible"
             app:cardCornerRadius="@dimen/dp_8"
             app:cardElevation="@dimen/dp_6"
             app:cardPreventCornerOverlap="false">

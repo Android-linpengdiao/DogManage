@@ -50,7 +50,7 @@ public class AdoptionRecordAdapter extends BaseRecyclerAdapter<RecordAdoption, I
 
     @Override
     protected void onBindItem(ItemAdoptionRecordBinding binding, RecordAdoption dataBean, int position) {
-        binding.dogNameView.setText(dataBean.getDogName() + "|" + dataBean.getDogColor() + "|" + dataBean.getDogAge() + "岁3个月");
+        binding.dogNameView.setText(dataBean.getDogName() + "|" + dataBean.getDogColor() + "|" + dataBean.getDogAge() + "岁");
         binding.acceptUnitView.setText(dataBean.getAcceptUnit());
         binding.acceptUnitAddressView.setText(dataBean.getAcceptUnitAddress());
         try {

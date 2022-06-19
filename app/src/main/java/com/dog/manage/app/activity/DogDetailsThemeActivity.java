@@ -54,18 +54,18 @@ public class DogDetailsThemeActivity extends BaseActivity {
     }
 
     private void intBanner() {
-        binding.banner.setImageLoader(new GlideImageLoader(0));
-        binding.banner.isAutoPlay(false);
-        binding.banner.setBannerStyle(BannerConfig.CIRCLE_INDICATOR);
-        binding.banner.setBannerAnimation(Transformer.Default);
-        binding.banner.setIndicatorGravity(BannerConfig.CENTER);
-        binding.banner.setDelayTime(5000);
-        binding.banner.setOnBannerListener(new OnBannerListener() {
-            @Override
-            public void OnBannerClick(int position) {
-
-            }
-        });
+//        binding.banner.setImageLoader(new GlideImageLoader(0));
+//        binding.banner.isAutoPlay(false);
+//        binding.banner.setBannerStyle(BannerConfig.CIRCLE_INDICATOR);
+//        binding.banner.setBannerAnimation(Transformer.Default);
+//        binding.banner.setIndicatorGravity(BannerConfig.CENTER);
+//        binding.banner.setDelayTime(5000);
+//        binding.banner.setOnBannerListener(new OnBannerListener() {
+//            @Override
+//            public void OnBannerClick(int position) {
+//
+//            }
+//        });
     }
 
     /**
@@ -108,7 +108,9 @@ public class DogDetailsThemeActivity extends BaseActivity {
                     try {
                         List<String> imageList = new Gson().fromJson(dogDetail.getDogPhoto(), new TypeToken<List<String>>() {
                         }.getType());
-                        binding.banner.setImages(imageList).start();
+                        if (imageList != null && imageList.size() > 0)
+                            GlideLoader.LoderRoundedImage(DogDetailsThemeActivity.this, imageList.get(0), binding.coverView,15);
+//                        binding.banner.setImages(imageList).start();
                     } catch (Exception e) {
                         e.getMessage();
                     }

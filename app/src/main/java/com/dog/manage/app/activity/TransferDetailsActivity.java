@@ -76,7 +76,7 @@ public class TransferDetailsActivity extends BaseActivity {
         binding.confirmView.setVisibility(status == 2 ? View.VISIBLE : View.GONE);
 
         binding.contentView.setText(dataBean.getDogType() + "-" + dataBean.getDogAge() + "岁3个月");
-        binding.createTimeView.setText(dataBean.getCreatedTime());
+        binding.createTimeView.setText(dataBean.getApplyTime());
         binding.descView.setText("犬证:" + dataBean.getDogLicenceNum());
         binding.oldUserNameView.setText("原犬主:" + dataBean.getOldUserName());
         binding.newUserNameView.setText("新犬主:" + dataBean.getNewUserName());

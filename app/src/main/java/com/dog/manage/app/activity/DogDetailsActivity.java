@@ -33,7 +33,7 @@ import okhttp3.Request;
 public class DogDetailsActivity extends BaseActivity {
 
     private ActivityDogDetailsBinding binding;
-    private int dogId;
+    private int leaveId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,32 +41,32 @@ public class DogDetailsActivity extends BaseActivity {
         binding = getViewData(R.layout.activity_dog_details);
         addActivity(this);
 
-        dogId = getIntent().getIntExtra("dogId", 0);
+        leaveId = getIntent().getIntExtra("leaveId", 0);
 
         intBanner();
         getDogById();
     }
 
     private void intBanner() {
-        binding.banner.setImageLoader(new GlideImageLoader(0));
-        binding.banner.isAutoPlay(false);
-        binding.banner.setBannerStyle(BannerConfig.CIRCLE_INDICATOR);
-        binding.banner.setBannerAnimation(Transformer.Default);
-        binding.banner.setIndicatorGravity(BannerConfig.CENTER);
-        binding.banner.setDelayTime(5000);
-        binding.banner.setOnBannerListener(new OnBannerListener() {
-            @Override
-            public void OnBannerClick(int position) {
-
-            }
-        });
+//        binding.banner.setImageLoader(new GlideImageLoader(0));
+//        binding.banner.isAutoPlay(false);
+//        binding.banner.setBannerStyle(BannerConfig.CIRCLE_INDICATOR);
+//        binding.banner.setBannerAnimation(Transformer.Default);
+//        binding.banner.setIndicatorGravity(BannerConfig.CENTER);
+//        binding.banner.setDelayTime(5000);
+//        binding.banner.setOnBannerListener(new OnBannerListener() {
+//            @Override
+//            public void OnBannerClick(int position) {
+//
+//            }
+//        });
     }
 
     /**
      * 犬证 获取犬只详情信息
      */
     private void getDogById() {
-        SendRequest.getDogById(dogId, new GenericsCallback<ResultClient<DogDetail>>(new JsonGenericsSerializator()) {
+        SendRequest.getLeaveDogDetail(leaveId, new GenericsCallback<ResultClient<DogDetail>>(new JsonGenericsSerializator()) {
 
             @Override
             public void onBefore(Request request, int id) {
@@ -103,11 +103,12 @@ public class DogDetailsActivity extends BaseActivity {
                         binding.immuneStatus.setText("免疫情况：未免疫");
                     }
                     binding.sterilizationView.setText("绝育情况：" + (dogDetail.getSterilization() == 0 ? "未绝育" : "已绝育"));
-
+//                    GlideLoader.LoderImage(DogDetailsActivity.this, dogDetail.getDogPhoto(), binding.coverView);
                     try {
                         List<String> imageList = new Gson().fromJson(dogDetail.getDogPhoto(), new TypeToken<List<String>>() {
                         }.getType());
-                        binding.banner.setImages(imageList).start();
+                        GlideLoader.LoderRoundedImage(DogDetailsActivity.this, imageList.get(0), binding.coverView,15);
+//                        binding.banner.setImages(imageList).start();
                     } catch (Exception e) {
                         e.getMessage();
                     }

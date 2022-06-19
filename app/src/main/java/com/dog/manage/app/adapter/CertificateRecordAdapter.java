@@ -83,6 +83,7 @@ public class CertificateRecordAdapter extends BaseRecyclerAdapter<RecordImmune, 
             binding.descView.setVisibility(View.GONE);
             binding.dogOwnerContainer.setVisibility(View.INVISIBLE);
             binding.contentView.setText(dataBean.getDogType() + "-" + dataBean.getDogAge() + "岁3个月");
+            binding.createTimeView.setText(dataBean.getCreateTime());
             binding.contentView.setTextColor(Color.parseColor("#999999"));
             if (dataBean.getLincenceStatus() != null) {
                 if (dataBean.getLincenceStatus() == 1) {
@@ -115,7 +116,7 @@ public class CertificateRecordAdapter extends BaseRecyclerAdapter<RecordImmune, 
             //办理状态 0 是未审核的 1 成功的 2 是失败的
             binding.titleView.setText("犬只过户");
             binding.contentView.setText(dataBean.getDogType() + "-" + dataBean.getDogAge() + "岁3个月");
-            binding.createTimeView.setText(dataBean.getCreatedTime());
+            binding.createTimeView.setText(dataBean.getApplyTime());
             binding.descView.setText("犬证:" + dataBean.getDogLicenceNum());
             binding.oldUserNameView.setText("原犬主:" + dataBean.getOldUserName());
             binding.newUserNameView.setText("新犬主:" + dataBean.getNewUserName());
@@ -145,10 +146,11 @@ public class CertificateRecordAdapter extends BaseRecyclerAdapter<RecordImmune, 
             //status 办理状态 null （不传） 全部 0 未办理 1 已办理 2 驳回
             binding.titleView.setText("犬只注销");
             binding.bottomView.setVisibility(View.GONE);
+            binding.descView.setVisibility(View.GONE);
             binding.contentView.setTextColor(Color.parseColor("#999999"));
-            binding.contentView.setText(dataBean.getDogType() + "-" + dataBean.getDogAge() + "岁3个月");
+            binding.contentView.setText(dataBean.getDogType() + "-编号：" + dataBean.getDogLicenceNum()
+                    + "（" + (dataBean.getCancelType() == 1 ? "犬只丢失" : "犬只死亡") + "）");
             binding.createTimeView.setText(dataBean.getCreatedTime());
-            binding.descView.setText("犬证:" + dataBean.getDogLicenceNum());
             if (dataBean.getStatus() != null) {
                 if (dataBean.getStatus() == 0) {
                     binding.checkStatusView.setText("审核中");
@@ -186,7 +188,7 @@ public class CertificateRecordAdapter extends BaseRecyclerAdapter<RecordImmune, 
                     } else if (type == RecordActivity.type_transfer) {
                         onClickListener.onClick(view, dataBean);
 
-                    }else if (type == RecordActivity.type_logout) {
+                    } else if (type == RecordActivity.type_logout) {
                         onClickListener.onClick(view, dataBean);
 
                     } else {

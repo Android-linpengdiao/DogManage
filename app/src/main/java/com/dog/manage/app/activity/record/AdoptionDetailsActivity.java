@@ -12,10 +12,8 @@ import com.dog.manage.app.activity.DogCertificateEditDogOwnerActivity;
 import com.dog.manage.app.activity.DogDetailsActivity;
 import com.dog.manage.app.activity.DogInfoActivity;
 import com.dog.manage.app.activity.PayActivity;
-import com.dog.manage.app.activity.TransferDetailsActivity;
 import com.dog.manage.app.databinding.ActivityAdoptionDetailsBinding;
 import com.dog.manage.app.model.RecordAdoption;
-import com.dog.manage.app.model.RecordImmune;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.okhttp.ResultClient;
@@ -98,7 +96,7 @@ public class AdoptionDetailsActivity extends BaseActivity {
         }
 
         binding.dogOwnerInfoView.binding.itemContent.setText(dataBean.getUserName());
-        binding.dogDetailsView.binding.itemContent.setText(dataBean.getDogType());
+        binding.dogDetailsView.binding.itemContent.setText(dataBean.getDogName());
         binding.auditAcceptUnitView.setText(dataBean.getAcceptUnit());
         binding.priceView.binding.itemContent.setText("￥" + dataBean.getPrice());
         //办理状态 1 待审核 0 待支付 2 领养完成 3 拒绝 4 全部
@@ -121,9 +119,10 @@ public class AdoptionDetailsActivity extends BaseActivity {
 
             } else if (dataBean.getStatus() == 3) {
                 binding.statusView.setText("审核拒绝");
-                binding.priceView.setVisibility(View.VISIBLE);
+                binding.auditReasonView.setVisibility(View.VISIBLE);
                 binding.confirmView.setVisibility(View.VISIBLE);
-                binding.statusView.setText("重新提交");
+                binding.auditReasonView.binding.itemDesc.setText("犬只信息有误，无法领养，请选择其他犬只");
+                binding.confirmView.setText("重新提交");
 
             } else {
                 binding.statusView.setText("待审核");
@@ -139,7 +138,7 @@ public class AdoptionDetailsActivity extends BaseActivity {
                     return;
                 }
                 Bundle bundle = new Bundle();
-                bundle.putInt("dogId", recordAdoption.getDogId());
+                bundle.putInt("dogId", recordAdoption.getLeaveDogId());
                 bundle.putInt("type", DogCertificateEditDogOwnerActivity.type_details);
                 openActivity(DogCertificateEditDogOwnerActivity.class, bundle);
             }
@@ -151,8 +150,8 @@ public class AdoptionDetailsActivity extends BaseActivity {
                     return;
                 }
                 Bundle bundle = new Bundle();
-                bundle.putInt("dogId", recordAdoption.getDogId());
-                openActivity(DogInfoActivity.class, bundle);
+                bundle.putInt("leaveId", recordAdoption.getLeaveDogId());
+                openActivity(DogDetailsActivity.class, bundle);
             }
         });
     }
@@ -160,7 +159,10 @@ public class AdoptionDetailsActivity extends BaseActivity {
     public void onClickConfirm(View view) {
         if (recordAdoption != null && recordAdoption.getStatus() != null) {
             if (recordAdoption.getStatus() == 0) {
-                openActivity(PayActivity.class);
+                Bundle bundle = new Bundle();
+                bundle.putInt("leaveId", recordAdoption.getLeaveId());
+                bundle.putString("price", recordAdoption.getPrice());
+                openActivity(PayActivity.class, bundle);
             }
         }
     }

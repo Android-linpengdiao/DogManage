@@ -22,22 +22,22 @@
                 android:background="@drawable/button_radius_top"
                 android:orientation="vertical">
 
-                <com.xw.banner.Banner
-                    android:id="@+id/banner"
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/dp_294"
-                    app:xw_banner_layout="@layout/banner_layout"
-                    app:xw_indicator_drawable_selected="@drawable/tab_b"
-                    app:xw_indicator_drawable_unselected="@drawable/tab_b_t50"
-                    app:xw_indicator_height="@dimen/dp_0"
-                    app:xw_indicator_width="@dimen/dp_0" />
+<!--                <com.xw.banner.Banner-->
+<!--                    android:id="@+id/banner"-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="@dimen/dp_294"-->
+<!--                    app:xw_banner_layout="@layout/banner_layout"-->
+<!--                    app:xw_indicator_drawable_selected="@drawable/tab_b"-->
+<!--                    app:xw_indicator_drawable_unselected="@drawable/tab_b_t50"-->
+<!--                    app:xw_indicator_height="@dimen/dp_0"-->
+<!--                    app:xw_indicator_width="@dimen/dp_0" />-->
 
                 <ImageView
                     android:id="@+id/coverView"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/dp_294"
                     android:background="@drawable/button_radius_top"
-                    android:visibility="gone"/>
+                    android:visibility="visible"/>
 
 
                 <com.dog.manage.app.view.TextBoldView
@@ -46,7 +46,6 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/dp_26"
                     android:layout_marginTop="@dimen/dp_18"
-                    android:gravity="center"
                     tools="柯基犬|白色|1岁2个月"
                     android:textColor="@color/colorAppTheme"
                     android:textSize="@dimen/sp_18" />

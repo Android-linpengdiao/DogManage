@@ -29,7 +29,7 @@ public class PayActivity extends BaseActivity {
     private ActivityPayBinding binding;
     private int licenceId;
     private int payType = 0;
-    private int price;
+    private String price;
 
 
     @Override
@@ -39,7 +39,7 @@ public class PayActivity extends BaseActivity {
         addActivity(this);
 
         licenceId = getIntent().getIntExtra("licenceId", 0);
-        price = getIntent().getIntExtra("price", 0);
+        price = getIntent().getStringExtra("price");
         binding.moneyView.binding.itemContent.setText("￥" + price);
 
         binding.wxPayView.setSelected(true);
