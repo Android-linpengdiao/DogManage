@@ -228,7 +228,9 @@ public class RecordFragment extends BaseFragment {
             }
         });
 
-        if (type == RecordActivity.type_certificate || type == RecordActivity.type_immune) {
+        if (type == RecordActivity.type_certificate
+                || type == RecordActivity.type_immune
+                || type == RecordActivity.type_adoption) {
             binding.refreshLayout.setEnableLoadMore(false);
 
         } else if (type == RecordActivity.type_transfer) {
@@ -379,7 +381,7 @@ public class RecordFragment extends BaseFragment {
             @Override
             public void onError(Call call, Exception e, int id) {
                 binding.refreshLayout.finishRefresh(false);
-                Log.i(TAG, "onError: "+e.getMessage());
+                Log.i(TAG, "onError: " + e.getMessage());
             }
 
             @Override

@@ -2,12 +2,14 @@ package com.dog.manage.app.activity;
 
 
 import android.Manifest;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 
+import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.amap.api.location.AMapLocation;
@@ -225,11 +227,22 @@ public class DogImmuneHospitalActivity extends BaseActivity implements AMap.OnMa
 
 
     private void openMapNavigate(LatLng latLng) {
-        List<String> hasMap = new MapNavigationUtil().hasMap(DogImmuneHospitalActivity.this);
-        if (hasMap.size() > 0) {
-            MapNavigationUtil.showChooseMap(DogImmuneHospitalActivity.this, new LocationBean(null, latLng.latitude, latLng.longitude));
-        } else {
-            ToastUtils.showLong(DogImmuneHospitalActivity.this, "未找到地图APP，请下载安装高德地图APP");
+        if (CommonUtil.openLocation(DogImmuneHospitalActivity.this, request_Location)) {
+            List<String> hasMap = new MapNavigationUtil().hasMap(DogImmuneHospitalActivity.this);
+            if (hasMap.size() > 0) {
+                MapNavigationUtil.showChooseMap(DogImmuneHospitalActivity.this, new LocationBean(null, latLng.latitude, latLng.longitude));
+            } else {
+                ToastUtils.showLong(DogImmuneHospitalActivity.this, "未找到地图APP，请下载安装高德地图APP");
+            }
+        }
+    }
+
+    private final int request_Location = 100;
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == RESULT_OK && requestCode == request_Location) {
+            permissionsLocation();
         }
     }
 
@@ -298,7 +311,7 @@ public class DogImmuneHospitalActivity extends BaseActivity implements AMap.OnMa
                 Log.i(TAG, "onLocationChanged: latitude " + latitude);
                 Log.i(TAG, "onLocationChanged: longitude " + longitude);
                 LatLng startLatLng = new LatLng(latitude, longitude);
-                if (adapter!=null)
+                if (adapter != null)
                     adapter.setStartLatLng(startLatLng);
             } else {
 

@@ -1,9 +1,12 @@
 package com.dog.manage.app.activity;
 
 import android.Manifest;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+
+import androidx.annotation.Nullable;
 
 import com.amap.api.location.AMapLocation;
 import com.amap.api.location.AMapLocationClient;
@@ -15,6 +18,7 @@ import com.amap.api.maps.model.LatLng;
 import com.amap.api.maps.model.Marker;
 import com.base.LocationBean;
 import com.base.manager.LoadingManager;
+import com.base.utils.CommonUtil;
 import com.base.utils.MapNavigationUtil;
 import com.base.utils.ToastUtils;
 import com.dog.manage.app.R;
@@ -132,15 +136,26 @@ public class ImmuneDetailsActivity extends BaseActivity implements AMapLocationL
     }
 
     public void onClickNavigate(View view) {
-        LatLng latLng = new LatLng(39.993743, 116.472995);
-        List<String> hasMap = new MapNavigationUtil().hasMap(ImmuneDetailsActivity.this);
-        if (hasMap.size() > 0) {
-            MapNavigationUtil.showChooseMap(ImmuneDetailsActivity.this, new LocationBean(null, latLng.latitude, latLng.longitude));
-        } else {
-            ToastUtils.showLong(ImmuneDetailsActivity.this, "未找到地图APP，请下载安装高德地图APP");
+        if (CommonUtil.openLocation(ImmuneDetailsActivity.this,request_Location)) {
+            LatLng latLng = new LatLng(39.993743, 116.472995);
+            List<String> hasMap = new MapNavigationUtil().hasMap(ImmuneDetailsActivity.this);
+            if (hasMap.size() > 0) {
+                MapNavigationUtil.showChooseMap(ImmuneDetailsActivity.this, new LocationBean(null, latLng.latitude, latLng.longitude));
+            } else {
+                ToastUtils.showLong(ImmuneDetailsActivity.this, "未找到地图APP，请下载安装高德地图APP");
+            }
         }
     }
 
+    private final int request_Location = 100;
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        Log.i(TAG, "onActivityResult: "+requestCode);
+        if (resultCode == RESULT_OK && requestCode == request_Location) {
+            permissionsLocation();
+        }
+    }
 
     //==================================     定位     ==============================================
 
@@ -170,7 +185,7 @@ public class ImmuneDetailsActivity extends BaseActivity implements AMapLocationL
      * 定位
      */
     private void initLocation() {
-
+        Log.i(TAG, "initLocation: ");
         AMapLocationClient mlocationClient = new AMapLocationClient(getApplicationContext());
         //初始化定位参数
         AMapLocationClientOption mLocationOption = new AMapLocationClientOption();

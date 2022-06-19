@@ -283,13 +283,13 @@ public class CommonUtil {
         return bitmap;
     }
 
-    public static boolean openLocation(Context context) {
-        LocationManager lm = (LocationManager) context.getSystemService(context.LOCATION_SERVICE);
+    public static boolean openLocation(Activity activity, int requestCode) {
+        LocationManager lm = (LocationManager) activity.getSystemService(activity.LOCATION_SERVICE);
         boolean ok = lm.isProviderEnabled(LocationManager.GPS_PROVIDER);
         if (!ok) {//开了定位服务
             Intent intent = new Intent();
             intent.setAction(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
-            context.startActivity(intent);
+            activity.startActivityForResult(intent, requestCode);
         }
         return ok;
     }
