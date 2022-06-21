@@ -44,8 +44,12 @@ public class DogTransferActivity extends BaseActivity {
         binding.dogCertificateView.binding.itemContent.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                onClickDogCertificate(DogTransferActivity.this, dogList,
-                        dogList.indexOf(binding.dogCertificateView.binding.itemContent.getText().toString()), new OnClickListener() {
+                if (dogList.size() == 0) {
+                    ToastUtils.showShort(getApplicationContext(), "暂无犬只");
+                    return;
+                }
+                onClickDogCertificate(DogTransferActivity.this,
+                        dogList, dogList.indexOf(binding.dogCertificateView.binding.itemContent.getText().toString()), new OnClickListener() {
                             @Override
                             public void onClick(View view, Object object) {
                                 dogDetail = (Dog) object;

@@ -109,6 +109,10 @@ public class DogCertificateEditDogActivity extends BaseActivity {
         binding.dogCertificateView.binding.itemContent.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                if (dogList.size() == 0) {
+                    ToastUtils.showShort(getApplicationContext(), "暂无犬只");
+                    return;
+                }
                 onClickDogCertificate(DogCertificateEditDogActivity.this,
                         dogList, dogList.indexOf(binding.dogCertificateView.binding.itemContent.getText().toString()),
                         new OnClickListener() {

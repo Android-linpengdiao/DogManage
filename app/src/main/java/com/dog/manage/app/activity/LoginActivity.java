@@ -25,6 +25,7 @@ import com.okhttp.sample_okhttp.JsonGenericsSerializator;
 
 import java.util.concurrent.TimeUnit;
 
+import cn.jpush.android.api.JPushInterface;
 import io.reactivex.rxjava3.core.Observable;
 import io.reactivex.rxjava3.functions.Consumer;
 import okhttp3.Call;
@@ -81,7 +82,8 @@ public class LoginActivity extends BaseActivity {
             ToastUtils.showShort(getApplicationContext(), "请同意服务条款");
             return;
         }
-        SendRequest.userLogin(phone, code, new GenericsCallback<ResultClient<UserInfo>>(new JsonGenericsSerializator()) {
+        String registrationID = JPushInterface.getRegistrationID(this);
+        SendRequest.userLogin(phone, code,registrationID, new GenericsCallback<ResultClient<UserInfo>>(new JsonGenericsSerializator()) {
             @Override
             public void onError(Call call, Exception e, int id) {
 

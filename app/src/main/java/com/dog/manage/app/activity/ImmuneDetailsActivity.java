@@ -135,8 +135,14 @@ public class ImmuneDetailsActivity extends BaseActivity implements AMapLocationL
         binding.hospitalPhoneView.setText(data.getHospitalPhone());
     }
 
+    public void onClickConfirm(View view) {
+        Bundle bundle = new Bundle();
+        bundle.putInt("type", MyDogCertificateOrImmuneActivity.type_immune);
+        openActivity(MyDogCertificateOrImmuneActivity.class, bundle);
+    }
+
     public void onClickNavigate(View view) {
-        if (CommonUtil.openLocation(ImmuneDetailsActivity.this,request_Location)) {
+        if (CommonUtil.openLocation(ImmuneDetailsActivity.this, request_Location)) {
             LatLng latLng = new LatLng(39.993743, 116.472995);
             List<String> hasMap = new MapNavigationUtil().hasMap(ImmuneDetailsActivity.this);
             if (hasMap.size() > 0) {
@@ -148,10 +154,11 @@ public class ImmuneDetailsActivity extends BaseActivity implements AMapLocationL
     }
 
     private final int request_Location = 100;
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        Log.i(TAG, "onActivityResult: "+requestCode);
+        Log.i(TAG, "onActivityResult: " + requestCode);
         if (resultCode == RESULT_OK && requestCode == request_Location) {
             permissionsLocation();
         }

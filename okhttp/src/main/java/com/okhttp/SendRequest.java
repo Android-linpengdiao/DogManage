@@ -3,6 +3,7 @@ package com.okhttp;
 import android.util.Log;
 
 import com.base.BaseApplication;
+import com.base.utils.CommonUtil;
 import com.okhttp.callbacks.Callback;
 import com.okhttp.utils.APIUrls;
 import com.okhttp.utils.OkHttpUtils;
@@ -19,11 +20,13 @@ public class SendRequest {
      * APP登录
      * 设备类型 1 ios 2 安卓
      */
-    public static void userLogin(String phone, String code, Callback call) {
+    public static void userLogin(String phone, String code, String registrationID, Callback call) {
         Map<String, String> map = new HashMap<>();
         map.put("loginPhone", phone);
         map.put("code", code);
         map.put("tremType", "2");
+        if (!CommonUtil.isBlank(registrationID))
+            map.put("registId", registrationID);
         OkHttpUtils.post().params(map).url(APIUrls.userLogin).build().execute(call);
 
     }
@@ -74,6 +77,21 @@ public class SendRequest {
         Map<String, String> map = new HashMap<>();
         map.put("noticeId", String.valueOf(noticeId));
         OkHttpUtils.post().params(map).url(APIUrls.getNoticeById).build().execute(call);
+
+    }
+
+    public static void sysNoticeList(int pageNum, int pageSize, Callback call) {
+        Map<String, String> map = new HashMap<>();
+        map.put("pageNum", String.valueOf(pageNum));
+        map.put("pageSize", String.valueOf(pageSize));
+        OkHttpUtils.post().params(map).url(APIUrls.sysNoticeList).build().execute(call);
+
+    }
+
+    public static void getSysNoticeById(int noticeId, Callback call) {
+        Map<String, String> map = new HashMap<>();
+        map.put("noticeId", String.valueOf(noticeId));
+        OkHttpUtils.post().params(map).url(APIUrls.getSysNoticeById).build().execute(call);
 
     }
 
@@ -499,6 +517,21 @@ public class SendRequest {
 
     }
 
+    /**
+     * 我的-免疫证详情
+     *
+     * @param immuneId
+     * @param call
+     */
+    public static void getImmuneDetail(int immuneId, Callback call) {
+        Map<String, String> headers = new HashMap<>();
+        headers.put("Authorization", BaseApplication.getInstance().getUserInfo().getAuthorization());
+        Map<String, String> map = new HashMap<>();
+        map.put("immuneId", String.valueOf(immuneId));
+        OkHttpUtils.post().headers(headers).params(map).url(APIUrls.getImmuneDetail).build().execute(call);
+
+    }
+
 
     /**
      * 犬证提交审核
@@ -914,6 +947,16 @@ public class SendRequest {
         map.put("licenceId", String.valueOf(licenceId));
         map.put("payType", String.valueOf(payType));
         OkHttpUtils.post().headers(headers).params(map).url(APIUrls.payment).build().execute(call);
+
+    }
+
+    public static void aliPayment(int orderId, Callback call) {
+        Map<String, String> headers = new HashMap<>();
+        headers.put("Authorization", BaseApplication.getInstance().getUserInfo().getAuthorization());
+
+        Map<String, String> map = new HashMap<>();
+        map.put("orderId", String.valueOf(orderId));
+        OkHttpUtils.post().headers(headers).params(map).url(APIUrls.aliPayment).build().execute(call);
 
     }
 

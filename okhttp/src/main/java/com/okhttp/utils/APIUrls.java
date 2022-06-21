@@ -114,6 +114,7 @@ public class APIUrls {
      */
     //系统消息
     public final static String sysNoticeList = URL_DOMAIN + "/sysNotice/sysNoticeList";
+    public final static String getSysNoticeById = URL_DOMAIN + "/notice/getSysNoticeById";
 
 
     /**
@@ -123,6 +124,8 @@ public class APIUrls {
     public final static String getMyLicenceList = URL_DOMAIN + "/user/dog/getMyLicenceList";
     //获取个人犬只免疫列表
     public final static String getDogImmuneList = URL_DOMAIN + "/user/dog/getDogImmuneList";
+    //我的-免疫证详情
+    public final static String getImmuneDetail = URL_DOMAIN + "/user/dog/getImmuneDetail";
     //犬证办理记录
     public final static String getUserDogLicence = URL_DOMAIN + "/user/dog/getUserDogLincence";
     //犬证办理记录详情
@@ -181,6 +184,7 @@ public class APIUrls {
     /**
      * 支付
      */
+    public final static String aliPayment = URL_DOMAIN + "/pay/aliPayment";//支付宝支付
     public final static String viporder_createOrder = URL_DOMAIN + "/viporder/createOrder";//记录邀请信息
     //支付宝_VIP订单_生成支付订单
     public final static String orderCreateAliOrderAboutVip = URL_DOMAIN + "/order/createAliOrderAboutVip";

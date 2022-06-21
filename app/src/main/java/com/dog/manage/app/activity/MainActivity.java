@@ -59,9 +59,9 @@ public class MainActivity extends BaseActivity {
         setStatusBarHeight();
         addActivity(this);
 
-
-        String registrationID = JPushInterface.getRegistrationID(this);
-        JPushInterface.setAlias(this, getUserInfo().getId(), String.valueOf(getUserInfo().getId()));
+        if (checkUserRank(getApplicationContext())) {
+            JPushInterface.setAlias(this, getUserInfo().getId(), String.valueOf(getUserInfo().getId()));
+        }
 
         initView();
         noticeList();
@@ -74,8 +74,8 @@ public class MainActivity extends BaseActivity {
     /**
      * http://dogmanage.file.obs.cn-north-4.myhuaweicloud.com/828adcb2-c53c-446f-ae04-4f1f653a7561.webp
      * http://dogmanage.file.obs.cn-north-4.myhuaweicloud.com/ef02820b-5d40-457d-97e2-adb29ccbecba.jpg
-     *http://dogmanage.file.obs.cn-north-4.myhuaweicloud.com/aaef08a2-e4ee-4802-9875-14755e6b4af8.webp
-     *
+     * http://dogmanage.file.obs.cn-north-4.myhuaweicloud.com/aaef08a2-e4ee-4802-9875-14755e6b4af8.webp
+     * <p>
      * http://dogmanage.file.obs.cn-north-4.myhuaweicloud.com/54577243b9b38770.jpg
      */
 
@@ -160,24 +160,24 @@ public class MainActivity extends BaseActivity {
         SendRequest.bannerInfoList(0, 20, new GenericsCallback<Pager<BannerBean>>(new JsonGenericsSerializator()) {
 
 
-                    @Override
-                    public void onError(Call call, Exception e, int id) {
+            @Override
+            public void onError(Call call, Exception e, int id) {
 
-                    }
+            }
 
-                    @Override
-                    public void onResponse(Pager<BannerBean> response, int id) {
-                        if (response != null && response.getRows() != null && response.getRows().size() > 0) {
-                            List<String> imageList = new ArrayList<>();
-                            for (BannerBean bannerBean : response.getRows()) {
-                                imageList.add(bannerBean.getImageUrl());
-                            }
-                            binding.mainBanner.setImages(imageList).start();
-                        } else {
-                            binding.mainBanner.setImages(Arrays.asList("")).start();
-                        }
+            @Override
+            public void onResponse(Pager<BannerBean> response, int id) {
+                if (response != null && response.getRows() != null && response.getRows().size() > 0) {
+                    List<String> imageList = new ArrayList<>();
+                    for (BannerBean bannerBean : response.getRows()) {
+                        imageList.add(bannerBean.getImageUrl());
                     }
-                });
+                    binding.mainBanner.setImages(imageList).start();
+                } else {
+                    binding.mainBanner.setImages(Arrays.asList("")).start();
+                }
+            }
+        });
 
     }
 
@@ -185,24 +185,24 @@ public class MainActivity extends BaseActivity {
         SendRequest.getForbiddenById(new GenericsCallback<ResultClient<PoliciesBean>>(new JsonGenericsSerializator()) {
 
 
-                    @Override
-                    public void onError(Call call, Exception e, int id) {
+            @Override
+            public void onError(Call call, Exception e, int id) {
 
-                    }
+            }
 
-                    @Override
-                    public void onResponse(ResultClient<PoliciesBean> response, int id) {
-                        if (response != null && response.getData() != null) {
-                            try {
-                                List<String> imageList = new Gson().fromJson(response.getData().getImageUrl(), new TypeToken<List<String>>() {
-                                }.getType());
-                                binding.banner.setImages(imageList).start();
-                            } catch (Exception e) {
-                                e.getMessage();
-                            }
-                        }
+            @Override
+            public void onResponse(ResultClient<PoliciesBean> response, int id) {
+                if (response != null && response.getData() != null) {
+                    try {
+                        List<String> imageList = new Gson().fromJson(response.getData().getImageUrl(), new TypeToken<List<String>>() {
+                        }.getType());
+                        binding.banner.setImages(imageList).start();
+                    } catch (Exception e) {
+                        e.getMessage();
                     }
-                });
+                }
+            }
+        });
 
     }
 

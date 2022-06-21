@@ -54,7 +54,10 @@ public class MessageActivity extends BaseActivity {
         adapter.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view, Object object) {
-                openActivity(MessageDetailsActivity.class);
+                Message dataBean = (Message) object;
+                Bundle bundle = new Bundle();
+                bundle.putSerializable("dataBean", dataBean);
+                openActivity(MessageDetailsActivity.class, bundle);
             }
 
             @Override
@@ -89,7 +92,7 @@ public class MessageActivity extends BaseActivity {
     }
 
     public void loadData(boolean isRefresh) {
-        SendRequest.noticeList(pager.getCursor(), pager.getSize(),
+        SendRequest.sysNoticeList(pager.getCursor(), pager.getSize(),
                 new GenericsCallback<Pager<Message>>(new JsonGenericsSerializator()) {
 
                     @Override

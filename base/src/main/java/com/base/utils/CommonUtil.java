@@ -48,6 +48,8 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import androidx.core.app.NotificationManagerCompat;
+
 import com.base.BaseApplication;
 import com.base.MessageBus;
 import com.base.R;
@@ -73,6 +75,21 @@ import java.util.regex.Pattern;
 
 public class CommonUtil {
     private static final String TAG = "CommonUtil";
+
+    public static void toSetting(Context context) {
+        NotificationManagerCompat.from(context).areNotificationsEnabled();
+        Intent localIntent = new Intent();
+        localIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        if (Build.VERSION.SDK_INT >= 9) {
+            localIntent.setAction(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
+            localIntent.setData(Uri.fromParts("package", context.getPackageName(), null));
+        } else if (Build.VERSION.SDK_INT <= 8) {
+            localIntent.setAction(Intent.ACTION_VIEW);
+            localIntent.setClassName("com.android.settings", "com.android.setting.InstalledAppDetails");
+            localIntent.putExtra("com.android.settings.ApplicationPkgName", context.getPackageName());
+        }
+        context.startActivity(localIntent);
+    }
 
     public static int getLocalVideoDuration(String videoPath) {
         //时长

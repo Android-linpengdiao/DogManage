@@ -160,6 +160,7 @@ public class AdoptionDetailsActivity extends BaseActivity {
         if (recordAdoption != null && recordAdoption.getStatus() != null) {
             if (recordAdoption.getStatus() == 0) {
                 Bundle bundle = new Bundle();
+                bundle.putInt("orderId", recordAdoption.getOrderId());
                 bundle.putInt("leaveId", recordAdoption.getLeaveId());
                 bundle.putString("price", recordAdoption.getPrice());
                 openActivity(PayActivity.class, bundle);

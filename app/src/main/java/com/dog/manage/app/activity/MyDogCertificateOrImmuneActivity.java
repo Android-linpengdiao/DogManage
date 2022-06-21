@@ -15,6 +15,7 @@ import com.dog.manage.app.adapter.MainPagerAdapter;
 import com.dog.manage.app.databinding.ActivityMyDogCertificateOrImmuneBinding;
 import com.dog.manage.app.fragment.MyDogCertificateOrImmuneFragment;
 import com.dog.manage.app.model.Dog;
+import com.dog.manage.app.model.ImmuneBean;
 import com.dog.manage.app.model.LicenceBean;
 import com.okhttp.ResultClient;
 import com.okhttp.SendRequest;
@@ -50,7 +51,6 @@ public class MyDogCertificateOrImmuneActivity extends BaseActivity {
 
         } else if (type == type_immune) {
             getDogImmuneList();
-            initImmuneTabLayout();
 
         }
 
@@ -99,7 +99,7 @@ public class MyDogCertificateOrImmuneActivity extends BaseActivity {
      * 获取个人犬只免疫列表
      */
     private void getDogImmuneList() {
-        SendRequest.getDogImmuneList(new GenericsCallback<ResultClient<List<Dog>>>(new JsonGenericsSerializator()) {
+        SendRequest.getDogImmuneList(new GenericsCallback<ResultClient<List<ImmuneBean>>>(new JsonGenericsSerializator()) {
 
             @Override
             public void onBefore(Request request, int id) {
@@ -119,10 +119,10 @@ public class MyDogCertificateOrImmuneActivity extends BaseActivity {
             }
 
             @Override
-            public void onResponse(ResultClient<List<Dog>> response, int id) {
+            public void onResponse(ResultClient<List<ImmuneBean>> response, int id) {
                 if (response.isSuccess() && response.getData() != null) {
                     if (response.getData().size() > 0) {
-//                        initImmuneTabLayout(response.getData());
+                        initImmuneTabLayout(response.getData());
 
                     } else {
                         binding.emptyView.setVisibility(View.GONE);
@@ -171,19 +171,12 @@ public class MyDogCertificateOrImmuneActivity extends BaseActivity {
         });
     }
 
-    private void initImmuneTabLayout() {
+    private void initImmuneTabLayout(List<ImmuneBean> data) {
         CustomPagerAdapter customPagerAdapter = new CustomPagerAdapter(getSupportFragmentManager());
 
-//        for (LicenceBean licenceBean : data) {
-//            mainPagerAdapter.addFragment(licenceBean.getDogType(), MyDogCertificateOrImmuneFragment.getInstanceLicence(type, licenceBean));
-//
-//        }
-
-        customPagerAdapter.addFragment("萨摩耶", MyDogCertificateOrImmuneFragment.getInstance(type, 0));
-        customPagerAdapter.addFragment("柯基", MyDogCertificateOrImmuneFragment.getInstance(type, 1));
-        customPagerAdapter.addFragment("泰迪", MyDogCertificateOrImmuneFragment.getInstance(type, 2));
-        customPagerAdapter.addFragment("哈士奇", MyDogCertificateOrImmuneFragment.getInstance(type, 3));
-
+        for (ImmuneBean immuneBean : data) {
+            customPagerAdapter.addFragment(immuneBean.getDogType(), MyDogCertificateOrImmuneFragment.getInstanceImmune(type, immuneBean));
+        }
         binding.viewPager.setAdapter(customPagerAdapter);
         binding.viewPager.setOffscreenPageLimit(10);
         binding.viewPager.setCurrentItem(0);

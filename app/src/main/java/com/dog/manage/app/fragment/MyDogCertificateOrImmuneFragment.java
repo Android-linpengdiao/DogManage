@@ -12,13 +12,22 @@ import androidx.databinding.DataBindingUtil;
 
 import com.base.utils.GlideLoader;
 import com.base.utils.TimeUtils;
+import com.base.utils.ToastUtils;
 import com.dog.manage.app.R;
 import com.dog.manage.app.activity.DogCertificateEditDogOwnerActivity;
 import com.dog.manage.app.activity.DogCertificateExaminedActivity;
 import com.dog.manage.app.activity.DogDetailsActivity;
 import com.dog.manage.app.activity.DogInfoActivity;
 import com.dog.manage.app.databinding.FragmentMyDogCertificateOrImmuneBinding;
+import com.dog.manage.app.model.ImmuneBean;
+import com.dog.manage.app.model.ImmuneDetail;
 import com.dog.manage.app.model.LicenceBean;
+import com.okhttp.ResultClient;
+import com.okhttp.SendRequest;
+import com.okhttp.callbacks.GenericsCallback;
+import com.okhttp.sample_okhttp.JsonGenericsSerializator;
+
+import okhttp3.Call;
 
 /**
  * 我的犬证、免疫证明
@@ -41,11 +50,11 @@ public class MyDogCertificateOrImmuneFragment extends BaseFragment {
 
     }
 
-    public static MyDogCertificateOrImmuneFragment getInstance(int type, int id) {
+    public static MyDogCertificateOrImmuneFragment getInstanceImmune(int type, ImmuneBean immuneBean) {
         MyDogCertificateOrImmuneFragment fragment = new MyDogCertificateOrImmuneFragment();
         Bundle bundle = new Bundle();
         bundle.putInt("type", type);
-        bundle.putInt("id", id);
+        bundle.putSerializable("dataBean", immuneBean);
         fragment.setArguments(bundle);
         return fragment;
 
@@ -65,13 +74,28 @@ public class MyDogCertificateOrImmuneFragment extends BaseFragment {
 
             if (type == type_certificate) {
                 LicenceBean licenceBean = (LicenceBean) getArguments().getSerializable("dataBean");
-                if (licenceBean != null) {
+                if (licenceBean != null)
                     certificateView(licenceBean);
 
-                }
-
             } else if (type == type_immune) {
-                GlideLoader.LoderImage(getActivity(), "https://pics7.baidu.com/feed/6c224f4a20a446236fb6db0ac3bf5d040df3d785.jpeg", binding.coverView, 5);
+                ImmuneBean immuneBean = (ImmuneBean) getArguments().getSerializable("dataBean");
+                if (immuneBean != null)
+                    SendRequest.getImmuneDetail(immuneBean.getImmuneId(), new GenericsCallback<ResultClient<ImmuneDetail>>(new JsonGenericsSerializator()) {
+                        @Override
+                        public void onError(Call call, Exception e, int id) {
+
+                        }
+
+                        @Override
+                        public void onResponse(ResultClient<ImmuneDetail> response, int id) {
+                            if (response.isSuccess() && response.getData() != null) {
+                                immuneView(response.getData());
+                            } else {
+                                ToastUtils.showShort(getActivity(), response.getMsg());
+                            }
+
+                        }
+                    });
 
 
             }
@@ -79,6 +103,20 @@ public class MyDogCertificateOrImmuneFragment extends BaseFragment {
 
         }
         return binding.getRoot();
+    }
+
+    private void immuneView(ImmuneDetail immuneDetail) {
+        binding.immuneDogTypeView.setText(immuneDetail.getDogType());
+
+        binding.immuneNameView.setText(immuneDetail.getImmuneName());
+        binding.immuneBatchView.setText(immuneDetail.getImmuneBatch());
+        binding.immuneFactoryView.setText(immuneDetail.getImmuneFactory());
+        binding.immuneDataView.setText(immuneDetail.getImmuneData());
+        binding.immuneNumView.setText(immuneDetail.getImmuneNum());
+        binding.immuneUserView.setText(immuneDetail.getImmuneUser());
+        binding.nextImmuneDataView.setText(immuneDetail.getNextImmuneData());
+
+
     }
 
     private void certificateView(LicenceBean licenceBean) {

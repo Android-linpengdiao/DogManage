@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 @Data
 public class DogLicenceDetail {
 
+    private Integer orderId;
     private Integer lincenceId;
     private Integer licenceStatus;
     private String dogType;

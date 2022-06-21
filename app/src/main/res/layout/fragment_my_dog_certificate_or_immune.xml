@@ -429,11 +429,12 @@
                                 android:textSize="@dimen/sp_12" />
 
                             <TextView
+                                android:id="@+id/immuneDogTypeView"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginLeft="@dimen/dp_8"
                                 android:gravity="center_vertical"
-                                android:text="旺财"
+                                tools:text="旺财"
                                 android:textColor="@color/black"
                                 android:textSize="@dimen/sp_12" />
 
@@ -637,11 +638,12 @@
                                 android:textSize="@dimen/sp_12" />
 
                             <TextView
+                                android:id="@+id/immuneNameView"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginLeft="@dimen/dp_8"
                                 android:gravity="center_vertical"
-                                android:text="狂犬病疫苗"
+                                tools:text="狂犬病疫苗"
                                 android:textColor="@color/black"
                                 android:textSize="@dimen/sp_12" />
 
@@ -663,11 +665,12 @@
                                 android:textSize="@dimen/sp_12" />
 
                             <TextView
+                                android:id="@+id/immuneBatchView"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginLeft="@dimen/dp_8"
                                 android:gravity="center_vertical"
-                                android:text="CEWERWERW"
+                                tools:text="CEWERWERW"
                                 android:textColor="@color/black"
                                 android:textSize="@dimen/sp_12" />
 
@@ -689,11 +692,12 @@
                                 android:textSize="@dimen/sp_12" />
 
                             <TextView
+                                android:id="@+id/immuneFactoryView"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginLeft="@dimen/dp_8"
                                 android:gravity="center_vertical"
-                                android:text="XXXXX厂家"
+                                tools:text="XXXXX厂家"
                                 android:textColor="@color/black"
                                 android:textSize="@dimen/sp_12" />
 
@@ -715,11 +719,12 @@
                                 android:textSize="@dimen/sp_12" />
 
                             <TextView
+                                android:id="@+id/immuneDataView"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginLeft="@dimen/dp_8"
                                 android:gravity="center_vertical"
-                                android:text="2022-03-05"
+                                tools:text="2022-03-05"
                                 android:textColor="@color/black"
                                 android:textSize="@dimen/sp_12" />
 
@@ -741,11 +746,12 @@
                                 android:textSize="@dimen/sp_12" />
 
                             <TextView
+                                android:id="@+id/immuneNumView"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginLeft="@dimen/dp_8"
                                 android:gravity="center_vertical"
-                                android:text="02798"
+                                tools:text="02798"
                                 android:textColor="@color/black"
                                 android:textSize="@dimen/sp_12" />
 
@@ -767,11 +773,12 @@
                                 android:textSize="@dimen/sp_12" />
 
                             <TextView
+                                android:id="@+id/immuneUserView"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginLeft="@dimen/dp_8"
                                 android:gravity="center_vertical"
-                                android:text="张三"
+                                tools:text="张三"
                                 android:textColor="@color/black"
                                 android:textSize="@dimen/sp_12" />
 
@@ -794,11 +801,12 @@
                                 android:textSize="@dimen/sp_12" />
 
                             <TextView
+                                android:id="@+id/nextImmuneDataView"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginLeft="@dimen/dp_8"
                                 android:gravity="center_vertical"
-                                android:text="2023-03-05"
+                                tools:text="2023-03-05"
                                 android:textColor="@color/black"
                                 android:textSize="@dimen/sp_12" />
 

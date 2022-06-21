@@ -9,4 +9,7 @@
 
     <string name="hello_first_fragment">Hello first fragment</string>
     <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
+
+    <string name="str_setting_hint">您可以到 “应用信息”>“通知管理”中开启通知。</string>
+    <string name="str_setting_hint_26">您可以到 “应用信息”>“通知管理”>“新消息通知”中开启通知。</string>
 </resources>

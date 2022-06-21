@@ -7,9 +7,11 @@ import android.view.View;
 import com.base.BaseData;
 import com.base.manager.LoadingManager;
 import com.base.utils.CommonUtil;
+import com.base.utils.GsonUtils;
 import com.base.utils.ToastUtils;
 import com.dog.manage.app.Callback;
 import com.dog.manage.app.R;
+import com.dog.manage.app.activity.record.AdoptionDetailsActivity;
 import com.dog.manage.app.databinding.ActivityPayBinding;
 import com.dog.manage.app.model.VipOrderBean;
 import com.dog.manage.app.utils.PayManager;
@@ -27,6 +29,7 @@ import okhttp3.Request;
 public class PayActivity extends BaseActivity {
 
     private ActivityPayBinding binding;
+    private int orderId;
     private int licenceId;
     private int payType = 0;
     private String price;
@@ -38,6 +41,7 @@ public class PayActivity extends BaseActivity {
         binding = getViewData(R.layout.activity_pay);
         addActivity(this);
 
+        orderId = getIntent().getIntExtra("orderId", 0);
         licenceId = getIntent().getIntExtra("licenceId", 0);
         price = getIntent().getStringExtra("price");
         binding.moneyView.binding.itemContent.setText("￥" + price);
@@ -57,37 +61,87 @@ public class PayActivity extends BaseActivity {
     }
 
     public void onClickConfirm(View view) {
-        SendRequest.payment(licenceId, payType, new GenericsCallback<ResultClient<Boolean>>(new JsonGenericsSerializator()) {
+        if (binding.wxPayView.isSelected()) {
+            ToastUtils.showShort(PayActivity.this, "微信支付未开通");
 
-            @Override
-            public void onBefore(Request request, int id) {
-                super.onBefore(request, id);
-                LoadingManager.showLoadingDialog(PayActivity.this);
-            }
+        } else if (binding.aliPayView.isSelected()) {
+            SendRequest.aliPayment(orderId, new GenericsCallback<String>(new JsonGenericsSerializator()) {
 
-            @Override
-            public void onAfter(int id) {
-                super.onAfter(id);
-                LoadingManager.hideLoadingDialog(PayActivity.this);
-            }
-
-            @Override
-            public void onError(Call call, Exception e, int id) {
-
-            }
-
-            @Override
-            public void onResponse(ResultClient<Boolean> response, int id) {
-                if (response.isSuccess()) {
-                    finishActivity(CertificateDetailsActivity.class);
-                    finish();
-
-                } else {
-                    ToastUtils.showShort(getApplicationContext(), !CommonUtil.isBlank(response.getMsg()) ? response.getMsg() : "支付失败");
-
+                @Override
+                public void onError(Call call, Exception e, int id) {
                 }
-            }
-        });
+
+                @Override
+                public void onResponse(String response, int id) {
+                    try {
+                        JSONObject object = new JSONObject(response);
+                        if (!object.isNull("code")) {
+                            int code = object.optInt("code");
+                            if (code == 200) {
+                                if (!object.isNull("data")) {
+                                    JSONObject data = object.optJSONObject("data");
+                                    PayManager.aliPay(PayActivity.this, data.optString("orderInfo"), new PayManager.PayListener() {
+                                        @Override
+                                        public void onSuccess() {
+                                            paySuccess();
+                                        }
+
+                                        @Override
+                                        public void onFail() {
+                                            payFail("支付失败");
+
+                                        }
+
+                                        @Override
+                                        public void onCancel() {
+                                            payFail("取消支付");
+                                        }
+                                    });
+                                }
+                            } else {
+                                ToastUtils.showShort(PayActivity.this, object.optString("msg"));
+                            }
+                        }
+
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+            });
+        }
+
+
+//        SendRequest.payment(licenceId, payType, new GenericsCallback<ResultClient<Boolean>>(new JsonGenericsSerializator()) {
+//
+//            @Override
+//            public void onBefore(Request request, int id) {
+//                super.onBefore(request, id);
+//                LoadingManager.showLoadingDialog(PayActivity.this);
+//            }
+//
+//            @Override
+//            public void onAfter(int id) {
+//                super.onAfter(id);
+//                LoadingManager.hideLoadingDialog(PayActivity.this);
+//            }
+//
+//            @Override
+//            public void onError(Call call, Exception e, int id) {
+//
+//            }
+//
+//            @Override
+//            public void onResponse(ResultClient<Boolean> response, int id) {
+//                if (response.isSuccess()) {
+//                    finishActivity(CertificateDetailsActivity.class);
+//                    finish();
+//
+//                } else {
+//                    ToastUtils.showShort(getApplicationContext(), !CommonUtil.isBlank(response.getMsg()) ? response.getMsg() : "支付失败");
+//
+//                }
+//            }
+//        });
     }
 
     private int month = 1;
@@ -239,17 +293,9 @@ public class PayActivity extends BaseActivity {
 
     private void paySuccess() {
         ToastUtils.showShort(PayActivity.this, "支付成功");
-        updateUserInfo(new Callback() {
-            @Override
-            public void onError() {
-
-            }
-
-            @Override
-            public void onResponse(boolean success, int id) {
-
-            }
-        });
+        finishActivity(CertificateDetailsActivity.class);
+        finishActivity(AdoptionDetailsActivity.class);
+        finish();
     }
 
     private void payFail(String content) {
