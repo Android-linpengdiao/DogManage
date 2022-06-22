@@ -388,9 +388,12 @@ public class DogCertificateEditDogOwnerActivity extends BaseActivity {
                                 areaSelectAdapter.refreshData(response.getRows());
                             } else {
                                 areaSelectAdapter.loadMoreData(response.getRows());
-                                if (areaSelectAdapter.getList().size() < response.getTotal()) {
-                                    areasPager.setCursor(areasPager.getCursor() + 1);
-                                }
+                            }
+                            Log.i(TAG, "onResponse: size = "+areaSelectAdapter.getList().size());
+                            Log.i(TAG, "onResponse: getTotal = "+response.getTotal());
+                            if (areaSelectAdapter.getList().size() < response.getTotal()) {
+                                areasPager.setCursor(areasPager.getCursor() + 1);
+                                Log.i(TAG, "onResponse: getCursor = "+areasPager.getCursor());
                             }
                             if (areaSelectAdapter.getList().size() == response.getTotal()) {
                                 addressBinding.refreshLayout.setNoMoreData(true);

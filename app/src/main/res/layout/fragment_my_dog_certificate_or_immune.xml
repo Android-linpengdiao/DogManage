@@ -394,12 +394,13 @@
                     android:textSize="@dimen/sp_20"/>
 
                 <com.dog.manage.app.view.TextBoldView
+                    android:id="@+id/immuneIdNumView"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/dp_13"
                     android:gravity="center"
                     android:singleLine="true"
-                    android:text="免疫证明编号：2022030509870987612"
+                    android:text="免疫证明编号："
                     android:textColor="@color/black"
                     android:textSize="@dimen/sp_13"/>
 
@@ -429,7 +430,7 @@
                                 android:textSize="@dimen/sp_12" />
 
                             <TextView
-                                android:id="@+id/immuneDogTypeView"
+                                android:id="@+id/immuneDogNameView"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginLeft="@dimen/dp_8"
@@ -456,11 +457,12 @@
                                 android:textSize="@dimen/sp_12" />
 
                             <TextView
+                                android:id="@+id/immuneDogGenderView"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginLeft="@dimen/dp_8"
                                 android:gravity="center_vertical"
-                                android:text="雄性"
+                                tools:text="雄性"
                                 android:textColor="@color/black"
                                 android:textSize="@dimen/sp_12" />
 
@@ -482,11 +484,12 @@
                                 android:textSize="@dimen/sp_12" />
 
                             <TextView
+                                android:id="@+id/immuneDogColorView"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginLeft="@dimen/dp_8"
                                 android:gravity="center_vertical"
-                                android:text="白色"
+                                tools:text="白色"
                                 android:textColor="@color/black"
                                 android:textSize="@dimen/sp_12" />
 
@@ -508,11 +511,12 @@
                                 android:textSize="@dimen/sp_12" />
 
                             <TextView
+                                android:id="@+id/immuneDogTypeView"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginLeft="@dimen/dp_8"
                                 android:gravity="center_vertical"
-                                android:text="严摩耶"
+                                tools:text="严摩耶"
                                 android:textColor="@color/black"
                                 android:textSize="@dimen/sp_12" />
 
@@ -612,11 +616,12 @@
                                 android:textSize="@dimen/sp_12" />
 
                             <TextView
+                                android:id="@+id/hospitalNameView"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginLeft="@dimen/dp_8"
                                 android:gravity="center_vertical"
-                                android:text="北京友好动物医院"
+                                tools:text="北京友好动物医院"
                                 android:textColor="@color/black"
                                 android:textSize="@dimen/sp_12" />
 

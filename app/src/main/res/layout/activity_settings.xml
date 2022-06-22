@@ -35,18 +35,6 @@
             app:item_title="软件介绍"
             app:item_title_size="@dimen/sp_17" />
 
-        <com.dog.manage.app.view.ViewItemLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:item_container_margin_left="@dimen/viewPadding"
-            app:item_container_margin_right="@dimen/viewPadding"
-            app:item_divider_visible="true"
-            app:item_container_height="@dimen/dp_50"
-            android:onClick="onClickSystemNotice"
-            app:item_arrow_visible="true"
-            app:item_title="新消息系统通知"
-            app:item_title_size="@dimen/sp_17" />
-
 
         <com.dog.manage.app.view.ViewItemLayout
             android:layout_width="match_parent"
@@ -73,6 +61,18 @@
             app:item_title="清理缓存"
             app:item_title_size="@dimen/sp_17"
             android:onClick="onClickClear"/>
+
+        <com.dog.manage.app.view.ViewItemLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:item_container_margin_left="@dimen/viewPadding"
+            app:item_container_margin_right="@dimen/viewPadding"
+            app:item_divider_visible="true"
+            app:item_container_height="@dimen/dp_50"
+            android:onClick="onClickSystemNotice"
+            app:item_arrow_visible="true"
+            app:item_title="新消息系统通知"
+            app:item_title_size="@dimen/sp_17" />
 
 
         <com.dog.manage.app.view.ViewItemLayout

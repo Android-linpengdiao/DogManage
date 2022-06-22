@@ -1,6 +1,7 @@
 package com.dog.manage.app.utils;
 
 import android.app.Activity;
+import android.util.Log;
 
 import com.alipay.sdk.app.PayTask;
 import com.tencent.mm.opensdk.modelpay.PayReq;
@@ -19,7 +20,7 @@ import java.util.Map;
 
 public class PayManager {
 
-
+    private static final String TAG = "PayManager";
     /**
      * 支付宝支付
      *
@@ -28,7 +29,7 @@ public class PayManager {
      * @param listener  监听
      */
     public static void aliPay(final Activity activity, final String orderInfo, final PayListener listener) {
-
+        Log.i(TAG, "aliPay: "+orderInfo);
         if (activity == null) {
             if (listener != null) {
                 listener.onFail();

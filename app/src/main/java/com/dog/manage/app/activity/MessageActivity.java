@@ -130,7 +130,10 @@ public class MessageActivity extends BaseActivity {
                                 binding.refreshLayout.setNoMoreData(true);
                             }
                             binding.emptyView.setVisibility(adapter.getList().size() > 0 ? View.GONE : View.VISIBLE);
-                            binding.emptyView.setText("暂无内容～");
+                            binding.emptyView.setText("暂无消息～");
+                        }else {
+                            binding.emptyView.setVisibility(View.VISIBLE);
+                            binding.emptyView.setText("暂无消息～");
                         }
                     }
                 });

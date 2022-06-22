@@ -93,13 +93,13 @@ public class DogInfoActivity extends BaseActivity {
                         List<String> idPhotos = new Gson().fromJson(dogDetail.getDogPhoto(), new TypeToken<List<String>>() {
                         }.getType());
                         if (idPhotos.size() > 0) {
-                            GlideLoader.LoderImage(DogInfoActivity.this, idPhotos.size() > 0 ? idPhotos.get(0) : "", binding.leftFaceView);
+                            GlideLoader.LoderImage(DogInfoActivity.this, idPhotos.size() > 0 ? idPhotos.get(0) : "", binding.leftFaceView,6);
                         }
                         if (idPhotos.size() > 1) {
-                            GlideLoader.LoderImage(DogInfoActivity.this, idPhotos.size() > 1 ? idPhotos.get(1) : "", binding.centerFaceView);
+                            GlideLoader.LoderImage(DogInfoActivity.this, idPhotos.size() > 1 ? idPhotos.get(1) : "", binding.centerFaceView,6);
                         }
                         if (idPhotos.size() > 2) {
-                            GlideLoader.LoderImage(DogInfoActivity.this, idPhotos.size() > 2 ? idPhotos.get(2) : "", binding.rightFaceView);
+                            GlideLoader.LoderImage(DogInfoActivity.this, idPhotos.size() > 2 ? idPhotos.get(2) : "", binding.rightFaceView,6);
                         }
                     } catch (Exception e) {
                         e.getMessage();
