@@ -47,6 +47,25 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/dp_14">
 
+                <ImageView
+                    android:id="@+id/certificateCoverView"
+                    android:layout_width="@dimen/dp_84"
+                    android:layout_height="@dimen/dp_78"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginRight="@dimen/dp_30"
+                    android:background="@drawable/image_8" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/certificateCoverView"
+                    android:layout_alignStart="@+id/certificateCoverView"
+                    android:layout_marginTop="@dimen/dp_8"
+                    android:gravity="center"
+                    android:text="免疫证状态:有效"
+                    android:textColor="#000000"
+                    android:textSize="@dimen/certificateSize" />
+
                 <LinearLayout
                     android:id="@+id/certificateInfoContainer"
                     android:layout_width="match_parent"
@@ -251,25 +270,6 @@
                         android:textSize="@dimen/sp_11"/>
 
                 </LinearLayout>
-
-                <ImageView
-                    android:id="@+id/certificateCoverView"
-                    android:layout_width="@dimen/dp_84"
-                    android:layout_height="@dimen/dp_78"
-                    android:layout_alignParentRight="true"
-                    android:layout_marginRight="@dimen/dp_40"
-                    android:background="@drawable/image_8" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/certificateCoverView"
-                    android:layout_alignStart="@+id/certificateCoverView"
-                    android:layout_marginTop="@dimen/dp_8"
-                    android:gravity="center"
-                    android:text="免疫证状态:有效"
-                    android:textColor="#000000"
-                    android:textSize="@dimen/certificateSize" />
 
                 <ImageView
                     android:layout_width="@dimen/dp_70"
