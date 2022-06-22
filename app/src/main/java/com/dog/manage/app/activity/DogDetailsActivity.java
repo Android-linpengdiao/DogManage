@@ -44,7 +44,7 @@ public class DogDetailsActivity extends BaseActivity {
         leaveId = getIntent().getIntExtra("leaveId", 0);
 
         intBanner();
-        getDogById();
+        getLeaveDogDetail();
     }
 
     private void intBanner() {
@@ -65,7 +65,7 @@ public class DogDetailsActivity extends BaseActivity {
     /**
      * 犬证 获取犬只详情信息
      */
-    private void getDogById() {
+    private void getLeaveDogDetail() {
         SendRequest.getLeaveDogDetail(leaveId, new GenericsCallback<ResultClient<DogDetail>>(new JsonGenericsSerializator()) {
 
             @Override

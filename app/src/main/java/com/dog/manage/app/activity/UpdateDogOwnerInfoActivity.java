@@ -136,6 +136,7 @@ public class UpdateDogOwnerInfoActivity extends BaseActivity {
                 addressBinding.recyclerView.setAdapter(areaSelectAdapter);
 
                 addressBinding.refreshLayout.setEnableRefresh(false);
+                addressBinding.refreshLayout.setEnableLoadMore(false);
                 addressBinding.refreshLayout.setOnLoadMoreListener(new OnLoadMoreListener() {
                     @Override
                     public void onLoadMore(RefreshLayout refreshlayout) {
@@ -185,6 +186,7 @@ public class UpdateDogOwnerInfoActivity extends BaseActivity {
                 communityBinding.recyclerView.setAdapter(communitySelectAdapter);
 
                 communityBinding.refreshLayout.setEnableRefresh(false);
+                communityBinding.refreshLayout.setEnableLoadMore(false);
                 communityBinding.refreshLayout.setOnLoadMoreListener(new OnLoadMoreListener() {
                     @Override
                     public void onLoadMore(RefreshLayout refreshlayout) {
@@ -298,7 +300,7 @@ public class UpdateDogOwnerInfoActivity extends BaseActivity {
         }
         //省110000 、市110100
         SendRequest.getAddressList(communityName, 110000, 110100, addressBean.getId(),
-                communityPager.getCursor(), communityPager.getSize(),
+                communityPager.getCursor(), 100,
                 new GenericsCallback<Pager<CommunityBean>>(new JsonGenericsSerializator()) {
 
                     @Override
@@ -351,7 +353,8 @@ public class UpdateDogOwnerInfoActivity extends BaseActivity {
 
     private void getAddressAreas(boolean isRefresh) {
         //省110000 、市110100
-        SendRequest.getAddressAreas(3, 110100, areasPager.getCursor(), areasPager.getSize(),
+        SendRequest.getAddressAreas(3, 110100,
+                areasPager.getCursor(), 100,
                 new GenericsCallback<Pager<AddressBean>>(new JsonGenericsSerializator()) {
 
                     @Override

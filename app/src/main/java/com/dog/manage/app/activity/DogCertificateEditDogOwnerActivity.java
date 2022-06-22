@@ -207,6 +207,7 @@ public class DogCertificateEditDogOwnerActivity extends BaseActivity {
                 addressBinding.recyclerView.setAdapter(areaSelectAdapter);
 
                 addressBinding.refreshLayout.setEnableRefresh(false);
+                addressBinding.refreshLayout.setEnableLoadMore(false);
                 addressBinding.refreshLayout.setOnLoadMoreListener(new OnLoadMoreListener() {
                     @Override
                     public void onLoadMore(RefreshLayout refreshlayout) {
@@ -260,6 +261,7 @@ public class DogCertificateEditDogOwnerActivity extends BaseActivity {
                 communityBinding.recyclerView.setAdapter(communitySelectAdapter);
 
                 communityBinding.refreshLayout.setEnableRefresh(false);
+                addressBinding.refreshLayout.setEnableLoadMore(false);
                 communityBinding.refreshLayout.setOnLoadMoreListener(new OnLoadMoreListener() {
                     @Override
                     public void onLoadMore(RefreshLayout refreshlayout) {
@@ -304,7 +306,7 @@ public class DogCertificateEditDogOwnerActivity extends BaseActivity {
         }
         //省110000 、市110100
         SendRequest.getAddressList(communityName, 110000, 110100, addressBean.getId(),
-                communityPager.getCursor(), communityPager.getSize(),
+                communityPager.getCursor(), 100,
                 new GenericsCallback<Pager<CommunityBean>>(new JsonGenericsSerializator()) {
 
                     @Override
@@ -357,7 +359,8 @@ public class DogCertificateEditDogOwnerActivity extends BaseActivity {
 
     private void getAddressAreas(boolean isRefresh) {
         //省110000 、市110100
-        SendRequest.getAddressAreas(3, 110100, areasPager.getCursor(), areasPager.getSize(),
+        SendRequest.getAddressAreas(3, 110100,
+                areasPager.getCursor(), 100,
                 new GenericsCallback<Pager<AddressBean>>(new JsonGenericsSerializator()) {
 
                     @Override
@@ -389,11 +392,11 @@ public class DogCertificateEditDogOwnerActivity extends BaseActivity {
                             } else {
                                 areaSelectAdapter.loadMoreData(response.getRows());
                             }
-                            Log.i(TAG, "onResponse: size = "+areaSelectAdapter.getList().size());
-                            Log.i(TAG, "onResponse: getTotal = "+response.getTotal());
+                            Log.i(TAG, "onResponse: size = " + areaSelectAdapter.getList().size());
+                            Log.i(TAG, "onResponse: getTotal = " + response.getTotal());
                             if (areaSelectAdapter.getList().size() < response.getTotal()) {
                                 areasPager.setCursor(areasPager.getCursor() + 1);
-                                Log.i(TAG, "onResponse: getCursor = "+areasPager.getCursor());
+                                Log.i(TAG, "onResponse: getCursor = " + areasPager.getCursor());
                             }
                             if (areaSelectAdapter.getList().size() == response.getTotal()) {
                                 addressBinding.refreshLayout.setNoMoreData(true);
@@ -1108,7 +1111,7 @@ public class DogCertificateEditDogOwnerActivity extends BaseActivity {
                             response.getData().setLeaveId(leaveId);
                             Bundle bundle = new Bundle();
                             bundle.putSerializable("dogDetail", response.getData());
-                            openActivity(DogAdoptionSubmitActivity.class,bundle);
+                            openActivity(DogAdoptionSubmitActivity.class, bundle);
 
                         } else {
                             ToastUtils.showShort(getApplicationContext(), response.getMsg());

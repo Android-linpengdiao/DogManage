@@ -58,7 +58,8 @@ public class MainActivity extends BaseActivity {
         binding = getViewData(R.layout.activity_main);
         setStatusBarHeight();
         addActivity(this);
-
+        String registrationID = JPushInterface.getRegistrationID(this);
+        Log.i(TAG, "onClickLogin: registrationID = "+registrationID);
         if (checkUserRank(getApplicationContext())) {
             JPushInterface.setAlias(this, getUserInfo().getId(), String.valueOf(getUserInfo().getId()));
         }

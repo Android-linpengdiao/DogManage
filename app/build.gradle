@@ -100,6 +100,7 @@ dependencies {
     implementation lombok
     implementation annotation
     implementation huaweicloud
+    implementation pickerView
 
     //支付宝
     implementation files('libs/alipaysdk-noutdid-15.8.00.201112210139.aar')

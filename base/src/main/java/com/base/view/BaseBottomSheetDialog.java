@@ -26,6 +26,8 @@ public abstract class BaseBottomSheetDialog extends BottomSheetDialog {
 
         mDialogBehavior = BottomSheetBehavior.from((View) rootView.getParent());
         mDialogBehavior.setPeekHeight(getWindowHeight());
+        //禁止滑动关闭但允许点击背景关闭
+        mDialogBehavior.setHideable(false);
         //dialog滑动监听
         mDialogBehavior.setBottomSheetCallback(new BottomSheetBehavior.BottomSheetCallback() {
             @Override

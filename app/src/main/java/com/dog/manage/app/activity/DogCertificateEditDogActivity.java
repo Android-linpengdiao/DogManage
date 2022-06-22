@@ -2,12 +2,14 @@ package com.dog.manage.app.activity;
 
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.RadioGroup;
 
+import com.base.manager.LoadingManager;
 import com.base.utils.CommonUtil;
 import com.base.utils.FileUtils;
 import com.base.utils.GlideLoader;
@@ -15,6 +17,9 @@ import com.base.utils.GsonUtils;
 import com.base.utils.PermissionUtils;
 import com.base.utils.ToastUtils;
 import com.base.view.OnClickListener;
+import com.bigkoo.pickerview.builder.TimePickerBuilder;
+import com.bigkoo.pickerview.listener.OnTimeSelectListener;
+import com.bigkoo.pickerview.view.TimePickerView;
 import com.dog.manage.app.Config;
 import com.dog.manage.app.DogDialogManager;
 import com.dog.manage.app.R;
@@ -23,6 +28,7 @@ import com.dog.manage.app.media.MediaFile;
 import com.dog.manage.app.media.MediaSelectActivity;
 import com.dog.manage.app.media.MediaUtils;
 import com.dog.manage.app.model.Dog;
+import com.dog.manage.app.model.DogDetail;
 import com.dog.manage.app.utils.UploadFileManager;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -36,13 +42,17 @@ import com.okhttp.callbacks.GenericsCallback;
 import com.okhttp.sample_okhttp.JsonGenericsSerializator;
 
 import java.io.File;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import okhttp3.Call;
+import okhttp3.Request;
 import top.zibin.luban.Luban;
 import top.zibin.luban.OnCompressListener;
 
@@ -120,6 +130,7 @@ public class DogCertificateEditDogActivity extends BaseActivity {
                             public void onClick(View view, Object object) {
                                 dog = (Dog) object;
                                 binding.dogCertificateView.binding.itemContent.setText(dog.getDogType());
+                                getDogById(dog.getDogId());
                             }
 
                             @Override
@@ -188,10 +199,75 @@ public class DogCertificateEditDogActivity extends BaseActivity {
             }
         });
 
-        getDogImmuneList();
+        binding.dogAgeView.binding.itemContent.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                getDogAge();
+            }
+        });
+
+        if (type == type_certificate) {
+            getDogList();
+
+        } else if (type == type_immune) {
+            getDogLicenceList();
+
+        }
 
     }
 
+    /**
+     * 犬只年龄
+     */
+    private void getDogAge() {
+        Calendar selectedDate = Calendar.getInstance();
+        Calendar startDate = Calendar.getInstance();
+        Calendar endDate = Calendar.getInstance();
+
+        //正确设置方式 原因：注意事项有说明
+        SimpleDateFormat yearSimpleDateFormat = new SimpleDateFormat("yyyy");
+        SimpleDateFormat monthSimpleDateFormat = new SimpleDateFormat("MM");
+        SimpleDateFormat dateSimpleDateFormat = new SimpleDateFormat("dd");
+        Date date = new Date(System.currentTimeMillis());
+        startDate.set(2010, 11, 31);
+        endDate.set(Integer.parseInt(yearSimpleDateFormat.format(date)), Integer.parseInt(monthSimpleDateFormat.format(date)) - 1, Integer.parseInt(dateSimpleDateFormat.format(date)));
+
+        TimePickerView timePickerView = new TimePickerBuilder(DogCertificateEditDogActivity.this, new OnTimeSelectListener() {
+            @Override
+            public void onTimeSelect(Date date, View v) {//选中事件回调
+                SimpleDateFormat sdr = new SimpleDateFormat("yyyy-MM");
+                binding.dogAgeView.binding.itemContent.setText(sdr.format(date));
+            }
+        })
+                .setType(new boolean[]{true, true, false, false, false, false})// 默认全部显示
+                .setCancelText("取消")//取消按钮文字
+                .setSubmitText("确定")//确认按钮文字
+                .setSubCalSize(16)//滚轮文字大小
+                .setContentTextSize(18)//滚轮文字大小
+                .setTitleSize(18)//标题文字大小
+                .setTitleText("选择时间")//标题文字
+                .setOutSideCancelable(false)//点击屏幕，点在控件外部范围时，是否取消显示
+                .isCyclic(false)//是否循环滚动
+                .setTitleColor(Color.BLACK)//标题文字颜色
+                .setSubmitColor(Color.BLACK)//确定按钮文字颜色
+                .setCancelColor(Color.BLACK)//取消按钮文字颜色
+                .setTitleBgColor(getResources().getColor(R.color.white))//标题背景颜色 Night mode
+                .setBgColor(getResources().getColor(R.color.white))//滚轮背景颜色 Night mode
+                .setDate(selectedDate)// 如果不设置的话，默认是系统时间*/
+                .setRangDate(startDate, endDate)//起始终止年月日设定
+                .setLabel("", "", "", "时", "分", "秒")//默认设置为年月日时分秒
+                .isCenterLabel(false) //是否只显示中间选中项的label文字，false则每项item全部都带有label。
+                .isDialog(false)//是否显示为对话框样式
+                .setLineSpacingMultiplier(2.6f)//设置间距倍数,但是只能在1.0-4.0f之间
+                .build();
+        timePickerView.show();
+    }
+
+    /**
+     * 是否不可养犬
+     *
+     * @param dogType
+     */
     private void verificationDog(String dogType) {
         SendRequest.verificationDog(dogType, new GenericsCallback<ResultClient<Boolean>>(new JsonGenericsSerializator()) {
             @Override
@@ -209,8 +285,11 @@ public class DogCertificateEditDogActivity extends BaseActivity {
         });
     }
 
-    private void getDogImmuneList() {
-        SendRequest.getDogImmuneList(new GenericsCallback<ResultClient<List<Dog>>>(new JsonGenericsSerializator()) {
+    /**
+     * 办理过疫苗的。没有办理狗证的
+     */
+    private void getDogList() {
+        SendRequest.getDogList(new GenericsCallback<ResultClient<List<Dog>>>(new JsonGenericsSerializator()) {
             @Override
             public void onError(Call call, Exception e, int id) {
             }
@@ -226,17 +305,106 @@ public class DogCertificateEditDogActivity extends BaseActivity {
                     newDog.setDogType("添加新犬只");
                     dogList.add(newDog);
                     dog = dogList.get(0);
-                    binding.dogCertificateView.binding.itemContent.setText(dog.getDogType());
-                    if (dog.getDogId() != 0) {
+//                    binding.dogCertificateView.binding.itemContent.setText(dog.getDogType());
+//                    if (dog.getDogId() != 0) {
 //                        intiView();
-                    }
+//                    }
 
                 }
             }
         });
     }
 
-    private void intiView() {
+    /**
+     * 获取犬证列表
+     */
+    private void getDogLicenceList() {
+        SendRequest.getDogLicenceList(new GenericsCallback<ResultClient<List<Dog>>>(new JsonGenericsSerializator()) {
+            @Override
+            public void onError(Call call, Exception e, int id) {
+            }
+
+            @Override
+            public void onResponse(ResultClient<List<Dog>> response, int id) {
+                if (response.isSuccess() && response.getData() != null) {
+                    if (response.getData().size() > 0) {
+                        dogList = response.getData();
+                    }
+                    Dog newDog = new Dog();
+                    newDog.setDogId(0);
+                    newDog.setDogType("添加新犬只");
+                    dogList.add(newDog);
+                    dog = dogList.get(0);
+//                    binding.dogCertificateView.binding.itemContent.setText(dog.getDogType());
+//                    if (dog.getDogId() != 0) {
+//                        intiView();
+//                    }
+
+                }
+            }
+        });
+    }
+
+    /**
+     * 犬证 获取犬只详情信息
+     */
+    private void getDogById(int dogId) {
+        SendRequest.getDogById(dogId, new GenericsCallback<ResultClient<Dog>>(new JsonGenericsSerializator()) {
+
+            @Override
+            public void onBefore(Request request, int id) {
+                super.onBefore(request, id);
+                LoadingManager.showLoadingDialog(DogCertificateEditDogActivity.this);
+            }
+
+            @Override
+            public void onAfter(int id) {
+                super.onAfter(id);
+                LoadingManager.hideLoadingDialog(DogCertificateEditDogActivity.this);
+            }
+
+            @Override
+            public void onError(Call call, Exception e, int id) {
+
+            }
+
+            @Override
+            public void onResponse(ResultClient<Dog> response, int id) {
+                if (response.isSuccess() && response.getData() != null) {
+                    intiView(response.getData());
+//                    binding.container.setVisibility(View.VISIBLE);
+//                    DogDetail dogDetail = response.getData();
+//                    binding.dogNameView.setText(dogDetail.getDogName() + "|" + dogDetail.getDogColor() + "|" + dogDetail.getDogAge() + "岁3个月");
+//                    binding.leaveCenterView.setText(dogDetail.getLeaveCenter());
+//                    binding.centerAddressView.setText(dogDetail.getCenterAddress());
+//                    binding.phoneView.setText(dogDetail.getPhone());
+//                    binding.idNumView.setText("犬只编号：" + dogDetail.getIdNum());
+//                    binding.dogGenderView.setText("犬只性别：" + (dogDetail.getDogGender() == 0 ? "雌性" : "雄性"));
+//                    binding.dogShapeView.setText("犬只体型：" + (dogDetail.getDogShape() == 0 ? "小型" : "中型"));
+//                    if (dogDetail.getImmuneStatus() == 1) {
+//                        binding.immuneStatus.setText("免疫情况：已免疫" + "，" + dogDetail.getImmuneExprie() + "到期");
+//                    } else {
+//                        binding.immuneStatus.setText("免疫情况：未免疫");
+//                    }
+//                    binding.sterilizationView.setText("绝育情况：" + (dogDetail.getSterilization() == 0 ? "未绝育" : "已绝育"));
+////                    GlideLoader.LoderImage(DogDetailsActivity.this, dogDetail.getDogPhoto(), binding.coverView);
+//                    try {
+//                        List<String> imageList = new Gson().fromJson(dogDetail.getDogPhoto(), new TypeToken<List<String>>() {
+//                        }.getType());
+//                        GlideLoader.LoderRoundedImage(DogDetailsActivity.this, imageList.get(0), binding.coverView,15);
+////                        binding.banner.setImages(imageList).start();
+//                    } catch (Exception e) {
+//                        e.getMessage();
+//                    }
+                } else {
+                    ToastUtils.showShort(getApplicationContext(), "获取信息失败");
+                }
+            }
+        });
+    }
+
+    private void intiView(Dog data) {
+        dog = data;
         //犬只姓名
         binding.dogNameView.binding.itemEdit.setText(dog.getDogName());
         //犬只颜色

@@ -7,6 +7,7 @@ import android.text.SpannableString;
 import android.text.Spanned;
 import android.text.method.LinkMovementMethod;
 import android.text.style.ForegroundColorSpan;
+import android.util.Log;
 import android.view.View;
 
 import com.base.BaseApplication;
@@ -83,7 +84,8 @@ public class LoginActivity extends BaseActivity {
             return;
         }
         String registrationID = JPushInterface.getRegistrationID(this);
-        SendRequest.userLogin(phone, code,registrationID, new GenericsCallback<ResultClient<UserInfo>>(new JsonGenericsSerializator()) {
+        Log.i(TAG, "onClickLogin: registrationID = " + registrationID);
+        SendRequest.userLogin(phone, code, registrationID, new GenericsCallback<ResultClient<UserInfo>>(new JsonGenericsSerializator()) {
             @Override
             public void onError(Call call, Exception e, int id) {
 
@@ -91,10 +93,12 @@ public class LoginActivity extends BaseActivity {
 
             @Override
             public void onResponse(ResultClient<UserInfo> response, int id) {
-                if (response.isSuccess() && response.getData() != null) {
-                    BaseApplication.getInstance().setUserInfo(response.getData());
-                    finishActivity(LoginActivity.class);
-                    finish();
+                if (response.isSuccess()) {
+                    if (response.getData() != null) {
+                        BaseApplication.getInstance().setUserInfo(response.getData());
+                        finishActivity(LoginActivity.class);
+                        finish();
+                    }
                 } else {
                     ToastUtils.showShort(getApplicationContext(), response.getMessage());
                 }
