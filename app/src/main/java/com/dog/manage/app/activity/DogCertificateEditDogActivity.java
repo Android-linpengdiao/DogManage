@@ -130,7 +130,7 @@ public class DogCertificateEditDogActivity extends BaseActivity {
                             public void onClick(View view, Object object) {
                                 dog = (Dog) object;
                                 binding.dogCertificateView.binding.itemContent.setText(dog.getDogType());
-                                getDogById(dog.getDogId());
+//                                getDogById(dog.getDogId());
                             }
 
                             @Override
