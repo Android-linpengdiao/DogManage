@@ -130,7 +130,7 @@ public class DogCertificateEditDogActivity extends BaseActivity {
                             public void onClick(View view, Object object) {
                                 dog = (Dog) object;
                                 binding.dogCertificateView.binding.itemContent.setText(dog.getDogType());
-//                                getDogById(dog.getDogId());
+                                getDogById(dog.getDogId());
                             }
 
                             @Override
@@ -408,7 +408,7 @@ public class DogCertificateEditDogActivity extends BaseActivity {
         //犬只姓名
         binding.dogNameView.binding.itemEdit.setText(dog.getDogName());
         //犬只颜色
-        binding.dogColorView.binding.itemEdit.setText(dog.getDogColor());
+        binding.dogColorView.binding.itemContent.setText(dog.getDogColor());
         //犬只年龄
         binding.dogAgeView.binding.itemContent.setText(dog.getDogAge() + "");
 
@@ -424,12 +424,17 @@ public class DogCertificateEditDogActivity extends BaseActivity {
             GlideLoader.LoderImage(DogCertificateEditDogActivity.this, dog.getSterilizationProve(), binding.testifyView);
         }
 
+        if (!CommonUtil.isBlank(dog.getDogType())) {
+            binding.petTypeView.binding.itemContent.setText(dog.getDogType());
+        }
+
         binding.petTypeView.binding.itemContent.setText(dog.getDogType());//犬只品种
         if (!CommonUtil.isBlank(dog.getNoseprint()))
             binding.createPetArchivesView.binding.itemContent.setText("已完成采集");//鼻纹信息
 
         //绝育证明
-        GlideLoader.LoderImage(DogCertificateEditDogActivity.this, dog.getSterilizationProve(), binding.testifyView, 6);
+        if (dog.getSterilizationProve() != null)
+            GlideLoader.LoderImage(DogCertificateEditDogActivity.this, dog.getSterilizationProve(), binding.testifyView, 6);
 
         try {
             //犬只照片
@@ -565,6 +570,9 @@ public class DogCertificateEditDogActivity extends BaseActivity {
         map.put("dogPhoto", GsonUtils.toJson(Arrays.asList(leftFace, centerFace, rightFace)));//犬只照片，多张图片以“，”分开
         map.put("dogType", dog.getDogType());//犬只品种
         map.put("noseprint", dog.getNoseprint());//鼻纹信息
+
+        if (dog.getId() > 0)
+            map.put("id", dog.getId() + "");//选择的犬只id
 
         SendRequest.savaDog(map, new GenericsCallback<ResultClient<Dog>>(new JsonGenericsSerializator()) {
             @Override
