@@ -60,7 +60,7 @@ public class CameraActivity extends BaseActivity {
         binding.titleView.setText(type == type_petType ? "犬只品种" : "鼻纹采集");
 
         if (CommonUtil.isBlank(getUserInfo().getAccessToken())) {
-            getAccessToken();
+            getAccessToken(this);
         }
 
         initCamera();
@@ -172,38 +172,6 @@ public class CameraActivity extends BaseActivity {
             }
         });
 
-    }
-
-
-    private void getAccessToken() {
-        SendRequest.getAccessToken(Config.yueBaoAccessKey, Config.yueBaoSecretKey,
-                new StringCallback() {
-                    @Override
-                    public void onError(Call call, Exception e, int id) {
-
-                    }
-
-                    @Override
-                    public void onResponse(String response, int id) {
-
-                        try {
-                            JSONObject object = new JSONObject(response);
-                            int status = object.optInt("status");
-                            if (status == 200) {
-                                String accessToken = object.optJSONObject("data").optString("access_token");
-                                UserInfo userInfo = getUserInfo();
-                                userInfo.setAccessToken(accessToken);
-                                setUserInfo(userInfo);
-
-                            } else if (status == 401) {
-                                ToastUtils.showShort(CameraActivity.this, object.optString("message"));
-                            }
-
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                        }
-                    }
-                });
     }
 
     /**

@@ -50,6 +50,7 @@ public class CertificateRecordAdapter extends BaseRecyclerAdapter<RecordImmune, 
             binding.contentView.setText(dataBean.getDogType() + "-" + dataBean.getDogAge() + "岁3个月");
             binding.createTimeView.setText(dataBean.getCreatedTime());
             binding.contentView.setTextColor(Color.parseColor("#999999"));
+            binding.checkStatusView.setBackgroundResource(R.drawable.button_theme);
             if (dataBean.getLicenceStatus() != null) {
                 if (dataBean.getLicenceStatus() == 1) {
                     binding.checkStatusView.setText("审核中");

@@ -38,6 +38,7 @@ import com.base.utils.StatusBarUtil;
 import com.base.utils.ToastUtils;
 import com.base.view.OnClickListener;
 import com.dog.manage.app.Callback;
+import com.dog.manage.app.Config;
 import com.dog.manage.app.DogDialogManager;
 import com.dog.manage.app.R;
 //import com.lianqinbang.Callback;
@@ -64,6 +65,7 @@ import com.okhttp.Pager;
 import com.okhttp.ResultClient;
 import com.okhttp.SendRequest;
 import com.okhttp.callbacks.GenericsCallback;
+import com.okhttp.callbacks.StringCallback;
 import com.okhttp.sample_okhttp.JsonGenericsSerializator;
 //import com.okhttp.utils.APIUrls;
 //import com.scwang.smart.refresh.layout.api.RefreshLayout;
@@ -80,6 +82,7 @@ import com.okhttp.sample_okhttp.JsonGenericsSerializator;
 //import com.xw.banner.listener.OnBannerListener;
 
 import org.greenrobot.eventbus.EventBus;
+import org.json.JSONObject;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -178,6 +181,37 @@ public class BaseActivity extends AppCompatActivity {
     public void setTypeface(TextView textView) {
         Typeface typeface = BaseApplication.getInstance().getTypeface();
         textView.setTypeface(typeface);
+    }
+
+    public void getAccessToken(Activity activity) {
+        SendRequest.getAccessToken(Config.yueBaoAccessKey, Config.yueBaoSecretKey,
+                new StringCallback() {
+                    @Override
+                    public void onError(Call call, Exception e, int id) {
+
+                    }
+
+                    @Override
+                    public void onResponse(String response, int id) {
+
+                        try {
+                            JSONObject object = new JSONObject(response);
+                            int status = object.optInt("status");
+                            if (status == 200) {
+                                String accessToken = object.optJSONObject("data").optString("access_token");
+                                UserInfo userInfo = getUserInfo();
+                                userInfo.setAccessToken(accessToken);
+                                setUserInfo(userInfo);
+
+                            } else if (status == 401) {
+                                ToastUtils.showShort(activity, object.optString("message"));
+                            }
+
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    }
+                });
     }
 
     public boolean checkUserRank(Context context) {

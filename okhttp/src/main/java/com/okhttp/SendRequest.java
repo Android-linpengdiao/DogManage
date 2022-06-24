@@ -937,6 +937,16 @@ public class SendRequest {
 
     }
 
+    public static void petTypeUrl(String token, String imageUrl, Callback call) {
+        Map<String, String> map = new HashMap<>();
+        if (!CommonUtil.isBlank(token))
+            map.put("token", token);
+        map.put("imageUrl", imageUrl);
+        map.put("petType", String.valueOf(0));
+        OkHttpUtils.pet().params(map).url(APIUrls.petType).build().execute(call);
+
+    }
+
     /*====================================    支付      ==========================================*/
 
     public static void payment(int licenceId, int payType, Callback call) {

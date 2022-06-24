@@ -4,7 +4,9 @@ package com.dog.manage.app.activity;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.text.Editable;
 import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -261,7 +263,7 @@ public class DogCertificateEditDogOwnerActivity extends BaseActivity {
                 communityBinding.recyclerView.setAdapter(communitySelectAdapter);
 
                 communityBinding.refreshLayout.setEnableRefresh(false);
-                addressBinding.refreshLayout.setEnableLoadMore(false);
+                communityBinding.refreshLayout.setEnableLoadMore(false);
                 communityBinding.refreshLayout.setOnLoadMoreListener(new OnLoadMoreListener() {
                     @Override
                     public void onLoadMore(RefreshLayout refreshlayout) {
@@ -270,6 +272,35 @@ public class DogCertificateEditDogOwnerActivity extends BaseActivity {
                 });
                 getAddressList(true, "");
 
+                communityBinding.detailedAddressView.addTextChangedListener(new TextWatcher() {
+                    @Override
+                    public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+                    }
+
+                    @Override
+                    public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                        if (CommonUtil.isBlank(charSequence.toString())){
+                            getAddressList(true, "");
+                        }
+                    }
+
+                    @Override
+                    public void afterTextChanged(Editable editable) {
+
+                    }
+                });
+                communityBinding.searchView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        String content = communityBinding.detailedAddressView.getText().toString();
+                        if (CommonUtil.isBlank(content)) {
+                            ToastUtils.showShort(getApplication(), "请输入小区名称");
+                        } else {
+                            getAddressList(true, content);
+                        }
+                    }
+                });
                 communityBinding.confirmView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
@@ -299,6 +330,12 @@ public class DogCertificateEditDogOwnerActivity extends BaseActivity {
     private Pager<CommunityBean> communityPager = new Pager<>();
     private CommunityBean communityBean;
 
+    /**
+     * 详细地址
+     *
+     * @param isRefresh
+     * @param communityName
+     */
     private void getAddressList(boolean isRefresh, String communityName) {
         if (addressBean == null) {
             ToastUtils.showShort(getApplicationContext(), "请先选择居住地址");
@@ -357,6 +394,11 @@ public class DogCertificateEditDogOwnerActivity extends BaseActivity {
     private Pager<AddressBean> areasPager = new Pager<>();
     private AddressBean addressBean;
 
+    /**
+     * 居住地址
+     *
+     * @param isRefresh
+     */
     private void getAddressAreas(boolean isRefresh) {
         //省110000 、市110100
         SendRequest.getAddressAreas(3, 110100,

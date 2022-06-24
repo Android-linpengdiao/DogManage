@@ -29,6 +29,7 @@ import com.dog.manage.app.media.MediaSelectActivity;
 import com.dog.manage.app.media.MediaUtils;
 import com.dog.manage.app.model.Dog;
 import com.dog.manage.app.model.DogDetail;
+import com.dog.manage.app.model.PetType;
 import com.dog.manage.app.utils.UploadFileManager;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -130,7 +131,8 @@ public class DogCertificateEditDogActivity extends BaseActivity {
                             public void onClick(View view, Object object) {
                                 dog = (Dog) object;
                                 binding.dogCertificateView.binding.itemContent.setText(dog.getDogType());
-                                getDogById(dog.getDogId());
+                                if (dog.getDogId() != 0)
+                                    getDogById(dog.getDogId());
                             }
 
                             @Override
@@ -171,20 +173,18 @@ public class DogCertificateEditDogActivity extends BaseActivity {
                 }
             }
         });
+        //犬只品种
         binding.petTypeView.binding.itemInfo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                dog.setDogType("泰迪");
-//                binding.petTypeView.binding.itemContent.setText(dog.getDogType());
-//                verificationDog(dog.getDogType());
-
-                if (checkPermissions(PermissionUtils.CAMERA, 100)) {
-                    Bundle bundle = new Bundle();
-                    bundle.putInt("type", CameraActivity.type_petType);
-                    openActivity(CameraActivity.class, bundle, request_petType);
+                if (CommonUtil.isBlank(centerFace)) {
+                    ToastUtils.showShort(getApplicationContext(), "请上传正面照片");
+                    return;
                 }
+                petTypeUrl(centerFace);
             }
         });
+        //鼻纹信息
         binding.createPetArchivesView.binding.itemInfo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -214,6 +214,52 @@ public class DogCertificateEditDogActivity extends BaseActivity {
 
         }
 
+        if (CommonUtil.isBlank(getUserInfo().getAccessToken())) {
+            getAccessToken(this);
+        }
+
+    }
+
+    /**
+     * 宠物品种识别
+     *
+     * @param imageUrl
+     */
+    private void petTypeUrl(String imageUrl) {
+        SendRequest.petTypeUrl(getUserInfo().getAccessToken(), imageUrl,
+                new GenericsCallback<PetType>(new JsonGenericsSerializator()) {
+
+                    @Override
+                    public void onError(Call call, Exception e, int id) {
+                        ToastUtils.showShort(getApplicationContext(), "犬只品种获取失败");
+                    }
+
+                    @Override
+                    public void onResponse(PetType response, int id) {
+                        if (response.getStatus() == 200) {
+                            if (response.getData() != null &&
+                                    response.getData().getPet() != null &&
+                                    response.getData().getPet().size() > 0 &&
+                                    response.getData().getPet().get(0).getIdentification() != null &&
+                                    response.getData().getPet().get(0).getIdentification().size() > 0) {
+                                String english_name = response.getData().getPet().get(0).getIdentification().get(0).getEnglish_name();
+                                String chinese_name = response.getData().getPet().get(0).getIdentification().get(0).getChinese_name();
+                                Double confidence = response.getData().getPet().get(0).getIdentification().get(0).getConfidence();
+
+                                dog.setDogType(chinese_name);
+                                binding.petTypeView.binding.itemContent.setText(dog.getDogType());
+                                verificationDog(dog.getDogType());
+
+                            } else {
+                                ToastUtils.showShort(getApplicationContext(), "犬只品种获取失败");
+                            }
+
+                        } else {
+                            ToastUtils.showShort(getApplicationContext(), response.getMessage());
+                        }
+
+                    }
+                });
     }
 
     /**
@@ -372,30 +418,6 @@ public class DogCertificateEditDogActivity extends BaseActivity {
             public void onResponse(ResultClient<Dog> response, int id) {
                 if (response.isSuccess() && response.getData() != null) {
                     intiView(response.getData());
-//                    binding.container.setVisibility(View.VISIBLE);
-//                    DogDetail dogDetail = response.getData();
-//                    binding.dogNameView.setText(dogDetail.getDogName() + "|" + dogDetail.getDogColor() + "|" + dogDetail.getDogAge() + "岁3个月");
-//                    binding.leaveCenterView.setText(dogDetail.getLeaveCenter());
-//                    binding.centerAddressView.setText(dogDetail.getCenterAddress());
-//                    binding.phoneView.setText(dogDetail.getPhone());
-//                    binding.idNumView.setText("犬只编号：" + dogDetail.getIdNum());
-//                    binding.dogGenderView.setText("犬只性别：" + (dogDetail.getDogGender() == 0 ? "雌性" : "雄性"));
-//                    binding.dogShapeView.setText("犬只体型：" + (dogDetail.getDogShape() == 0 ? "小型" : "中型"));
-//                    if (dogDetail.getImmuneStatus() == 1) {
-//                        binding.immuneStatus.setText("免疫情况：已免疫" + "，" + dogDetail.getImmuneExprie() + "到期");
-//                    } else {
-//                        binding.immuneStatus.setText("免疫情况：未免疫");
-//                    }
-//                    binding.sterilizationView.setText("绝育情况：" + (dogDetail.getSterilization() == 0 ? "未绝育" : "已绝育"));
-////                    GlideLoader.LoderImage(DogDetailsActivity.this, dogDetail.getDogPhoto(), binding.coverView);
-//                    try {
-//                        List<String> imageList = new Gson().fromJson(dogDetail.getDogPhoto(), new TypeToken<List<String>>() {
-//                        }.getType());
-//                        GlideLoader.LoderRoundedImage(DogDetailsActivity.this, imageList.get(0), binding.coverView,15);
-////                        binding.banner.setImages(imageList).start();
-//                    } catch (Exception e) {
-//                        e.getMessage();
-//                    }
                 } else {
                     ToastUtils.showShort(getApplicationContext(), "获取信息失败");
                 }
