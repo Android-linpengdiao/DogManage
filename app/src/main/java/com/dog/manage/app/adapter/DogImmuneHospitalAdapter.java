@@ -7,6 +7,7 @@ import android.view.View;
 import com.amap.api.maps.AMapUtils;
 import com.amap.api.maps.model.LatLng;
 import com.base.BaseRecyclerAdapter;
+import com.base.utils.CommonUtil;
 import com.base.view.OnClickListener;
 import com.dog.manage.app.R;
 import com.dog.manage.app.databinding.ItemDogImmuneHospitalBinding;
@@ -14,6 +15,7 @@ import com.dog.manage.app.databinding.ItemMessageBinding;
 import com.dog.manage.app.model.Hospital;
 
 import java.text.DecimalFormat;
+import java.util.List;
 
 public class DogImmuneHospitalAdapter extends BaseRecyclerAdapter<Hospital, ItemDogImmuneHospitalBinding> {
 
@@ -56,7 +58,11 @@ public class DogImmuneHospitalAdapter extends BaseRecyclerAdapter<Hospital, Item
         binding.hospitalAddressView.setText(dataBean.getHospitalAddress());
         binding.hospitalPhoneView.setText(dataBean.getHospitalPhone());
         binding.selectedView.setSelected(select == position ? true : false);
-        LatLng endLatLng = new LatLng(39.993743, 116.472995);
+        LatLng endLatLng = new LatLng(0, 0);
+        List<String> coordinate = CommonUtil.stringToList(dataBean.getCoordinate());
+        if (coordinate.size()==2) {
+            endLatLng = new LatLng(Double.parseDouble(coordinate.get(1)), Double.parseDouble(coordinate.get(0)));
+        }
         if (startLatLng.latitude == 0 || startLatLng.longitude == 0 || endLatLng.latitude == 0 || endLatLng.longitude == 0) {
             binding.locationTextView.setVisibility(View.INVISIBLE);
         } else {

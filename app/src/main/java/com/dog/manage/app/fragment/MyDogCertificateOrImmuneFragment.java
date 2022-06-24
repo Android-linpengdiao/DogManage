@@ -106,9 +106,10 @@ public class MyDogCertificateOrImmuneFragment extends BaseFragment {
     }
 
     private void immuneView(ImmuneDetail immuneDetail) {
-        binding.immuneIdNumView.setText("免疫证明编号："+immuneDetail.getIdNum());
+        binding.immuneIdNumView.setText("免疫证明编号：" + immuneDetail.getIdNum());
         binding.immuneDogNameView.setText(immuneDetail.getDogName());
-        binding.immuneDogGenderView.setText(immuneDetail.getDogGender() == 0 ? "雌性" : "雄性");
+        if (immuneDetail.getDogGender() != null)
+            binding.immuneDogGenderView.setText(immuneDetail.getDogGender() == 0 ? "雌性" : "雄性");
         binding.immuneDogColorView.setText(immuneDetail.getDogColor());
         binding.immuneDogTypeView.setText(immuneDetail.getDogType());
         binding.hospitalNameView.setText(immuneDetail.getHospitalName());

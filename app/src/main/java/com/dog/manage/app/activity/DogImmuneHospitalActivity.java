@@ -75,16 +75,13 @@ public class DogImmuneHospitalActivity extends BaseActivity implements AMap.OnMa
         initMapView(savedInstanceState);
         permissionsLocation();
 
-        getHospitalPosition();
-
-
     }
 
     /**
      * 根据坐标获取宠物医院信息
      */
-    private void getHospitalPosition() {
-        SendRequest.getHospitalPosition("39.90403,116.407525",
+    private void getHospitalPosition(String coordinate, LatLng startLatLng) {
+        SendRequest.getHospitalPosition(coordinate,
                 new GenericsCallback<ResultClient<List<Hospital>>>(new JsonGenericsSerializator()) {
                     @Override
                     public void onError(Call call, Exception e, int id) {
@@ -94,6 +91,7 @@ public class DogImmuneHospitalActivity extends BaseActivity implements AMap.OnMa
                     @Override
                     public void onResponse(ResultClient<List<Hospital>> response, int id) {
                         if (response.isSuccess() && response.getData() != null) {
+                            adapter.setStartLatLng(startLatLng);
                             adapter.refreshData(response.getData());
                         } else {
                             ToastUtils.showShort(getApplicationContext(), response.getMessage());
@@ -238,6 +236,7 @@ public class DogImmuneHospitalActivity extends BaseActivity implements AMap.OnMa
     }
 
     private final int request_Location = 100;
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -311,8 +310,9 @@ public class DogImmuneHospitalActivity extends BaseActivity implements AMap.OnMa
                 Log.i(TAG, "onLocationChanged: latitude " + latitude);
                 Log.i(TAG, "onLocationChanged: longitude " + longitude);
                 LatLng startLatLng = new LatLng(latitude, longitude);
-                if (adapter != null)
-                    adapter.setStartLatLng(startLatLng);
+                getHospitalPosition(latitude + "," + longitude, startLatLng);
+//                if (adapter != null)
+//                    adapter.setStartLatLng(startLatLng);
             } else {
 
             }
