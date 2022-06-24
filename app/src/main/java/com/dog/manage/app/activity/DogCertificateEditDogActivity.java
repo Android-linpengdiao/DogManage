@@ -443,7 +443,7 @@ public class DogCertificateEditDogActivity extends BaseActivity {
         if (dog.getSterilization() == 1) {
             binding.radioButtonSterilization1.setChecked(true);
             binding.sterilizationProveContainer.setVisibility(View.VISIBLE);
-            GlideLoader.LoderImage(DogCertificateEditDogActivity.this, dog.getSterilizationProve(), binding.testifyView);
+            GlideLoader.LoderImage(DogCertificateEditDogActivity.this, dog.getSterilizationProve(), binding.testifyView,6);
         }
 
         if (!CommonUtil.isBlank(dog.getDogType())) {
@@ -453,10 +453,6 @@ public class DogCertificateEditDogActivity extends BaseActivity {
         binding.petTypeView.binding.itemContent.setText(dog.getDogType());//犬只品种
         if (!CommonUtil.isBlank(dog.getNoseprint()))
             binding.createPetArchivesView.binding.itemContent.setText("已完成采集");//鼻纹信息
-
-        //绝育证明
-        if (dog.getSterilizationProve() != null)
-            GlideLoader.LoderImage(DogCertificateEditDogActivity.this, dog.getSterilizationProve(), binding.testifyView, 6);
 
         try {
             //犬只照片
