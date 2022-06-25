@@ -14,6 +14,7 @@ import com.base.utils.GsonUtils;
 import com.base.utils.PermissionUtils;
 import com.base.utils.ToastUtils;
 import com.base.view.OnClickListener;
+import com.dog.manage.app.Config;
 import com.dog.manage.app.R;
 import com.dog.manage.app.activity.record.RecordActivity;
 import com.dog.manage.app.databinding.ActivityDogCertificateExaminedBinding;
@@ -24,8 +25,13 @@ import com.dog.manage.app.model.Dog;
 import com.dog.manage.app.model.DogDetail;
 import com.dog.manage.app.model.DogLicenseDetail;
 import com.dog.manage.app.model.PoliciesBean;
+import com.dog.manage.app.utils.UploadFileManager;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import com.obs.services.model.ProgressListener;
+import com.obs.services.model.ProgressStatus;
+import com.obs.services.model.PutObjectRequest;
+import com.obs.services.model.PutObjectResult;
 import com.okhttp.ResultClient;
 import com.okhttp.SendRequest;
 import com.okhttp.callbacks.GenericsCallback;
@@ -175,23 +181,23 @@ public class DogCertificateExaminedActivity extends BaseActivity {
     private void getDogLicenseDetail(int lincenceId) {
         SendRequest.getDogLicenseDetail(lincenceId,
                 new GenericsCallback<ResultClient<DogLicenseDetail>>(new JsonGenericsSerializator()) {
-            @Override
-            public void onError(Call call, Exception e, int id) {
+                    @Override
+                    public void onError(Call call, Exception e, int id) {
 
-            }
+                    }
 
-            @Override
-            public void onResponse(ResultClient<DogLicenseDetail> response, int id) {
-                if (response.isSuccess() && response.getData() != null) {
-                    initView(response.getData());
+                    @Override
+                    public void onResponse(ResultClient<DogLicenseDetail> response, int id) {
+                        if (response.isSuccess() && response.getData() != null) {
+                            initView(response.getData());
 
-                } else {
-                    initView(null);
-                    ToastUtils.showShort(getApplicationContext(), !CommonUtil.isBlank(response.getMsg()) ? response.getMsg() : "获取信息失败");
+                        } else {
+                            initView(null);
+                            ToastUtils.showShort(getApplicationContext(), !CommonUtil.isBlank(response.getMsg()) ? response.getMsg() : "获取信息失败");
 
-                }
-            }
-        });
+                        }
+                    }
+                });
     }
 
     private void initView(DogLicenseDetail data) {
@@ -330,15 +336,13 @@ public class DogCertificateExaminedActivity extends BaseActivity {
 
                                     @Override
                                     public void onSuccess(File file) {
-                                        if (requestCode == request_DogCertificate) {
-                                            dogCertificate = file.getAbsolutePath();
-                                            GlideLoader.LoderImage(DogCertificateExaminedActivity.this, file.getAbsolutePath(), binding.paperDogCertificateView, 6);
+                                        new Thread(new Runnable() {
+                                            @Override
+                                            public void run() {
+                                                uploadFile(requestCode, file.getAbsolutePath());
+                                            }
+                                        }).start();
 
-                                        } else if (requestCode == request_ImmuneCertificate) {
-                                            immuneCertificate = file.getAbsolutePath();
-                                            GlideLoader.LoderImage(DogCertificateExaminedActivity.this, file.getAbsolutePath(), binding.paperImmuneCertificateView, 6);
-
-                                        }
                                     }
 
                                     @Override
@@ -351,5 +355,52 @@ public class DogCertificateExaminedActivity extends BaseActivity {
         } catch (Exception e) {
             e.getMessage();
         }
+    }
+
+    /**
+     * 华为云 上传文件
+     *
+     * @param requestCode
+     * @param filePath
+     */
+    private void uploadFile(int requestCode, String filePath) {
+        String fileName = filePath.substring(filePath.lastIndexOf("/") + 1);
+        PutObjectRequest request = new PutObjectRequest();
+        request.setBucketName(Config.huaweiBucketName);
+        request.setObjectKey(fileName);
+        request.setFile(new File(filePath));
+        request.setProgressListener(new ProgressListener() {
+            @Override
+            public void progressChanged(ProgressStatus status) {
+                // 获取上传平均速率
+                Log.i(TAG, "uploadFile: AverageSpeed:" + status.getAverageSpeed());
+                // 获取上传进度百分比
+                Log.i(TAG, "uploadFile: TransferPercentage:" + status.getTransferPercentage());
+            }
+        });
+        //每上传1MB数据反馈上传进度
+        request.setProgressInterval(1024 * 1024L);
+        PutObjectResult result = UploadFileManager.getInstance().getObsClient().putObject(request);
+        Log.i(TAG, "uploadFile: getObjectUrl = " + result.getObjectUrl());
+        String url = "http://" + Config.huaweiBucketName + "." + Config.huaweiCloudEndPoint + "/" + fileName;
+        Log.i(TAG, "uploadFile: url = " + url);
+
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                if (requestCode == request_DogCertificate) {
+                    dogCertificate = url;
+                    GlideLoader.LoderImage(DogCertificateExaminedActivity.this, dogCertificate, binding.paperDogCertificateView, 6);
+
+                } else if (requestCode == request_ImmuneCertificate) {
+                    immuneCertificate = url;
+                    GlideLoader.LoderImage(DogCertificateExaminedActivity.this, immuneCertificate, binding.paperImmuneCertificateView, 6);
+
+                }
+
+            }
+        });
+
+
     }
 }

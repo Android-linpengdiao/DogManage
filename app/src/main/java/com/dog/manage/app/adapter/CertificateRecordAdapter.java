@@ -150,7 +150,7 @@ public class CertificateRecordAdapter extends BaseRecyclerAdapter<RecordImmune, 
             binding.descView.setVisibility(View.GONE);
             binding.contentView.setTextColor(Color.parseColor("#999999"));
             binding.contentView.setText(dataBean.getDogType() + "-编号：" + dataBean.getDogLicenceNum()
-                    + "（" + (dataBean.getCancelType() == 1 ? "犬只丢失" : "犬只死亡") + "）");
+                    + "（" + (dataBean.getCancelType() == 1 ? "犬只死亡" : "犬只丢失") + "）");
             binding.createTimeView.setText(dataBean.getCreatedTime());
             if (dataBean.getStatus() != null) {
                 if (dataBean.getStatus() == 0) {

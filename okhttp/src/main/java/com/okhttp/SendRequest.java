@@ -166,6 +166,19 @@ public class SendRequest {
     }
 
     /**
+     * 纸证保存犬只
+     *
+     * @param map
+     * @param call
+     */
+    public static void savaPaperDog(Map<String, String> map, Callback call) {
+        Map<String, String> headers = new HashMap<>();
+        headers.put("Authorization", BaseApplication.getInstance().getUserInfo().getAuthorization());
+        OkHttpUtils.post().headers(headers).params(map).url(APIUrls.savaPaperDog).build().execute(call);
+
+    }
+
+    /**
      * 验证犬只是否可养
      *
      * @param dogType

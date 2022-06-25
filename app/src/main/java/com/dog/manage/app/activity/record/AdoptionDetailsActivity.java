@@ -90,7 +90,7 @@ public class AdoptionDetailsActivity extends BaseActivity {
             List<String> dogPhotos = new Gson().fromJson(dataBean.getDogPhoto(), new TypeToken<List<String>>() {
             }.getType());
             if (dogPhotos != null && dogPhotos.size() > 0)
-                GlideLoader.LoderImage(this, dogPhotos.get(0), binding.coverView, 8);
+                GlideLoader.LoderImage(this, dogPhotos.get(0), binding.coverView,8);
         } catch (Exception e) {
             e.getMessage();
         }
@@ -139,6 +139,7 @@ public class AdoptionDetailsActivity extends BaseActivity {
                 }
                 Bundle bundle = new Bundle();
                 bundle.putInt("dogId", recordAdoption.getLeaveDogId());
+                bundle.putInt("useId", recordAdoption.getUseId());
                 bundle.putInt("type", DogCertificateEditDogOwnerActivity.type_details);
                 openActivity(DogCertificateEditDogOwnerActivity.class, bundle);
             }

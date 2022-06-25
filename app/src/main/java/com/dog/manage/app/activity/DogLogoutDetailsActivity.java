@@ -124,7 +124,7 @@ public class DogLogoutDetailsActivity extends BaseActivity {
             binding.acceptUnitView.setText(recordImmune.getAcceptUnit());
 
             try {
-                binding.pictureHintView.setText("无害化处理过程图片");
+                binding.pictureHintView.setText(recordImmune.getCancelType() == 1 ? "无害化处理过程图片" : "犬只照片");
                 //犬只照片
                 List<String> idPhotos = new Gson().fromJson(recordImmune.getCancelImageUrl(), new TypeToken<List<String>>() {
                 }.getType());
