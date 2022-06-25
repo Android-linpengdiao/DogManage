@@ -281,6 +281,7 @@ public class DogCertificateEditDogActivity extends BaseActivity {
         TimePickerView timePickerView = new TimePickerBuilder(DogCertificateEditDogActivity.this, new OnTimeSelectListener() {
             @Override
             public void onTimeSelect(Date date, View v) {//选中事件回调
+//                dog.setDogAge(date.getTime());
                 SimpleDateFormat sdr = new SimpleDateFormat("yyyy-MM");
                 binding.dogAgeView.binding.itemContent.setText(sdr.format(date));
             }
@@ -443,7 +444,7 @@ public class DogCertificateEditDogActivity extends BaseActivity {
         if (dog.getSterilization() == 1) {
             binding.radioButtonSterilization1.setChecked(true);
             binding.sterilizationProveContainer.setVisibility(View.VISIBLE);
-            GlideLoader.LoderImage(DogCertificateEditDogActivity.this, dog.getSterilizationProve(), binding.testifyView,6);
+            GlideLoader.LoderImage(DogCertificateEditDogActivity.this, dog.getSterilizationProve(), binding.testifyView, 6);
         }
 
         if (!CommonUtil.isBlank(dog.getDogType())) {
