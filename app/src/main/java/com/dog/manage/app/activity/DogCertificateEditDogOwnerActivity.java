@@ -1136,7 +1136,7 @@ public class DogCertificateEditDogOwnerActivity extends BaseActivity {
             map.put("communityDept", dogUser.getCommunityDept() + "");//社区所属机构（新增）
             map.put("villageId", dogUser.getVillageId() + "");//社区id
 
-            if (type == type_certificate || type == type_immune || type == type_adoption) {
+            if (type == type_certificate || type == type_immune || type == type_examined|| type == type_adoption) {
                 map.put("busTypeId", String.valueOf(0));//业务类型 1 个人信息 0 犬证、疫苗
 
             } else if (type == type_userInfo) {
