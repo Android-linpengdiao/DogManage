@@ -584,15 +584,18 @@ public class SendRequest {
      *
      * @param userId 用户id
      * @param dogId  犬只id
+     * @param type   领养犬只传type:1
      * @param call
      */
-    public static void getUserById(int userId, int dogId, Callback call) {
+    public static void getUserById(int userId, int dogId, int type, Callback call) {
         Map<String, String> headers = new HashMap<>();
         headers.put("Authorization", BaseApplication.getInstance().getUserInfo().getAuthorization());
 
         Map<String, String> map = new HashMap<>();
         map.put("userId", String.valueOf(userId));
         map.put("dogId", String.valueOf(dogId));
+        if (type > 0)
+            map.put("type", String.valueOf(type));
         OkHttpUtils.post().headers(headers).params(map).url(APIUrls.getUserById).build().execute(call);
 
     }

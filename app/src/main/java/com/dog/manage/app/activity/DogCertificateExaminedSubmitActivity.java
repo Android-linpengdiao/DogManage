@@ -102,6 +102,8 @@ public class DogCertificateExaminedSubmitActivity extends BaseActivity implement
 
                             finishActivity(DogManageWorkflowActivity.class);
                             finishActivity(DogCertificateExaminedActivity.class);
+                            finishActivity(DogCertificateEditDogOwnerActivity.class);
+                            finishActivity(DogCertificateEditDogActivity.class);
                             finish();
 
                         } else {

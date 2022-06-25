@@ -130,7 +130,7 @@
                     android:paddingLeft="@dimen/viewPadding"
                     android:paddingRight="@dimen/viewPadding"
                     app:item_container_height="@dimen/dp_50"
-                    app:item_content="张三"
+                    app:item_content=""
                     app:item_content_color="@color/colorAppTheme"
                     app:item_content_size="@dimen/sp_14"
                     app:item_info="查看详情"

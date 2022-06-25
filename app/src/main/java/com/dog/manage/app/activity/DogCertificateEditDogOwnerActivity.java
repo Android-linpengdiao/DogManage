@@ -170,8 +170,10 @@ public class DogCertificateEditDogOwnerActivity extends BaseActivity {
             dogId = getIntent().getIntExtra("dogId", 0);
             if (getIntent().getIntExtra("useId", 0) != 0) {
                 useId = getIntent().getIntExtra("useId", 0);
+                getDogUserById(1);
+            } else {
+                getDogUserById(0);
             }
-            getDogUserById();
 
         }
 
@@ -536,8 +538,8 @@ public class DogCertificateEditDogOwnerActivity extends BaseActivity {
     /**
      * 犬证 获取犬主信息
      */
-    private void getDogUserById() {
-        SendRequest.getUserById(useId, dogId, new GenericsCallback<ResultClient<DogUser>>(new JsonGenericsSerializator()) {
+    private void getDogUserById(int userType) {
+        SendRequest.getUserById(useId, dogId, userType, new GenericsCallback<ResultClient<DogUser>>(new JsonGenericsSerializator()) {
             @Override
             public void onError(Call call, Exception e, int id) {
 
@@ -1136,7 +1138,7 @@ public class DogCertificateEditDogOwnerActivity extends BaseActivity {
             map.put("communityDept", dogUser.getCommunityDept() + "");//社区所属机构（新增）
             map.put("villageId", dogUser.getVillageId() + "");//社区id
 
-            if (type == type_certificate || type == type_immune || type == type_examined|| type == type_adoption) {
+            if (type == type_certificate || type == type_immune || type == type_examined || type == type_adoption) {
                 map.put("busTypeId", String.valueOf(0));//业务类型 1 个人信息 0 犬证、疫苗
 
             } else if (type == type_userInfo) {
@@ -1182,7 +1184,7 @@ public class DogCertificateEditDogOwnerActivity extends BaseActivity {
                             bundle.putInt("type", type);
                             if (type == type_certificate || type == type_immune || type == type_examined) {
                                 bundle.putInt("addressId", response.getData().getAddressId());
-                                if (type == type_examined){
+                                if (type == type_examined) {
                                     bundle.putString("paperLicence", paperLicence);
                                     bundle.putString("paperImmuneLicence", paperImmuneLicence);
                                 }

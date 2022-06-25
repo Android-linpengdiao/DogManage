@@ -119,6 +119,8 @@ public class DogCertificateEditDogActivity extends BaseActivity {
             binding.thirdStepView.setText("③提交年审");
             paperLicence = getIntent().getStringExtra("paperLicence");
             paperImmuneLicence = getIntent().getStringExtra("paperImmuneLicence");
+            Log.i(TAG, "onCreate: paperLicence = " + paperLicence);
+            Log.i(TAG, "onCreate: paperImmuneLicence = " + paperImmuneLicence);
 
         }
 
@@ -182,25 +184,28 @@ public class DogCertificateEditDogActivity extends BaseActivity {
         binding.petTypeView.binding.itemInfo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (CommonUtil.isBlank(centerFace)) {
-                    ToastUtils.showShort(getApplicationContext(), "请上传正面照片");
-                    return;
-                }
-                petTypeUrl(centerFace);
+                dog.setDogType("金毛");
+                binding.petTypeView.binding.itemContent.setText(dog.getDogType());
+
+//                if (CommonUtil.isBlank(centerFace)) {
+//                    ToastUtils.showShort(getApplicationContext(), "请上传正面照片");
+//                    return;
+//                }
+//                petTypeUrl(centerFace);
             }
         });
         //鼻纹信息
         binding.createPetArchivesView.binding.itemInfo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                dog.setNoseprint("23325059-b2c1-11eb-1Vu7hqwN6");
-//                binding.createPetArchivesView.binding.itemContent.setText("已完成采集");
+                dog.setNoseprint("23325059-b2c1-11eb-1Vu7hqwN6");
+                binding.createPetArchivesView.binding.itemContent.setText("已完成采集");
 
-                if (checkPermissions(PermissionUtils.CAMERA, 100)) {
-                    Bundle bundle = new Bundle();
-                    bundle.putInt("type", CameraActivity.type_petArchives);
-                    openActivity(CameraActivity.class, bundle, request_petArchive);
-                }
+//                if (checkPermissions(PermissionUtils.CAMERA, 100)) {
+//                    Bundle bundle = new Bundle();
+//                    bundle.putInt("type", CameraActivity.type_petArchives);
+//                    openActivity(CameraActivity.class, bundle, request_petArchive);
+//                }
             }
         });
 
@@ -233,6 +238,18 @@ public class DogCertificateEditDogActivity extends BaseActivity {
     private void petTypeUrl(String imageUrl) {
         SendRequest.petTypeUrl(getUserInfo().getAccessToken(), imageUrl,
                 new GenericsCallback<PetType>(new JsonGenericsSerializator()) {
+
+                    @Override
+                    public void onBefore(Request request, int id) {
+                        super.onBefore(request, id);
+                        LoadingManager.showLoadingDialog(DogCertificateEditDogActivity.this);
+                    }
+
+                    @Override
+                    public void onAfter(int id) {
+                        super.onAfter(id);
+                        LoadingManager.hideLoadingDialog(DogCertificateEditDogActivity.this);
+                    }
 
                     @Override
                     public void onError(Call call, Exception e, int id) {
@@ -485,9 +502,9 @@ public class DogCertificateEditDogActivity extends BaseActivity {
 
     }
 
-    private String leftFace = null;
-    private String centerFace = null;
-    private String rightFace = null;
+    private String leftFace = "http://dogmanage.file.obs.cn-north-4.myhuaweicloud.com/IMG_20220601_081815.jpg";
+    private String centerFace = "http://dogmanage.file.obs.cn-north-4.myhuaweicloud.com/1e4d053d666ebca4.jpg";
+    private String rightFace = "http://dogmanage.file.obs.cn-north-4.myhuaweicloud.com/ic_right_face.png";
 
     /**
      * dogName
@@ -601,6 +618,8 @@ public class DogCertificateEditDogActivity extends BaseActivity {
         if (type == type_examined) {
             map.put("paperLicence", paperLicence);//犬证图片地址
             map.put("paperImmuneLicence", paperImmuneLicence);//免疫证明
+            map.put("addressId", addressId + "");//地址id
+            map.put("annualStatus", "1");//类型 0 首次 1 年审
             SendRequest.savaPaperDog(map, new GenericsCallback<ResultClient<Dog>>(new JsonGenericsSerializator()) {
                 @Override
                 public void onError(Call call, Exception e, int id) {

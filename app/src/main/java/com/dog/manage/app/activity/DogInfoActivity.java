@@ -86,7 +86,7 @@ public class DogInfoActivity extends BaseActivity {
                     } else {
                         binding.radioButtonSterilization1.setChecked(true);
                         binding.radioButtonSterilization0.setVisibility(View.GONE);
-                        GlideLoader.LoderImage(DogInfoActivity.this, dogDetail.getSterilizationProve(), binding.sterilizationProveView);
+                        GlideLoader.LoderImage(DogInfoActivity.this, dogDetail.getSterilizationProve(), binding.sterilizationProveView,6);
                     }
 
                     try {
