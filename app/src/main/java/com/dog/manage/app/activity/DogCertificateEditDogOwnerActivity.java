@@ -83,7 +83,10 @@ public class DogCertificateEditDogOwnerActivity extends BaseActivity {
     public static final int type_details = 5;//犬主信息
     private int type = 0;
     private int dogId = 0;
+    private int useId = 0;
     private int leaveId = 0;
+    private String paperLicence = null;
+    private String paperImmuneLicence = null;
     private DogUser dogUser = new DogUser();
 
     @Override
@@ -92,7 +95,7 @@ public class DogCertificateEditDogOwnerActivity extends BaseActivity {
         binding = getViewData(R.layout.activity_dog_certificate_edit_dog_owner);
         addActivity(this);
         type = getIntent().getIntExtra("type", 0);
-
+        useId = getUserInfo().getId();
         if (type == type_userInfo) {
             binding.titleView.binding.itemTitle.setText("我的信息");
             binding.stepContainer.setVisibility(View.GONE);
@@ -119,13 +122,15 @@ public class DogCertificateEditDogOwnerActivity extends BaseActivity {
             checkingDogUser();
 
         } else if (type == type_examined) {
-            binding.titleView.binding.itemTitle.setText("犬证办理");
+            binding.titleView.binding.itemTitle.setText("年审办理");
             binding.firstStepView.setSelected(true);
             binding.firstStepView.setText("①犬主信息");
             binding.secondStepView.setText("②犬只信息");
-            binding.thirdStepView.setText("③提交审核");
+            binding.thirdStepView.setText("③提交年审");
             initPersonal();
             checkingDogUser();
+            paperLicence = getIntent().getStringExtra("paperLicence");
+            paperImmuneLicence = getIntent().getStringExtra("paperImmuneLicence");
 
         } else if (type == type_adoption) {
             binding.titleView.binding.itemTitle.setText("犬只领养");
@@ -163,6 +168,9 @@ public class DogCertificateEditDogOwnerActivity extends BaseActivity {
             initPersonal();
 
             dogId = getIntent().getIntExtra("dogId", 0);
+            if (getIntent().getIntExtra("useId", 0) != 0) {
+                useId = getIntent().getIntExtra("useId", 0);
+            }
             getDogUserById();
 
         }
@@ -280,7 +288,7 @@ public class DogCertificateEditDogOwnerActivity extends BaseActivity {
 
                     @Override
                     public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                        if (CommonUtil.isBlank(charSequence.toString())){
+                        if (CommonUtil.isBlank(charSequence.toString())) {
                             getAddressList(true, "");
                         }
                     }
@@ -529,7 +537,7 @@ public class DogCertificateEditDogOwnerActivity extends BaseActivity {
      * 犬证 获取犬主信息
      */
     private void getDogUserById() {
-        SendRequest.getUserById(getUserInfo().getId(), dogId, new GenericsCallback<ResultClient<DogUser>>(new JsonGenericsSerializator()) {
+        SendRequest.getUserById(useId, dogId, new GenericsCallback<ResultClient<DogUser>>(new JsonGenericsSerializator()) {
             @Override
             public void onError(Call call, Exception e, int id) {
 
@@ -1174,6 +1182,10 @@ public class DogCertificateEditDogOwnerActivity extends BaseActivity {
                             bundle.putInt("type", type);
                             if (type == type_certificate || type == type_immune || type == type_examined) {
                                 bundle.putInt("addressId", response.getData().getAddressId());
+                                if (type == type_examined){
+                                    bundle.putString("paperLicence", paperLicence);
+                                    bundle.putString("paperImmuneLicence", paperImmuneLicence);
+                                }
                                 openActivity(DogCertificateEditDogActivity.class, bundle);
 
                             } else if (type == type_adoption) {

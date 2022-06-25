@@ -78,6 +78,8 @@ public class APIUrls {
     public final static String getAnnualDogLicense = URL_DOMAIN + "/user/dog/getAnnualDogLicense";
     //年审-提交审批
     public final static String saveAnnualDogLicense = URL_DOMAIN + "/user/dog/saveAnnualDogLicense";
+    //纸证保存犬只
+    public final static String savaPaperDog = URL_DOMAIN + "/user/dog/savaPaperDog";
 
     /**
      * 犬只过户

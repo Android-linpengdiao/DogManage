@@ -76,6 +76,9 @@ public class DogCertificateEditDogActivity extends BaseActivity {
     private final int request_petType = 1100;
     private final int request_petArchive = 1200;
 
+    private String paperLicence = null;
+    private String paperImmuneLicence = null;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -109,11 +112,13 @@ public class DogCertificateEditDogActivity extends BaseActivity {
             binding.thirdStepView.setText("③选择医院");
 
         } else if (type == type_examined) {
-            binding.titleView.binding.itemTitle.setText("犬证办理");
+            binding.titleView.binding.itemTitle.setText("年审办理");
             binding.secondStepView.setSelected(true);
             binding.firstStepView.setText("①犬主信息");
             binding.secondStepView.setText("②犬只信息");
-            binding.thirdStepView.setText("③提交审核");
+            binding.thirdStepView.setText("③提交年审");
+            paperLicence = getIntent().getStringExtra("paperLicence");
+            paperImmuneLicence = getIntent().getStringExtra("paperImmuneLicence");
 
         }
 
@@ -593,38 +598,62 @@ public class DogCertificateEditDogActivity extends BaseActivity {
         if (dog.getId() > 0)
             map.put("id", dog.getId() + "");//选择的犬只id
 
-        SendRequest.savaDog(map, new GenericsCallback<ResultClient<Dog>>(new JsonGenericsSerializator()) {
-            @Override
-            public void onError(Call call, Exception e, int id) {
+        if (type == type_examined) {
+            map.put("paperLicence", paperLicence);//犬证图片地址
+            map.put("paperImmuneLicence", paperImmuneLicence);//免疫证明
+            SendRequest.savaPaperDog(map, new GenericsCallback<ResultClient<Dog>>(new JsonGenericsSerializator()) {
+                @Override
+                public void onError(Call call, Exception e, int id) {
 
-            }
-
-            @Override
-            public void onResponse(ResultClient<Dog> response, int id) {
-                if (response.isSuccess() && response.getData() != null) {
-                    if (type == type_userInfo) {
-
-
-                    } else if (type == type_certificate || type == type_examined) {
-                        Bundle bundle = new Bundle();
-                        bundle.putInt("type", type);
-                        bundle.putInt("dogId", response.getData().getDogId());
-                        bundle.putInt("addressId", addressId);
-                        bundle.putString("dogType", dog.getDogType());
-                        openActivity(DogCertificateEditSubmitActivity.class, bundle);
-
-                    } else if (type == type_immune) {
-                        Bundle bundle = new Bundle();
-                        bundle.putInt("dogId", response.getData().getDogId());
-                        bundle.putInt("addressId", addressId);
-                        openActivity(DogImmuneHospitalActivity.class, bundle);
-
-                    }
-                } else {
-                    ToastUtils.showShort(getApplicationContext(), response.getMsg());
                 }
-            }
-        });
+
+                @Override
+                public void onResponse(ResultClient<Dog> response, int id) {
+                    if (response.isSuccess() && response.getData() != null) {
+                        Bundle bundle = new Bundle();
+                        bundle.putInt("type", DogCertificateExaminedSubmitActivity.type_zhiZhi);
+                        bundle.putSerializable("dataBean", response.getData());
+                        openActivity(DogCertificateExaminedSubmitActivity.class, bundle);
+
+                    } else {
+                        ToastUtils.showShort(getApplicationContext(), response.getMsg());
+                    }
+                }
+            });
+        } else {
+            SendRequest.savaDog(map, new GenericsCallback<ResultClient<Dog>>(new JsonGenericsSerializator()) {
+                @Override
+                public void onError(Call call, Exception e, int id) {
+
+                }
+
+                @Override
+                public void onResponse(ResultClient<Dog> response, int id) {
+                    if (response.isSuccess() && response.getData() != null) {
+                        if (type == type_userInfo) {
+
+
+                        } else if (type == type_certificate || type == type_examined) {
+                            Bundle bundle = new Bundle();
+                            bundle.putInt("type", type);
+                            bundle.putInt("dogId", response.getData().getDogId());
+                            bundle.putInt("addressId", addressId);
+                            bundle.putString("dogType", dog.getDogType());
+                            openActivity(DogCertificateEditSubmitActivity.class, bundle);
+
+                        } else if (type == type_immune) {
+                            Bundle bundle = new Bundle();
+                            bundle.putInt("dogId", response.getData().getDogId());
+                            bundle.putInt("addressId", addressId);
+                            openActivity(DogImmuneHospitalActivity.class, bundle);
+
+                        }
+                    } else {
+                        ToastUtils.showShort(getApplicationContext(), response.getMsg());
+                    }
+                }
+            });
+        }
     }
 
 

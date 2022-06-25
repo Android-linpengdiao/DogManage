@@ -37,6 +37,9 @@ public class DogCertificateExaminedSubmitActivity extends BaseActivity implement
 
     private ActivityDogCertificateExaminedSubmitBinding binding;
     private Dog dogDetail;
+    private int type;
+    public static final int type_dianZhi = 0;//电子
+    public static final int type_zhiZhi = 1;//纸质
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,6 +48,8 @@ public class DogCertificateExaminedSubmitActivity extends BaseActivity implement
         addActivity(this);
 
         dogDetail = (Dog) getIntent().getSerializableExtra("dataBean");
+        type = getIntent().getIntExtra("type", 0);
+        binding.stepContainer.setVisibility(type == type_zhiZhi ? View.VISIBLE : View.VISIBLE);
         if (dogDetail != null) {
             binding.dogTypeView.binding.itemContent.setText(dogDetail.getDogType());
             getAnnualDogLicense(dogDetail.getLincenceId());
@@ -58,22 +63,22 @@ public class DogCertificateExaminedSubmitActivity extends BaseActivity implement
     private void getAnnualDogLicense(int lincenceId) {
         SendRequest.getAnnualDogLicense(lincenceId,
                 new GenericsCallback<ResultClient<HandleInfo>>(new JsonGenericsSerializator()) {
-            @Override
-            public void onError(Call call, Exception e, int id) {
+                    @Override
+                    public void onError(Call call, Exception e, int id) {
 
-            }
+                    }
 
-            @Override
-            public void onResponse(ResultClient<HandleInfo> response, int id) {
-                if (response.isSuccess() && response.getData() != null) {
-                    binding.handleUnitAddressView.setText(response.getData().getHandleUnitAddress());
-                    binding.costValueView.binding.itemContent.setText("￥" + response.getData().getCostValue());
+                    @Override
+                    public void onResponse(ResultClient<HandleInfo> response, int id) {
+                        if (response.isSuccess() && response.getData() != null) {
+                            binding.handleUnitAddressView.setText(response.getData().getHandleUnitAddress());
+                            binding.costValueView.binding.itemContent.setText("￥" + response.getData().getCostValue());
 
-                } else {
-                    ToastUtils.showShort(getApplicationContext(), !CommonUtil.isBlank(response.getMsg()) ? response.getMsg() : "获取信息失败");
-                }
-            }
-        });
+                        } else {
+                            ToastUtils.showShort(getApplicationContext(), !CommonUtil.isBlank(response.getMsg()) ? response.getMsg() : "获取信息失败");
+                        }
+                    }
+                });
     }
 
     public void onClickConfirm(View view) {

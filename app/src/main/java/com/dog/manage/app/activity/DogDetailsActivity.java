@@ -107,7 +107,7 @@ public class DogDetailsActivity extends BaseActivity {
                     try {
                         List<String> imageList = new Gson().fromJson(dogDetail.getDogPhoto(), new TypeToken<List<String>>() {
                         }.getType());
-                        GlideLoader.LoderRoundedImage(DogDetailsActivity.this, imageList.get(0), binding.coverView,15);
+                        GlideLoader.LoderImage(DogDetailsActivity.this, imageList.get(0), binding.coverView);
 //                        binding.banner.setImages(imageList).start();
                     } catch (Exception e) {
                         e.getMessage();
