@@ -110,13 +110,15 @@ public class ImmuneDetailsActivity extends BaseActivity implements AMapLocationL
                     initView(response.getData());
 
                 } else {
-                    ToastUtils.showShort(getApplicationContext(), response.getMessage());
+                    ToastUtils.showShort(getApplicationContext(),!CommonUtil.isBlank(response.getMsg()) ? response.getMsg() : "获取信息失败");
                 }
             }
         });
     }
 
     private void initView(ImmuneApproveDetail data) {
+        binding.container.setVisibility(View.VISIBLE);
+        binding.bottomView.setVisibility(View.VISIBLE);
         immuneApproveDetail = data;
         //办理状态 0 默认 1：未接种 2：已接种 3: 即将过期 4: 已过期
         Integer licenceStatus = data.getLincenceStatus();

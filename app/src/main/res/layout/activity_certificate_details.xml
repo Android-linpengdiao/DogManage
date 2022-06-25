@@ -24,9 +24,12 @@
             app:tv_title_size="@dimen/titleViewSize" />
 
         <ScrollView
+            android:id="@+id/container"
             android:layout_width="match_parent"
             android:layout_height="@dimen/dp_0"
             android:layout_weight="1"
+            android:visibility="gone"
+            tools:visibility="visible"
             android:overScrollMode="never">
 
             <LinearLayout
@@ -287,10 +290,13 @@
         </ScrollView>
 
         <LinearLayout
+            android:id="@+id/bottomView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/white"
             android:orientation="vertical"
+            android:visibility="gone"
+            tools:visibility="visible"
             android:paddingLeft="@dimen/dp_20"
             android:paddingTop="@dimen/dp_26"
             android:paddingRight="@dimen/dp_20"

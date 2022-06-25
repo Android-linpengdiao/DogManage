@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.View;
 
 import com.base.manager.LoadingManager;
+import com.base.utils.CommonUtil;
 import com.base.utils.ToastUtils;
 import com.dog.manage.app.R;
 import com.dog.manage.app.databinding.ActivityCertificateDetailsBinding;
@@ -118,13 +119,15 @@ public class CertificateDetailsActivity extends BaseActivity {
                     initView(response.getData());
 
                 } else {
-                    ToastUtils.showShort(getApplicationContext(), response.getMessage());
+                    ToastUtils.showShort(getApplicationContext(), !CommonUtil.isBlank(response.getMsg()) ? response.getMsg() : "获取信息失败");
                 }
             }
         });
     }
 
     private void initView(DogLicenceDetail data) {
+        binding.container.setVisibility(View.VISIBLE);
+        binding.bottomView.setVisibility(View.VISIBLE);
         dogLicenceDetail = data;
         //办理状态 0 全部 1：待审核 2：代缴费 3：审核驳回 4：已办结 5：已过期 6：已注销
         Integer licenceStatus = data.getLicenceStatus();

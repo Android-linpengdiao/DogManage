@@ -24,8 +24,11 @@
             app:tv_title_size="@dimen/titleViewSize" />
 
         <ScrollView
+            android:id="@+id/container"
             android:layout_width="match_parent"
             android:layout_height="@dimen/dp_0"
+            android:visibility="gone"
+            tools:visibility="visible"
             android:layout_weight="1"
             android:overScrollMode="never">
 

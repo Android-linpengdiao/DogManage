@@ -69,6 +69,7 @@ public class TransferDetailsActivity extends BaseActivity {
     }
 
     private void initView(RecordImmune dataBean) {
+        binding.container.setVisibility(View.VISIBLE);
         //status   办理状态 0 是未审核的 1 成功的 2 是失败的
         int status = dataBean.getStatus();
         binding.auditStatusView.setText(status == 1 ? "过户成功" : status == 2 ? "过户失败" : "审核中");
