@@ -242,8 +242,7 @@
                         <ImageView
                             android:id="@+id/sterilizationProveView"
                             android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:onClick="onClickTestify"/>
+                            android:layout_height="match_parent"/>
 
                     </RelativeLayout>
 
@@ -349,8 +348,7 @@
                             <ImageView
                                 android:id="@+id/leftFaceView"
                                 android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:onClick="onClickLeftFace"/>
+                                android:layout_height="match_parent"/>
 
                         </RelativeLayout>
 
@@ -382,8 +380,7 @@
                             <ImageView
                                 android:id="@+id/centerFaceView"
                                 android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:onClick="onClickCenterFace"/>
+                                android:layout_height="match_parent"/>
 
                         </RelativeLayout>
 
@@ -414,8 +411,7 @@
                             <ImageView
                                 android:id="@+id/rightFaceView"
                                 android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:onClick="onClickRightFace"/>
+                                android:layout_height="match_parent"/>
 
                         </RelativeLayout>
 
