@@ -184,28 +184,28 @@ public class DogCertificateEditDogActivity extends BaseActivity {
         binding.petTypeView.binding.itemInfo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                dog.setDogType("金毛");
-                binding.petTypeView.binding.itemContent.setText(dog.getDogType());
+//                dog.setDogType("金毛");
+//                binding.petTypeView.binding.itemContent.setText(dog.getDogType());
 
-//                if (CommonUtil.isBlank(centerFace)) {
-//                    ToastUtils.showShort(getApplicationContext(), "请上传正面照片");
-//                    return;
-//                }
-//                petTypeUrl(centerFace);
+                if (CommonUtil.isBlank(centerFace)) {
+                    ToastUtils.showShort(getApplicationContext(), "请上传正面照片");
+                    return;
+                }
+                petTypeUrl(centerFace);
             }
         });
         //鼻纹信息
         binding.createPetArchivesView.binding.itemInfo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                dog.setNoseprint("23325059-b2c1-11eb-1Vu7hqwN6");
-                binding.createPetArchivesView.binding.itemContent.setText("已完成采集");
+//                dog.setNoseprint("23325059-b2c1-11eb-1Vu7hqwN6");
+//                binding.createPetArchivesView.binding.itemContent.setText("已完成采集");
 
-//                if (checkPermissions(PermissionUtils.CAMERA, 100)) {
-//                    Bundle bundle = new Bundle();
-//                    bundle.putInt("type", CameraActivity.type_petArchives);
-//                    openActivity(CameraActivity.class, bundle, request_petArchive);
-//                }
+                if (checkPermissions(PermissionUtils.CAMERA, 100)) {
+                    Bundle bundle = new Bundle();
+                    bundle.putInt("type", CameraActivity.type_petArchives);
+                    openActivity(CameraActivity.class, bundle, request_petArchive);
+                }
             }
         });
 
@@ -502,9 +502,9 @@ public class DogCertificateEditDogActivity extends BaseActivity {
 
     }
 
-    private String leftFace = "http://dogmanage.file.obs.cn-north-4.myhuaweicloud.com/IMG_20220601_081815.jpg";
-    private String centerFace = "http://dogmanage.file.obs.cn-north-4.myhuaweicloud.com/1e4d053d666ebca4.jpg";
-    private String rightFace = "http://dogmanage.file.obs.cn-north-4.myhuaweicloud.com/ic_right_face.png";
+    private String leftFace = null;
+    private String centerFace = null;
+    private String rightFace = null;
 
     /**
      * dogName

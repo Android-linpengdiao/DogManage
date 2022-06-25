@@ -58,8 +58,8 @@ public class DogCertificateExaminedActivity extends BaseActivity {
     private final int request_DogCertificate = 100;
     private final int request_ImmuneCertificate = 200;
 
-    private String dogCertificate = "http://dogmanage.file.obs.cn-north-4.myhuaweicloud.com/ic_right_face.png";
-    private String immuneCertificate = "http://dogmanage.file.obs.cn-north-4.myhuaweicloud.com/ic_right_face.png";
+    private String dogCertificate = null;
+    private String immuneCertificate = null;
     private Dog dogDetail;
 
     @Override
