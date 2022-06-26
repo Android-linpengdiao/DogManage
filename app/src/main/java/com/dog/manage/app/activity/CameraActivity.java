@@ -201,7 +201,7 @@ public class CameraActivity extends BaseActivity {
                         } else {
                             startTimer();
                             ToastUtils.showShort(CameraActivity.this, response.getMessage());
-                            binding.testView.setVisibility(View.VISIBLE);
+//                            binding.testView.setVisibility(View.VISIBLE);
                         }
 
                     }
