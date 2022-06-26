@@ -98,7 +98,7 @@ public class DogLogoutDetailsActivity extends BaseActivity {
             binding.createTimeView.setText(recordImmune.getCreatedTime());
 
             binding.dogCertificateView.binding.itemTitle.setText("选择犬只");
-            binding.dogCertificateView.binding.itemContent.setText(recordImmune.getDogType() + "（犬证编号：）" + recordImmune.getDogLicenceNum());
+            binding.dogCertificateView.binding.itemContent.setText(recordImmune.getDogType() + "（犬证编号：" + recordImmune.getDogLicenceNum() + "）");
 
             binding.auditReasonView.setVisibility(recordImmune.getStatus() == 2 ? View.VISIBLE : View.GONE);
             binding.confirmView.setVisibility(recordImmune.getStatus() == 2 ? View.VISIBLE : View.GONE);
