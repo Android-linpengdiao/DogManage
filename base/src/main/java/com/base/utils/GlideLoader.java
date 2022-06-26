@@ -79,6 +79,21 @@ public class GlideLoader {
         }
     }
 
+    public static void LoderMessageImage(Context context, String url, ImageView view) {
+        try {
+            Glide.with(context)
+                    .load(url)
+                    .centerCrop()
+                    .transform(new GlideRoundTransform(context, 100))
+                    .placeholder(R.drawable.notice)
+                    .error(R.drawable.notice)
+                    .diskCacheStrategy(DiskCacheStrategy.ALL)
+                    .into(view);
+        } catch (Exception e) {
+            e.getMessage();
+        }
+    }
+
     public static void LoderCircleImage(Context context, String url, ImageView view) {
         try {
             Glide.with(context)

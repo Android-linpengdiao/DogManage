@@ -9,51 +9,39 @@ import lombok.NoArgsConstructor;
 @Data
 public class Message implements Serializable {
 
+
     /**
-     * createBy
-     * string
-     * 创建人
-     * createTime
-     * string
-     * 创建时间
-     * updateBy
-     * string
-     * 更新人
-     * updateTime
-     * string
-     * 更新时间
-     * remark
-     * string
-     * 备注
-     * imageUrl
-     * string
-     * 图片地址 多个图片以“，”分开
-     * params
-     * object
-     * {0}
-     * noticeId
-     * integer
-     * id
-     * noticeTitle
-     * string
-     * 标题
-     * noticeType
-     * string
-     * noticeContent
-     * string
-     * 内容
-     * status
-     * string
-     * 状态
-     * sonType
-     * string
-     * 消息类型
+     * searchValue : null
+     * createBy : admin
+     * createTime : 2022-04-25 13:48:25
+     * updateBy :
+     * updateTime : 2022-06-26 21:48:47
+     * remark : 管理员
+     * params : {}
+     * noticeId : 2
+     * noticeTitle : 维护通知：2018-07-01 系统凌晨维护
+     * imageUrl : null
+     * noticeType : 1
+     * noticeContent : 维护内容
+     * status : 0
+     * userId : null
+     * sonType : null
+     * readStatus : 1
      */
 
+    private String searchValue;
+    private String createBy;
+    private String createTime;
+    private String updateBy;
+    private String updateTime;
+    private String remark;
     private Integer noticeId;
     private String noticeTitle;
-    private String noticeContent;
     private String imageUrl;
-    private String createTime;
-    private String updateTime;
+    private String noticeType;
+    private String noticeContent;
+    private String status;
+    private Integer userId;
+    private Integer sonType;//1 犬证办理 2 免疫证办理 3 犬证年审提醒 4 犬只过户 5 领养 6 犬只注销 7 犬只变更
+    private Integer readStatus;//0 是未读
 }

@@ -81,17 +81,21 @@ public class SendRequest {
     }
 
     public static void sysNoticeList(int pageNum, int pageSize, Callback call) {
+        Map<String, String> headers = new HashMap<>();
+        headers.put("Authorization", BaseApplication.getInstance().getUserInfo().getAuthorization());
         Map<String, String> map = new HashMap<>();
         map.put("pageNum", String.valueOf(pageNum));
         map.put("pageSize", String.valueOf(pageSize));
-        OkHttpUtils.post().params(map).url(APIUrls.sysNoticeList).build().execute(call);
+        OkHttpUtils.post().headers(headers).params(map).url(APIUrls.sysNoticeList).build().execute(call);
 
     }
 
     public static void getSysNoticeById(int noticeId, Callback call) {
+        Map<String, String> headers = new HashMap<>();
+        headers.put("Authorization", BaseApplication.getInstance().getUserInfo().getAuthorization());
         Map<String, String> map = new HashMap<>();
         map.put("noticeId", String.valueOf(noticeId));
-        OkHttpUtils.post().params(map).url(APIUrls.getSysNoticeById).build().execute(call);
+        OkHttpUtils.post().headers(headers).params(map).url(APIUrls.getSysNoticeById).build().execute(call);
 
     }
 

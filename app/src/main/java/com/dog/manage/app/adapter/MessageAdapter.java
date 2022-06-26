@@ -1,6 +1,7 @@
 package com.dog.manage.app.adapter;
 
 import android.content.Context;
+import android.text.Html;
 import android.view.View;
 
 import com.base.BaseRecyclerAdapter;
@@ -36,12 +37,15 @@ public class MessageAdapter extends BaseRecyclerAdapter<Message, ItemMessageBind
     @Override
     protected void onBindItem(ItemMessageBinding binding, Message dataBean, int position) {
         binding.noticeTitleView.setText(dataBean.getNoticeTitle());
-        binding.noticeContentView.setText(dataBean.getNoticeContent());
+        binding.noticeContentView.setText(Html.fromHtml(dataBean.getNoticeContent()));
         binding.createTimeView.setText(dataBean.getCreateTime());
-        GlideLoader.LoderCircleImage(mContext, "https://pics7.baidu.com/feed/6c224f4a20a446236fb6db0ac3bf5d040df3d785.jpeg", binding.coverView);
+        binding.unreadMessageView.setVisibility(dataBean.getReadStatus() == 0 ? View.VISIBLE : View.GONE);
+        GlideLoader.LoderMessageImage(mContext, dataBean.getImageUrl(), binding.coverView);
         binding.getRoot().setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                dataBean.setReadStatus(1);
+                notifyDataSetChanged();
                 if (onClickListener != null)
                     onClickListener.onClick(view, dataBean);
             }

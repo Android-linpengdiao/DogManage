@@ -2,6 +2,7 @@ package com.dog.manage.app.activity.record;
 
 
 import android.os.Bundle;
+import android.text.Html;
 
 import com.base.utils.ToastUtils;
 import com.dog.manage.app.R;
@@ -46,7 +47,7 @@ public class MessageDetailsActivity extends BaseActivity {
                         if (response.isSuccess() && response.getData() != null) {
 //                            binding.noticeTitleView.setText(dataBean.getNoticeTitle());
                             binding.noticeTimeView.setText(dataBean.getCreateTime());
-                            binding.noticeContentView.setText(dataBean.getNoticeTitle());
+                            binding.noticeContentView.setText(Html.fromHtml(dataBean.getNoticeContent()));
                         } else {
                             ToastUtils.showShort(getApplicationContext(), response.getMessage());
                         }
