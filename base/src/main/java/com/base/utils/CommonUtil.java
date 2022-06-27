@@ -76,6 +76,14 @@ import java.util.regex.Pattern;
 public class CommonUtil {
     private static final String TAG = "CommonUtil";
 
+    public static String getDogAge(int dogAge) {
+        if (isBlank(dogAge)) {
+            return "0个月";
+        }
+        return (dogAge / 12 > 0 ? dogAge / 12 + "岁" : "") + dogAge % 12 + "个月";
+
+    }
+
     public static void toSetting(Context context) {
         NotificationManagerCompat.from(context).areNotificationsEnabled();
         Intent localIntent = new Intent();

@@ -4,6 +4,7 @@ import android.content.Context;
 import android.view.View;
 
 import com.base.BaseRecyclerAdapter;
+import com.base.utils.CommonUtil;
 import com.base.utils.GlideLoader;
 import com.base.view.OnClickListener;
 import com.dog.manage.app.R;
@@ -61,8 +62,12 @@ public class DogAdapter extends BaseRecyclerAdapter<Dog, ItemDogBinding> {
             e.getMessage();
         }
 
-        binding.titleView.setText(dataBean.getDogName() + "|" + dataBean.getDogColor() + "|" + dataBean.getDogAge() + "岁3个月");
-        binding.contentView.setText(dataBean.getDogName() + "|" + dataBean.getDogColor() + "|" + dataBean.getDogAge() + "岁3个月");
+        String dogAge = "0个月";
+        if (dataBean.getDogAge()!=null){
+            dogAge = CommonUtil.getDogAge(dataBean.getDogAge());
+        }
+        binding.titleView.setText(dataBean.getDogName() + "|" + dataBean.getDogColor() + "|" + dogAge);
+        binding.contentView.setText(dataBean.getDogName() + "|" + dataBean.getDogColor() + "|" + dogAge);
 
         binding.getRoot().setOnClickListener(new View.OnClickListener() {
             @Override

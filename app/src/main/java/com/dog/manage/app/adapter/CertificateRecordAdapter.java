@@ -5,6 +5,7 @@ import android.graphics.Color;
 import android.view.View;
 
 import com.base.BaseRecyclerAdapter;
+import com.base.utils.CommonUtil;
 import com.base.view.OnClickListener;
 import com.dog.manage.app.R;
 import com.dog.manage.app.activity.record.RecordActivity;
@@ -47,7 +48,7 @@ public class CertificateRecordAdapter extends BaseRecyclerAdapter<RecordImmune, 
             binding.descView.setVisibility(View.GONE);
             binding.bottomView.setVisibility(View.VISIBLE);
             binding.dogOwnerContainer.setVisibility(View.INVISIBLE);
-            binding.contentView.setText(dataBean.getDogType() + "-" + dataBean.getDogAge() + "岁3个月");
+            binding.contentView.setText(dataBean.getDogType() + "-" + CommonUtil.getDogAge(dataBean.getDogAge()));
             binding.createTimeView.setText(dataBean.getCreatedTime());
             binding.contentView.setTextColor(Color.parseColor("#999999"));
             binding.checkStatusView.setBackgroundResource(R.drawable.button_theme);
@@ -83,7 +84,7 @@ public class CertificateRecordAdapter extends BaseRecyclerAdapter<RecordImmune, 
             binding.titleView.setText("免疫证办理");
             binding.descView.setVisibility(View.GONE);
             binding.dogOwnerContainer.setVisibility(View.INVISIBLE);
-            binding.contentView.setText(dataBean.getDogType() + "-" + dataBean.getDogAge() + "岁3个月");
+            binding.contentView.setText(dataBean.getDogType() + "-" + CommonUtil.getDogAge(dataBean.getDogAge()));
             binding.createTimeView.setText(dataBean.getCreateTime());
             binding.contentView.setTextColor(Color.parseColor("#999999"));
             if (dataBean.getLincenceStatus() != null) {
@@ -116,7 +117,7 @@ public class CertificateRecordAdapter extends BaseRecyclerAdapter<RecordImmune, 
         } else if (type == RecordActivity.type_transfer) {
             //办理状态 0 是未审核的 1 成功的 2 是失败的
             binding.titleView.setText("犬只过户");
-            binding.contentView.setText(dataBean.getDogType() + "-" + dataBean.getDogAge() + "岁3个月");
+            binding.contentView.setText(dataBean.getDogType() + "-" + CommonUtil.getDogAge(dataBean.getDogAge()));
             binding.createTimeView.setText(dataBean.getApplyTime());
             binding.descView.setText("犬证:" + dataBean.getDogLicenceNum());
             binding.oldUserNameView.setText("原犬主:" + dataBean.getOldUserName());

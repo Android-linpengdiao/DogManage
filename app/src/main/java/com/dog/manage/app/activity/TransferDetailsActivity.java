@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.View;
 
 import com.base.manager.LoadingManager;
+import com.base.utils.CommonUtil;
 import com.base.utils.ToastUtils;
 import com.dog.manage.app.R;
 import com.dog.manage.app.databinding.ActivityTransferDetailsBinding;
@@ -76,7 +77,7 @@ public class TransferDetailsActivity extends BaseActivity {
         binding.auditReasonView.setVisibility(status == 2 ? View.VISIBLE : View.GONE);
         binding.confirmView.setVisibility(status == 2 ? View.VISIBLE : View.GONE);
 
-        binding.contentView.setText(dataBean.getDogType() + "-" + dataBean.getDogAge() + "岁3个月");
+        binding.contentView.setText(dataBean.getDogType() + "-" + CommonUtil.getDogAge(dataBean.getDogAge()));
         binding.createTimeView.setText(dataBean.getApplyTime());
         binding.descView.setText("犬证:" + dataBean.getDogLicenceNum());
         binding.oldUserNameView.setText("原犬主:" + dataBean.getOldUserName());

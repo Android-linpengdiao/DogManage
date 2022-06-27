@@ -6,6 +6,7 @@ import android.text.TextUtils;
 import android.view.View;
 
 import com.base.BaseData;
+import com.base.utils.CommonUtil;
 import com.base.utils.GlideLoader;
 import com.base.utils.LogUtil;
 import com.base.utils.ToastUtils;
@@ -41,7 +42,7 @@ public class DogAdoptionSubmitActivity extends BaseActivity {
         dogDetail = (DogDetail) getIntent().getSerializableExtra("dogDetail");
 
         if (dogDetail != null) {
-            binding.dogNameView.setText(dogDetail.getDogName() + "|" + dogDetail.getDogColor() + "|" + dogDetail.getDogAge() + "岁3个月");
+            binding.dogNameView.setText(dogDetail.getDogName() + "|" + dogDetail.getDogColor() + "|" + CommonUtil.getDogAge(dogDetail.getDogAge()));
             binding.leaveCenterView.setText(dogDetail.getLeaveCenter());
             binding.centerAddressView.setText(dogDetail.getCenterAddress());
             try {

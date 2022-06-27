@@ -110,7 +110,7 @@ public class ImmuneDetailsActivity extends BaseActivity implements AMapLocationL
                     initView(response.getData());
 
                 } else {
-                    ToastUtils.showShort(getApplicationContext(),!CommonUtil.isBlank(response.getMsg()) ? response.getMsg() : "获取信息失败");
+                    ToastUtils.showShort(getApplicationContext(), !CommonUtil.isBlank(response.getMsg()) ? response.getMsg() : "获取信息失败");
                 }
             }
         });
@@ -126,7 +126,9 @@ public class ImmuneDetailsActivity extends BaseActivity implements AMapLocationL
         binding.hintView.setVisibility(licenceStatus == 1 ? View.VISIBLE : View.GONE);
         binding.confirmView.setVisibility(licenceStatus == 1 ? View.GONE : View.VISIBLE);
         binding.confirmView.setText(licenceStatus == 2 ? "查看免疫证" : "立即办理");
-        binding.contentView.setText(data.getDogType() + "-" + data.getDogAge() + "岁3个月");
+        if (data.getDogAge() != null) {
+            binding.contentView.setText(data.getDogType() + "-" + CommonUtil.getDogAge(data.getDogAge()));
+        }
         binding.createTimeView.setText(data.getCreateTime());
 
         binding.dogOwnerInfoView.binding.itemContent.setText(data.getUserName());

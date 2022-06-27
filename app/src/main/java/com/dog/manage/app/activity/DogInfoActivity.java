@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.View;
 
 import com.base.manager.LoadingManager;
+import com.base.utils.CommonUtil;
 import com.base.utils.GlideLoader;
 import com.base.utils.ToastUtils;
 import com.dog.manage.app.R;
@@ -67,7 +68,7 @@ public class DogInfoActivity extends BaseActivity {
 
                     binding.dogNameView.binding.itemContent.setText(dogDetail.getDogName());
                     binding.dogColorView.binding.itemContent.setText(dogDetail.getDogColor());
-                    binding.dogAgeView.binding.itemContent.setText(dogDetail.getDogAge() + "岁3个月");
+                    binding.dogAgeView.binding.itemContent.setText(CommonUtil.getDogAge(dogDetail.getDogAge()));
 
                     //0-雌性 1-雄性
                     if (dogDetail.getDogGender() == 0) {

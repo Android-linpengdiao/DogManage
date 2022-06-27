@@ -17,8 +17,11 @@ import com.base.utils.GsonUtils;
 import com.base.utils.PermissionUtils;
 import com.base.utils.ToastUtils;
 import com.base.view.OnClickListener;
+import com.bigkoo.pickerview.builder.OptionsPickerBuilder;
 import com.bigkoo.pickerview.builder.TimePickerBuilder;
+import com.bigkoo.pickerview.listener.OnOptionsSelectListener;
 import com.bigkoo.pickerview.listener.OnTimeSelectListener;
+import com.bigkoo.pickerview.view.OptionsPickerView;
 import com.bigkoo.pickerview.view.TimePickerView;
 import com.dog.manage.app.Config;
 import com.dog.manage.app.DogDialogManager;
@@ -288,27 +291,19 @@ public class DogCertificateEditDogActivity extends BaseActivity {
      * 犬只年龄
      */
     private void getDogAge() {
-        Calendar selectedDate = Calendar.getInstance();
-        Calendar startDate = Calendar.getInstance();
-        Calendar endDate = Calendar.getInstance();
-
-        //正确设置方式 原因：注意事项有说明
-        SimpleDateFormat yearSimpleDateFormat = new SimpleDateFormat("yyyy");
-        SimpleDateFormat monthSimpleDateFormat = new SimpleDateFormat("MM");
-        SimpleDateFormat dateSimpleDateFormat = new SimpleDateFormat("dd");
-        Date date = new Date(System.currentTimeMillis());
-        startDate.set(2010, 11, 31);
-        endDate.set(Integer.parseInt(yearSimpleDateFormat.format(date)), Integer.parseInt(monthSimpleDateFormat.format(date)) - 1, Integer.parseInt(dateSimpleDateFormat.format(date)));
-
-        TimePickerView timePickerView = new TimePickerBuilder(DogCertificateEditDogActivity.this, new OnTimeSelectListener() {
+        List<String> optionsItems = new ArrayList<>();
+        for (int i = 1; i <= 100; i++) {
+            optionsItems.add(i + "个月");
+        }
+        OptionsPickerView pickerView = new OptionsPickerBuilder(this, new OnOptionsSelectListener() {
             @Override
-            public void onTimeSelect(Date date, View v) {//选中事件回调
-//                dog.setDogAge(date.getTime());
-                SimpleDateFormat sdr = new SimpleDateFormat("yyyy-MM");
-                binding.dogAgeView.binding.itemContent.setText(sdr.format(date));
+            public void onOptionsSelect(int options1, int options2, int options3, View v) {
+                dog.setDogAge(options1 + 1);
+                binding.dogAgeView.binding.itemContent.setText(optionsItems.get(options1));
             }
         })
-                .setType(new boolean[]{true, true, false, false, false, false})// 默认全部显示
+                .setTitleText("选择犬只年龄")
+                .setContentTextSize(16)
                 .setCancelText("取消")//取消按钮文字
                 .setSubmitText("确定")//确认按钮文字
                 .setSubCalSize(16)//滚轮文字大小
@@ -316,20 +311,61 @@ public class DogCertificateEditDogActivity extends BaseActivity {
                 .setTitleSize(18)//标题文字大小
                 .setTitleText("选择时间")//标题文字
                 .setOutSideCancelable(false)//点击屏幕，点在控件外部范围时，是否取消显示
-                .isCyclic(false)//是否循环滚动
                 .setTitleColor(Color.BLACK)//标题文字颜色
                 .setSubmitColor(Color.BLACK)//确定按钮文字颜色
                 .setCancelColor(Color.BLACK)//取消按钮文字颜色
                 .setTitleBgColor(getResources().getColor(R.color.white))//标题背景颜色 Night mode
                 .setBgColor(getResources().getColor(R.color.white))//滚轮背景颜色 Night mode
-                .setDate(selectedDate)// 如果不设置的话，默认是系统时间*/
-                .setRangDate(startDate, endDate)//起始终止年月日设定
-                .setLabel("", "", "", "时", "分", "秒")//默认设置为年月日时分秒
                 .isCenterLabel(false) //是否只显示中间选中项的label文字，false则每项item全部都带有label。
                 .isDialog(false)//是否显示为对话框样式
-                .setLineSpacingMultiplier(2.6f)//设置间距倍数,但是只能在1.0-4.0f之间
+                .setLineSpacingMultiplier(2.0f)//设置间距倍数,但是只能在1.0-4.0f之间
                 .build();
-        timePickerView.show();
+
+        pickerView.setPicker(optionsItems);
+        pickerView.show();
+
+//        Calendar selectedDate = Calendar.getInstance();
+//        Calendar startDate = Calendar.getInstance();
+//        Calendar endDate = Calendar.getInstance();
+//
+//        //正确设置方式 原因：注意事项有说明
+//        SimpleDateFormat yearSimpleDateFormat = new SimpleDateFormat("yyyy");
+//        SimpleDateFormat monthSimpleDateFormat = new SimpleDateFormat("MM");
+//        SimpleDateFormat dateSimpleDateFormat = new SimpleDateFormat("dd");
+//        Date date = new Date(System.currentTimeMillis());
+//        startDate.set(2010, 11, 31);
+//        endDate.set(Integer.parseInt(yearSimpleDateFormat.format(date)), Integer.parseInt(monthSimpleDateFormat.format(date)) - 1, Integer.parseInt(dateSimpleDateFormat.format(date)));
+//
+//        TimePickerView timePickerView = new TimePickerBuilder(DogCertificateEditDogActivity.this, new OnTimeSelectListener() {
+//            @Override
+//            public void onTimeSelect(Date date, View v) {//选中事件回调
+////                dog.setDogAge(date.getTime());
+//                SimpleDateFormat sdr = new SimpleDateFormat("yyyy-MM");
+//                binding.dogAgeView.binding.itemContent.setText(sdr.format(date));
+//            }
+//        })
+//                .setType(new boolean[]{true, true, false, false, false, false})// 默认全部显示
+//                .setCancelText("取消")//取消按钮文字
+//                .setSubmitText("确定")//确认按钮文字
+//                .setSubCalSize(16)//滚轮文字大小
+//                .setContentTextSize(18)//滚轮文字大小
+//                .setTitleSize(18)//标题文字大小
+//                .setTitleText("选择时间")//标题文字
+//                .setOutSideCancelable(false)//点击屏幕，点在控件外部范围时，是否取消显示
+//                .isCyclic(false)//是否循环滚动
+//                .setTitleColor(Color.BLACK)//标题文字颜色
+//                .setSubmitColor(Color.BLACK)//确定按钮文字颜色
+//                .setCancelColor(Color.BLACK)//取消按钮文字颜色
+//                .setTitleBgColor(getResources().getColor(R.color.white))//标题背景颜色 Night mode
+//                .setBgColor(getResources().getColor(R.color.white))//滚轮背景颜色 Night mode
+//                .setDate(selectedDate)// 如果不设置的话，默认是系统时间*/
+//                .setRangDate(startDate, endDate)//起始终止年月日设定
+//                .setLabel("", "", "", "时", "分", "秒")//默认设置为年月日时分秒
+//                .isCenterLabel(false) //是否只显示中间选中项的label文字，false则每项item全部都带有label。
+//                .isDialog(false)//是否显示为对话框样式
+//                .setLineSpacingMultiplier(2.6f)//设置间距倍数,但是只能在1.0-4.0f之间
+//                .build();
+//        timePickerView.show();
     }
 
     /**
@@ -455,7 +491,7 @@ public class DogCertificateEditDogActivity extends BaseActivity {
         //犬只颜色
         binding.dogColorView.binding.itemContent.setText(dog.getDogColor());
         //犬只年龄
-        binding.dogAgeView.binding.itemContent.setText(dog.getDogAge() + "");
+        binding.dogAgeView.binding.itemContent.setText(dog.getDogAge() > 0 ? dog.getDogAge() + "个月" : "选择犬只年龄");
 
         //犬只性别;0:雌性， 1：雄性
         if (dog.getDogGender() == 1) {
@@ -575,7 +611,7 @@ public class DogCertificateEditDogActivity extends BaseActivity {
 
         }
 
-        if (dog.getDogAge() < 0) {
+        if (dog.getDogAge() <= 0) {
             ToastUtils.showShort(getApplicationContext(), "选择犬只年龄");
             return;
         }

@@ -138,7 +138,7 @@ public class CertificateDetailsActivity extends BaseActivity {
         binding.confirmView.setVisibility(licenceStatus == 1 ? View.GONE : View.VISIBLE);
         binding.confirmView.setBackgroundResource(licenceStatus == 5 ? R.drawable.button_red : R.drawable.button_theme);
 
-        binding.contentView.setText(data.getDogType() + "-" + data.getDogAge() + "岁3个月");
+        binding.contentView.setText(data.getDogType() + "-" + CommonUtil.getDogAge(data.getDogAge()));
         binding.createTimeView.setText(data.getCreatedTime());
         binding.dogOwnerInfoView.binding.itemContent.setText(data.getUserName());
         binding.dogDetailsView.binding.itemContent.setText(data.getDogType());

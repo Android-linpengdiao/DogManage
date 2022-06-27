@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.view.WindowManager;
 
 import com.base.manager.LoadingManager;
+import com.base.utils.CommonUtil;
 import com.base.utils.GlideLoader;
 import com.base.utils.ToastUtils;
 import com.dog.manage.app.R;
@@ -95,7 +96,7 @@ public class DogDetailsThemeActivity extends BaseActivity {
             public void onResponse(ResultClient<DogDetail> response, int id) {
                 if (response.isSuccess() && response.getData() != null) {
                     dogDetail = response.getData();
-                    binding.dogNameView.setText(dogDetail.getDogName() + "|" + dogDetail.getDogColor() + "|" + dogDetail.getDogAge() + "岁3个月");
+                    binding.dogNameView.setText(dogDetail.getDogName() + "|" + dogDetail.getDogColor() + "|" + CommonUtil.getDogAge(dogDetail.getDogAge()));
                     binding.leaveCenterView.setText(dogDetail.getLeaveCenter());
                     binding.centerAddressView.setText(dogDetail.getCenterAddress());
                     binding.phoneView.setText(dogDetail.getPhone());

@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.View;
 
 import com.base.manager.LoadingManager;
+import com.base.utils.CommonUtil;
 import com.base.utils.GlideLoader;
 import com.base.utils.ToastUtils;
 import com.dog.manage.app.R;
@@ -85,7 +86,7 @@ public class AdoptionDetailsActivity extends BaseActivity {
         binding.container.setVisibility(View.VISIBLE);
         binding.bottomView.setVisibility(View.VISIBLE);
         recordAdoption = dataBean;
-        binding.dogNameView.setText(dataBean.getDogName() + "|" + dataBean.getDogColor() + "|" + dataBean.getDogAge() + "岁3个月");
+        binding.dogNameView.setText(dataBean.getDogName() + "|" + dataBean.getDogColor() + "|" + CommonUtil.getDogAge(dataBean.getDogAge()));
         binding.acceptUnitView.setText(dataBean.getAcceptUnit());
         binding.acceptUnitAddressView.setText(dataBean.getAcceptUnitAddress());
         try {
