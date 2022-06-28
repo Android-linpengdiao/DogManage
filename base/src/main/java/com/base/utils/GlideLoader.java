@@ -70,8 +70,8 @@ public class GlideLoader {
                     .load(url)
                     .centerCrop()
                     .transform(new GlideRoundTransform(context, round))
-                    .placeholder(round == 0 ? R.color.app_background : R.drawable.placeholder)
-                    .error(round == 0 ? R.color.app_background : R.drawable.placeholder)
+                    .placeholder(round == 0 ? R.color.app_background : R.drawable.banner)
+                    .error(round == 0 ? R.color.app_background : R.drawable.banner_1)
                     .diskCacheStrategy(DiskCacheStrategy.ALL)
                     .into(view);
         } catch (Exception e) {
