@@ -3,14 +3,21 @@ package com.dog.manage.app.activity;
 
 import android.os.Bundle;
 import android.view.View;
+import android.webkit.JavascriptInterface;
+import android.webkit.WebChromeClient;
+import android.webkit.WebSettings;
+import android.webkit.WebView;
+import android.webkit.WebViewClient;
 
 import androidx.recyclerview.widget.GridLayoutManager;
 
 import com.base.utils.CommonUtil;
+import com.base.utils.LogUtil;
 import com.base.view.OnClickListener;
 import com.dog.manage.app.R;
 import com.dog.manage.app.adapter.DogAdapter;
 import com.dog.manage.app.databinding.ActivityAdvertiseBinding;
+import com.dog.manage.app.model.PoliciesBean;
 import com.dog.manage.app.view.GridItemDecoration;
 
 import java.util.Arrays;
@@ -18,7 +25,6 @@ import java.util.Arrays;
 public class AdvertiseActivity extends BaseActivity {
 
     private ActivityAdvertiseBinding binding;
-    private DogAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,36 +32,69 @@ public class AdvertiseActivity extends BaseActivity {
         binding = getViewData(R.layout.activity_advertise);
         addActivity(this);
 
-        GridItemDecoration.Builder builder = new GridItemDecoration.Builder(this);
-        builder.color(R.color.transparent);
-        builder.size(CommonUtil.dip2px(this, 12));
-        binding.recyclerView.addItemDecoration(new GridItemDecoration(builder));
-        binding.recyclerView.setLayoutManager(new GridLayoutManager(this, 3));
-        binding.recyclerView.setNestedScrollingEnabled(false);
-        adapter = new DogAdapter(getApplication());
-        adapter.setType(1);
-        binding.recyclerView.setAdapter(adapter);
-        adapter.setOnClickListener(new OnClickListener() {
+        if (getIntent().hasExtra("policiesBean")) {
+            PoliciesBean policiesBean = (PoliciesBean) getIntent().getSerializableExtra("policiesBean");
+            binding.noticeTitleView.setText(policiesBean.getNoticeTitle());
+            binding.noticeTimeView.setText(policiesBean.getCreateTime());
+            initWebView(policiesBean.getNoticeContent());
+        }
+    }
+
+    private void initWebView(String noticeContent) {
+        WebSettings wvSettings = binding.webView.getSettings();
+        // 是否阻止网络图像
+        wvSettings.setBlockNetworkImage(false);
+        // 是否阻止网络请求
+        wvSettings.setBlockNetworkLoads(false);
+        // 是否加载JS
+        wvSettings.setJavaScriptEnabled(true);
+        wvSettings.setJavaScriptCanOpenWindowsAutomatically(true);
+        //覆盖方式启动缓存
+        wvSettings.setCacheMode(WebSettings.LOAD_DEFAULT);
+        // 使用广泛视窗
+        wvSettings.setUseWideViewPort(false);
+        wvSettings.setLoadWithOverviewMode(true);
+        wvSettings.setDomStorageEnabled(true);
+        //是否支持缩放
+        wvSettings.setBuiltInZoomControls(false);
+        wvSettings.setSupportZoom(false);
+        //不显示缩放按钮
+        wvSettings.setDisplayZoomControls(false);
+        wvSettings.setAllowFileAccess(true);
+        wvSettings.setDatabaseEnabled(true);
+        //缓存相关
+        wvSettings.setAppCacheEnabled(true);
+        wvSettings.setDomStorageEnabled(true);
+        wvSettings.setDatabaseEnabled(true);
+        //去掉右侧导航条
+        binding.webView.setScrollBarStyle(WebView.SCROLLBARS_INSIDE_OVERLAY);
+        binding.webView.setWebViewClient(new WebViewClient() {
+
             @Override
-            public void onClick(View view, Object object) {
-
-
+            public boolean shouldOverrideUrlLoading(WebView view, String url) {
+                view.loadUrl(url);
+                return true;
             }
 
             @Override
-            public void onLongClick(View view, Object object) {
-
+            public void onPageFinished(WebView webView, String s) {
+                webView.loadUrl("javascript:getContent('" + noticeContent + "')");
+                super.onPageFinished(webView, s);
             }
         });
-//        adapter.refreshData(Arrays.asList(
-//                "犬证办理",
-//                "免疫证办理",
-//                "犬证年审",
-//                "犬只过户",
-//                "犬只领养",
-//                "犬只注销",
-//                "信息变更",
-//                "办理流程",
-//                "政策法规"));
+        binding.webView.setWebChromeClient(new WebChromeClient());
+        binding.webView.addJavascriptInterface(new myJavascriptInterface(), "injectedObject");
+
+        String url = "file:///android_asset/template.html";
+        binding.webView.loadUrl(url);
+    }
+
+    public class myJavascriptInterface {
+
+        @JavascriptInterface
+        public void getHeight(int pageHeight) {
+
+        }
+
     }
 }

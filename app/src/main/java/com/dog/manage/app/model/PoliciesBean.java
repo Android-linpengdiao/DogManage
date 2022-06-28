@@ -31,16 +31,10 @@ public class PoliciesBean implements Serializable {
     private String updateBy;
     private String updateTime;
     private String remark;
-    private ParamsBean params;
     private Integer noticeId;
     private String noticeTitle;
     private String imageUrl;
     private String noticeType;
     private String noticeContent;
     private String status;
-
-    @NoArgsConstructor
-    @Data
-    public static class ParamsBean implements Serializable{
-    }
 }
