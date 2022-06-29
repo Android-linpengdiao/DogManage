@@ -138,10 +138,12 @@ public class MyDogCertificateOrImmuneFragment extends BaseFragment {
         binding.dogOwnerInfoView.binding.itemContent.setText(licenceBean.getOrgName());
         binding.dogDetailsView.binding.itemContent.setText(licenceBean.getDogType());
 
-        long examinedTime = 365 - (System.currentTimeMillis() - TimeUtils.getTimeExamined(licenceBean.getAwardTime())) / (24 * 60 * 60 * 1000);
-        binding.examinedTimeView.setText((examinedTime > 0 ? "距离年审还有" : "距离年审已过") + Math.abs(examinedTime) + "天");
-        binding.examinedTimeView.setTextColor(examinedTime > 0 ? Color.parseColor("#273154") : Color.parseColor("#FF2020"));
-
+        if (licenceBean.getSurplusDate()!=null) {
+//            long examinedTime = 365 - (System.currentTimeMillis() - TimeUtils.getTimeExamined(licenceBean.getAwardTime())) / (24 * 60 * 60 * 1000);
+            long surplusDate = licenceBean.getSurplusDate();
+            binding.examinedTimeView.setText((surplusDate > 0 ? "距离年审还有" : "距离年审已过") + Math.abs(surplusDate) + "天");
+            binding.examinedTimeView.setTextColor(surplusDate > 0 ? Color.parseColor("#273154") : Color.parseColor("#FF2020"));
+        }
         binding.dogOwnerInfoView.binding.itemInfo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
