@@ -98,9 +98,11 @@ public class LoginActivity extends BaseActivity {
                         BaseApplication.getInstance().setUserInfo(response.getData());
                         finishActivity(LoginActivity.class);
                         finish();
+                    }else {
+                        ToastUtils.showShort(getApplicationContext(), "获取用户信息失败");
                     }
                 } else {
-                    ToastUtils.showShort(getApplicationContext(), response.getMessage());
+                    ToastUtils.showShort(getApplicationContext(), response.getMsg());
                 }
             }
         });
