@@ -348,9 +348,9 @@ public class RecordFragment extends BaseFragment {
                                 certificateRecordAdapter.refreshData(response.getRows());
                             } else {
                                 certificateRecordAdapter.loadMoreData(response.getRows());
-                                if (certificateRecordAdapter.getList().size() < response.getTotal()) {
-                                    transferPager.setCursor(transferPager.getCursor() + 1);
-                                }
+                            }
+                            if (certificateRecordAdapter.getList().size() < response.getTotal()) {
+                                transferPager.setCursor(transferPager.getCursor() + 1);
                             }
                             if (certificateRecordAdapter.getList().size() == response.getTotal()) {
                                 binding.refreshLayout.setNoMoreData(true);
@@ -433,9 +433,9 @@ public class RecordFragment extends BaseFragment {
                                 certificateRecordAdapter.refreshData(response.getRows());
                             } else {
                                 certificateRecordAdapter.loadMoreData(response.getRows());
-                                if (certificateRecordAdapter.getList().size() < response.getTotal()) {
-                                    logoutPager.setCursor(logoutPager.getCursor() + 1);
-                                }
+                            }
+                            if (certificateRecordAdapter.getList().size() < response.getTotal()) {
+                                logoutPager.setCursor(logoutPager.getCursor() + 1);
                             }
                             if (certificateRecordAdapter.getList().size() == response.getTotal()) {
                                 binding.refreshLayout.setNoMoreData(true);

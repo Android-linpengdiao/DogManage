@@ -102,7 +102,7 @@ public class LoginActivity extends BaseActivity {
                         ToastUtils.showShort(getApplicationContext(), "获取用户信息失败");
                     }
                 } else {
-                    ToastUtils.showShort(getApplicationContext(), response.getMsg());
+                    ToastUtils.showShort(getApplicationContext(), !CommonUtil.isBlank(response.getMsg()) ? response.getMsg() : "获取用户信息失败");
                 }
             }
         });
