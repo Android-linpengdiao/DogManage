@@ -261,13 +261,14 @@
                         android:background="@drawable/image_8" />
 
                     <TextView
+                        android:id="@+id/immuneLicenceStatusView"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_below="@+id/certificateCoverView"
                         android:layout_alignStart="@+id/certificateCoverView"
                         android:layout_marginTop="@dimen/dp_8"
                         android:gravity="center"
-                        android:text="免疫证状态:有效"
+                        android:text="免疫证状态:"
                         android:textColor="#000000"
                         android:textSize="@dimen/certificateSize" />
 
@@ -399,7 +400,6 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/dp_13"
                     android:gravity="center"
-                    android:singleLine="true"
                     android:text="免疫证明编号："
                     android:textColor="@color/black"
                     android:textSize="@dimen/sp_13"/>

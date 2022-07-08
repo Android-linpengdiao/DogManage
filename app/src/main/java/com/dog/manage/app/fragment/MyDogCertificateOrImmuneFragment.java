@@ -138,6 +138,8 @@ public class MyDogCertificateOrImmuneFragment extends BaseFragment {
         binding.dogOwnerInfoView.binding.itemContent.setText(licenceBean.getOrgName());
         binding.dogDetailsView.binding.itemContent.setText(licenceBean.getDogType());
 
+        //1无效2有效
+        binding.immuneLicenceStatusView.setText(licenceBean.getImmuneLicenceStatus() == 1 ? "免疫证状态:无效" : "免疫证状态:有效");
         if (licenceBean.getSurplusDate()!=null) {
 //            long examinedTime = 365 - (System.currentTimeMillis() - TimeUtils.getTimeExamined(licenceBean.getAwardTime())) / (24 * 60 * 60 * 1000);
             long surplusDate = licenceBean.getSurplusDate();
