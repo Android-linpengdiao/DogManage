@@ -276,7 +276,19 @@ public class BaseActivity extends AppCompatActivity {
     }
 
     public void onClickDogCertificate(Activity activity, List<Dog> list, int index, OnClickListener listener) {
-        DogDialogManager.getInstance().showDogListDialog(activity, list, index,
+        onClickDogCertificate(activity,0,list,index,listener);
+    }
+
+    /**
+     *
+     * @param activity
+     * @param type 0-犬证 1-免疫证
+     * @param list
+     * @param index
+     * @param listener
+     */
+    public void onClickDogCertificate(Activity activity, int type, List<Dog> list, int index, OnClickListener listener) {
+        DogDialogManager.getInstance().showDogListDialog(activity,type, list, index,
                 new DogDialogManager.OnClickListener() {
                     @Override
                     public void onClick(View view, Object object) {

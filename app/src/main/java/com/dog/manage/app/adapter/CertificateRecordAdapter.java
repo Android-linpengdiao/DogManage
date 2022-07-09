@@ -42,6 +42,7 @@ public class CertificateRecordAdapter extends BaseRecyclerAdapter<RecordImmune, 
     @Override
     protected void onBindItem(ItemCertificateRecordBinding binding, RecordImmune dataBean, int position) {
 
+        binding.checkStatusView.setBackgroundResource(R.drawable.button_theme);
         if (type == RecordActivity.type_certificate) {
             //办理状态 0 全部 1：待审核 2：代缴费 3：审核驳回 4：已办结 5：已过期 6：已注销
             binding.titleView.setText("犬证办理");
@@ -51,7 +52,6 @@ public class CertificateRecordAdapter extends BaseRecyclerAdapter<RecordImmune, 
             binding.contentView.setText(dataBean.getDogType() + "-" + CommonUtil.getDogAge(dataBean.getDogAge()));
             binding.createTimeView.setText(dataBean.getCreatedTime());
             binding.contentView.setTextColor(Color.parseColor("#999999"));
-            binding.checkStatusView.setBackgroundResource(R.drawable.button_theme);
             if (dataBean.getLicenceStatus() != null) {
                 if (dataBean.getLicenceStatus() == 1) {
                     binding.checkStatusView.setText("审核中");

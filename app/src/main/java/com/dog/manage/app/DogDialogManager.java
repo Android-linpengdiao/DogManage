@@ -47,7 +47,7 @@ public class DogDialogManager {
         void onClick(View view, Object object);
     }
 
-    public void showDogListDialog(Activity activity, List<Dog> list, int position, OnClickListener listener) {
+    public void showDogListDialog(Activity activity,int type, List<Dog> list, int position, OnClickListener listener) {
         final AlertDialog dialog = new AlertDialog.Builder(activity, AlertDialog.THEME_HOLO_DARK).create();
         dialog.setCancelable(true);
         dialog.show();
@@ -58,6 +58,7 @@ public class DogDialogManager {
         window.setContentView(contentView);
         ViewRankDialogBinding binding = DataBindingUtil.bind(contentView);
         DogListAdapter dogListAdapter = new DogListAdapter(activity);
+        dogListAdapter.setType(type);
         binding.recyclerView.setLayoutManager(new LinearLayoutManager(activity));
         binding.recyclerView.setAdapter(dogListAdapter);
         dogListAdapter.setDone(position);

@@ -12,11 +12,16 @@ import com.dog.manage.app.model.Dog;
 
 public class DogListAdapter extends BaseRecyclerAdapter<Dog, ItemTextBinding> {
 
+    private int type = 1;//0-犬证 1-免疫证
     private int done = 0;
     private OnClickListener onClickListener;
 
     public void setOnClickListener(OnClickListener onClickListener) {
         this.onClickListener = onClickListener;
+    }
+
+    public void setType(int type) {
+        this.type = type;
     }
 
     public void setDone(int done) {
@@ -35,7 +40,7 @@ public class DogListAdapter extends BaseRecyclerAdapter<Dog, ItemTextBinding> {
 
     @Override
     protected void onBindItem(ItemTextBinding binding, Dog dataBean, int position) {
-        binding.titleView.setText(dataBean.getDogType() + (dataBean.getIdNum() != null ? "  犬证-" + dataBean.getIdNum() : ""));
+        binding.titleView.setText(dataBean.getDogType() + (dataBean.getIdNum() != null ? "  " + (type == 1 ? "免疫证号" : "犬证号") + "-" + dataBean.getIdNum() : ""));
         binding.titleView.setTypeface(position == done ? Typeface.defaultFromStyle(Typeface.BOLD) : Typeface.defaultFromStyle(Typeface.NORMAL));
 //        binding.doneView.setVisibility(position == done ? View.VISIBLE : View.GONE);
         binding.getRoot().setOnClickListener(new View.OnClickListener() {

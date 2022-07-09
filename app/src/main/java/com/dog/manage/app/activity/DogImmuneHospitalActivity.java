@@ -73,7 +73,9 @@ public class DogImmuneHospitalActivity extends BaseActivity implements AMap.OnMa
 
         initView();
         initMapView(savedInstanceState);
-        permissionsLocation();
+        if (CommonUtil.openLocation(DogImmuneHospitalActivity.this, request_Location)) {
+            permissionsLocation();
+        }
 
     }
 
@@ -93,6 +95,7 @@ public class DogImmuneHospitalActivity extends BaseActivity implements AMap.OnMa
                         if (response.isSuccess() && response.getData() != null) {
                             adapter.setStartLatLng(startLatLng);
                             adapter.refreshData(response.getData());
+                            addMarkersToMap(response.getData());
                         } else {
                             ToastUtils.showShort(getApplicationContext(), response.getMessage());
                         }
@@ -190,31 +193,41 @@ public class DogImmuneHospitalActivity extends BaseActivity implements AMap.OnMa
         binding.mapView.getMap().setOnMarkerClickListener(this);
 //        binding.mapView.getMap().getUiSettings().setZoomPosition(AMapOptions.ZOOM_POSITION_RIGHT_CENTER);
         binding.mapView.getMap().getUiSettings().setZoomControlsEnabled(false);
-        addMarkersToMap();
+//        addMarkersToMap();
     }
 
     List<LatLng> latLngs = new ArrayList<>();
 
     /**
      * 在地图上添加marker
+     *
+     * @param data
      */
-    private void addMarkersToMap() {
-        latLngs.add(BEIJING);
-        latLngs.add(ZHONGGUANCUN);
-        latLngs.add(new LatLng(39.993743, 116.472995));
+    private void addMarkersToMap(List<Hospital> data) {
+//        latLngs.add(BEIJING);
+//        latLngs.add(ZHONGGUANCUN);
+//        latLngs.add(new LatLng(39.993743, 116.472995));
 
-        for (int i = 0; i < latLngs.size(); i++) {
+        if (data.size() == 0) {
+            return;
+        }
+        for (int i = 0; i < data.size(); i++) {
+            LatLng latLng = new LatLng(0, 0);
+            List<String> coordinate = CommonUtil.stringToList(data.get(i).getCoordinate());
+            if (coordinate.size() == 2) {
+                latLng = new LatLng(Double.parseDouble(coordinate.get(1)), Double.parseDouble(coordinate.get(0)));
+            }
             MarkerOptions markerOption = new MarkerOptions()
                     .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED))
-                    .position(latLngs.get(i))
+                    .position(latLng)
 //                    .title("北京爱牧家动物医院(西直门店)" + i)
 //                    .snippet("详细信息")
                     .draggable(true);
             Marker marker = binding.mapView.getMap().addMarker(markerOption);
             marker.showInfoWindow();
+            latLngs.add(latLng);
         }
-        changeCamera(CameraUpdateFactory.newCameraPosition(new CameraPosition(
-                latLngs.get(0), 12, 30, 30)));
+        changeCamera(CameraUpdateFactory.newCameraPosition(new CameraPosition(latLngs.get(0), 12, 30, 30)));
 
     }
 
@@ -240,7 +253,9 @@ public class DogImmuneHospitalActivity extends BaseActivity implements AMap.OnMa
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (resultCode == RESULT_OK && requestCode == request_Location) {
+        Log.i(TAG, "onActivityResult: " + resultCode);
+        Log.i(TAG, "requestCode: " + requestCode);
+        if (requestCode == request_Location) {
             permissionsLocation();
         }
     }
@@ -314,8 +329,16 @@ public class DogImmuneHospitalActivity extends BaseActivity implements AMap.OnMa
 //                if (adapter != null)
 //                    adapter.setStartLatLng(startLatLng);
             } else {
-
+                double latitude = 39.90403;//获取纬度
+                double longitude = 116.407525;//获取经度
+                LatLng startLatLng = new LatLng(latitude, longitude);
+                getHospitalPosition(latitude + "," + longitude, startLatLng);
             }
+        } else {
+            double latitude = 39.90403;//获取纬度
+            double longitude = 116.407525;//获取经度
+            LatLng startLatLng = new LatLng(latitude, longitude);
+            getHospitalPosition(latitude + "," + longitude, startLatLng);
         }
     }
 

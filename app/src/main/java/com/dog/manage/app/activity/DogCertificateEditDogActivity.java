@@ -134,15 +134,25 @@ public class DogCertificateEditDogActivity extends BaseActivity {
                     ToastUtils.showShort(getApplicationContext(), "暂无犬只");
                     return;
                 }
-                onClickDogCertificate(DogCertificateEditDogActivity.this,
+                onClickDogCertificate(DogCertificateEditDogActivity.this,type,
                         dogList, dogList.indexOf(binding.dogCertificateView.binding.itemContent.getText().toString()),
                         new OnClickListener() {
                             @Override
                             public void onClick(View view, Object object) {
                                 dog = (Dog) object;
                                 binding.dogCertificateView.binding.itemContent.setText(dog.getDogType());
-                                if (dog.getDogId() != 0)
-                                    getDogById(dog.getDogId());
+                                Log.i(TAG, "onClick: getId = " + dog.getId());
+                                Log.i(TAG, "onClick: getDogId = " + dog.getDogId());
+                                Log.i(TAG, "onClick: type = " + type);
+                                if (type == type_certificate) {
+                                    if (dog.getId() != 0)
+                                        getDogById(dog.getId());
+
+                                } else if (type == type_immune) {
+                                    if (dog.getDogId() != 0)
+                                        getDogById(dog.getDogId());
+
+                                }
                             }
 
                             @Override
@@ -406,7 +416,7 @@ public class DogCertificateEditDogActivity extends BaseActivity {
                         dogList = response.getData();
                     }
                     Dog newDog = new Dog();
-                    newDog.setDogId(0);
+                    newDog.setId(0);
                     newDog.setDogType("添加新犬只");
                     dogList.add(newDog);
                     dog = dogList.get(0);
@@ -454,6 +464,7 @@ public class DogCertificateEditDogActivity extends BaseActivity {
      * 犬证 获取犬只详情信息
      */
     private void getDogById(int dogId) {
+        Log.i(TAG, "getDogById: "+dogId);
         SendRequest.getDogById(dogId, new GenericsCallback<ResultClient<Dog>>(new JsonGenericsSerializator()) {
 
             @Override

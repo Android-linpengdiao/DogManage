@@ -62,7 +62,7 @@ public class DogCertificateEditSubmitActivity extends BaseActivity implements AM
         binding.thirdStepView.setSelected(true);
 
         getHandleInfo();
-        permissionsManager();
+//        permissionsManager();
 
     }
 
