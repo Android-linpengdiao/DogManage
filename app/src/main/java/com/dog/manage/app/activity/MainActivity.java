@@ -219,7 +219,7 @@ public class MainActivity extends BaseActivity {
     }
 
     public void noticeList() {
-        SendRequest.noticeList(0, 10,
+        SendRequest.noticeList(1, 10,
                 new GenericsCallback<Pager<PoliciesBean>>(new JsonGenericsSerializator()) {
 
                     @Override

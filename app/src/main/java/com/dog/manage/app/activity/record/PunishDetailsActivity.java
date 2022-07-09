@@ -6,10 +6,12 @@ import android.view.View;
 import androidx.recyclerview.widget.GridLayoutManager;
 
 import com.base.utils.CommonUtil;
+import com.base.utils.GlideLoader;
 import com.base.utils.ToastUtils;
 import com.base.view.OnClickListener;
 import com.dog.manage.app.R;
 import com.dog.manage.app.activity.BaseActivity;
+import com.dog.manage.app.activity.DogDetailsActivity;
 import com.dog.manage.app.activity.DogManageWorkflowActivity;
 import com.dog.manage.app.activity.MainDogManageWorkflowActivity;
 import com.dog.manage.app.activity.PoliciesActivity;
@@ -73,7 +75,7 @@ public class PunishDetailsActivity extends BaseActivity {
     }
 
     private void initView(PunishRecord dataBean) {
-        binding.illegalTypeView.setText("违法类型: " + "违法类型: " +
+        binding.illegalTypeView.setText("违法类型: " +
                 (dataBean.getIllegalTypeId() == 1 ? "犬只伤人" :
                         dataBean.getIllegalTypeId() == 2 ? "犬吠" :
                                 dataBean.getIllegalTypeId() == 3 ? "未牵狗绳" :
@@ -89,18 +91,12 @@ public class PunishDetailsActivity extends BaseActivity {
         binding.recyclerView.setLayoutManager(new GridLayoutManager(getApplicationContext(), 3));
         VideoAdapter videoAdapter = new VideoAdapter(getApplicationContext());
         binding.recyclerView.setAdapter(videoAdapter);
-        videoAdapter.refreshData(Arrays.asList(dataBean.getIllegalFileUrl()));
-        videoAdapter.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View view, Object object) {
-
-
-            }
-
-            @Override
-            public void onLongClick(View view, Object object) {
-
-            }
-        });
+        try {
+            List<String> imageList = new Gson().fromJson(dataBean.getIllegalFileUrl(), new TypeToken<List<String>>() {
+            }.getType());
+            videoAdapter.refreshData(imageList);
+        } catch (Exception e) {
+            e.getMessage();
+        }
     }
 }

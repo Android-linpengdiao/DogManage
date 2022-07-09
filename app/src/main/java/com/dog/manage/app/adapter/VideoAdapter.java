@@ -32,7 +32,7 @@ public class VideoAdapter extends BaseRecyclerAdapter<String, ItemVideoBinding> 
     @Override
     protected void onBindItem(ItemVideoBinding binding, String dataBean, int position) {
 
-        GlideLoader.LoderImage(mContext, "https://pics7.baidu.com/feed/6c224f4a20a446236fb6db0ac3bf5d040df3d785.jpeg", binding.coverView,6);
+        GlideLoader.LoderImage(mContext, dataBean, binding.coverView, 6);
 //        binding.durationView.setText(CommonUtil.FormatMiss(dataBean.getDuration()/1000));
         binding.durationView.setVisibility(View.GONE);
         binding.getRoot().setOnClickListener(new View.OnClickListener() {
