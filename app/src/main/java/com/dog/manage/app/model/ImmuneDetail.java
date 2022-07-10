@@ -56,4 +56,5 @@ public class ImmuneDetail implements Serializable {
     private String immuneNum;
     private String immuneUser;
     private String nextImmuneData;
+    private String dogPhoto;
 }

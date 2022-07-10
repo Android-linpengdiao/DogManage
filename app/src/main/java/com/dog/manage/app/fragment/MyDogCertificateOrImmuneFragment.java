@@ -22,10 +22,14 @@ import com.dog.manage.app.databinding.FragmentMyDogCertificateOrImmuneBinding;
 import com.dog.manage.app.model.ImmuneBean;
 import com.dog.manage.app.model.ImmuneDetail;
 import com.dog.manage.app.model.LicenceBean;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.okhttp.ResultClient;
 import com.okhttp.SendRequest;
 import com.okhttp.callbacks.GenericsCallback;
 import com.okhttp.sample_okhttp.JsonGenericsSerializator;
+
+import java.util.List;
 
 import okhttp3.Call;
 
@@ -122,6 +126,15 @@ public class MyDogCertificateOrImmuneFragment extends BaseFragment {
         binding.immuneUserView.setText(immuneDetail.getImmuneUser());
         binding.nextImmuneDataView.setText(immuneDetail.getNextImmuneData());
 
+        try {
+            List<String> dogPhotos = new Gson().fromJson(immuneDetail.getDogPhoto(), new TypeToken<List<String>>() {
+            }.getType());
+            if (dogPhotos != null && dogPhotos.size() > 0)
+                GlideLoader.LoderImage(getActivity(), dogPhotos.get(0), binding.coverView,5);
+        } catch (Exception e) {
+            e.getMessage();
+        }
+
 
     }
 
@@ -133,7 +146,15 @@ public class MyDogCertificateOrImmuneFragment extends BaseFragment {
         binding.orgNameView.setText(licenceBean.getOrgName());
         binding.awardTimeView.setText(licenceBean.getAwardTime());
         binding.detailedAddressView.setText(licenceBean.getDetailedAddress());
-        GlideLoader.LoaderDogCover(getActivity(), "", binding.certificateCoverView, 5);
+
+        try {
+            List<String> dogPhotos = new Gson().fromJson(licenceBean.getDogPhoto(), new TypeToken<List<String>>() {
+            }.getType());
+            if (dogPhotos != null && dogPhotos.size() > 0)
+                GlideLoader.LoderImage(getActivity(), dogPhotos.get(0), binding.certificateCoverView,5);
+        } catch (Exception e) {
+            e.getMessage();
+        }
 
         binding.dogOwnerInfoView.binding.itemContent.setText(licenceBean.getOrgName());
         binding.dogDetailsView.binding.itemContent.setText(licenceBean.getDogType());

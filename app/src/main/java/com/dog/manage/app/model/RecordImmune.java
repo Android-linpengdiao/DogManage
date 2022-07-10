@@ -36,7 +36,7 @@ public class RecordImmune implements Serializable {
     private Integer dogAge;
     private Integer lincenceStatus;
 
-    //
+    //犬只过户
     /**
      * id
      * integer
@@ -87,6 +87,7 @@ public class RecordImmune implements Serializable {
     private String acceptUnit;
     private Integer status;
     private String applyTime;
+    private String rejectionReason;
 //    private Integer dogAge;
 
     //犬只注销

@@ -84,7 +84,7 @@ public class DogDetail implements Serializable {
     private String dogPhoto;
     private String dogType;
     private String noseprint;
-    private Integer status;
+    private Integer status;//状态 接口状态 3 已办理狗证、已疫苗 2 未办理狗证 已疫苗 1 已疫苗 未办理狗证
     private Integer createdBy;
     private String createdTime;
     private Integer updatedBy;

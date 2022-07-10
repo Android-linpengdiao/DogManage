@@ -102,6 +102,8 @@ public class AdoptionDetailsActivity extends BaseActivity {
         binding.dogDetailsView.binding.itemContent.setText(dataBean.getDogName());
         binding.auditAcceptUnitView.setText(dataBean.getAcceptUnit());
         binding.priceView.binding.itemContent.setText("￥" + dataBean.getPrice());
+        binding.auditReasonView.binding.itemDesc.setText(dataBean.getRejectionReason());
+
         //办理状态 1 待审核 0 待支付 2 领养完成 3 拒绝 4 全部
         if (dataBean.getStatus() != null) {
             if (dataBean.getStatus() == 1) {

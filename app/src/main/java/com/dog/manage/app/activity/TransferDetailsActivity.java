@@ -85,5 +85,7 @@ public class TransferDetailsActivity extends BaseActivity {
 
         binding.userNameView.binding.itemContent.setText(dataBean.getNewUserName());
         binding.userPhoneView.binding.itemContent.setText(dataBean.getNewUserPhone());
+
+        binding.auditReasonView.binding.itemDesc.setText(dataBean.getRejectionReason());
     }
 }

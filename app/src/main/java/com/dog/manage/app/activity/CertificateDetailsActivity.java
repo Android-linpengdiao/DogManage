@@ -144,5 +144,6 @@ public class CertificateDetailsActivity extends BaseActivity {
         binding.dogDetailsView.binding.itemContent.setText(data.getDogType());
         binding.acceptUnitView.setText(data.getAcceptUnit());
         binding.priceView.binding.itemContent.setText("￥" + data.getPrice());
+        binding.auditReasonView.binding.itemDesc.setText(data.getRejectionReason());
     }
 }

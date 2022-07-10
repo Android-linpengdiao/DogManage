@@ -102,6 +102,7 @@ public class DogLogoutDetailsActivity extends BaseActivity {
 
             binding.auditReasonView.setVisibility(recordImmune.getStatus() == 2 ? View.VISIBLE : View.GONE);
             binding.confirmView.setVisibility(recordImmune.getStatus() == 2 ? View.VISIBLE : View.GONE);
+            binding.auditReasonView.binding.itemDesc.setText(recordImmune.getRejectionReason());
 
             //cancelType 办理类型 1 死亡 2 丢失
             if (recordImmune.getCancelType() == 1) {

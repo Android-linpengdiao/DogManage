@@ -39,4 +39,5 @@ public class LicenceBean implements Serializable {
     private Integer surplusDate;
     private Integer immuneLicenceStatus;
     private String detailedAddress;
+    private String dogPhoto;
 }

@@ -214,7 +214,7 @@ public class DogCertificateExaminedActivity extends BaseActivity {
                 binding.orgNameView.setText(data.getDetailResultRespVo().getOrgName());
                 binding.detailedAddressView.setText(data.getDetailResultRespVo().getDetailedAddress());
                 binding.awardTimeView.setText(data.getDetailResultRespVo().getAwardTime());
-                GlideLoader.LoaderDogCover(DogCertificateExaminedActivity.this, "", binding.certificateCoverView, 5);
+                GlideLoader.LoderImage(DogCertificateExaminedActivity.this, data.getDetailResultRespVo().getImmunePhoto(), binding.certificateCoverView, 5);
 
             } else {
                 binding.idNumView.setText("");

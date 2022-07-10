@@ -41,6 +41,7 @@ public class DogLicenseDetail implements Serializable {
         private Integer dogGender;
         private String dogType;
         private String orgName;
+        private String immunePhoto;
         private String detailedAddress;
         private Boolean bizImmuneStatus;
     }

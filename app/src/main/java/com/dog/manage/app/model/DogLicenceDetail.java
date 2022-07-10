@@ -18,6 +18,6 @@ public class DogLicenceDetail {
     private String userName;
     private String acceptUnit;
     private Integer price;
-    private Object rejectionReason;
+    private String rejectionReason;
     private Integer payTypeId;
 }

@@ -645,6 +645,8 @@ public class DogCertificateEditDogOwnerActivity extends BaseActivity {
                 if (type == type_details) {
                     binding.dogTypeHintView.setVisibility(View.GONE);
                     binding.oldManHintView.setVisibility(View.GONE);
+                    binding.addressView.binding.itemArrow.setVisibility(View.GONE);
+                    binding.detailedAddressView.binding.itemArrow.setVisibility(View.GONE);
                 }
 
                 //居住地址（全）例：012/02/31
