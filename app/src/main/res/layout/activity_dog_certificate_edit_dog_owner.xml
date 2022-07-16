@@ -751,37 +751,85 @@
                                 android:textSize="@dimen/sp_14"
                                 tools:text="残疾人证或鳏寡老人证明" />
 
-                            <RelativeLayout
-                                android:layout_width="@dimen/dp_168"
-                                android:layout_height="@dimen/dp_108"
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
                                 android:layout_marginBottom="@dimen/dp_22"
-                                android:background="@drawable/upload_bg">
+                                android:orientation="horizontal">
 
-                                <ImageView
-                                    android:layout_width="@dimen/dp_36"
-                                    android:layout_height="@dimen/dp_28"
-                                    android:layout_centerHorizontal="true"
-                                    android:layout_marginTop="@dimen/dp_30"
-                                    android:background="@drawable/camera" />
+                                <RelativeLayout
+                                    android:layout_width="@dimen/dp_0"
+                                    android:layout_height="@dimen/dp_108"
+                                    android:layout_marginRight="@dimen/dp_5"
+                                    android:layout_weight="1"
+                                    android:background="@drawable/upload_bg">
 
-                                <TextView
-                                    android:id="@+id/oldManOrDisabledCertificateUploadHintView"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginTop="@dimen/dp_68"
-                                    android:gravity="center"
-                                    android:text="上传残疾人证"
-                                    android:textColor="#4669ED"
-                                    android:textSize="@dimen/sp_14"
-                                    android:textStyle="normal" />
+                                    <ImageView
+                                        android:layout_width="@dimen/dp_36"
+                                        android:layout_height="@dimen/dp_28"
+                                        android:layout_centerHorizontal="true"
+                                        android:layout_marginTop="@dimen/dp_30"
+                                        android:background="@drawable/camera" />
 
-                                <ImageView
-                                    android:id="@+id/oldManOrDisabledCertificateView"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="match_parent"
-                                    android:onClick="onClickOldManOrDisabledCertificate" />
+                                    <TextView
+                                        android:id="@+id/oldManOrDisabledCertificateUploadHintView"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginTop="@dimen/dp_68"
+                                        android:gravity="center"
+                                        android:text="上传鳏寡老人证明"
+                                        android:textColor="#4669ED"
+                                        android:textSize="@dimen/sp_14"
+                                        android:textStyle="normal" />
 
-                            </RelativeLayout>
+                                    <ImageView
+                                        android:id="@+id/oldManOrDisabledCertificateView"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent"
+                                        android:onClick="onClickOldManOrDisabledCertificate" />
+
+                                </RelativeLayout>
+
+                                <RelativeLayout
+                                    android:layout_width="@dimen/dp_0"
+                                    android:layout_height="@dimen/dp_108"
+                                    android:layout_marginLeft="@dimen/dp_5"
+                                    android:layout_weight="1"
+                                    android:background="@drawable/upload_bg">
+
+                                    <ImageView
+                                        android:layout_width="@dimen/dp_36"
+                                        android:layout_height="@dimen/dp_28"
+                                        android:layout_centerHorizontal="true"
+                                        android:layout_marginTop="@dimen/dp_30"
+                                        android:background="@drawable/camera" />
+
+                                    <TextView
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginTop="@dimen/dp_68"
+                                        android:gravity="center"
+                                        android:text="上传残疾人证"
+                                        android:textColor="#4669ED"
+                                        android:textSize="@dimen/sp_14"
+                                        android:textStyle="normal" />
+
+                                    <ImageView
+                                        android:id="@+id/oldManOrDisabledCertificateContentView"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent"
+                                        android:onClick="onClickOldManOrDisabledCertificateContent" />
+
+                                </RelativeLayout>
+                            </LinearLayout>
+
+                            <com.dog.manage.app.view.TextBoldView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginBottom="@dimen/dp_22"
+                                android:text="拍照说明：1封面页 2内容页"
+                                android:textColor="#666666"
+                                android:textSize="@dimen/sp_14" />
 
                         </LinearLayout>
 
