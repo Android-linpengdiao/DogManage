@@ -826,6 +826,7 @@ public class DogCertificateEditDogOwnerActivity extends BaseActivity {
                         binding.oldManContainer.setVisibility(View.VISIBLE);
                         binding.oldManOrDisabledCertificateHintView.setText("鳏寡老人证明");
                         binding.oldManOrDisabledCertificateUploadHintView.setText("上传鳏寡老人证明");
+                        binding.oldManOrDisabledCertificateContentUploadHintView.setText("上传鳏寡老人证明");
                         GlideLoader.LoderUploadImage(DogCertificateEditDogOwnerActivity.this, oldManOrDisabledCertificate, binding.oldManOrDisabledCertificateView, 6);
                         GlideLoader.LoderUploadImage(DogCertificateEditDogOwnerActivity.this, oldManOrDisabledCertificateContent, binding.oldManOrDisabledCertificateContentView, 6);
 
@@ -843,6 +844,7 @@ public class DogCertificateEditDogOwnerActivity extends BaseActivity {
                         binding.oldManContainer.setVisibility(View.GONE);
                         binding.oldManOrDisabledCertificateHintView.setText("残疾人证");
                         binding.oldManOrDisabledCertificateUploadHintView.setText("上传残疾人证");
+                        binding.oldManOrDisabledCertificateContentUploadHintView.setText("上传残疾人证");
                         GlideLoader.LoderUploadImage(DogCertificateEditDogOwnerActivity.this, oldManOrDisabledCertificate, binding.oldManOrDisabledCertificateView, 6);
                         GlideLoader.LoderUploadImage(DogCertificateEditDogOwnerActivity.this, oldManOrDisabledCertificateContent, binding.oldManOrDisabledCertificateContentView, 6);
                         binding.oldManOrDisabledCertificateContainer.setVisibility(View.VISIBLE);

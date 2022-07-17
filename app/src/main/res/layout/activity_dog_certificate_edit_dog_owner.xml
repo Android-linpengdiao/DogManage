@@ -805,11 +805,12 @@
                                         android:background="@drawable/camera" />
 
                                     <TextView
+                                        android:id="@+id/oldManOrDisabledCertificateContentUploadHintView"
                                         android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
                                         android:layout_marginTop="@dimen/dp_68"
                                         android:gravity="center"
-                                        android:text="上传残疾人证"
+                                        android:text="上传鳏寡老人证明"
                                         android:textColor="#4669ED"
                                         android:textSize="@dimen/sp_14"
                                         android:textStyle="normal" />
