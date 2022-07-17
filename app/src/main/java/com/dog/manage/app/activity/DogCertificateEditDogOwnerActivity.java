@@ -1226,6 +1226,7 @@ public class DogCertificateEditDogOwnerActivity extends BaseActivity {
                 });
             } else {
                 SendRequest.editDogUser(map, new GenericsCallback<ResultClient<DogUser>>(new JsonGenericsSerializator()) {
+
                     @Override
                     public void onError(Call call, Exception e, int id) {
 
@@ -1582,6 +1583,7 @@ public class DogCertificateEditDogOwnerActivity extends BaseActivity {
      * @param filePath
      */
     private void uploadFile(int requestCode, String filePath) {
+        LoadingManager.showLoadingDialog(DogCertificateEditDogOwnerActivity.this,"上传中...");
         Log.i(TAG, "uploadFile: filePath = " + filePath);
         String fileName = filePath.substring(filePath.lastIndexOf("/") + 1);
         Log.i(TAG, "uploadFile: fileName = " + fileName);
@@ -1604,7 +1606,7 @@ public class DogCertificateEditDogOwnerActivity extends BaseActivity {
         Log.i(TAG, "uploadFile: getObjectUrl = " + result.getObjectUrl());
         String url = "http://" + Config.huaweiBucketName + "." + Config.huaweiCloudEndPoint + "/" + fileName;
         Log.i(TAG, "uploadFile: url = " + url);
-
+        LoadingManager.hideLoadingDialog(DogCertificateEditDogOwnerActivity.this);
         runOnUiThread(new Runnable() {
             @Override
             public void run() {

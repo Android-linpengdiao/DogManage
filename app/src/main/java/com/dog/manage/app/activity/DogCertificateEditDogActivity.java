@@ -893,6 +893,7 @@ public class DogCertificateEditDogActivity extends BaseActivity {
      * @param filePath
      */
     private void uploadFile(int requestCode, String filePath) {
+        LoadingManager.showLoadingDialog(DogCertificateEditDogActivity.this,"上传中...");
         Log.i(TAG, "uploadFile: filePath = " + filePath);
         String fileName = filePath.substring(filePath.lastIndexOf("/") + 1);
         Log.i(TAG, "uploadFile: fileName = " + fileName);
@@ -915,7 +916,7 @@ public class DogCertificateEditDogActivity extends BaseActivity {
         Log.i(TAG, "uploadFile: getObjectUrl = " + result.getObjectUrl());
         String url = "http://" + Config.huaweiBucketName + "." + Config.huaweiCloudEndPoint + "/" + fileName;
         Log.i(TAG, "uploadFile: url = " + url);
-
+        LoadingManager.hideLoadingDialog(DogCertificateEditDogActivity.this);
         runOnUiThread(new Runnable() {
             @Override
             public void run() {

@@ -26,6 +26,15 @@
             android:textColor="@android:color/white"
             android:textSize="@dimen/sp_14" />
 
+        <ImageView
+            android:id="@+id/playView"
+            android:layout_width="@dimen/dp_36"
+            android:layout_height="@dimen/dp_36"
+            android:layout_centerInParent="true"
+            android:src="@drawable/indicator_video_fill_black_g"
+            android:visibility="gone"
+            tools:visibility="visible"/>
+
 
     </RelativeLayout>
 </layout>

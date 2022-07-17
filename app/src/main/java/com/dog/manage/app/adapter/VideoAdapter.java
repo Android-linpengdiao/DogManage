@@ -30,10 +30,11 @@ public class VideoAdapter extends BaseRecyclerAdapter<String, ItemVideoBinding> 
     }
 
     @Override
-    protected void onBindItem(ItemVideoBinding binding, String dataBean, int position) {
+    protected void onBindItem(ItemVideoBinding binding, String url, int position) {
 
-        GlideLoader.LoderImage(mContext, dataBean, binding.coverView, 6);
+        GlideLoader.LoderImage(mContext, url, binding.coverView, 6);
 //        binding.durationView.setText(CommonUtil.FormatMiss(dataBean.getDuration()/1000));
+        binding.playView.setVisibility(url != null && url.endsWith("mp4") ? View.VISIBLE : View.GONE);
         binding.durationView.setVisibility(View.GONE);
         binding.getRoot().setOnClickListener(new View.OnClickListener() {
             @Override
