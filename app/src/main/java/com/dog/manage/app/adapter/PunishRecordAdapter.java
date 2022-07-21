@@ -40,10 +40,10 @@ public class PunishRecordAdapter extends BaseRecyclerAdapter<PunishRecord, ItemP
 
     @Override
     protected void onBindItem(ItemPunishRecordBinding binding, PunishRecord dataBean, int position) {
-        //处罚类型 1 犬只伤人 2 犬吠 3 未牵狗绳 4 其他
+        //处罚类型 1 犬只伤人 2 禁养犬只 3 未牵狗绳 4 其他
         binding.illegalTypeView.setText("违法类型: " +
                 (dataBean.getIllegalTypeId() == 1 ? "犬只伤人" :
-                        dataBean.getIllegalTypeId() == 2 ? "犬吠" :
+                        dataBean.getIllegalTypeId() == 2 ? "禁养犬只" :
                                 dataBean.getIllegalTypeId() == 3 ? "未牵狗绳" :
                                         dataBean.getIllegalTypeId() == 4 ? "其他" : "其他"));
         binding.illegalMeasureView.setText("处罚措施: " + dataBean.getIllegalMeasure());

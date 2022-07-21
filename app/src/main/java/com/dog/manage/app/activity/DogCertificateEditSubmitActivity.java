@@ -12,6 +12,7 @@ import com.amap.api.location.AMapLocation;
 import com.amap.api.location.AMapLocationClient;
 import com.amap.api.location.AMapLocationClientOption;
 import com.amap.api.location.AMapLocationListener;
+import com.base.manager.LoadingManager;
 import com.base.utils.GsonUtils;
 import com.base.utils.LogUtil;
 import com.base.utils.ToastUtils;
@@ -30,6 +31,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import okhttp3.Call;
+import okhttp3.Request;
 import pub.devrel.easypermissions.AfterPermissionGranted;
 import pub.devrel.easypermissions.EasyPermissions;
 
@@ -40,6 +42,7 @@ public class DogCertificateEditSubmitActivity extends BaseActivity implements AM
     private int dogId;
     private int addressId;
     private String dogType = null;
+    private String immunePhoto = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,6 +53,7 @@ public class DogCertificateEditSubmitActivity extends BaseActivity implements AM
         dogId = getIntent().getIntExtra("dogId", 0);
         addressId = getIntent().getIntExtra("addressId", 0);
         dogType = getIntent().getStringExtra("dogType");
+        immunePhoto = getIntent().getStringExtra("immunePhoto");
         binding.dogTypeView.binding.itemContent.setText(dogType + "");
 //        String paramsJson = getIntent().getStringExtra("paramsJson");
 //        if (!TextUtils.isEmpty(paramsJson)) {
@@ -133,8 +137,21 @@ public class DogCertificateEditSubmitActivity extends BaseActivity implements AM
         paramsMap.put("dogId", String.valueOf(dogId));
         paramsMap.put("acceptUnit", handleInfo.getHandleUnitAddress());
         paramsMap.put("unitId", String.valueOf(handleInfo.getHandleUnitId()));
-        paramsMap.put("immunePhoto", "https://pics7.baidu.com/feed/6c224f4a20a446236fb6db0ac3bf5d040df3d785.jpeg");
+        paramsMap.put("immunePhoto", immunePhoto);
         SendRequest.approveDogLicence(paramsMap, new GenericsCallback<ResultClient<Boolean>>(new JsonGenericsSerializator()) {
+
+            @Override
+            public void onBefore(Request request, int id) {
+                super.onBefore(request, id);
+                LoadingManager.showLoadingDialog(DogCertificateEditSubmitActivity.this);
+            }
+
+            @Override
+            public void onAfter(int id) {
+                super.onAfter(id);
+                LoadingManager.hideLoadingDialog(DogCertificateEditSubmitActivity.this);
+            }
+
             @Override
             public void onError(Call call, Exception e, int id) {
 

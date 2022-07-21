@@ -18,7 +18,7 @@ public class PunishRecord implements Serializable {
      * 处罚图片
      * illegalTypeId
      * integer
-     * 处罚类型 1 犬只伤人 2 犬吠 3 未牵狗绳 4 其他
+     * 处罚类型 1 犬只伤人 2 禁养犬只 3 未牵狗绳 4 其他
      * illegalDescribe
      * string
      * 事件描述

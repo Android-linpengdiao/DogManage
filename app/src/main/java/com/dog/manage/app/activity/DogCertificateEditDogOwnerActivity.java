@@ -1208,6 +1208,19 @@ public class DogCertificateEditDogOwnerActivity extends BaseActivity {
 
             if (type == type_adoption) {
                 SendRequest.saveLeaveDogUser(map, new GenericsCallback<ResultClient<DogDetail>>(new JsonGenericsSerializator()) {
+
+                    @Override
+                    public void onBefore(Request request, int id) {
+                        super.onBefore(request, id);
+                        LoadingManager.showLoadingDialog(DogCertificateEditDogOwnerActivity.this);
+                    }
+
+                    @Override
+                    public void onAfter(int id) {
+                        super.onAfter(id);
+                        LoadingManager.hideLoadingDialog(DogCertificateEditDogOwnerActivity.this);
+                    }
+
                     @Override
                     public void onError(Call call, Exception e, int id) {
 
@@ -1228,6 +1241,18 @@ public class DogCertificateEditDogOwnerActivity extends BaseActivity {
                 });
             } else {
                 SendRequest.editDogUser(map, new GenericsCallback<ResultClient<DogUser>>(new JsonGenericsSerializator()) {
+
+                    @Override
+                    public void onBefore(Request request, int id) {
+                        super.onBefore(request, id);
+                        LoadingManager.showLoadingDialog(DogCertificateEditDogOwnerActivity.this);
+                    }
+
+                    @Override
+                    public void onAfter(int id) {
+                        super.onAfter(id);
+                        LoadingManager.hideLoadingDialog(DogCertificateEditDogOwnerActivity.this);
+                    }
 
                     @Override
                     public void onError(Call call, Exception e, int id) {

@@ -782,6 +782,17 @@
                                         android:textSize="@dimen/sp_14"
                                         android:textStyle="normal" />
 
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginBottom="@dimen/dp_22"
+                                        android:layout_alignParentBottom="true"
+                                        android:layout_alignParentRight="true"
+                                        android:layout_margin="@dimen/dp_3"
+                                        android:text="封面页"
+                                        android:textColor="#999999"
+                                        android:textSize="@dimen/sp_14" />
+
                                     <ImageView
                                         android:id="@+id/oldManOrDisabledCertificateView"
                                         android:layout_width="match_parent"
@@ -815,6 +826,17 @@
                                         android:textSize="@dimen/sp_14"
                                         android:textStyle="normal" />
 
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginBottom="@dimen/dp_22"
+                                        android:layout_alignParentBottom="true"
+                                        android:layout_alignParentRight="true"
+                                        android:layout_margin="@dimen/dp_3"
+                                        android:text="内容页"
+                                        android:textColor="#999999"
+                                        android:textSize="@dimen/sp_14" />
+
                                     <ImageView
                                         android:id="@+id/oldManOrDisabledCertificateContentView"
                                         android:layout_width="match_parent"
@@ -823,14 +845,6 @@
 
                                 </RelativeLayout>
                             </LinearLayout>
-
-                            <com.dog.manage.app.view.TextBoldView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginBottom="@dimen/dp_22"
-                                android:text="拍照说明：1封面页 2内容页"
-                                android:textColor="#666666"
-                                android:textSize="@dimen/sp_14" />
 
                         </LinearLayout>
 

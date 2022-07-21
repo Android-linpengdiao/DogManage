@@ -77,7 +77,7 @@ public class PunishDetailsActivity extends BaseActivity {
     private void initView(PunishRecord dataBean) {
         binding.illegalTypeView.setText("违法类型: " +
                 (dataBean.getIllegalTypeId() == 1 ? "犬只伤人" :
-                        dataBean.getIllegalTypeId() == 2 ? "犬吠" :
+                        dataBean.getIllegalTypeId() == 2 ? "禁养犬只" :
                                 dataBean.getIllegalTypeId() == 3 ? "未牵狗绳" :
                                         dataBean.getIllegalTypeId() == 4 ? "其他" : "其他"));
         binding.illegalMeasureView.setText("处罚措施: " + dataBean.getIllegalMeasure());

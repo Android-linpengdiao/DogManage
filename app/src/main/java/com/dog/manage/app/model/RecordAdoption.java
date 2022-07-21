@@ -42,7 +42,7 @@ public class RecordAdoption {
     private String dogName;
     private String dogColor;
     private Integer dogGender;
-    private Integer dogAge;
+    private String dogAge;
     private String dogPhoto;
     private Integer leaveId;
     private String price;

@@ -11,7 +11,7 @@ public class DogLicenceDetail {
     private Integer lincenceId;
     private Integer licenceStatus;
     private String dogType;
-    private Integer dogAge;
+    private String dogAge;
     private String createdTime;
     private Integer userId;
     private Integer dogId;
