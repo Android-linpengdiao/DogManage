@@ -1529,7 +1529,7 @@ public class DogCertificateEditDogOwnerActivity extends BaseActivity {
         if (checkPermissions(PermissionUtils.STORAGE, request_HouseProprietaryCertificate)) {
             Bundle bundle = new Bundle();
             bundle.putInt("mediaType", MediaUtils.MEDIA_TYPE_PHOTO);
-            bundle.putInt("maxNumber", 10 - imageAdapter.getList().size());
+            bundle.putInt("maxNumber", 5 - imageAdapter.getList().size());
             openActivity(MediaSelectActivity.class, bundle, request_HouseProprietaryCertificate);
         }
     }
