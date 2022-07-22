@@ -163,6 +163,7 @@ public class DogCertificateEditDogOwnerActivity extends BaseActivity {
             binding.dogOwnerIDCardView.binding.itemEdit.setEnabled(false);
 
             binding.addressView.binding.itemContent.setEnabled(false);
+            binding.communityAddressView.binding.itemContent.setEnabled(false);
             binding.detailedAddressView.setEnabled(false);
             binding.houseNumberView.binding.itemEdit.setEnabled(false);
             initPersonal();
@@ -245,7 +246,7 @@ public class DogCertificateEditDogOwnerActivity extends BaseActivity {
             }
         });
 
-        binding.detailedAddressView.binding.itemContent.setOnClickListener(new View.OnClickListener() {
+        binding.communityAddressView.binding.itemContent.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (type == type_details) {
@@ -320,9 +321,9 @@ public class DogCertificateEditDogOwnerActivity extends BaseActivity {
                                 dogUser.setVillageId(communityBean.getId());
                                 dogUser.setCommunityDept(communityBean.getCommunityDept());
                             }
-                            String detailedAddress = communityBean.getCommunityName();
-                            dogUser.setDetailedAddress(detailedAddress);
-                            binding.detailedAddressView.binding.itemContent.setText(detailedAddress);
+                            String communityAddress = communityBean.getCommunityName();
+//                            dogUser.setDetailedAddress(detailedAddress);
+                            binding.communityAddressView.binding.itemContent.setText(communityAddress);
                             bottomSheetDialog.cancel();
                         }
                     }
@@ -681,13 +682,15 @@ public class DogCertificateEditDogOwnerActivity extends BaseActivity {
                     binding.dogTypeHintView.setVisibility(View.GONE);
                     binding.oldManHintView.setVisibility(View.GONE);
                     binding.addressView.binding.itemArrow.setVisibility(View.GONE);
-                    binding.detailedAddressView.binding.itemArrow.setVisibility(View.GONE);
+                    binding.communityAddressView.binding.itemArrow.setVisibility(View.GONE);
                 }
 
                 //居住地址（全）例：012/02/31
                 binding.addressView.binding.itemContent.setText(dogUser.getAddress());
+                //所属小区
+                binding.communityAddressView.binding.itemContent.setText(dogUser.getVillageName());
                 //详细地址（全）
-                binding.detailedAddressView.binding.itemContent.setText(dogUser.getDetailedAddress());
+                binding.detailedAddressView.setText(dogUser.getDetailedAddress());
 
                 binding.houseNumberView.binding.itemEdit.setText(dogUser.getHouseNum());
                 GlideLoader.LoderUploadImage(DogCertificateEditDogOwnerActivity.this, dogUser.getHousePhoto(), binding.houseProprietaryCertificateView, 6);
@@ -730,8 +733,10 @@ public class DogCertificateEditDogOwnerActivity extends BaseActivity {
 
                 //居住地址（全）例：012/02/31
                 binding.addressView.binding.itemContent.setText(dogUser.getAddress());
+                //所属小区
+                binding.communityAddressView.binding.itemContent.setText(dogUser.getVillageName());
                 //详细地址（全）
-                binding.detailedAddressView.binding.itemContent.setText(dogUser.getDetailedAddress());
+                binding.detailedAddressView.setText(dogUser.getDetailedAddress());
 
                 //养犬管理制度（单位）
                 GlideLoader.LoderUploadImage(DogCertificateEditDogOwnerActivity.this, dogUser.getDogManagement(), binding.managementSystemView, 6);
@@ -1027,11 +1032,17 @@ public class DogCertificateEditDogOwnerActivity extends BaseActivity {
                 }
 
                 if (CommonUtil.isBlank(dogUser.getAddress())) {
-                    ToastUtils.showShort(getApplicationContext(), "请选择养犬地址");
+                    ToastUtils.showShort(getApplicationContext(), "请选择省市区");
                     return;
                 }
 
-                String detailedAddress = binding.detailedAddressView.binding.itemContent.getText().toString();
+                String communityAddress = binding.communityAddressView.binding.itemContent.getText().toString();
+                if (CommonUtil.isBlank(communityAddress)) {
+                    ToastUtils.showShort(getApplicationContext(), "请选择所属小区");
+                    return;
+                }
+
+                String detailedAddress = binding.detailedAddressView.getText().toString();
                 if (CommonUtil.isBlank(detailedAddress)) {
                     ToastUtils.showShort(getApplicationContext(), "请输入详细地址");
                     return;
@@ -1142,7 +1153,13 @@ public class DogCertificateEditDogOwnerActivity extends BaseActivity {
                     return;
                 }
 
-                String detailedAddress = binding.detailedAddressView.binding.itemContent.getText().toString();
+                String communityAddress = binding.communityAddressView.binding.itemContent.getText().toString();
+                if (CommonUtil.isBlank(communityAddress)) {
+                    ToastUtils.showShort(getApplicationContext(), "请选择所属小区");
+                    return;
+                }
+
+                String detailedAddress = binding.detailedAddressView.getText().toString();
                 if (CommonUtil.isBlank(detailedAddress)) {
                     ToastUtils.showShort(getApplicationContext(), "请输入详细地址");
                     return;
