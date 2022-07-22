@@ -13,6 +13,7 @@ import android.view.View;
 import android.widget.RadioGroup;
 
 import androidx.databinding.DataBindingUtil;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.base.manager.DialogManager;
@@ -24,11 +25,13 @@ import com.base.utils.GsonUtils;
 import com.base.utils.PermissionUtils;
 import com.base.utils.ToastUtils;
 import com.base.view.BaseBottomSheetDialog;
+import com.base.view.OnClickListener;
 import com.base.view.RecycleViewDivider;
 import com.dog.manage.app.Config;
 import com.dog.manage.app.R;
 import com.dog.manage.app.adapter.AreaSelectAdapter;
 import com.dog.manage.app.adapter.CommunitySelectAdapter;
+import com.dog.manage.app.adapter.ImageAdapter;
 import com.dog.manage.app.area.CityData;
 import com.dog.manage.app.area.CityManager;
 import com.dog.manage.app.databinding.ActivityDogCertificateEditDogOwnerBinding;
@@ -43,6 +46,7 @@ import com.dog.manage.app.model.DogDetail;
 import com.dog.manage.app.model.DogUser;
 import com.dog.manage.app.model.PunishRecord;
 import com.dog.manage.app.utils.UploadFileManager;
+import com.dog.manage.app.view.GridItemDecoration;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.obs.services.model.ProgressListener;
@@ -58,6 +62,7 @@ import com.scwang.smart.refresh.layout.api.RefreshLayout;
 import com.scwang.smart.refresh.layout.listener.OnLoadMoreListener;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
@@ -88,6 +93,9 @@ public class DogCertificateEditDogOwnerActivity extends BaseActivity {
     private String paperLicence = null;
     private String paperImmuneLicence = null;
     private DogUser dogUser = new DogUser();
+
+    private ImageAdapter imageAdapter;
+    private List<String> imageList = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -332,6 +340,41 @@ public class DogCertificateEditDogOwnerActivity extends BaseActivity {
 
             }
         });
+
+
+        imageAdapter = new ImageAdapter(this);
+        GridItemDecoration.Builder builder = new GridItemDecoration.Builder(this);
+        builder.color(R.color.transparent);
+        builder.size(CommonUtil.dip2px(this, 2));
+        binding.imageRecyclerView.addItemDecoration(new GridItemDecoration(builder));
+        binding.imageRecyclerView.setLayoutManager(new GridLayoutManager(this, 2));
+        binding.imageRecyclerView.setAdapter(imageAdapter);
+        imageAdapter.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view, Object object) {
+                if (object instanceof Integer) {
+                    int position = (int) object;
+                    if (position == (imageList.size() - 1)) {
+                        if (imageList.size() < 10) {
+                            onClickHouseProprietaryCertificate();
+                        } else {
+                            ToastUtils.showShort(DogCertificateEditDogOwnerActivity.this, "最多上传9张图片");
+                        }
+                    }
+                }
+            }
+
+            @Override
+            public void onLongClick(View view, Object object) {
+
+            }
+        });
+        if (type == type_details) {
+            imageAdapter.setType(type);
+        }else {
+            imageList.add("add");
+            imageAdapter.refreshData(imageList);
+        }
 
 
     }
@@ -693,7 +736,23 @@ public class DogCertificateEditDogOwnerActivity extends BaseActivity {
                 binding.detailedAddressView.setText(dogUser.getDetailedAddress());
 
                 binding.houseNumberView.binding.itemEdit.setText(dogUser.getHouseNum());
-                GlideLoader.LoderUploadImage(DogCertificateEditDogOwnerActivity.this, dogUser.getHousePhoto(), binding.houseProprietaryCertificateView, 6);
+//                GlideLoader.LoderUploadImage(DogCertificateEditDogOwnerActivity.this, dogUser.getHousePhoto(), binding.houseProprietaryCertificateView, 6);
+                try {
+                    //房产证或房屋租赁合同
+                    List<String> housePhotos = new Gson().fromJson(dogUser.getHousePhoto(), new TypeToken<List<String>>() {
+                    }.getType());
+                    Log.i(TAG, "initDogUserView: "+housePhotos.size());
+                    if (housePhotos != null) {
+                        if (imageAdapter.getList().size()>0) {
+                            imageList.addAll(imageAdapter.getList().size() - 1, housePhotos);
+                        }else {
+                            imageList.addAll(housePhotos);
+                        }
+                    }
+                    imageAdapter.refreshData(imageList);
+                } catch (Exception e) {
+                    e.getMessage();
+                }
 
 
             } else if (dogUser.getUserType() == DogUser.userType_organ) {
@@ -1176,10 +1235,18 @@ public class DogCertificateEditDogOwnerActivity extends BaseActivity {
                         dogUser.setHouseNum(personaHouseNumber);
                     }
 
-                    if (CommonUtil.isBlank(dogUser.getHousePhoto())) {
+                    if (imageList.size() <= 1) {
                         ToastUtils.showShort(getApplicationContext(), "请上传房产证或房屋租赁合同");
                         return;
                     }
+                    if (imageList.size() > 0 && imageList.indexOf("add") != -1) {
+                        imageList.remove("add");
+                    }
+
+//                    if (CommonUtil.isBlank(dogUser.getHousePhoto())) {
+//                        ToastUtils.showShort(getApplicationContext(), "请上传房产证或房屋租赁合同");
+//                        return;
+//                    }
                 }
 
                 map.put("userType", String.valueOf(1));//用户类型（全）;1：个人 2 ：单位
@@ -1203,7 +1270,8 @@ public class DogCertificateEditDogOwnerActivity extends BaseActivity {
                 map.put("detailedAddress", dogUser.getDetailedAddress());//详细地址
                 if (type != type_immune) {
                     map.put("houseNum", dogUser.getHouseNum());//房本编号
-                    map.put("housePhoto", dogUser.getHousePhoto());//房产证或租赁合同照片
+                    map.put("housePhoto", GsonUtils.toJson(imageList));//房产证或租赁合同照片
+//                    map.put("housePhoto", dogUser.getHousePhoto());//房产证或租赁合同照片
                 }
 
             }
@@ -1450,17 +1518,15 @@ public class DogCertificateEditDogOwnerActivity extends BaseActivity {
 
     /**
      * 上传房产证或房屋租赁合同
-     *
-     * @param view
      */
-    public void onClickHouseProprietaryCertificate(View view) {
+    public void onClickHouseProprietaryCertificate() {
         if (!isEnabled()) {
             return;
         }
         if (checkPermissions(PermissionUtils.STORAGE, request_HouseProprietaryCertificate)) {
             Bundle bundle = new Bundle();
             bundle.putInt("mediaType", MediaUtils.MEDIA_TYPE_PHOTO);
-            bundle.putInt("maxNumber", 1);
+            bundle.putInt("maxNumber", 10 - imageAdapter.getList().size());
             openActivity(MediaSelectActivity.class, bundle, request_HouseProprietaryCertificate);
         }
     }
@@ -1551,7 +1617,7 @@ public class DogCertificateEditDogOwnerActivity extends BaseActivity {
 
                     break;
                 case request_HouseProprietaryCertificate:
-                    compressImage(data, request_HouseProprietaryCertificate);
+                    compressImageMulti(data, request_HouseProprietaryCertificate);
 
                     break;
                 case request_ManagementSystem:
@@ -1627,7 +1693,7 @@ public class DogCertificateEditDogOwnerActivity extends BaseActivity {
      * @param filePath
      */
     private void uploadFile(int requestCode, String filePath) {
-        LoadingManager.showLoadingDialog(DogCertificateEditDogOwnerActivity.this,"上传中...");
+        LoadingManager.showLoadingDialog(DogCertificateEditDogOwnerActivity.this, "上传中...");
         Log.i(TAG, "uploadFile: filePath = " + filePath);
         String fileName = filePath.substring(filePath.lastIndexOf("/") + 1);
         Log.i(TAG, "uploadFile: fileName = " + fileName);
@@ -1687,9 +1753,9 @@ public class DogCertificateEditDogOwnerActivity extends BaseActivity {
                     GlideLoader.LoderImage(DogCertificateEditDogOwnerActivity.this, oldManOrDisabledCertificateContent, binding.oldManOrDisabledCertificateContentView, 6);
 
                 } else if (requestCode == request_HouseProprietaryCertificate) {
-                    String personaHouseProprietaryCertificate = url;
-                    dogUser.setHousePhoto(personaHouseProprietaryCertificate);
-                    GlideLoader.LoderImage(DogCertificateEditDogOwnerActivity.this, personaHouseProprietaryCertificate, binding.houseProprietaryCertificateView, 6);
+//                    String personaHouseProprietaryCertificate = url;
+//                    dogUser.setHousePhoto(personaHouseProprietaryCertificate);
+//                    GlideLoader.LoderImage(DogCertificateEditDogOwnerActivity.this, personaHouseProprietaryCertificate, binding.houseProprietaryCertificateView, 6);
 
                 } else if (requestCode == request_ManagementSystem) {
                     String legalManagementSystem = url;
@@ -1711,6 +1777,94 @@ public class DogCertificateEditDogOwnerActivity extends BaseActivity {
 
 
     }
+
+
+    private void compressImageMulti(Intent data, int requestCode) {
+        try {
+            if (data != null) {
+                String imageJson = data.getStringExtra("imageJson");
+                if (!TextUtils.isEmpty(imageJson)) {
+                    Gson gson = new Gson();
+                    List<MediaFile> mediaFiles = gson.fromJson(imageJson, new TypeToken<List<MediaFile>>() {
+                    }.getType());
+                    if (mediaFiles != null && mediaFiles.size() > 0) {
+                        List<String> mediaFileList = new ArrayList<>();
+                        for (int i = 0; i < mediaFiles.size(); i++) {
+                            MediaFile mediaFile = mediaFiles.get(i);
+                            String path = mediaFile.getPath();
+                            int finalI = i;
+                            Luban.with(this)
+                                    .load(path)// 传人要压缩的图片列表
+                                    .ignoreBy(500)// 忽略不压缩图片的大小
+                                    .setTargetDir(FileUtils.getMediaPath())// 设置压缩后文件存储位置
+                                    .setCompressListener(new OnCompressListener() { //设置回调
+                                        @Override
+                                        public void onStart() {
+                                        }
+
+                                        @Override
+                                        public void onSuccess(File file) {
+                                            mediaFileList.add(file.getAbsolutePath());
+                                            if (finalI == mediaFiles.size() - 1) {
+                                                new Thread(new Runnable() {
+                                                    @Override
+                                                    public void run() {
+                                                        uploadFileMulti(mediaFileList);
+                                                    }
+                                                }).start();
+                                            }
+//                                                }
+                                        }
+
+                                        @Override
+                                        public void onError(Throwable e) {
+                                        }
+                                    }).launch();//启动压缩
+                        }
+                    }
+                }
+            }
+        } catch (Exception e) {
+            e.getMessage();
+        }
+    }
+
+    /**
+     * 华为云 上传文件
+     *
+     * @param mediaFileList
+     */
+    private void uploadFileMulti(List<String> mediaFileList) {
+        LoadingManager.showLoadingDialog(DogCertificateEditDogOwnerActivity.this, "上传中...");
+        for (int i = 0; i < mediaFileList.size(); i++) {
+            String filePath = mediaFileList.get(i);
+            Log.i(TAG, "uploadFile: filePath = " + filePath);
+            String fileName = filePath.substring(filePath.lastIndexOf("/") + 1);
+            PutObjectRequest request = new PutObjectRequest();
+            request.setBucketName(Config.huaweiBucketName);
+            request.setObjectKey(fileName);
+            request.setFile(new File(filePath));
+            request.setProgressListener(new ProgressListener() {
+                @Override
+                public void progressChanged(ProgressStatus status) {
+                }
+            });
+            //每上传1MB数据反馈上传进度
+            request.setProgressInterval(1024 * 1024L);
+            PutObjectResult result = UploadFileManager.getInstance().getObsClient().putObject(request);
+            String url = "http://" + Config.huaweiBucketName + "." + Config.huaweiCloudEndPoint + "/" + fileName;
+            Log.i(TAG, "uploadFile: url = " + url);
+            imageList.add(imageAdapter.getList().size() - 1, url);
+            LoadingManager.hideLoadingDialog(DogCertificateEditDogOwnerActivity.this);
+            runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    imageAdapter.notifyDataSetChanged();
+                }
+            });
+        }
+    }
+
 
     private boolean isEnabled() {
         if (type == type_details) {
