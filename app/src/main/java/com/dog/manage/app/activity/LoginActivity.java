@@ -86,6 +86,19 @@ public class LoginActivity extends BaseActivity {
         String registrationID = JPushInterface.getRegistrationID(this);
         Log.i(TAG, "onClickLogin: registrationID = " + registrationID);
         SendRequest.userLogin(phone, code, registrationID, new GenericsCallback<ResultClient<UserInfo>>(new JsonGenericsSerializator()) {
+
+            @Override
+            public void onBefore(Request request, int id) {
+                super.onBefore(request, id);
+                LoadingManager.showLoadingDialog(LoginActivity.this);
+            }
+
+            @Override
+            public void onAfter(int id) {
+                super.onAfter(id);
+                LoadingManager.hideLoadingDialog(LoginActivity.this);
+            }
+
             @Override
             public void onError(Call call, Exception e, int id) {
 

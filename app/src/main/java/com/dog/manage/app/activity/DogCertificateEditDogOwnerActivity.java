@@ -371,7 +371,7 @@ public class DogCertificateEditDogOwnerActivity extends BaseActivity {
         });
         if (type == type_details) {
             imageAdapter.setType(type);
-        }else {
+        } else {
             imageList.add("add");
             imageAdapter.refreshData(imageList);
         }
@@ -537,20 +537,21 @@ public class DogCertificateEditDogOwnerActivity extends BaseActivity {
                     binding.confirmView.setVisibility(View.VISIBLE);
                     getDogUser();
                 } else if (response.isSuccess() && !response.getData()) {
-                    DialogManager.showConfirmDialog(DogCertificateEditDogOwnerActivity.this, "请先完善个人信息", new DialogManager.Listener() {
-                        @Override
-                        public void onItemLeft() {
-                            finish();
-                        }
+                    DialogManager.showConfirmDialog(DogCertificateEditDogOwnerActivity.this, "请先完善个人信息",
+                            new DialogManager.Listener() {
+                                @Override
+                                public void onItemLeft() {
+                                    finish();
+                                }
 
-                        @Override
-                        public void onItemRight() {
-                            Bundle bundle = new Bundle();
-                            bundle.putInt("type", DogCertificateEditDogOwnerActivity.type_userInfo);
-                            openActivity(DogCertificateEditDogOwnerActivity.class, bundle);
-                            finish();
-                        }
-                    });
+                                @Override
+                                public void onItemRight() {
+                                    Bundle bundle = new Bundle();
+                                    bundle.putInt("type", DogCertificateEditDogOwnerActivity.type_userInfo);
+                                    openActivity(DogCertificateEditDogOwnerActivity.class, bundle, request_Update);
+//                            finish();
+                                }
+                            });
                 } else {
                     ToastUtils.showShort(getApplicationContext(), response.getMsg());
                 }
@@ -741,11 +742,11 @@ public class DogCertificateEditDogOwnerActivity extends BaseActivity {
                     //房产证或房屋租赁合同
                     List<String> housePhotos = new Gson().fromJson(dogUser.getHousePhoto(), new TypeToken<List<String>>() {
                     }.getType());
-                    Log.i(TAG, "initDogUserView: "+housePhotos.size());
+                    Log.i(TAG, "initDogUserView: " + housePhotos.size());
                     if (housePhotos != null) {
-                        if (imageAdapter.getList().size()>0) {
+                        if (imageAdapter.getList().size() > 0) {
                             imageList.addAll(imageAdapter.getList().size() - 1, housePhotos);
-                        }else {
+                        } else {
                             imageList.addAll(housePhotos);
                         }
                     }
@@ -1365,6 +1366,7 @@ public class DogCertificateEditDogOwnerActivity extends BaseActivity {
 
                             } else if (type == type_userInfo) {
                                 ToastUtils.showShort(getApplicationContext(), "保存成功");
+                                setResult(RESULT_OK);
                                 finish();
 
                             }
@@ -1392,6 +1394,7 @@ public class DogCertificateEditDogOwnerActivity extends BaseActivity {
     private final int request_Facility1 = 900;
     private final int request_Facility2 = 1000;
     private final int request_City = 1100;
+    private final int request_Update = 1300;
 
     /**
      * 个人证件 上传身份证人像面
@@ -1638,6 +1641,10 @@ public class DogCertificateEditDogOwnerActivity extends BaseActivity {
                         dogUser.setAddress(cityName);
                         binding.addressView.binding.itemContent.setText(cityName);
                     }
+                    break;
+                case request_Update:
+                    checkingDogUser();
+
                     break;
             }
         }
