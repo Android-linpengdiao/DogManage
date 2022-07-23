@@ -355,7 +355,7 @@ public class DogCertificateEditDogOwnerActivity extends BaseActivity {
                 if (object instanceof Integer) {
                     int position = (int) object;
                     if (position == (imageList.size() - 1)) {
-                        if (imageList.size() < 10) {
+                        if (imageList.size() < 5) {
                             onClickHouseProprietaryCertificate();
                         } else {
                             ToastUtils.showShort(DogCertificateEditDogOwnerActivity.this, "最多上传9张图片");

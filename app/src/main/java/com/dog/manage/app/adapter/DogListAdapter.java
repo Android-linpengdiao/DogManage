@@ -12,7 +12,7 @@ import com.dog.manage.app.model.Dog;
 
 public class DogListAdapter extends BaseRecyclerAdapter<Dog, ItemTextBinding> {
 
-    private int type = 1;//0-犬证 1-免疫证
+    private int type = 0;//1-犬证办理
     private int done = 0;
     private OnClickListener onClickListener;
 
@@ -37,10 +37,18 @@ public class DogListAdapter extends BaseRecyclerAdapter<Dog, ItemTextBinding> {
         return com.base.R.layout.item_text;
     }
 
-
     @Override
     protected void onBindItem(ItemTextBinding binding, Dog dataBean, int position) {
-        binding.titleView.setText(dataBean.getDogType() + (dataBean.getIdNum() != null ? "  " + (type == 1 ? "免疫证号" : "犬证号") + "-" + dataBean.getIdNum() : ""));
+        if (type == 1) {
+            if (dataBean.getAdoptStatus() != null && dataBean.getAdoptStatus() == 1) {
+                binding.titleView.setText(dataBean.getDogType() + (dataBean.getAdoptNum() != null ? "  " + "领养编号" + ":" + dataBean.getAdoptNum() : ""));
+            } else {
+                binding.titleView.setText(dataBean.getDogType() + (dataBean.getIdNum() != null ? "  " + "免疫证号" + ":" + dataBean.getIdNum() : ""));
+            }
+        } else {
+            binding.titleView.setText(dataBean.getDogType() + (dataBean.getIdNum() != null ? "  " + "犬证号" + ":" + dataBean.getIdNum() : ""));
+        }
+//        binding.titleView.setText(dataBean.getDogType() + (dataBean.getIdNum() != null ? "  " + (type == 1 ? "免疫证号" : "犬证号") + "-" + dataBean.getIdNum() : ""));
         binding.titleView.setTypeface(position == done ? Typeface.defaultFromStyle(Typeface.BOLD) : Typeface.defaultFromStyle(Typeface.NORMAL));
 //        binding.doneView.setVisibility(position == done ? View.VISIBLE : View.GONE);
         binding.getRoot().setOnClickListener(new View.OnClickListener() {

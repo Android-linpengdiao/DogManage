@@ -40,4 +40,6 @@ public class LicenceBean implements Serializable {
     private Integer immuneLicenceStatus;
     private String detailedAddress;
     private String dogPhoto;
+    private Integer licenceStatus = 0;//办理状态;1：待审核 2：代缴费  3：审核驳回  4：已办结  5：已过期  6：已注销
+    private Integer adoptStatus = 0;//领养状态 0 正常 1 领养
 }

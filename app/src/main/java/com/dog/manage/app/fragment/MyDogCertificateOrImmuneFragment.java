@@ -130,7 +130,7 @@ public class MyDogCertificateOrImmuneFragment extends BaseFragment {
             List<String> dogPhotos = new Gson().fromJson(immuneDetail.getDogPhoto(), new TypeToken<List<String>>() {
             }.getType());
             if (dogPhotos != null && dogPhotos.size() > 0)
-                GlideLoader.LoderImage(getActivity(), dogPhotos.get(0), binding.coverView,5);
+                GlideLoader.LoderImage(getActivity(), dogPhotos.get(0), binding.coverView, 5);
         } catch (Exception e) {
             e.getMessage();
         }
@@ -140,6 +140,7 @@ public class MyDogCertificateOrImmuneFragment extends BaseFragment {
 
     private void certificateView(LicenceBean licenceBean) {
         binding.idNumView.setText(licenceBean.getIdNum());
+        binding.adoptStatusView.setVisibility(licenceBean.getAdoptStatus() == 1 ? View.VISIBLE : View.GONE);
         binding.dogTypeView.setText(licenceBean.getDogType());
         binding.dogColorView.setText(licenceBean.getDogColor());
         binding.dogGenderView.setText(licenceBean.getDogGender() == 0 ? "雌性" : "雄性");
@@ -151,7 +152,7 @@ public class MyDogCertificateOrImmuneFragment extends BaseFragment {
             List<String> dogPhotos = new Gson().fromJson(licenceBean.getDogPhoto(), new TypeToken<List<String>>() {
             }.getType());
             if (dogPhotos != null && dogPhotos.size() > 0)
-                GlideLoader.LoderImage(getActivity(), dogPhotos.get(0), binding.certificateCoverView,5);
+                GlideLoader.LoderImage(getActivity(), dogPhotos.get(0), binding.certificateCoverView, 5);
         } catch (Exception e) {
             e.getMessage();
         }
@@ -161,7 +162,7 @@ public class MyDogCertificateOrImmuneFragment extends BaseFragment {
 
         //1无效2有效
         binding.immuneLicenceStatusView.setText(licenceBean.getImmuneLicenceStatus() == 1 ? "免疫证状态:无效" : "免疫证状态:有效");
-        if (licenceBean.getSurplusDate()!=null) {
+        if (licenceBean.getSurplusDate() != null) {
 //            long examinedTime = 365 - (System.currentTimeMillis() - TimeUtils.getTimeExamined(licenceBean.getAwardTime())) / (24 * 60 * 60 * 1000);
             long surplusDate = licenceBean.getSurplusDate();
             binding.examinedTimeView.setText((surplusDate > 0 ? "距离年审还有" : "距离年审已过") + Math.abs(surplusDate) + "天");

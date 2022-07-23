@@ -76,6 +76,18 @@
                                 android:textColor="#000000"
                                 android:textSize="@dimen/certificateSize" />
 
+                            <TextView
+                                android:id="@+id/adoptStatusView"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="@dimen/dp_8"
+                                android:gravity="center_vertical"
+                                android:text="(领养)"
+                                android:textColor="#F14343"
+                                android:textSize="@dimen/certificateSize"
+                                android:visibility="gone"
+                                tools:visibility="visible"/>
+
                         </LinearLayout>
 
                         <LinearLayout
@@ -369,7 +381,7 @@
             android:layout_margin="@dimen/dp_16"
             android:background="@color/white"
             android:visibility="gone"
-            tools:visibility="visible"
+            tools:visibility="gone"
             app:cardCornerRadius="@dimen/dp_8"
             app:cardElevation="@dimen/dp_6"
             app:cardPreventCornerOverlap="false">

@@ -33,6 +33,8 @@ public class Dog implements Serializable {
     private String noseprint;
     private Integer leaveId = 0;
     private Integer id = 0;
+    private Integer adoptStatus = 0;//领养状态 0 正常 1 领养
+    private String adoptNum;
 
     public Dog(Integer dogId, String dogType, String idNum) {
         this.dogId = dogId;
