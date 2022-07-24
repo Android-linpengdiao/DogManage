@@ -2,6 +2,7 @@ package com.dog.manage.app.activity;
 
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
@@ -181,6 +182,31 @@ public class DogCertificateExaminedActivity extends BaseActivity {
     private void getDogLicenseDetail(int lincenceId) {
         SendRequest.getDogLicenseDetail(lincenceId,
                 new GenericsCallback<ResultClient<DogLicenseDetail>>(new JsonGenericsSerializator()) {
+
+                    @Override
+                    public void onError(Call call, Exception e, int id) {
+                        initView(null);
+                    }
+
+                    @Override
+                    public void onResponse(ResultClient<DogLicenseDetail> response, int id) {
+                        if (response.isSuccess() && response.getData() != null) {
+                            annualStatus(lincenceId);
+                            initView(response.getData());
+
+                        } else {
+                            initView(null);
+                            ToastUtils.showShort(getApplicationContext(), !CommonUtil.isBlank(response.getMsg()) ? response.getMsg() : "获取信息失败");
+
+                        }
+                    }
+                });
+    }
+
+    private void annualStatus(int lincenceId) {
+        SendRequest.annualStatus(lincenceId,
+                new GenericsCallback<ResultClient<DogLicenseDetail>>(new JsonGenericsSerializator()) {
+
                     @Override
                     public void onError(Call call, Exception e, int id) {
 
@@ -188,13 +214,14 @@ public class DogCertificateExaminedActivity extends BaseActivity {
 
                     @Override
                     public void onResponse(ResultClient<DogLicenseDetail> response, int id) {
-                        if (response.isSuccess() && response.getData() != null) {
-                            initView(response.getData());
-
+                        if (response.isSuccess()) {
+                            binding.confirmView.setEnabled(true);
+                            binding.confirmView.setTextColor(Color.parseColor("#ffffff"));
+                            binding.confirmView.setBackgroundResource(R.drawable.button_theme);
                         } else {
-                            initView(null);
-                            ToastUtils.showShort(getApplicationContext(), !CommonUtil.isBlank(response.getMsg()) ? response.getMsg() : "获取信息失败");
-
+                            binding.confirmView.setEnabled(false);
+                            binding.confirmView.setTextColor(Color.parseColor("#ffffff"));
+                            binding.confirmView.setBackgroundResource(R.drawable.button_gray);
                         }
                     }
                 });
@@ -287,8 +314,8 @@ public class DogCertificateExaminedActivity extends BaseActivity {
                 return;
             }
             Bundle bundle = new Bundle();
-            bundle.putString("paperLicence",dogCertificate);
-            bundle.putString("paperImmuneLicence",immuneCertificate);
+            bundle.putString("paperLicence", dogCertificate);
+            bundle.putString("paperImmuneLicence", immuneCertificate);
             bundle.putInt("type", DogCertificateEditDogOwnerActivity.type_examined);
             openActivity(DogCertificateEditDogOwnerActivity.class, bundle);
 

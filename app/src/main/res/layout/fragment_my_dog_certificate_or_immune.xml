@@ -79,14 +79,13 @@
                             <TextView
                                 android:id="@+id/adoptStatusView"
                                 android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginLeft="@dimen/dp_8"
+                                android:layout_height="match_parent"
                                 android:gravity="center_vertical"
                                 android:text="(领养)"
                                 android:textColor="#F14343"
                                 android:textSize="@dimen/certificateSize"
                                 android:visibility="gone"
-                                tools:visibility="visible"/>
+                                tools:visibility="visible" />
 
                         </LinearLayout>
 
@@ -268,7 +267,7 @@
                         android:layout_width="@dimen/dp_84"
                         android:layout_height="@dimen/dp_78"
                         android:layout_alignParentRight="true"
-                        android:layout_marginRight="@dimen/dp_40"
+                        android:layout_marginRight="@dimen/dp_30"
                         android:scaleType="fitCenter"
                         android:background="@drawable/image_8" />
 

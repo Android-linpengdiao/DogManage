@@ -134,7 +134,7 @@ public class DogCertificateEditDogActivity extends BaseActivity {
                     ToastUtils.showShort(getApplicationContext(), "暂无犬只");
                     return;
                 }
-                onClickDogCertificate(DogCertificateEditDogActivity.this,type,
+                onClickDogCertificate(DogCertificateEditDogActivity.this, type,
                         dogList, dogList.indexOf(binding.dogCertificateView.binding.itemContent.getText().toString()),
                         new OnClickListener() {
                             @Override
@@ -145,8 +145,13 @@ public class DogCertificateEditDogActivity extends BaseActivity {
                                 Log.i(TAG, "onClick: getDogId = " + dog.getDogId());
                                 Log.i(TAG, "onClick: type = " + type);
                                 if (type == type_certificate) {
-                                    if (dog.getId() != 0)
-                                        getDogById(dog.getId());
+                                    if (dog.getDogId() != 0) {
+                                        if (dog.getType() != null && dog.getType() == 2) {
+                                            getAdoptNumDetail(dog.getIdNum());
+                                        } else {
+                                            getDogById(dog.getDogId());
+                                        }
+                                    }
 
                                 } else if (type == type_immune) {
                                     if (dog.getDogId() != 0)
@@ -211,7 +216,7 @@ public class DogCertificateEditDogActivity extends BaseActivity {
         binding.createPetArchivesView.binding.itemInfo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                dog.setNoseprint("23325059-b2c1-11eb-1Vu7hqwN6");
+//                dog.setNoseprint("23325059-b2c1-11eb-1Vu7hqwN6afc");
 //                binding.createPetArchivesView.binding.itemContent.setText("已完成采集");
 
                 if (checkPermissions(PermissionUtils.CAMERA, 100)) {
@@ -230,7 +235,7 @@ public class DogCertificateEditDogActivity extends BaseActivity {
         });
 
         if (type == type_certificate) {
-            getDogList();
+            getDogImmuneList();
 
         } else if (type == type_immune) {
             getDogLicenceList();
@@ -404,8 +409,8 @@ public class DogCertificateEditDogActivity extends BaseActivity {
     /**
      * 办理过疫苗的。没有办理狗证的
      */
-    private void getDogList() {
-        SendRequest.getDogList(new GenericsCallback<ResultClient<List<Dog>>>(new JsonGenericsSerializator()) {
+    private void getDogImmuneList() {
+        SendRequest.getDogImmuneList(new GenericsCallback<ResultClient<List<Dog>>>(new JsonGenericsSerializator()) {
             @Override
             public void onError(Call call, Exception e, int id) {
             }
@@ -417,7 +422,7 @@ public class DogCertificateEditDogActivity extends BaseActivity {
                         dogList = response.getData();
                     }
                     Dog newDog = new Dog();
-                    newDog.setId(0);
+                    newDog.setDogId(0);
                     newDog.setDogType("添加新犬只");
                     dogList.add(newDog);
                     dog = dogList.get(0);
@@ -465,7 +470,7 @@ public class DogCertificateEditDogActivity extends BaseActivity {
      * 犬证 获取犬只详情信息
      */
     private void getDogById(int dogId) {
-        Log.i(TAG, "getDogById: "+dogId);
+        Log.i(TAG, "getDogById: " + dogId);
         SendRequest.getDogById(dogId, new GenericsCallback<ResultClient<Dog>>(new JsonGenericsSerializator()) {
 
             @Override
@@ -488,7 +493,7 @@ public class DogCertificateEditDogActivity extends BaseActivity {
             @Override
             public void onResponse(ResultClient<Dog> response, int id) {
                 if (response.isSuccess() && response.getData() != null) {
-                    intiView(response.getData());
+                    intiView(response.getData(), null);
                 } else {
                     ToastUtils.showShort(getApplicationContext(), "获取信息失败");
                 }
@@ -496,8 +501,48 @@ public class DogCertificateEditDogActivity extends BaseActivity {
         });
     }
 
-    private void intiView(Dog data) {
+    /**
+     * 犬证 获取领养犬只详情信息
+     */
+    private void getAdoptNumDetail(String adoptNum) {
+        Log.i(TAG, "getAdoptNumDetail: " + adoptNum);
+        SendRequest.getAdoptNumDetail(adoptNum, new GenericsCallback<ResultClient<Dog>>(new JsonGenericsSerializator()) {
+
+            @Override
+            public void onBefore(Request request, int id) {
+                super.onBefore(request, id);
+                LoadingManager.showLoadingDialog(DogCertificateEditDogActivity.this);
+            }
+
+            @Override
+            public void onAfter(int id) {
+                super.onAfter(id);
+                LoadingManager.hideLoadingDialog(DogCertificateEditDogActivity.this);
+            }
+
+            @Override
+            public void onError(Call call, Exception e, int id) {
+
+            }
+
+            @Override
+            public void onResponse(ResultClient<Dog> response, int id) {
+                if (response.isSuccess() && response.getData() != null) {
+                    intiView(response.getData(), adoptNum);
+                } else {
+                    ToastUtils.showShort(getApplicationContext(), "获取信息失败");
+                }
+            }
+        });
+    }
+
+    private void intiView(Dog data, String adoptNum) {
         dog = data;
+
+        //领养状态 0 正常 1 领养
+        dog.setAdoptStatus(CommonUtil.isBlank(adoptNum) ? 0 : 1);
+        dog.setAdoptNum(adoptNum);
+
         //犬只姓名
         binding.dogNameView.binding.itemEdit.setText(dog.getDogName());
         //犬只颜色
@@ -661,7 +706,11 @@ public class DogCertificateEditDogActivity extends BaseActivity {
         map.put("noseprint", dog.getNoseprint());//鼻纹信息
 
         if (dog.getId() > 0)
-            map.put("id", dog.getId() + "");//选择的犬只id
+            map.put("id", dog.getId() + "");//
+
+        map.put("adoptStatus", dog.getAdoptStatus() + "");//领养状态 0 正常 1 领养
+        if (dog.getAdoptNum() != null)
+            map.put("adoptNum", dog.getAdoptNum());//领养犬只编号
 
         if (type == type_examined) {
             map.put("paperLicence", paperLicence);//犬证图片地址
@@ -895,7 +944,7 @@ public class DogCertificateEditDogActivity extends BaseActivity {
      * @param filePath
      */
     private void uploadFile(int requestCode, String filePath) {
-        LoadingManager.showLoadingDialog(DogCertificateEditDogActivity.this,"上传中...");
+        LoadingManager.showLoadingDialog(DogCertificateEditDogActivity.this, "上传中...");
         Log.i(TAG, "uploadFile: filePath = " + filePath);
         String fileName = filePath.substring(filePath.lastIndexOf("/") + 1);
         Log.i(TAG, "uploadFile: fileName = " + fileName);

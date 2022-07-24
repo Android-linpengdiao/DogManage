@@ -35,6 +35,7 @@ public class Dog implements Serializable {
     private Integer id = 0;
     private Integer adoptStatus = 0;//领养状态 0 正常 1 领养
     private String adoptNum;
+    private Integer type = 1;//1 免疫证 2 领养
 
     public Dog(Integer dogId, String dogType, String idNum) {
         this.dogId = dogId;

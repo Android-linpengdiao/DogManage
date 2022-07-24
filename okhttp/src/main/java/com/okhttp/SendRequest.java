@@ -338,6 +338,15 @@ public class SendRequest {
 
     }
 
+    public static void annualStatus(int lincenceId, Callback call) {
+        Map<String, String> headers = new HashMap<>();
+        headers.put("Authorization", BaseApplication.getInstance().getUserInfo().getAuthorization());
+        Map<String, String> map = new HashMap<>();
+        map.put("lincenceId", String.valueOf(lincenceId));
+        OkHttpUtils.post().headers(headers).params(map).url(APIUrls.annualStatus).build().execute(call);
+
+    }
+
     /**
      * 年审-获取价格
      *
@@ -617,6 +626,22 @@ public class SendRequest {
         Map<String, String> map = new HashMap<>();
         map.put("dogId", String.valueOf(dogId));
         OkHttpUtils.post().headers(headers).params(map).url(APIUrls.getDogById).build().execute(call);
+
+    }
+
+    /**
+     * 犬只领养-根据领养号获取犬只详情
+     *
+     * @param adoptNum
+     * @param call
+     */
+    public static void getAdoptNumDetail(String adoptNum, Callback call) {
+        Map<String, String> headers = new HashMap<>();
+        headers.put("Authorization", BaseApplication.getInstance().getUserInfo().getAuthorization());
+
+        Map<String, String> map = new HashMap<>();
+        map.put("adoptNum", adoptNum);
+        OkHttpUtils.post().headers(headers).params(map).url(APIUrls.getAdoptNumDetail).build().execute(call);
 
     }
 

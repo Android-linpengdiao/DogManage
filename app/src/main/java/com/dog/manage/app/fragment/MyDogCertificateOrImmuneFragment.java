@@ -139,6 +139,7 @@ public class MyDogCertificateOrImmuneFragment extends BaseFragment {
     }
 
     private void certificateView(LicenceBean licenceBean) {
+        Log.i(TAG, "certificateView: getLicenceStatus = "+licenceBean.getLicenceStatus());
         binding.idNumView.setText(licenceBean.getIdNum());
         binding.adoptStatusView.setVisibility(licenceBean.getAdoptStatus() == 1 ? View.VISIBLE : View.GONE);
         binding.dogTypeView.setText(licenceBean.getDogType());
