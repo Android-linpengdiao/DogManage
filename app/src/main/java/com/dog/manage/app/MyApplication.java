@@ -72,7 +72,7 @@ public class MyApplication extends BaseApplication {
 
                     @Override
                     public void log(String message) {
-                        LogUtil.i("message", message);
+                        LogUtil.i("okhttp:message", message);
                     }
                 }).setLevel(HttpLoggingInterceptor.Level.BODY))
                 .hostnameVerifier(new HostnameVerifier() {

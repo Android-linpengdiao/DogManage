@@ -72,18 +72,18 @@ public class CameraActivity extends BaseActivity {
 
     @Override
     protected void onResume() {
-        if (isCapture) {
-            startTimer();
-        }
+//        if (isCapture) {
+//            startTimer();
+//        }
         binding.cameraView.onResume();
         super.onResume();
     }
 
     @Override
     protected void onPause() {
-        if (isCapture) {
-            stopTimer();
-        }
+        isCapture = false;
+        binding.captureView.setText("开始采集");
+        stopTimer();
         binding.cameraView.onPause();
         super.onPause();
     }
@@ -91,6 +91,8 @@ public class CameraActivity extends BaseActivity {
     @Override
     protected void onDestroy() {
         stopTimer();
+        timer = null;
+        timerTask = null;
         super.onDestroy();
     }
 
@@ -119,6 +121,8 @@ public class CameraActivity extends BaseActivity {
     private Object object = new Object();
 
     public void startTimer() {
+        timer = null;
+        timerTask = null;
         timer = new Timer();
         timerTask = new TimerTask() {
             @Override
@@ -128,25 +132,46 @@ public class CameraActivity extends BaseActivity {
                 if (bitmap != null) {
                     String path = FileUtils.saveFirstFrameBitmap(bitmap);
                     Log.i(TAG, "run: path " + path);
-                    if (!CommonUtil.isBlank(path)) {
-                        if (type == type_petType) {
-                            petType(path);
+                    Luban.with(CameraActivity.this)
+                            .load(path)
+                            .ignoreBy(1800)
+                            .setTargetDir(FileUtils.getMediaPath())
+                            .setCompressListener(new OnCompressListener() {
+                                @Override
+                                public void onStart() {
+                                }
 
-                        } else if (type == type_petArchives) {
-                            createPetArchives(path);
+                                @Override
+                                public void onSuccess(File file) {
+                                    String filePath = file.getAbsolutePath();
+                                    if (!CommonUtil.isBlank(filePath)) {
+                                        if (type == type_petType) {
+                                            petType(filePath);
 
-                        }
-                    }
+                                        } else if (type == type_petArchives) {
+                                            createPetArchives(filePath);
+
+                                        }
+                                    }
+                                }
+
+                                @Override
+                                public void onError(Throwable e) {
+                                }
+                            }).launch();//启动压缩
                 }
             }
         };
-        timer.schedule(timerTask, 3000, 3000);
+        timer.schedule(timerTask, 1000, 2000);
 
     }
 
     public void stopTimer() {
         if (timer != null) {
             timer.cancel();
+        }
+        if (timerTask != null) {
+            timerTask.cancel();
         }
     }
 
@@ -180,12 +205,12 @@ public class CameraActivity extends BaseActivity {
      * @param filePath
      */
     private void createPetArchives(String filePath) {
-        stopTimer();
+//        stopTimer();
         SendRequest.createPetArchives(getUserInfo().getAccessToken(), filePath,
                 new GenericsCallback<PetArchives>(new JsonGenericsSerializator()) {
                     @Override
                     public void onError(Call call, Exception e, int id) {
-                        startTimer();
+//                        startTimer();
                     }
 
                     @Override
@@ -199,7 +224,7 @@ public class CameraActivity extends BaseActivity {
                                 finish();
                             }
                         } else {
-                            startTimer();
+//                            startTimer();
                             ToastUtils.showShort(CameraActivity.this, response.getMessage());
 //                            binding.testView.setVisibility(View.VISIBLE);
                         }
