@@ -11,9 +11,12 @@ import android.widget.LinearLayout;
 import android.widget.RadioGroup;
 
 import com.base.UserInfo;
+import com.base.manager.LoadingManager;
 import com.base.utils.CommonUtil;
 import com.base.utils.FileUtils;
+import com.base.utils.GlideLoader;
 import com.base.utils.GsonUtils;
+import com.base.utils.PermissionUtils;
 import com.base.utils.ToastUtils;
 import com.cjt2325.camera.JCameraView;
 import com.cjt2325.camera.listener.JCameraListener;
@@ -21,10 +24,17 @@ import com.dog.manage.app.Config;
 import com.dog.manage.app.R;
 import com.dog.manage.app.databinding.ActivityCameraBinding;
 import com.dog.manage.app.media.MediaFile;
+import com.dog.manage.app.media.MediaSelectActivity;
+import com.dog.manage.app.media.MediaUtils;
 import com.dog.manage.app.model.PetArchives;
 import com.dog.manage.app.model.PetType;
+import com.dog.manage.app.utils.UploadFileManager;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import com.obs.services.model.ProgressListener;
+import com.obs.services.model.ProgressStatus;
+import com.obs.services.model.PutObjectRequest;
+import com.obs.services.model.PutObjectResult;
 import com.okhttp.SendRequest;
 import com.okhttp.callbacks.GenericsCallback;
 import com.okhttp.callbacks.StringCallback;
@@ -76,12 +86,18 @@ public class CameraActivity extends BaseActivity {
                     case R.id.radioButtonVideo:
                         binding.cameraView.onResume();
 
+                        binding.videoContainer.setVisibility(View.VISIBLE);
+                        binding.pictureContainer.setVisibility(View.GONE);
+
                         break;
                     case R.id.radioButtonPicture:
                         isCapture = false;
                         binding.captureView.setText("开始采集");
                         stopTimer();
                         binding.cameraView.onPause();
+
+                        binding.videoContainer.setVisibility(View.GONE);
+                        binding.pictureContainer.setVisibility(View.VISIBLE);
 
                         break;
                     default:
@@ -170,10 +186,11 @@ public class CameraActivity extends BaseActivity {
 //                                        if (type == type_petType) {
 //                                            petType(filePath);
 //
-//                                        } else if (type == type_petArchives) {
-//                                            createPetArchives(filePath);
-//
-//                                        }
+//                                        } else
+                                        if (type == type_petArchives) {
+                                            createPetArchives(filePath);
+
+                                        }
                                     }
                                 }
 
@@ -203,26 +220,217 @@ public class CameraActivity extends BaseActivity {
      * @param view
      */
     public void onClickCapture(View view) {
-        isCapture = !isCapture;
-        binding.captureView.setText(isCapture ? "停止采集" : "开始采集");
-        ToastUtils.showShort(CameraActivity.this, isCapture ? "开始采集" : "停止采集");
-        executorService.submit(new Runnable() {
-            @Override
-            public void run() {
-                synchronized (object) {
-                    if (isCapture) {
-                        startTimer();
-                    } else {
-                        stopTimer();
+
+        int sexCheckedRadioButtonId = binding.radioGroup.getCheckedRadioButtonId();
+        if (sexCheckedRadioButtonId == R.id.radioButtonVideo) {//视频采集
+            isCapture = !isCapture;
+            binding.captureView.setText(isCapture ? "停止采集" : "开始采集");
+            ToastUtils.showShort(CameraActivity.this, isCapture ? "开始采集" : "停止采集");
+            executorService.submit(new Runnable() {
+                @Override
+                public void run() {
+                    synchronized (object) {
+                        if (isCapture) {
+                            startTimer();
+                        } else {
+                            stopTimer();
+                        }
                     }
                 }
+            });
+
+        } else if (sexCheckedRadioButtonId == R.id.radioButtonPicture) {//图片采集
+            if (CommonUtil.isBlank(leftFace) && CommonUtil.isBlank(centerFace) && CommonUtil.isBlank(rightFace) &&
+                    CommonUtil.isBlank(archivesOne) && CommonUtil.isBlank(archivesTwo) && CommonUtil.isBlank(archivesThree)) {
+                ToastUtils.showShort(CameraActivity.this, "请上传正脸照或鼻纹照");
+                return;
             }
-        });
+            if (!CommonUtil.isBlank(archivesOne)) {
+                createPetArchives(archivesOne, request_ArchivesOne);
+
+            } else if (!CommonUtil.isBlank(archivesTwo)) {
+                createPetArchives(archivesOne, request_ArchivesTwo);
+
+            } else if (!CommonUtil.isBlank(archivesThree)) {
+                createPetArchives(archivesOne, request_ArchivesThree);
+
+            } else if (!CommonUtil.isBlank(leftFace)) {
+                createPetArchives(leftFace, request_LeftFace);
+
+            } else if (!CommonUtil.isBlank(centerFace)) {
+                createPetArchives(centerFace, request_CenterFace);
+
+            } else if (!CommonUtil.isBlank(rightFace)) {
+                createPetArchives(rightFace, request_RightFace);
+
+            }
+
+
+        }
 
     }
 
     /**
-     * 宠物狗面部+鼻纹建档
+     * 宠物狗面部+鼻纹建档 - 图片采集
+     *
+     * @param filePath
+     */
+    private void createPetArchives(String filePath, int requestCode) {
+        //recogType	int	识别种类：0（鼻子）、1（正脸），不传默认为0（鼻子）
+        int recogType = 0;
+        if (CommonUtil.isBlank(leftFace) || CommonUtil.isBlank(centerFace) || CommonUtil.isBlank(rightFace)) {
+            recogType = 1;
+        } else if (CommonUtil.isBlank(archivesOne) || CommonUtil.isBlank(archivesTwo) || CommonUtil.isBlank(archivesThree)) {
+            recogType = 0;
+        }
+        SendRequest.createPetArchives(getUserInfo().getAccessToken(), recogType, filePath,
+                new GenericsCallback<PetArchives>(new JsonGenericsSerializator()) {
+                    @Override
+                    public void onError(Call call, Exception e, int id) {
+                        if (requestCode == request_ArchivesOne) {
+                            if (!CommonUtil.isBlank(archivesTwo)) {
+                                createPetArchives(archivesOne, request_ArchivesTwo);
+
+                            } else if (!CommonUtil.isBlank(archivesThree)) {
+                                createPetArchives(archivesOne, request_ArchivesThree);
+
+                            } else if (!CommonUtil.isBlank(leftFace)) {
+                                createPetArchives(leftFace, request_LeftFace);
+
+                            } else if (!CommonUtil.isBlank(centerFace)) {
+                                createPetArchives(centerFace, request_CenterFace);
+
+                            } else if (!CommonUtil.isBlank(rightFace)) {
+                                createPetArchives(rightFace, request_RightFace);
+
+                            }
+
+                        } else if (requestCode == request_ArchivesTwo) {
+                            if (!CommonUtil.isBlank(archivesThree)) {
+                                createPetArchives(archivesOne, request_ArchivesThree);
+
+                            } else if (!CommonUtil.isBlank(leftFace)) {
+                                createPetArchives(leftFace, request_LeftFace);
+
+                            } else if (!CommonUtil.isBlank(centerFace)) {
+                                createPetArchives(centerFace, request_CenterFace);
+
+                            } else if (!CommonUtil.isBlank(rightFace)) {
+                                createPetArchives(rightFace, request_RightFace);
+
+                            }
+
+                        } else if (requestCode == request_ArchivesThree) {
+                            if (!CommonUtil.isBlank(leftFace)) {
+                                createPetArchives(leftFace, request_LeftFace);
+
+                            } else if (!CommonUtil.isBlank(centerFace)) {
+                                createPetArchives(centerFace, request_CenterFace);
+
+                            } else if (!CommonUtil.isBlank(rightFace)) {
+                                createPetArchives(rightFace, request_RightFace);
+
+                            }
+
+                        } else if (requestCode == request_LeftFace) {
+                            if (!CommonUtil.isBlank(centerFace)) {
+                                createPetArchives(centerFace, request_CenterFace);
+
+                            } else if (!CommonUtil.isBlank(rightFace)) {
+                                createPetArchives(rightFace, request_RightFace);
+
+                            }
+
+                        } else if (requestCode == request_CenterFace) {
+                            if (!CommonUtil.isBlank(rightFace)) {
+                                createPetArchives(rightFace, request_RightFace);
+
+                            }
+
+                        }
+                    }
+
+                    @Override
+                    public void onResponse(PetArchives response, int id) {
+                        if (response.getStatus() == 200) {
+                            if (response.getData() != null &&
+                                    response.getData().getPetId() != null) {
+                                Intent intent = new Intent();
+                                intent.putExtra("petId", response.getData().getPetId());
+                                setResult(RESULT_OK, intent);
+                                finish();
+                            }
+                        } else {
+                            ToastUtils.showShort(CameraActivity.this, response.getMessage());
+                            if (requestCode == request_ArchivesOne) {
+                                if (!CommonUtil.isBlank(archivesTwo)) {
+                                    createPetArchives(archivesOne, request_ArchivesTwo);
+
+                                } else if (!CommonUtil.isBlank(archivesThree)) {
+                                    createPetArchives(archivesOne, request_ArchivesThree);
+
+                                } else if (!CommonUtil.isBlank(leftFace)) {
+                                    createPetArchives(leftFace, request_LeftFace);
+
+                                } else if (!CommonUtil.isBlank(centerFace)) {
+                                    createPetArchives(centerFace, request_CenterFace);
+
+                                } else if (!CommonUtil.isBlank(rightFace)) {
+                                    createPetArchives(rightFace, request_RightFace);
+
+                                }
+
+                            } else if (requestCode == request_ArchivesTwo) {
+                                if (!CommonUtil.isBlank(archivesThree)) {
+                                    createPetArchives(archivesOne, request_ArchivesThree);
+
+                                } else if (!CommonUtil.isBlank(leftFace)) {
+                                    createPetArchives(leftFace, request_LeftFace);
+
+                                } else if (!CommonUtil.isBlank(centerFace)) {
+                                    createPetArchives(centerFace, request_CenterFace);
+
+                                } else if (!CommonUtil.isBlank(rightFace)) {
+                                    createPetArchives(rightFace, request_RightFace);
+
+                                }
+
+                            } else if (requestCode == request_ArchivesThree) {
+                                if (!CommonUtil.isBlank(leftFace)) {
+                                    createPetArchives(leftFace, request_LeftFace);
+
+                                } else if (!CommonUtil.isBlank(centerFace)) {
+                                    createPetArchives(centerFace, request_CenterFace);
+
+                                } else if (!CommonUtil.isBlank(rightFace)) {
+                                    createPetArchives(rightFace, request_RightFace);
+
+                                }
+
+                            } else if (requestCode == request_LeftFace) {
+                                if (!CommonUtil.isBlank(centerFace)) {
+                                    createPetArchives(centerFace, request_CenterFace);
+
+                                } else if (!CommonUtil.isBlank(rightFace)) {
+                                    createPetArchives(rightFace, request_RightFace);
+
+                                }
+
+                            } else if (requestCode == request_CenterFace) {
+                                if (!CommonUtil.isBlank(rightFace)) {
+                                    createPetArchives(rightFace, request_RightFace);
+
+                                }
+
+                            }
+                        }
+
+                    }
+                });
+    }
+
+    /**
+     * 宠物狗面部+鼻纹建档 - 视频采集
      *
      * @param filePath
      */
@@ -306,4 +514,279 @@ public class CameraActivity extends BaseActivity {
         setResult(RESULT_OK, intent);
         finish();
     }
+
+    private String leftFace = null;
+    private String centerFace = null;
+    private String rightFace = null;
+    private String archivesOne = null;
+    private String archivesTwo = null;
+    private String archivesThree = null;
+
+
+    private final int request_LeftFace = 100;
+    private final int request_CenterFace = 200;
+    private final int request_RightFace = 300;
+    private final int request_ArchivesOne = 400;
+    private final int request_ArchivesTwo = 500;
+    private final int request_ArchivesThree = 600;
+
+    /**
+     * 全身照-1
+     *
+     * @param view
+     */
+    public void onClickFullOne(View view) {
+    }
+
+    /**
+     * 全身照-2
+     *
+     * @param view
+     */
+    public void onClickFullTwo(View view) {
+    }
+
+    /**
+     * 鼻纹照-1
+     *
+     * @param view
+     */
+    public void onClickArchivesOne(View view) {
+        if (checkPermissions(PermissionUtils.STORAGE, request_ArchivesOne)) {
+            Bundle bundle = new Bundle();
+            bundle.putInt("mediaType", MediaUtils.MEDIA_TYPE_PHOTO);
+            bundle.putInt("maxNumber", 1);
+            openActivity(MediaSelectActivity.class, bundle, request_ArchivesOne);
+        }
+    }
+
+    /**
+     * 鼻纹照-2
+     *
+     * @param view
+     */
+    public void onClickArchivesTwo(View view) {
+        if (checkPermissions(PermissionUtils.STORAGE, request_ArchivesTwo)) {
+            Bundle bundle = new Bundle();
+            bundle.putInt("mediaType", MediaUtils.MEDIA_TYPE_PHOTO);
+            bundle.putInt("maxNumber", 1);
+            openActivity(MediaSelectActivity.class, bundle, request_ArchivesTwo);
+        }
+    }
+
+    /**
+     * 鼻纹照-3
+     *
+     * @param view
+     */
+    public void onClickArchivesThree(View view) {
+        if (checkPermissions(PermissionUtils.STORAGE, request_ArchivesThree)) {
+            Bundle bundle = new Bundle();
+            bundle.putInt("mediaType", MediaUtils.MEDIA_TYPE_PHOTO);
+            bundle.putInt("maxNumber", 1);
+            openActivity(MediaSelectActivity.class, bundle, request_ArchivesThree);
+        }
+    }
+
+    /**
+     * 上传左侧面照片
+     *
+     * @param view
+     */
+    public void onClickLeftFace(View view) {
+        if (checkPermissions(PermissionUtils.STORAGE, request_LeftFace)) {
+            Bundle bundle = new Bundle();
+            bundle.putInt("mediaType", MediaUtils.MEDIA_TYPE_PHOTO);
+            bundle.putInt("maxNumber", 1);
+            openActivity(MediaSelectActivity.class, bundle, request_LeftFace);
+        }
+    }
+
+    /**
+     * 上传正面照片
+     *
+     * @param view
+     */
+    public void onClickCenterFace(View view) {
+        if (checkPermissions(PermissionUtils.STORAGE, request_CenterFace)) {
+            Bundle bundle = new Bundle();
+            bundle.putInt("mediaType", MediaUtils.MEDIA_TYPE_PHOTO);
+            bundle.putInt("maxNumber", 1);
+            openActivity(MediaSelectActivity.class, bundle, request_CenterFace);
+        }
+    }
+
+    /**
+     * 上右侧面照片
+     *
+     * @param view
+     */
+    public void onClickRightFace(View view) {
+        if (checkPermissions(PermissionUtils.STORAGE, request_RightFace)) {
+            Bundle bundle = new Bundle();
+            bundle.putInt("mediaType", MediaUtils.MEDIA_TYPE_PHOTO);
+            bundle.putInt("maxNumber", 1);
+            openActivity(MediaSelectActivity.class, bundle, request_RightFace);
+        }
+    }
+
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == RESULT_OK) {
+            switch (requestCode) {
+                case request_LeftFace:
+                    compressImage(data, request_LeftFace);
+
+                    break;
+                case request_CenterFace:
+                    compressImage(data, request_CenterFace);
+
+                    break;
+                case request_RightFace:
+                    compressImage(data, request_RightFace);
+
+                    break;
+                case request_ArchivesOne:
+                    compressImage(data, request_ArchivesOne);
+
+                    break;
+                case request_ArchivesTwo:
+                    compressImage(data, request_ArchivesTwo);
+
+                    break;
+                case request_ArchivesThree:
+                    compressImage(data, request_ArchivesThree);
+
+                    break;
+            }
+        }
+    }
+
+    private void compressImage(Intent data, int requestCode) {
+        try {
+            if (data != null) {
+                String imageJson = data.getStringExtra("imageJson");
+                if (!TextUtils.isEmpty(imageJson)) {
+                    Gson gson = new Gson();
+                    List<MediaFile> imageList = gson.fromJson(imageJson, new TypeToken<List<MediaFile>>() {
+                    }.getType());
+                    if (imageList != null && imageList.size() > 0) {
+                        String path = imageList.get(0).getPath();
+                        Luban.with(this)
+                                .load(path)// 传人要压缩的图片列表
+                                .ignoreBy(1800)// 忽略不压缩图片的大小
+                                .setTargetDir(FileUtils.getMediaPath())// 设置压缩后文件存储位置
+                                .setCompressListener(new OnCompressListener() { //设置回调
+                                    @Override
+                                    public void onStart() {
+                                    }
+
+                                    @Override
+                                    public void onSuccess(File file) {
+
+                                        if (requestCode == request_LeftFace) {
+                                            leftFace = file.getAbsolutePath();
+                                            GlideLoader.LoderImage(CameraActivity.this, leftFace, binding.leftFaceView, 6);
+
+                                        } else if (requestCode == request_CenterFace) {
+                                            centerFace = file.getAbsolutePath();
+                                            GlideLoader.LoderImage(CameraActivity.this, centerFace, binding.centerFaceView, 6);
+
+                                        } else if (requestCode == request_RightFace) {
+                                            rightFace = file.getAbsolutePath();
+                                            GlideLoader.LoderImage(CameraActivity.this, rightFace, binding.rightFaceView, 6);
+
+                                        } else if (requestCode == request_ArchivesOne) {
+                                            archivesOne = file.getAbsolutePath();
+                                            GlideLoader.LoderImage(CameraActivity.this, archivesOne, binding.archivesOneView, 6);
+
+                                        } else if (requestCode == request_ArchivesTwo) {
+                                            archivesTwo = file.getAbsolutePath();
+                                            GlideLoader.LoderImage(CameraActivity.this, archivesTwo, binding.archivesTwoView, 6);
+
+                                        } else if (requestCode == request_ArchivesThree) {
+                                            archivesThree = file.getAbsolutePath();
+                                            GlideLoader.LoderImage(CameraActivity.this, archivesThree, binding.archivesThreeView, 6);
+
+                                        }
+
+//                                        new Thread(new Runnable() {
+//                                            @Override
+//                                            public void run() {
+//                                                uploadFile(requestCode, file.getAbsolutePath());
+//                                            }
+//                                        }).start();
+
+                                    }
+
+                                    @Override
+                                    public void onError(Throwable e) {
+                                    }
+                                }).launch();//启动压缩
+                    }
+                }
+            }
+        } catch (Exception e) {
+            e.getMessage();
+        }
+    }
+
+    /**
+     * 华为云 上传文件
+     *
+     * @param requestCode
+     * @param filePath
+     */
+    private void uploadFile(int requestCode, String filePath) {
+        LoadingManager.showLoadingDialog(CameraActivity.this, "上传中...");
+        Log.i(TAG, "uploadFile: filePath = " + filePath);
+        String fileName = filePath.substring(filePath.lastIndexOf("/") + 1);
+        Log.i(TAG, "uploadFile: fileName = " + fileName);
+        PutObjectRequest request = new PutObjectRequest();
+        request.setBucketName(Config.huaweiBucketName);
+        request.setObjectKey(fileName);
+        request.setFile(new File(filePath));
+        request.setProgressListener(new ProgressListener() {
+            @Override
+            public void progressChanged(ProgressStatus status) {
+                // 获取上传平均速率
+                Log.i(TAG, "uploadFile: AverageSpeed:" + status.getAverageSpeed());
+                // 获取上传进度百分比
+                Log.i(TAG, "uploadFile: TransferPercentage:" + status.getTransferPercentage());
+            }
+        });
+        //每上传1MB数据反馈上传进度
+        request.setProgressInterval(1024 * 1024L);
+        PutObjectResult result = UploadFileManager.getInstance().getObsClient().putObject(request);
+        Log.i(TAG, "uploadFile: getObjectUrl = " + result.getObjectUrl());
+        String url = "http://" + Config.huaweiBucketName + "." + Config.huaweiCloudEndPoint + "/" + fileName;
+        Log.i(TAG, "uploadFile: url = " + url);
+        LoadingManager.hideLoadingDialog(CameraActivity.this);
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+
+                if (requestCode == request_LeftFace) {
+                    leftFace = url;
+                    GlideLoader.LoderImage(CameraActivity.this, leftFace, binding.leftFaceView, 6);
+
+                } else if (requestCode == request_CenterFace) {
+                    centerFace = url;
+                    GlideLoader.LoderImage(CameraActivity.this, centerFace, binding.centerFaceView, 6);
+
+                } else if (requestCode == request_RightFace) {
+                    rightFace = url;
+                    GlideLoader.LoderImage(CameraActivity.this, rightFace, binding.rightFaceView, 6);
+
+                }
+
+            }
+        });
+
+
+    }
+
+
 }

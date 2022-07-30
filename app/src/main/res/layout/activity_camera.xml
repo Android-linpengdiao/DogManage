@@ -163,17 +163,362 @@
 
             </RelativeLayout>
 
-            <RelativeLayout
+            <LinearLayout
                 android:id="@+id/pictureContainer"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:gravity="center_horizontal"
                 android:background="@color/white"
-                android:orientation="vertical">
+                android:gravity="center_horizontal"
+                android:orientation="vertical"
+                android:visibility="gone">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:orientation="vertical"
+                    android:paddingLeft="@dimen/dp_16"
+                    android:paddingRight="@dimen/dp_16">
+
+                    <com.dog.manage.app.view.TextBoldView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/dp_20"
+                        android:layout_marginBottom="@dimen/dp_17"
+                        android:text="全身照"
+                        android:textColor="#333333"
+                        android:textSize="@dimen/sp_14" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <RelativeLayout
+                            android:layout_width="@dimen/dp_0"
+                            android:layout_height="@dimen/dp_108"
+                            android:layout_marginRight="@dimen/dp_5"
+                            android:layout_weight="1"
+                            android:background="@drawable/upload_bg_t">
+
+                            <ImageView
+                                android:layout_width="@dimen/dp_36"
+                                android:layout_height="@dimen/dp_28"
+                                android:layout_centerHorizontal="true"
+                                android:layout_marginTop="@dimen/dp_30"
+                                android:src="@drawable/camera"
+                                app:tint="@color/colorAppTheme" />
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/dp_68"
+                                android:gravity="center"
+                                android:text="上传照片"
+                                android:textColor="@color/colorAppTheme"
+                                android:textSize="@dimen/sp_14" />
+
+                            <ImageView
+                                android:id="@+id/fullOneView"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:onClick="onClickFullOne" />
+
+                        </RelativeLayout>
+
+                        <RelativeLayout
+                            android:layout_width="@dimen/dp_0"
+                            android:layout_height="@dimen/dp_108"
+                            android:layout_marginLeft="@dimen/dp_5"
+                            android:layout_marginRight="@dimen/dp_5"
+                            android:layout_weight="1"
+                            android:background="@drawable/upload_bg_t">
+
+                            <ImageView
+                                android:layout_width="@dimen/dp_36"
+                                android:layout_height="@dimen/dp_28"
+                                android:layout_centerHorizontal="true"
+                                android:layout_marginTop="@dimen/dp_30"
+                                android:src="@drawable/camera"
+                                app:tint="@color/colorAppTheme" />
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/dp_68"
+                                android:gravity="center"
+                                android:text="上传照片"
+                                android:textColor="@color/colorAppTheme"
+                                android:textSize="@dimen/sp_14" />
+
+                            <ImageView
+                                android:id="@+id/fullTwoView"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:onClick="onClickFullTwo" />
+
+                        </RelativeLayout>
+
+                        <RelativeLayout
+                            android:layout_width="@dimen/dp_0"
+                            android:layout_height="@dimen/dp_108"
+                            android:layout_marginLeft="@dimen/dp_5"
+                            android:layout_weight="1">
+
+                        </RelativeLayout>
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:orientation="vertical"
+                    android:paddingLeft="@dimen/dp_16"
+                    android:paddingRight="@dimen/dp_16">
+
+                    <com.dog.manage.app.view.TextBoldView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/dp_20"
+                        android:layout_marginBottom="@dimen/dp_17"
+                        android:text="正脸照"
+                        android:textColor="#333333"
+                        android:textSize="@dimen/sp_14" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <RelativeLayout
+                            android:layout_width="@dimen/dp_0"
+                            android:layout_height="@dimen/dp_108"
+                            android:layout_marginRight="@dimen/dp_5"
+                            android:layout_weight="1"
+                            android:background="@drawable/upload_bg_t">
+
+                            <ImageView
+                                android:layout_width="@dimen/dp_36"
+                                android:layout_height="@dimen/dp_28"
+                                android:layout_centerHorizontal="true"
+                                android:layout_marginTop="@dimen/dp_30"
+                                android:src="@drawable/camera"
+                                app:tint="@color/colorAppTheme" />
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/dp_68"
+                                android:gravity="center"
+                                android:text="上传照片"
+                                android:textColor="@color/colorAppTheme"
+                                android:textSize="@dimen/sp_14" />
+
+                            <ImageView
+                                android:id="@+id/leftFaceView"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:onClick="onClickLeftFace" />
+
+                        </RelativeLayout>
+
+                        <RelativeLayout
+                            android:layout_width="@dimen/dp_0"
+                            android:layout_height="@dimen/dp_108"
+                            android:layout_marginLeft="@dimen/dp_5"
+                            android:layout_marginRight="@dimen/dp_5"
+                            android:layout_weight="1"
+                            android:background="@drawable/upload_bg_t">
+
+                            <ImageView
+                                android:layout_width="@dimen/dp_36"
+                                android:layout_height="@dimen/dp_28"
+                                android:layout_centerHorizontal="true"
+                                android:layout_marginTop="@dimen/dp_30"
+                                android:src="@drawable/camera"
+                                app:tint="@color/colorAppTheme" />
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/dp_68"
+                                android:gravity="center"
+                                android:text="上传照片"
+                                android:textColor="@color/colorAppTheme"
+                                android:textSize="@dimen/sp_14" />
+
+                            <ImageView
+                                android:id="@+id/centerFaceView"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:onClick="onClickCenterFace" />
+
+                        </RelativeLayout>
+
+                        <RelativeLayout
+                            android:layout_width="@dimen/dp_0"
+                            android:layout_height="@dimen/dp_108"
+                            android:layout_marginLeft="@dimen/dp_5"
+                            android:layout_weight="1"
+                            android:background="@drawable/upload_bg_t">
+
+                            <ImageView
+                                android:layout_width="@dimen/dp_36"
+                                android:layout_height="@dimen/dp_28"
+                                android:layout_centerHorizontal="true"
+                                android:layout_marginTop="@dimen/dp_30"
+                                android:src="@drawable/camera"
+                                app:tint="@color/colorAppTheme" />
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/dp_68"
+                                android:gravity="center"
+                                android:text="上传照片"
+                                android:textColor="@color/colorAppTheme"
+                                android:textSize="@dimen/sp_14" />
+
+                            <ImageView
+                                android:id="@+id/rightFaceView"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:onClick="onClickRightFace" />
+
+                        </RelativeLayout>
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:orientation="vertical"
+                    android:paddingLeft="@dimen/dp_16"
+                    android:paddingRight="@dimen/dp_16">
+
+                    <com.dog.manage.app.view.TextBoldView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/dp_20"
+                        android:layout_marginBottom="@dimen/dp_17"
+                        android:text="鼻纹照"
+                        android:textColor="#333333"
+                        android:textSize="@dimen/sp_14" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <RelativeLayout
+                            android:layout_width="@dimen/dp_0"
+                            android:layout_height="@dimen/dp_108"
+                            android:layout_marginRight="@dimen/dp_5"
+                            android:layout_weight="1"
+                            android:background="@drawable/upload_bg_t">
+
+                            <ImageView
+                                android:layout_width="@dimen/dp_36"
+                                android:layout_height="@dimen/dp_28"
+                                android:layout_centerHorizontal="true"
+                                android:layout_marginTop="@dimen/dp_30"
+                                android:src="@drawable/camera"
+                                app:tint="@color/colorAppTheme" />
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/dp_68"
+                                android:gravity="center"
+                                android:text="上传照片"
+                                android:textColor="@color/colorAppTheme"
+                                android:textSize="@dimen/sp_14" />
+
+                            <ImageView
+                                android:id="@+id/archivesOneView"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:onClick="onClickArchivesOne" />
+
+                        </RelativeLayout>
+
+                        <RelativeLayout
+                            android:layout_width="@dimen/dp_0"
+                            android:layout_height="@dimen/dp_108"
+                            android:layout_marginLeft="@dimen/dp_5"
+                            android:layout_marginRight="@dimen/dp_5"
+                            android:layout_weight="1"
+                            android:background="@drawable/upload_bg_t">
+
+                            <ImageView
+                                android:layout_width="@dimen/dp_36"
+                                android:layout_height="@dimen/dp_28"
+                                android:layout_centerHorizontal="true"
+                                android:layout_marginTop="@dimen/dp_30"
+                                android:src="@drawable/camera"
+                                app:tint="@color/colorAppTheme" />
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/dp_68"
+                                android:gravity="center"
+                                android:text="上传照片"
+                                android:textColor="@color/colorAppTheme"
+                                android:textSize="@dimen/sp_14" />
+
+                            <ImageView
+                                android:id="@+id/archivesTwoView"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:onClick="onClickArchivesTwo" />
+
+                        </RelativeLayout>
+
+                        <RelativeLayout
+                            android:layout_width="@dimen/dp_0"
+                            android:layout_height="@dimen/dp_108"
+                            android:layout_marginLeft="@dimen/dp_5"
+                            android:layout_weight="1"
+                            android:background="@drawable/upload_bg_t">
+
+                            <ImageView
+                                android:layout_width="@dimen/dp_36"
+                                android:layout_height="@dimen/dp_28"
+                                android:layout_centerHorizontal="true"
+                                android:layout_marginTop="@dimen/dp_30"
+                                android:src="@drawable/camera"
+                                app:tint="@color/colorAppTheme" />
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/dp_68"
+                                android:gravity="center"
+                                android:text="上传照片"
+                                android:textColor="@color/colorAppTheme"
+                                android:textSize="@dimen/sp_14" />
+
+                            <ImageView
+                                android:id="@+id/archivesThreeView"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:onClick="onClickArchivesThree" />
+
+                        </RelativeLayout>
+
+                    </LinearLayout>
+
+                </LinearLayout>
 
 
-
-            </RelativeLayout>
+            </LinearLayout>
 
         </RelativeLayout>
 
