@@ -103,7 +103,6 @@ public class APIUrls {
     public final static String getCancelDogList = URL_DOMAIN + "/user/canelDog/getCancelDogList";
 
 
-
     /**
      * 信息变更
      */
@@ -198,6 +197,38 @@ public class APIUrls {
     public final static String orderCreateWxOrderAboutVip = URL_DOMAIN + "/order/createWxOrderAboutVip";
     public final static String order_aliOrderPayParam = URL_DOMAIN + "/order/aliOrderPayParam";//支付包支付 oid
     public final static String order_wxOrderPayParam = URL_DOMAIN + "/order/wxOrderPayParam";//微信支付 oid
+
+    //华为身份证识别
+    /**
+     * IAM用户名	xingchongwangguo			帐号名	xingchongwangguo
+     * IAM用户ID	2cd3e5a747bc462da04db02a290aa78c			帐号ID	74d89464a4d6449cba5c0aeba893ee22
+     */
+
+    /**
+     * 访问密钥ID	描述	状态	创建时间	操作
+     * NSUCIEWATZVUNAPHIYHL	obs访问
+     * 启用
+     * 2022/04/26 16:41:19 GMT+08:00
+     */
+
+    /**
+     * 项目ID	项目	所属区域
+     * c057f59145894988b8df3c8a1748bd26	cn-north-1	华北-北京一
+     * 4d30ef8e43634e9fba859bd0c805188f	cn-north-4	华北-北京四
+     * a21ba21b57754393983582f4f0daf1e1	cn-north-9	华北-乌兰察布一
+     * 49a51af7ab7f4f5988c3eeee48936c46	cn-east-3	华东-上海一
+     * 04eddaa501fc4b8a958d02f0790a9953	cn-east-2	华东-上海二
+     * b8f594f83e084fe4acf64ef73af0b6f6	cn-south-1	华南-广州
+     * c2c3ec08cc0a402a9236932f9eaf48f2	cn-southwest-2	西南-贵阳一
+     * fdd9a564f4cb4b079fbb8a072ae30741	ap-southeast-1	中国-香港
+     * f3bce6b733884dc8bf797d85806f495f	ap-southeast-2	亚太-曼谷
+     * c2922b2c5d784ca19a57393baa969228	ap-southeast-3	亚太-新加坡
+     * 15a1e626ea754df3b38704b847785d10	af-south-1	非洲-约翰内斯堡
+     */
+    public final static String endpoint = "ocr.cn-north-4.myhuaweicloud.com";
+    public final static String project_id = "4d30ef8e43634e9fba859bd0c805188f";
+    public final static String huaweiCloudIdCard = "https://" + endpoint + "/v2/" + project_id + "/ocr/id-card";
+    public final static String huaweiCloudAuthTokens = "https://iam.cn-north-4.myhuaweicloud.com/v3/auth/tokens";
 
     //
     public final static String payment = URL_DOMAIN + "/user/dog/licence/payment";

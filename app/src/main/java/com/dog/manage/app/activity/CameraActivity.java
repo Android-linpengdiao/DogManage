@@ -8,6 +8,7 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.LinearLayout;
+import android.widget.RadioGroup;
 
 import com.base.UserInfo;
 import com.base.utils.CommonUtil;
@@ -67,6 +68,27 @@ public class CameraActivity extends BaseActivity {
 
         LinearLayout.LayoutParams layoutParams = (LinearLayout.LayoutParams) binding.hintView.getLayoutParams();
         layoutParams.topMargin = CommonUtil.getScreenWidth(this) / 2 + getResources().getDimensionPixelSize(R.dimen.dp_78);
+
+        binding.radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup radioGroup, int i) {
+                switch (i) {
+                    case R.id.radioButtonVideo:
+                        binding.cameraView.onResume();
+
+                        break;
+                    case R.id.radioButtonPicture:
+                        isCapture = false;
+                        binding.captureView.setText("开始采集");
+                        stopTimer();
+                        binding.cameraView.onPause();
+
+                        break;
+                    default:
+                        break;
+                }
+            }
+        });
 
     }
 
@@ -145,13 +167,13 @@ public class CameraActivity extends BaseActivity {
                                 public void onSuccess(File file) {
                                     String filePath = file.getAbsolutePath();
                                     if (!CommonUtil.isBlank(filePath)) {
-                                        if (type == type_petType) {
-                                            petType(filePath);
-
-                                        } else if (type == type_petArchives) {
-                                            createPetArchives(filePath);
-
-                                        }
+//                                        if (type == type_petType) {
+//                                            petType(filePath);
+//
+//                                        } else if (type == type_petArchives) {
+//                                            createPetArchives(filePath);
+//
+//                                        }
                                     }
                                 }
 

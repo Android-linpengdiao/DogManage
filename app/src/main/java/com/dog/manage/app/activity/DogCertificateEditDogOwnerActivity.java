@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.text.Editable;
+import android.text.InputFilter;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -843,6 +844,7 @@ public class DogCertificateEditDogOwnerActivity extends BaseActivity {
             binding.houseNumberView.setVisibility(View.VISIBLE);
             binding.houseProprietaryCertificateContainer.setVisibility(View.VISIBLE);
         }
+        binding.houseNumberView.binding.itemEdit.setFilters(new InputFilter[]{new InputFilter.LengthFilter(9)});
 
         binding.organNameView.setVisibility(View.GONE);
         binding.organCertificateContainer.setVisibility(View.GONE);

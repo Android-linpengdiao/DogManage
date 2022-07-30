@@ -911,6 +911,29 @@ public class SendRequest {
 
     /*====================================    华为云     ==========================================*/
 
+
+    public static void huaweiCloudIdCard(Callback call) {
+        Map<String, String> headers = new HashMap<>();
+        headers.put("X-Auth-Token", "NSUCIEWATZVUNAPHIYHL");
+        headers.put("Content-Type", "application/json");
+
+        Map<String, String> map = new HashMap<>();
+//        map.put("id", String.valueOf(id));
+        OkHttpUtils.post().headers(headers).params(map).url(APIUrls.huaweiCloudIdCard).build().execute(call);
+
+    }
+
+    public static void huaweiCloudAuthTokens(String auth, Callback call) {
+        Log.i(TAG, "huaweiCloudAuthTokens: " + auth);
+        Map<String, String> headers = new HashMap<>();
+        headers.put("Content-Type", "application/json");
+
+        Map<String, String> map = new HashMap<>();
+        map.put("auth", auth);
+        OkHttpUtils.post().headers(headers).params(map).url(APIUrls.huaweiCloudAuthTokens).build().execute(call);
+
+    }
+
     /**
      * 获取鉴权Token
      *
@@ -947,6 +970,8 @@ public class SendRequest {
      * imageUrl	string	图片的URL地址；支持PNG、JPG、JPEG、BMP格式；优先使用该参数
      * imageBase64	string	图片base64编码；支持PNG、JPG、JPEG、BMP格式；
      * 如果同时传入file、imageUrl、imageBase64，本API使用顺序为imageUrl优先，imageBase64最低
+     * <p>
+     * 是否必选 否  recogType	int	识别种类：0（鼻子）、1（正脸），不传默认为0（鼻子）
      *
      * @param token
      * @param filePath

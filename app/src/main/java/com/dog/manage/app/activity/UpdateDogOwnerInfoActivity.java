@@ -4,6 +4,7 @@ package com.dog.manage.app.activity;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.text.InputFilter;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -100,6 +101,7 @@ public class UpdateDogOwnerInfoActivity extends BaseActivity {
         addActivity(this);
 
         type = getIntent().getIntExtra("type", 0);
+        binding.houseNumberView.binding.itemEdit.setFilters(new InputFilter[]{new InputFilter.LengthFilter(9)});
 
 
         if (type == type_details) {
