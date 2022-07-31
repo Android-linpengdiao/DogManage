@@ -21,7 +21,6 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.VideoView;
 
-import com.cjt2325.cameralibrary.R;
 import com.cjt2325.camera.listener.CaptureListener;
 import com.cjt2325.camera.listener.ClickListener;
 import com.cjt2325.camera.listener.ErrorListener;
@@ -32,6 +31,7 @@ import com.cjt2325.camera.util.FileUtil;
 import com.cjt2325.camera.util.LogUtil;
 import com.cjt2325.camera.util.ScreenUtils;
 import com.cjt2325.camera.view.CameraView;
+import com.cjt2325.cameralibrary.R;
 
 import java.io.IOException;
 
@@ -182,7 +182,7 @@ public class JCameraView extends FrameLayout implements CameraInterface.CameraOp
             }
         });
         //拍照 录像
-        mCaptureLayout.setCaptureListener(new CaptureListener() {
+        mCaptureLayout.setCaptureLisenter(new CaptureListener() {
             @Override
             public void takePictures() {
                 mSwitchCamera.setVisibility(INVISIBLE);
@@ -219,7 +219,6 @@ public class JCameraView extends FrameLayout implements CameraInterface.CameraOp
             @Override
             public void recordEnd(long time) {
                 machine.stopRecord(false, time);
-                machine.confirm();
             }
 
             @Override
@@ -236,7 +235,7 @@ public class JCameraView extends FrameLayout implements CameraInterface.CameraOp
             }
         });
         //确认 取消
-        mCaptureLayout.setTypeListener(new TypeListener() {
+        mCaptureLayout.setTypeLisenter(new TypeListener() {
             @Override
             public void cancel() {
                 machine.cancle(mVideoView.getHolder(), screenProp);
@@ -276,7 +275,6 @@ public class JCameraView extends FrameLayout implements CameraInterface.CameraOp
     }
 
     private int CAMERA_FACING = 0;
-
     private void foucsView() {
         CAMERA_FACING = CameraInterface.getInstance().getSelectedCamera();
         switch (CAMERA_FACING) {
@@ -487,8 +485,8 @@ public class JCameraView extends FrameLayout implements CameraInterface.CameraOp
         switch (type) {
             case TYPE_VIDEO:
                 stopVideo();    //停止播放
-//                mVideoView.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
-//                machine.start(mVideoView.getHolder(), screenProp);
+                mVideoView.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
+                machine.start(mVideoView.getHolder(), screenProp);
                 if (jCameraLisenter != null) {
                     jCameraLisenter.recordSuccess(videoUrl, firstFrame);
                 }
@@ -555,7 +553,7 @@ public class JCameraView extends FrameLayout implements CameraInterface.CameraOp
                         }
                     });
                     mMediaPlayer.setLooping(true);
-//                    mMediaPlayer.prepare();
+                    mMediaPlayer.prepare();
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -565,7 +563,7 @@ public class JCameraView extends FrameLayout implements CameraInterface.CameraOp
 
     @Override
     public void stopVideo() {
-        if (mMediaPlayer != null) {
+        if (mMediaPlayer != null && mMediaPlayer.isPlaying()) {
             mMediaPlayer.stop();
             mMediaPlayer.release();
             mMediaPlayer = null;

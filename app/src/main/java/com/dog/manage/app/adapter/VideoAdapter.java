@@ -4,13 +4,10 @@ import android.content.Context;
 import android.view.View;
 
 import com.base.BaseRecyclerAdapter;
-import com.base.utils.CommonUtil;
 import com.base.utils.GlideLoader;
 import com.base.view.OnClickListener;
 import com.dog.manage.app.R;
-import com.dog.manage.app.databinding.ItemFrameBinding;
 import com.dog.manage.app.databinding.ItemVideoBinding;
-import com.dog.manage.app.media.MediaFile;
 
 public class VideoAdapter extends BaseRecyclerAdapter<String, ItemVideoBinding> {
 

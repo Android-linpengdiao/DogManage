@@ -1,7 +1,6 @@
 package com.dog.manage.app.adapter;
 
 import android.app.Activity;
-import android.graphics.Color;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -12,7 +11,7 @@ import androidx.viewpager.widget.PagerAdapter;
 import com.base.view.OnClickListener;
 import com.bumptech.glide.Glide;
 import com.dog.manage.app.R;
-import com.dog.manage.app.media.MediaFile;
+import com.base.MediaFile;
 
 import java.util.List;
 

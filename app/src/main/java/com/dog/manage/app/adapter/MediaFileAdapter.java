@@ -2,7 +2,6 @@ package com.dog.manage.app.adapter;
 
 import android.content.Context;
 import android.graphics.Color;
-import android.util.Log;
 import android.view.View;
 
 import com.base.BaseRecyclerAdapter;
@@ -12,8 +11,7 @@ import com.base.utils.ToastUtils;
 import com.base.view.OnClickListener;
 import com.dog.manage.app.R;
 import com.dog.manage.app.databinding.ItemMediaFileBinding;
-import com.dog.manage.app.media.MediaFile;
-import com.dog.manage.app.media.MediaUtils;
+import com.base.MediaFile;
 
 public class MediaFileAdapter extends BaseRecyclerAdapter<MediaFile, ItemMediaFileBinding> {
 

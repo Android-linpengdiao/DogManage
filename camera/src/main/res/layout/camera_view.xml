@@ -60,4 +60,17 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:visibility="invisible" />
+
+    <com.cjt2325.camera.view.ScanView
+        android:id="@+id/scanView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="center"
+        android:visibility="visible"
+        android:layout_marginLeft="@dimen/dp_30"
+        android:layout_marginRight="@dimen/dp_30"
+        android:layout_marginTop="@dimen/dp_60"
+        android:layout_marginBottom="@dimen/dp_60"/>
+
+
 </FrameLayout>

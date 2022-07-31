@@ -10,20 +10,17 @@ import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.RadioGroup;
 
-import com.base.UserInfo;
 import com.base.manager.LoadingManager;
 import com.base.utils.CommonUtil;
 import com.base.utils.FileUtils;
 import com.base.utils.GlideLoader;
-import com.base.utils.GsonUtils;
 import com.base.utils.PermissionUtils;
 import com.base.utils.ToastUtils;
-import com.cjt2325.camera.JCameraView;
 import com.cjt2325.camera.listener.JCameraListener;
 import com.dog.manage.app.Config;
 import com.dog.manage.app.R;
 import com.dog.manage.app.databinding.ActivityCameraBinding;
-import com.dog.manage.app.media.MediaFile;
+import com.base.MediaFile;
 import com.dog.manage.app.media.MediaSelectActivity;
 import com.dog.manage.app.media.MediaUtils;
 import com.dog.manage.app.model.PetArchives;
@@ -37,10 +34,7 @@ import com.obs.services.model.PutObjectRequest;
 import com.obs.services.model.PutObjectResult;
 import com.okhttp.SendRequest;
 import com.okhttp.callbacks.GenericsCallback;
-import com.okhttp.callbacks.StringCallback;
 import com.okhttp.sample_okhttp.JsonGenericsSerializator;
-
-import org.json.JSONObject;
 
 import java.io.File;
 import java.util.List;
@@ -63,7 +57,7 @@ public class CameraActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        binding = getViewData(R.layout.activity_camera);
+        binding = getViewData(R.layout.activity_jcamera);
         setStatusBarDarkTheme(true);
         addActivity(this);
 

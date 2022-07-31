@@ -1,7 +1,6 @@
 package com.dog.manage.app.activity;
 
 import android.Manifest;
-import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -10,7 +9,6 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.GridLayoutManager;
 
 import com.base.utils.CommonUtil;
-import com.base.utils.PermissionUtils;
 import com.base.utils.ToastUtils;
 import com.base.view.OnClickListener;
 import com.chuanglan.shanyan_sdk.OneKeyLoginManager;
@@ -20,13 +18,9 @@ import com.dog.manage.app.R;
 import com.dog.manage.app.adapter.FrameItemAdapter;
 import com.dog.manage.app.databinding.ActivityMainBinding;
 import com.dog.manage.app.login.ConfigUtils;
-import com.dog.manage.app.media.MediaFile;
 import com.dog.manage.app.model.BannerBean;
 import com.dog.manage.app.model.PoliciesBean;
 import com.dog.manage.app.utils.GlideBannerLoader;
-import com.dog.manage.app.utils.GlideImageLoader;
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
 import com.okhttp.Pager;
 import com.okhttp.ResultClient;
 import com.okhttp.SendRequest;

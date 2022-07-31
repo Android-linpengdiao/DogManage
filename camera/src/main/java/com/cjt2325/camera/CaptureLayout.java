@@ -8,7 +8,6 @@ import android.content.Context;
 import android.content.res.Configuration;
 import android.util.AttributeSet;
 import android.util.DisplayMetrics;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.view.WindowManager;
@@ -16,12 +15,10 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.base.utils.CommonUtil;
 import com.cjt2325.camera.listener.CaptureListener;
 import com.cjt2325.camera.listener.ClickListener;
 import com.cjt2325.camera.listener.ReturnListener;
 import com.cjt2325.camera.listener.TypeListener;
-import com.cjt2325.cameralibrary.R;
 
 
 /**
@@ -36,16 +33,16 @@ import com.cjt2325.cameralibrary.R;
 public class CaptureLayout extends FrameLayout {
 
     private CaptureListener captureLisenter;    //拍照按钮监听
-    private TypeListener typeListener;          //拍照或录制后接结果按钮监听
+    private TypeListener typeLisenter;          //拍照或录制后接结果按钮监听
     private ReturnListener returnListener;      //退出按钮监听
     private ClickListener leftClickListener;    //左边按钮监听
     private ClickListener rightClickListener;   //右边按钮监听
 
-    public void setTypeListener(TypeListener typeLisenter) {
-        this.typeListener = typeListener;
+    public void setTypeLisenter(TypeListener typeLisenter) {
+        this.typeLisenter = typeLisenter;
     }
 
-    public void setCaptureListener(CaptureListener captureLisenter) {
+    public void setCaptureLisenter(CaptureListener captureLisenter) {
         this.captureLisenter = captureLisenter;
     }
 
@@ -60,7 +57,6 @@ public class CaptureLayout extends FrameLayout {
     private ImageView iv_custom_left;            //左边自定义按钮
     private ImageView iv_custom_right;            //右边自定义按钮
     private TextView txt_tip;               //提示文本
-    private TextView txt_time;               //录制时间文本
 
     private int layout_width;
     private int layout_height;
@@ -140,12 +136,11 @@ public class CaptureLayout extends FrameLayout {
         set.start();
     }
 
-    private static final String TAG = "CaptureLayout";
 
     private void initView() {
         setWillNotDraw(false);
         //拍照按钮
-        btn_capture = new CaptureButton(getContext(), getContext().getResources().getDimensionPixelSize(R.dimen.dp_60));
+        btn_capture = new CaptureButton(getContext(), button_size);
         LayoutParams btn_capture_param = new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
         btn_capture_param.gravity = Gravity.CENTER;
         btn_capture.setLayoutParams(btn_capture_param);
@@ -171,12 +166,11 @@ public class CaptureLayout extends FrameLayout {
                     captureLisenter.recordStart();
                 }
                 startAlphaAnimation();
-                txt_time.setVisibility(VISIBLE);
             }
 
             @Override
             public void updateProgress(long time) {
-                txt_time.setText(CommonUtil.FormatMiss(time / 1000));
+
             }
 
             @Override
@@ -184,9 +178,8 @@ public class CaptureLayout extends FrameLayout {
                 if (captureLisenter != null) {
                     captureLisenter.recordEnd(time);
                 }
-//                startAlphaAnimation();
-//                startTypeBtnAnimator();
-//                txt_time.setVisibility(INVISIBLE);
+                startAlphaAnimation();
+                startTypeBtnAnimator();
             }
 
             @Override
@@ -213,8 +206,8 @@ public class CaptureLayout extends FrameLayout {
         btn_cancel.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (typeListener != null) {
-                    typeListener.cancel();
+                if (typeLisenter != null) {
+                    typeLisenter.cancel();
                 }
                 startAlphaAnimation();
 //                resetCaptureLayout();
@@ -230,8 +223,8 @@ public class CaptureLayout extends FrameLayout {
         btn_confirm.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (typeListener != null) {
-                    typeListener.confirm();
+                if (typeLisenter != null) {
+                    typeLisenter.confirm();
                 }
                 startAlphaAnimation();
 //                resetCaptureLayout();
@@ -286,28 +279,18 @@ public class CaptureLayout extends FrameLayout {
         LayoutParams txt_param = new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
         txt_param.gravity = Gravity.CENTER_HORIZONTAL;
         txt_param.setMargins(0, 0, 0, 0);
-        txt_tip.setText("轻触拍照，长按摄像");
+//        txt_tip.setText("轻触拍照，长按摄像");
         txt_tip.setTextColor(0xFFFFFFFF);
         txt_tip.setGravity(Gravity.CENTER);
         txt_tip.setLayoutParams(txt_param);
 
-        txt_time = new TextView(getContext());
-        LayoutParams time_param = new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
-        time_param.gravity = Gravity.CENTER_HORIZONTAL | Gravity.BOTTOM;
-        time_param.setMargins(0, 0, 0, 0);
-        txt_time.setText("");
-        txt_time.setTextColor(0xFFFFFFFF);
-        txt_time.setGravity(Gravity.CENTER);
-        txt_time.setLayoutParams(time_param);
-
         this.addView(btn_capture);
         this.addView(btn_cancel);
         this.addView(btn_confirm);
-//        this.addView(btn_return);
-//        this.addView(iv_custom_left);
+        this.addView(btn_return);
+        this.addView(iv_custom_left);
 //        this.addView(iv_custom_right);
-//        this.addView(txt_tip);
-        this.addView(txt_time);
+        this.addView(txt_tip);
 
     }
 

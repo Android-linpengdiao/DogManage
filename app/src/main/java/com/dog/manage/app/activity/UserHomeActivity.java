@@ -14,7 +14,7 @@ import com.dog.manage.app.R;
 import com.dog.manage.app.activity.record.RecordActivity;
 import com.dog.manage.app.activity.record.PunishRecordActivity;
 import com.dog.manage.app.databinding.ActivityUserHomeBinding;
-import com.dog.manage.app.media.MediaFile;
+import com.base.MediaFile;
 import com.dog.manage.app.media.MediaSelectActivity;
 import com.dog.manage.app.media.MediaUtils;
 import com.google.gson.Gson;

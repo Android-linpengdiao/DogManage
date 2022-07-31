@@ -4,9 +4,9 @@ import androidx.recyclerview.widget.GridLayoutManager;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 
+import com.base.MediaFile;
 import com.base.utils.CommonUtil;
 import com.base.utils.GsonUtils;
 import com.base.utils.ToastUtils;

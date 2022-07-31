@@ -28,24 +28,24 @@ import com.base.utils.ToastUtils;
 import com.base.view.BaseBottomSheetDialog;
 import com.base.view.OnClickListener;
 import com.base.view.RecycleViewDivider;
+import com.cjt2325.camera.CameraActivity;
+import com.cjt2325.camera.JCameraView;
 import com.dog.manage.app.Config;
 import com.dog.manage.app.R;
 import com.dog.manage.app.adapter.AreaSelectAdapter;
 import com.dog.manage.app.adapter.CommunitySelectAdapter;
 import com.dog.manage.app.adapter.ImageAdapter;
-import com.dog.manage.app.area.CityData;
-import com.dog.manage.app.area.CityManager;
 import com.dog.manage.app.databinding.ActivityDogCertificateEditDogOwnerBinding;
 import com.dog.manage.app.databinding.DialogAddressBinding;
 import com.dog.manage.app.databinding.DialogCommunityBinding;
-import com.dog.manage.app.media.MediaFile;
+import com.base.MediaFile;
 import com.dog.manage.app.media.MediaSelectActivity;
 import com.dog.manage.app.media.MediaUtils;
 import com.dog.manage.app.model.AddressBean;
 import com.dog.manage.app.model.CommunityBean;
 import com.dog.manage.app.model.DogDetail;
 import com.dog.manage.app.model.DogUser;
-import com.dog.manage.app.model.PunishRecord;
+import com.dog.manage.app.model.IdCard;
 import com.dog.manage.app.utils.UploadFileManager;
 import com.dog.manage.app.view.GridItemDecoration;
 import com.google.gson.Gson;
@@ -58,6 +58,7 @@ import com.okhttp.Pager;
 import com.okhttp.ResultClient;
 import com.okhttp.SendRequest;
 import com.okhttp.callbacks.GenericsCallback;
+import com.okhttp.callbacks.StringCallback;
 import com.okhttp.sample_okhttp.JsonGenericsSerializator;
 import com.scwang.smart.refresh.layout.api.RefreshLayout;
 import com.scwang.smart.refresh.layout.listener.OnLoadMoreListener;
@@ -400,8 +401,8 @@ public class DogCertificateEditDogOwnerActivity extends BaseActivity {
             JSONObject password = new JSONObject();
 
             JSONObject user = new JSONObject();
-            user.put("name", "xingchongwangguo");
-            user.put("password", "xingchongwangguo123456");
+            user.put("name", "xingchongwangguo-token");
+            user.put("password", "xingchongwangguo12345678");
 
             JSONObject domain = new JSONObject();
             domain.put("name", "xingchongwangguo");
@@ -426,15 +427,15 @@ public class DogCertificateEditDogOwnerActivity extends BaseActivity {
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        SendRequest.huaweiCloudAuthTokens(jsonObject.toString(), new GenericsCallback(new JsonGenericsSerializator()) {
+        SendRequest.huaweiCloudAuthTokens(jsonObject.toString(), new StringCallback() {
             @Override
             public void onError(Call call, Exception e, int id) {
 
             }
 
             @Override
-            public void onResponse(Object response, int id) {
-
+            public void onResponse(String response, int id) {
+                Log.i(TAG, "onResponse: " + response);
             }
         });
     }
@@ -1467,13 +1468,22 @@ public class DogCertificateEditDogOwnerActivity extends BaseActivity {
             return;
         }
         if (type == type_userInfo) {
-            if (checkPermissions(PermissionUtils.STORAGE, request_IDCardFront)) {
-                Bundle bundle = new Bundle();
-                bundle.putInt("mediaType", MediaUtils.MEDIA_TYPE_PHOTO);
-                bundle.putInt("maxNumber", 1);
-                openActivity(MediaSelectActivity.class, bundle, request_IDCardFront);
+            if (checkPermissions(PermissionUtils.CAMERA, request_IDCardFront)) {
+                int type = JCameraView.BUTTON_STATE_ONLY_CAPTURE;
+                int minTime = 0;
+                int maxTime = 60;
+                CameraActivity.startCameraActivity(DogCertificateEditDogOwnerActivity.this, minTime, maxTime, "#44bf19", type, request_IDCardFront);
+
             }
         }
+//        if (type == type_userInfo) {
+//            if (checkPermissions(PermissionUtils.STORAGE, request_IDCardFront)) {
+//                Bundle bundle = new Bundle();
+//                bundle.putInt("mediaType", MediaUtils.MEDIA_TYPE_PHOTO);
+//                bundle.putInt("maxNumber", 1);
+//                openActivity(MediaSelectActivity.class, bundle, request_IDCardFront);
+//            }
+//        }
     }
 
     /**
@@ -1486,12 +1496,22 @@ public class DogCertificateEditDogOwnerActivity extends BaseActivity {
             return;
         }
         if (type == type_userInfo) {
-            if (checkPermissions(PermissionUtils.STORAGE, request_IDCardBack)) {
-                Bundle bundle = new Bundle();
-                bundle.putInt("mediaType", MediaUtils.MEDIA_TYPE_PHOTO);
-                bundle.putInt("maxNumber", 1);
-                openActivity(MediaSelectActivity.class, bundle, request_IDCardBack);
+            if (type == type_userInfo) {
+                if (checkPermissions(PermissionUtils.CAMERA, request_IDCardBack)) {
+                    int type = JCameraView.BUTTON_STATE_ONLY_CAPTURE;
+                    int minTime = 0;
+                    int maxTime = 60;
+                    CameraActivity.startCameraActivity(DogCertificateEditDogOwnerActivity.this, minTime, maxTime, "#44bf19", type, request_IDCardBack);
+
+                }
             }
+
+//            if (checkPermissions(PermissionUtils.STORAGE, request_IDCardBack)) {
+//                Bundle bundle = new Bundle();
+//                bundle.putInt("mediaType", MediaUtils.MEDIA_TYPE_PHOTO);
+//                bundle.putInt("maxNumber", 1);
+//                openActivity(MediaSelectActivity.class, bundle, request_IDCardBack);
+//            }
         }
     }
 
@@ -1732,13 +1752,66 @@ public class DogCertificateEditDogOwnerActivity extends BaseActivity {
 
                                     @Override
                                     public void onSuccess(File file) {
+                                        try {
+                                            if (requestCode == request_IDCardFront ||
+                                                    requestCode == request_IDCardBack) {
+                                                SendRequest.huaweiCloudIdCard(CommonUtil.encodeBase64File(file.getAbsolutePath()),
+                                                        new GenericsCallback<IdCard>(new JsonGenericsSerializator()) {
+                                                            @Override
+                                                            public void onError(Call call, Exception e, int id) {
+                                                                Log.i(TAG, "onError: " + e.getMessage());
+                                                                ToastUtils.showShort(getApplicationContext(), "识别有误,请重新请求");
+                                                            }
 
-                                        new Thread(new Runnable() {
-                                            @Override
-                                            public void run() {
-                                                uploadFile(requestCode, file.getAbsolutePath());
+                                                            @Override
+                                                            public void onResponse(IdCard response, int id) {
+                                                                Log.i(TAG, "onResponse: " + GsonUtils.toJson(requestCode));
+                                                                if (requestCode == request_IDCardFront) {
+                                                                    String name = response.getResult().getName();
+                                                                    binding.dogOwnerNameView.binding.itemEdit.setText(name);
+                                                                    dogUser.setUserName(name);
+                                                                    dogUser.setOrgName(name);
+                                                                    String number = response.getResult().getNumber();
+                                                                    binding.dogOwnerIDCardView.binding.itemEdit.setText(number);
+                                                                    dogUser.setIdNum(number);
+                                                                }
+                                                                if (response != null) {
+                                                                    if (response != null && response.getResult() != null) {
+                                                                        new Thread(new Runnable() {
+                                                                            @Override
+                                                                            public void run() {
+                                                                                uploadFile(requestCode, file.getAbsolutePath());
+                                                                            }
+                                                                        }).start();
+
+                                                                    } else if (CommonUtil.isBlank(response.getError_code()) &&
+                                                                            response.getError_code().equals("AIS.0103")) {
+                                                                        ToastUtils.showShort(getApplicationContext(), "图像尺寸不符合要求");
+
+                                                                    } else if (CommonUtil.isBlank(response.getError_code()) &&
+                                                                            response.getError_code().equals("AIS.0104")) {
+                                                                        ToastUtils.showShort(getApplicationContext(), "图像不支持或图像质量较差");
+
+                                                                    } else {
+                                                                        ToastUtils.showShort(getApplicationContext(), "识别有误,请重新请求");
+                                                                    }
+                                                                } else {
+                                                                    ToastUtils.showShort(getApplicationContext(), "识别有误,请重新请求");
+                                                                }
+                                                            }
+                                                        });
+                                            } else {
+                                                new Thread(new Runnable() {
+                                                    @Override
+                                                    public void run() {
+                                                        uploadFile(requestCode, file.getAbsolutePath());
+                                                    }
+                                                }).start();
                                             }
-                                        }).start();
+
+                                        } catch (Exception e) {
+                                            e.printStackTrace();
+                                        }
 
                                     }
 

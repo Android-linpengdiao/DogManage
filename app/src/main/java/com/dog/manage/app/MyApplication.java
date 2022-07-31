@@ -2,9 +2,12 @@ package com.dog.manage.app;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.util.Log;
 
 import com.base.BaseApplication;
+import com.base.utils.CommonUtil;
 import com.base.utils.LogUtil;
+import com.base.utils.SharedPreferencesUtils;
 import com.chuanglan.shanyan_sdk.OneKeyLoginManager;
 import com.chuanglan.shanyan_sdk.listener.InitListener;
 import com.dog.manage.app.area.CityManager;
@@ -35,6 +38,7 @@ import okhttp3.logging.HttpLoggingInterceptor;
 
 public class MyApplication extends BaseApplication {
 
+    private static final String TAG = "MyApplication";
     @Override
     public void onCreate() {
         super.onCreate();
@@ -73,6 +77,11 @@ public class MyApplication extends BaseApplication {
                     @Override
                     public void log(String message) {
                         LogUtil.i("okhttp:message", message);
+                        String tokenKey = "X-Subject-Token:";
+                        if (!CommonUtil.isBlank(message) && message.startsWith(tokenKey)){
+                            Log.i(TAG, "okhttp:message log: "+message.substring(message.lastIndexOf(tokenKey) + tokenKey.length()));
+                            SharedPreferencesUtils.getInstance().setAuthToken(message.substring(message.lastIndexOf(tokenKey) + tokenKey.length()));
+                        }
                     }
                 }).setLevel(HttpLoggingInterceptor.Level.BODY))
                 .hostnameVerifier(new HostnameVerifier() {

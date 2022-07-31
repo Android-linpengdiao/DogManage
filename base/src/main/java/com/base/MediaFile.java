@@ -1,4 +1,4 @@
-package com.dog.manage.app.media;
+package com.base;
 
 import android.os.Parcel;
 import android.os.Parcelable;
@@ -22,6 +22,10 @@ public class MediaFile implements Parcelable {
     private int status = 0; // 0-未选择  1-选择
 
     public MediaFile() {
+    }
+
+    public MediaFile(String path) {
+        this.path = path;
     }
 
     //图片

@@ -4,6 +4,7 @@ import android.util.Log;
 
 import com.base.BaseApplication;
 import com.base.utils.CommonUtil;
+import com.base.utils.SharedPreferencesUtils;
 import com.okhttp.callbacks.Callback;
 import com.okhttp.utils.APIUrls;
 import com.okhttp.utils.OkHttpUtils;
@@ -912,13 +913,13 @@ public class SendRequest {
     /*====================================    华为云     ==========================================*/
 
 
-    public static void huaweiCloudIdCard(Callback call) {
+    public static void huaweiCloudIdCard(String image,Callback call) {
         Map<String, String> headers = new HashMap<>();
-        headers.put("X-Auth-Token", "NSUCIEWATZVUNAPHIYHL");
+        headers.put("X-Auth-Token", SharedPreferencesUtils.getInstance().getAuthToken());
         headers.put("Content-Type", "application/json");
 
         Map<String, String> map = new HashMap<>();
-//        map.put("id", String.valueOf(id));
+        map.put("image", image);
         OkHttpUtils.post().headers(headers).params(map).url(APIUrls.huaweiCloudIdCard).build().execute(call);
 
     }

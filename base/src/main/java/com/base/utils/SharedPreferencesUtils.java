@@ -27,6 +27,16 @@ public class SharedPreferencesUtils {
         sharedPreferences = BaseApplication.getInstance().getSharedPreferences(SP_DATA, Context.MODE_PRIVATE);
     }
 
+    public String getAuthToken() {
+        return sharedPreferences.getString("AuthToken",null);
+    }
+
+    public void setAuthToken(String value) {
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString("AuthToken", value);
+        editor.commit();
+    }
+
     public static int getNoticeFriendsIndex(int uid) {
         return sharedPreferences.getInt(uid+"noticeFriendsIndex",0);
     }
