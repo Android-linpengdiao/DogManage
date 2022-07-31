@@ -60,8 +60,12 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
+            android:name=".activity.VideoPlayActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/VideoTheme"></activity>
+        <activity
             android:name=".activity.DogInfoActivity"
-            android:screenOrientation="portrait"></activity>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".activity.CameraActivity"
             android:screenOrientation="portrait"
@@ -413,6 +417,7 @@
         <meta-data
             android:name="JPUSH_APPKEY"
             android:value="143330558063ba5ebcc82fb2" />
+
         <provider
             android:name="androidx.core.content.FileProvider"
             android:authorities="${applicationId}.FileProvider"

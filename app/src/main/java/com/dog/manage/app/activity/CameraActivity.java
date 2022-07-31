@@ -3,6 +3,7 @@ package com.dog.manage.app.activity;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
@@ -57,7 +58,7 @@ public class CameraActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        binding = getViewData(R.layout.activity_jcamera);
+        binding = getViewData(R.layout.activity_camera);
         setStatusBarDarkTheme(true);
         addActivity(this);
 
@@ -80,6 +81,7 @@ public class CameraActivity extends BaseActivity {
 
                         binding.videoContainer.setVisibility(View.VISIBLE);
                         binding.pictureContainer.setVisibility(View.GONE);
+                        binding.demonstrationView.setText("视频采集流程");
 
                         break;
                     case R.id.radioButtonPicture:
@@ -90,6 +92,7 @@ public class CameraActivity extends BaseActivity {
 
                         binding.videoContainer.setVisibility(View.GONE);
                         binding.pictureContainer.setVisibility(View.VISIBLE);
+                        binding.demonstrationView.setText("图片采集流程");
 
                         break;
                     default:
@@ -780,5 +783,19 @@ public class CameraActivity extends BaseActivity {
 
     }
 
+    public void onClickDemonstration(View view) {
+        int sexCheckedRadioButtonId = binding.radioGroup.getCheckedRadioButtonId();
+        if (sexCheckedRadioButtonId == R.id.radioButtonVideo) {//视频采集
+            Bundle bundle = new Bundle();
+            bundle.putInt("type",0);
+            openActivity(VideoPlayActivity.class,bundle);
 
+        } else if (sexCheckedRadioButtonId == R.id.radioButtonPicture) {//图片采集
+            Bundle bundle = new Bundle();
+            bundle.putInt("type",1);
+            openActivity(VideoPlayActivity.class,bundle);
+
+        }
+
+    }
 }
