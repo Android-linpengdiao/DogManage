@@ -70,9 +70,7 @@ public class CameraActivity extends BaseActivity {
         type = getIntent().getIntExtra("type", 0);
         binding.titleView.setText(type == type_petType ? "犬只品种" : "鼻纹采集");
 
-        if (CommonUtil.isBlank(getUserInfo().getAccessToken())) {
-            getAccessToken(this);
-        }
+        getAccessToken(this);
 
         initCamera();
 

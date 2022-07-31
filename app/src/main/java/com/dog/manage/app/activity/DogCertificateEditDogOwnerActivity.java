@@ -62,6 +62,10 @@ import com.okhttp.sample_okhttp.JsonGenericsSerializator;
 import com.scwang.smart.refresh.layout.api.RefreshLayout;
 import com.scwang.smart.refresh.layout.listener.OnLoadMoreListener;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -111,6 +115,7 @@ public class DogCertificateEditDogOwnerActivity extends BaseActivity {
             binding.confirmView.setText("保存信息");
             initPersonal();
             getDogUser();
+            getHuaweiCloudAuthTokens();
 
         } else if (type == type_certificate) {
             binding.titleView.binding.itemTitle.setText("犬证办理");
@@ -378,6 +383,60 @@ public class DogCertificateEditDogOwnerActivity extends BaseActivity {
         }
 
 
+    }
+
+    /**
+     * 获取华为Token认证
+     */
+    private void getHuaweiCloudAuthTokens() {
+        JSONObject jsonObject = new JSONObject();
+        try {
+            JSONObject identity = new JSONObject();
+
+            JSONArray methods = new JSONArray();
+            methods.put("password");
+            identity.put("methods", methods);
+
+            JSONObject password = new JSONObject();
+
+            JSONObject user = new JSONObject();
+            user.put("name", "xingchongwangguo");
+            user.put("password", "xingchongwangguo123456");
+
+            JSONObject domain = new JSONObject();
+            domain.put("name", "xingchongwangguo");
+
+            user.put("domain", domain);
+
+            password.put("user", user);
+
+            identity.put("password", password);
+            jsonObject.put("identity", identity);
+
+
+            JSONObject scope = new JSONObject();
+
+            JSONObject project = new JSONObject();
+            project.put("name", "cn-north-4");
+            scope.put("project", project);
+
+            jsonObject.put("scope", scope);
+
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        SendRequest.huaweiCloudAuthTokens(jsonObject.toString(), new GenericsCallback(new JsonGenericsSerializator()) {
+            @Override
+            public void onError(Call call, Exception e, int id) {
+
+            }
+
+            @Override
+            public void onResponse(Object response, int id) {
+
+            }
+        });
     }
 
     private DialogCommunityBinding communityBinding;

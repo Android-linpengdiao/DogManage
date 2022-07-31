@@ -120,7 +120,7 @@ public class DogManageWorkflowActivity extends BaseActivity {
 //            } catch (JSONException e) {
 //                e.printStackTrace();
 //            }
-//            SendRequest.huaweiCloudAuthTokens(jsonObject, new GenericsCallback(new JsonGenericsSerializator()) {
+//            SendRequest.huaweiCloudAuthTokens(jsonObject.toString(), new GenericsCallback(new JsonGenericsSerializator()) {
 //                @Override
 //                public void onError(Call call, Exception e, int id) {
 //
