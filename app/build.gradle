@@ -104,7 +104,7 @@ dependencies {
 
     //支付宝
     implementation files('libs/alipaysdk-noutdid-15.8.00.201112210139.aar')
-    //微信
+    //微信adb
     implementation 'com.tencent.mm.opensdk:wechat-sdk-android-without-mta:+'
 
     implementation files('libs/shanyan_sdk_v2.3.4.1.aar')
@@ -116,7 +116,7 @@ dependencies {
 }
 
 def getProductName() {//获取产品的名字
-    return "智慧养犬"
+    return "数字化养犬"
 }
 
 def releaseTime() {//获取当前系统的时间

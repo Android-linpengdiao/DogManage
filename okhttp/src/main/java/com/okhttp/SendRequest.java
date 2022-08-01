@@ -913,6 +913,31 @@ public class SendRequest {
     /*====================================    华为云     ==========================================*/
 
 
+    /**
+     * side 否 String
+     *
+     * front：身份证人像面
+     * back：身份证国徽面
+     * 如果参数值为空或无该参数，系统自动识别，建议填写，准确率更高。
+     *
+     * return_verification 否 Boolean
+     *
+     * 返回校验身份证号等信息的开关，默认false，可选值如下所示：
+     *
+     * true：返回校验信息
+     * false：不返回校验信息
+     *
+     * return_text_location 否 Boolean
+     *
+     * 识别到的文字块的区域位置信息。可选值包括：
+     *
+     * true：返回各个文字块区域
+     * false：不返回各个文字块区域
+     *
+     * 如果无该参数，系统默认不返回文字块区域。如果输入参数不是Boolean类型，则会报非法参数错误。
+     * @param image
+     * @param call
+     */
     public static void huaweiCloudIdCard(String image,Callback call) {
         Map<String, String> headers = new HashMap<>();
         headers.put("X-Auth-Token", SharedPreferencesUtils.getInstance().getAuthToken());
@@ -920,12 +945,12 @@ public class SendRequest {
 
         Map<String, String> map = new HashMap<>();
         map.put("image", image);
+//        map.put("return_verification", true);
         OkHttpUtils.post().headers(headers).params(map).url(APIUrls.huaweiCloudIdCard).build().execute(call);
 
     }
 
     public static void huaweiCloudAuthTokens(String auth, Callback call) {
-        Log.i(TAG, "huaweiCloudAuthTokens: " + auth);
         Map<String, String> headers = new HashMap<>();
         headers.put("Content-Type", "application/json");
 

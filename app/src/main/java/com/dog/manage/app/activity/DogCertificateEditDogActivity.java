@@ -15,6 +15,7 @@ import com.base.utils.FileUtils;
 import com.base.utils.GlideLoader;
 import com.base.utils.GsonUtils;
 import com.base.utils.PermissionUtils;
+import com.base.utils.TimeUtils;
 import com.base.utils.ToastUtils;
 import com.base.view.OnClickListener;
 import com.bigkoo.pickerview.builder.TimePickerBuilder;
@@ -350,9 +351,10 @@ public class DogCertificateEditDogActivity extends BaseActivity {
         TimePickerView timePickerView = new TimePickerBuilder(DogCertificateEditDogActivity.this, new OnTimeSelectListener() {
             @Override
             public void onTimeSelect(Date date, View v) {//选中事件回调
-                SimpleDateFormat sdr = new SimpleDateFormat("yyyyMMdd");
-                binding.dogAgeView.binding.itemContent.setText(sdr.format(date));
-                dog.setDogAge(sdr.format(date));
+                SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+                binding.dogAgeView.binding.itemContent.setText(simpleDateFormat.format(date));
+                SimpleDateFormat simpleDateFormatDogAge = new SimpleDateFormat("yyyyMMdd");
+                dog.setDogAge(simpleDateFormatDogAge.format(date));
 
             }
         })
@@ -544,7 +546,8 @@ public class DogCertificateEditDogActivity extends BaseActivity {
         //犬只颜色
         binding.dogColorView.binding.itemContent.setText(dog.getDogColor());
         //犬只年龄
-        binding.dogAgeView.binding.itemContent.setText(CommonUtil.getDogAge(dog.getDogAge()));
+        binding.dogAgeView.binding.itemContent.setText(TimeUtils.getTimeDogAgeEdit(dog.getDogAge()));
+//        binding.dogAgeView.binding.itemContent.setText(CommonUtil.getDogAge(dog.getDogAge()));
 
         //犬只性别;0:雌性， 1：雄性
         if (dog.getDogGender() == 1) {

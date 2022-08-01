@@ -236,7 +236,7 @@ public class MainActivity extends BaseActivity {
 
     public void onClickMessage(View view) {
         if (checkUserRank(getApplicationContext(), true)) {
-            openActivity(CameraActivity.class);
+            openActivity(MessageActivity.class);
 
 //            openActivity(UpdateDogOwnerInfoActivity.class);
 //            if (checkPermissions(PermissionUtils.CAMERA, 100)) {

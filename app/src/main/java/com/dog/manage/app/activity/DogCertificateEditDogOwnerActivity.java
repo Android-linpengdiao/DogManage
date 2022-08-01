@@ -1524,12 +1524,21 @@ public class DogCertificateEditDogOwnerActivity extends BaseActivity {
         if (!isEnabled()) {
             return;
         }
-        if (checkPermissions(PermissionUtils.STORAGE, request_LegalPersonIDCardFront)) {
-            Bundle bundle = new Bundle();
-            bundle.putInt("mediaType", MediaUtils.MEDIA_TYPE_PHOTO);
-            bundle.putInt("maxNumber", 1);
-            openActivity(MediaSelectActivity.class, bundle, request_LegalPersonIDCardFront);
+
+        if (checkPermissions(PermissionUtils.CAMERA, request_LegalPersonIDCardFront)) {
+            int type = JCameraView.BUTTON_STATE_ONLY_CAPTURE;
+            int minTime = 0;
+            int maxTime = 60;
+            CameraActivity.startCameraActivity(DogCertificateEditDogOwnerActivity.this, minTime, maxTime, "#44bf19", type, request_LegalPersonIDCardFront);
+
         }
+
+//        if (checkPermissions(PermissionUtils.STORAGE, request_LegalPersonIDCardFront)) {
+//            Bundle bundle = new Bundle();
+//            bundle.putInt("mediaType", MediaUtils.MEDIA_TYPE_PHOTO);
+//            bundle.putInt("maxNumber", 1);
+//            openActivity(MediaSelectActivity.class, bundle, request_LegalPersonIDCardFront);
+//        }
     }
 
     /**
@@ -1541,12 +1550,21 @@ public class DogCertificateEditDogOwnerActivity extends BaseActivity {
         if (!isEnabled()) {
             return;
         }
-        if (checkPermissions(PermissionUtils.STORAGE, request_LegalPersonIDCardBack)) {
-            Bundle bundle = new Bundle();
-            bundle.putInt("mediaType", MediaUtils.MEDIA_TYPE_PHOTO);
-            bundle.putInt("maxNumber", 1);
-            openActivity(MediaSelectActivity.class, bundle, request_LegalPersonIDCardBack);
+
+        if (checkPermissions(PermissionUtils.CAMERA, request_LegalPersonIDCardBack)) {
+            int type = JCameraView.BUTTON_STATE_ONLY_CAPTURE;
+            int minTime = 0;
+            int maxTime = 60;
+            CameraActivity.startCameraActivity(DogCertificateEditDogOwnerActivity.this, minTime, maxTime, "#44bf19", type, request_LegalPersonIDCardBack);
+
         }
+
+//        if (checkPermissions(PermissionUtils.STORAGE, request_LegalPersonIDCardBack)) {
+//            Bundle bundle = new Bundle();
+//            bundle.putInt("mediaType", MediaUtils.MEDIA_TYPE_PHOTO);
+//            bundle.putInt("maxNumber", 1);
+//            openActivity(MediaSelectActivity.class, bundle, request_LegalPersonIDCardBack);
+//        }
     }
 
     /**
@@ -1754,7 +1772,9 @@ public class DogCertificateEditDogOwnerActivity extends BaseActivity {
                                     public void onSuccess(File file) {
                                         try {
                                             if (requestCode == request_IDCardFront ||
-                                                    requestCode == request_IDCardBack) {
+                                                    requestCode == request_IDCardBack ||
+                                                    requestCode == request_LegalPersonIDCardFront ||
+                                                    requestCode == request_LegalPersonIDCardBack) {
                                                 SendRequest.huaweiCloudIdCard(CommonUtil.encodeBase64File(file.getAbsolutePath()),
                                                         new GenericsCallback<IdCard>(new JsonGenericsSerializator()) {
                                                             @Override
@@ -1766,23 +1786,30 @@ public class DogCertificateEditDogOwnerActivity extends BaseActivity {
                                                             @Override
                                                             public void onResponse(IdCard response, int id) {
                                                                 Log.i(TAG, "onResponse: " + GsonUtils.toJson(requestCode));
-                                                                if (requestCode == request_IDCardFront) {
-                                                                    String name = response.getResult().getName();
-                                                                    binding.dogOwnerNameView.binding.itemEdit.setText(name);
-                                                                    dogUser.setUserName(name);
-                                                                    dogUser.setOrgName(name);
-                                                                    String number = response.getResult().getNumber();
-                                                                    binding.dogOwnerIDCardView.binding.itemEdit.setText(number);
-                                                                    dogUser.setIdNum(number);
-                                                                }
                                                                 if (response != null) {
                                                                     if (response != null && response.getResult() != null) {
+
+                                                                        if (requestCode == request_IDCardFront ||
+                                                                                requestCode == request_LegalPersonIDCardFront) {
+                                                                            String name = response.getResult().getName();
+                                                                            binding.dogOwnerNameView.binding.itemEdit.setText(name);
+                                                                            dogUser.setUserName(name);
+                                                                            dogUser.setOrgName(name);
+                                                                            String number = response.getResult().getNumber();
+                                                                            binding.dogOwnerIDCardView.binding.itemEdit.setText(number);
+                                                                            dogUser.setIdNum(number);
+                                                                        }
+
                                                                         new Thread(new Runnable() {
                                                                             @Override
                                                                             public void run() {
                                                                                 uploadFile(requestCode, file.getAbsolutePath());
                                                                             }
                                                                         }).start();
+
+                                                                    } else if (CommonUtil.isBlank(response.getError_code()) &&
+                                                                            response.getError_code().equals("AIS.0101")) {
+                                                                        ToastUtils.showShort(getApplicationContext(), "输入参数无效");
 
                                                                     } else if (CommonUtil.isBlank(response.getError_code()) &&
                                                                             response.getError_code().equals("AIS.0103")) {

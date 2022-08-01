@@ -59,17 +59,18 @@ public class TimeUtils {
         return 0;
     }
 
-    public static long getTimeExamined(String time) {
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+    public static String getTimeDogAgeEdit(String time) {
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyyMMdd");
         Date date;
         try {
             date = dateFormat.parse(time);
-            long dateTime = date.getTime();
-            return dateTime;
+            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+
+            return simpleDateFormat.format(date);
         } catch (ParseException e) {
             e.printStackTrace();
         }
-        return 0;
+        return "0";
     }
 
     public static String getMessageTime(long time) {
