@@ -94,7 +94,7 @@ public class DogCertificateEditSubmitActivity extends BaseActivity implements AM
             public void onResponse(ResultClient<HandleInfo> response, int id) {
                 if (response.isSuccess() && response.getData() != null) {
                     handleInfo = response.getData();
-                    binding.handleUnitAddressView.setText(response.getData().getHandleUnitAddress());
+                    binding.handleUnitAddressView.setText(response.getData().getSuperiorUnitName() + response.getData().getHandleUnitName());
                     binding.costValueView.binding.itemContent.setText("￥" + response.getData().getCostValue());
                 } else {
                     ToastUtils.showShort(getApplicationContext(), response.getMessage());
@@ -126,16 +126,9 @@ public class DogCertificateEditSubmitActivity extends BaseActivity implements AM
          * 犬只犬证照片 ，正面照
          */
 
-//        addressId = 112;
-//        dogId = 8;
-//        String acceptUnit = "北京市西城区天桥派出所";
-//        int unitId = 1;
-//        paramsMap.put("acceptUnit", acceptUnit);
-//        paramsMap.put("unitId", String.valueOf(unitId));
-
         paramsMap.put("addressId", String.valueOf(addressId));
         paramsMap.put("dogId", String.valueOf(dogId));
-        paramsMap.put("acceptUnit", handleInfo.getHandleUnitAddress());
+        paramsMap.put("acceptUnit", handleInfo.getSuperiorUnitName() + handleInfo.getHandleUnitName());
         paramsMap.put("unitId", String.valueOf(handleInfo.getHandleUnitId()));
         paramsMap.put("immunePhoto", immunePhoto);
         SendRequest.approveDogLicence(paramsMap, new GenericsCallback<ResultClient<Boolean>>(new JsonGenericsSerializator()) {
