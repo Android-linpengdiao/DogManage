@@ -525,12 +525,21 @@ public class CameraActivity extends BaseActivity {
     private final int request_ArchivesTwo = 500;
     private final int request_ArchivesThree = 600;
 
+    private final int request_FullOne = 700;
+    private final int request_FullTwo = 800;
+
     /**
      * 全身照-1
      *
      * @param view
      */
     public void onClickFullOne(View view) {
+        if (checkPermissions(PermissionUtils.STORAGE, request_FullOne)) {
+            Bundle bundle = new Bundle();
+            bundle.putInt("mediaType", MediaUtils.MEDIA_TYPE_PHOTO);
+            bundle.putInt("maxNumber", 1);
+            openActivity(MediaSelectActivity.class, bundle, request_FullOne);
+        }
     }
 
     /**
@@ -539,6 +548,12 @@ public class CameraActivity extends BaseActivity {
      * @param view
      */
     public void onClickFullTwo(View view) {
+        if (checkPermissions(PermissionUtils.STORAGE, request_FullTwo)) {
+            Bundle bundle = new Bundle();
+            bundle.putInt("mediaType", MediaUtils.MEDIA_TYPE_PHOTO);
+            bundle.putInt("maxNumber", 1);
+            openActivity(MediaSelectActivity.class, bundle, request_FullTwo);
+        }
     }
 
     /**
@@ -655,6 +670,14 @@ public class CameraActivity extends BaseActivity {
                     compressImage(data, request_ArchivesThree);
 
                     break;
+                case request_FullOne:
+                    compressImage(data, request_FullOne);
+
+                    break;
+                case request_FullTwo:
+                    compressImage(data, request_FullTwo);
+
+                    break;
             }
         }
     }
@@ -704,6 +727,14 @@ public class CameraActivity extends BaseActivity {
                                         } else if (requestCode == request_ArchivesThree) {
                                             archivesThree = file.getAbsolutePath();
                                             GlideLoader.LoderImage(CameraActivity.this, archivesThree, binding.archivesThreeView, 6);
+
+                                        } else if (requestCode == request_FullOne) {
+                                            String fullOne = file.getAbsolutePath();
+                                            GlideLoader.LoderImage(CameraActivity.this, fullOne, binding.fullOneView, 6);
+
+                                        } else if (requestCode == request_FullTwo) {
+                                            String fullTwo = file.getAbsolutePath();
+                                            GlideLoader.LoderImage(CameraActivity.this, fullTwo, binding.fullTwoView, 6);
 
                                         }
 
@@ -787,13 +818,13 @@ public class CameraActivity extends BaseActivity {
         int sexCheckedRadioButtonId = binding.radioGroup.getCheckedRadioButtonId();
         if (sexCheckedRadioButtonId == R.id.radioButtonVideo) {//视频采集
             Bundle bundle = new Bundle();
-            bundle.putInt("type",0);
-            openActivity(VideoPlayActivity.class,bundle);
+            bundle.putInt("type", 0);
+            openActivity(VideoPlayActivity.class, bundle);
 
         } else if (sexCheckedRadioButtonId == R.id.radioButtonPicture) {//图片采集
             Bundle bundle = new Bundle();
-            bundle.putInt("type",1);
-            openActivity(VideoPlayActivity.class,bundle);
+            bundle.putInt("type", 1);
+            openActivity(VideoPlayActivity.class, bundle);
 
         }
 
