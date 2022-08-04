@@ -118,6 +118,9 @@ public class MyDogCertificateOrImmuneFragment extends BaseFragment {
         binding.immuneDogTypeView.setText(immuneDetail.getDogType());
         binding.hospitalNameView.setText(immuneDetail.getHospitalName());
 
+        binding.streetNameView.setText(immuneDetail.getStreetName());
+        binding.detailedAddress.setText(immuneDetail.getDetailedAddress());
+
         binding.immuneNameView.setText(immuneDetail.getImmuneName());
         binding.immuneBatchView.setText(immuneDetail.getImmuneBatch());
         binding.immuneFactoryView.setText(immuneDetail.getImmuneFactory());

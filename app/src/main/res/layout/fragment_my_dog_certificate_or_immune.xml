@@ -380,7 +380,7 @@
             android:layout_margin="@dimen/dp_16"
             android:background="@color/white"
             android:visibility="gone"
-            tools:visibility="gone"
+            tools:visibility="visible"
             app:cardCornerRadius="@dimen/dp_8"
             app:cardElevation="@dimen/dp_6"
             app:cardPreventCornerOverlap="false">
@@ -549,11 +549,12 @@
                                 android:textSize="@dimen/sp_12" />
 
                             <TextView
+                                android:id="@+id/streetNameView"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginLeft="@dimen/dp_8"
                                 android:gravity="center_vertical"
-                                android:text="大红门街道"
+                                tools:text="大红门街道"
                                 android:textColor="@color/black"
                                 android:textSize="@dimen/sp_12" />
 
@@ -575,11 +576,12 @@
                                 android:textSize="@dimen/sp_12" />
 
                             <TextView
+                                android:id="@+id/detailedAddress"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginLeft="@dimen/dp_8"
                                 android:gravity="center_vertical"
-                                android:text="XXXXX地址"
+                                tools:text="XXXXX地址"
                                 android:textColor="@color/black"
                                 android:textSize="@dimen/sp_12" />
 

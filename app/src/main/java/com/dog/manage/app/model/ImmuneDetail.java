@@ -59,4 +59,7 @@ public class ImmuneDetail implements Serializable {
     private String dogPhoto;
     private Integer licenceStatus = 0;//办理状态;1：待审核 2：代缴费  3：审核驳回  4：已办结  5：已过期  6：已注销
     private Integer type = 0;//返回类型 1 免疫证 2 领养
+
+    private String streetName;
+    private String detailedAddress;
 }
