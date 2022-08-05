@@ -122,7 +122,7 @@ public class ImmuneDetailsActivity extends BaseActivity implements AMapLocationL
         immuneApproveDetail = data;
         //办理状态 0 默认 1：未接种 2：已接种 3: 即将过期 4: 已过期
         Integer licenceStatus = data.getLincenceStatus();
-        binding.auditStatusView.setText(licenceStatus == 1 ? "审核中" : licenceStatus == 2 ? "已接种" : licenceStatus == 3 ? "即将过期" : licenceStatus == 4 ? "已过期" : "审核中");
+        binding.auditStatusView.setText(licenceStatus == 1 ? "已预约" : licenceStatus == 2 ? "已接种" : licenceStatus == 3 ? "即将过期" : licenceStatus == 4 ? "已过期" : "已预约");
         binding.hintView.setVisibility(licenceStatus == 1 ? View.VISIBLE : View.GONE);
         binding.confirmView.setVisibility(licenceStatus == 1 ? View.GONE : View.VISIBLE);
         binding.confirmView.setText(licenceStatus == 2 ? "查看免疫证" : "立即办理");
