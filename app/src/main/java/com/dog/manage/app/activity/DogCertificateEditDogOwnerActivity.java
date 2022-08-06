@@ -828,7 +828,7 @@ public class DogCertificateEditDogOwnerActivity extends BaseActivity {
                 GlideLoader.LoderImage(DogCertificateEditDogOwnerActivity.this, dogUser.getBizLicense(), binding.businessLicenseView, 6);
                 binding.businessLicenseView.setEnabled(false);
 
-                binding.dogOwnerNameView.binding.itemEdit.setText(dogUser.getOrgName());
+                binding.dogOwnerNameView.binding.itemEdit.setText(dogUser.getUserName());
                 binding.dogOwnerNameView.binding.itemEdit.setEnabled(false);
 
                 binding.dogOwnerIDCardView.binding.itemEdit.setText(dogUser.getIdNum());

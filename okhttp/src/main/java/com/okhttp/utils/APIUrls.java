@@ -190,6 +190,7 @@ public class APIUrls {
      * 支付
      */
     public final static String aliPayment = URL_DOMAIN + "/pay/aliPayment";//支付宝支付
+    public final static String wxPayment = URL_DOMAIN + "/pay/wxPayment";//支付宝支付
     public final static String viporder_createOrder = URL_DOMAIN + "/viporder/createOrder";//记录邀请信息
     //支付宝_VIP订单_生成支付订单
     public final static String orderCreateAliOrderAboutVip = URL_DOMAIN + "/order/createAliOrderAboutVip";

@@ -1089,6 +1089,16 @@ public class SendRequest {
 
     }
 
+    public static void wxPayment(int orderId, Callback call) {
+        Map<String, String> headers = new HashMap<>();
+        headers.put("Authorization", BaseApplication.getInstance().getUserInfo().getAuthorization());
+
+        Map<String, String> map = new HashMap<>();
+        map.put("orderId", String.valueOf(orderId));
+        OkHttpUtils.post().headers(headers).params(map).url(APIUrls.wxPayment).build().execute(call);
+
+    }
+
     public static void viporder_createOrder(String token, int month, int rewardId, Callback call) {
         Map<String, String> map = new HashMap<>();
         map.put("token", token);

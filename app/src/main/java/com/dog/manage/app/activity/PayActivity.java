@@ -62,7 +62,37 @@ public class PayActivity extends BaseActivity {
 
     public void onClickConfirm(View view) {
         if (binding.wxPayView.isSelected()) {
-            ToastUtils.showShort(PayActivity.this, "微信支付未开通");
+            SendRequest.wxPayment(orderId, new GenericsCallback<String>(new JsonGenericsSerializator()) {
+
+                @Override
+                public void onError(Call call, Exception e, int id) {
+                }
+
+                @Override
+                public void onResponse(String response, int id) {
+                    try {
+                        JSONObject object = new JSONObject(response);
+                        if (!object.isNull("success")) {
+                            boolean success = object.getBoolean("success");
+                            if (success) {
+                                if (!object.isNull("data")) {
+                                    JSONObject dataJson = object.getJSONObject("data");
+                                    String appId = dataJson.getString("appid");
+                                    String partnerId = dataJson.getString("partnerid");
+                                    String prepayId = dataJson.getString("prepayid");
+                                    String nonceStr = dataJson.getString("noncestr");
+                                    String timeStamp = dataJson.getString("timestamp");
+                                    String sign = dataJson.getString("sign");
+                                    PayManager.WeChatPay(PayActivity.this, appId, partnerId, prepayId, nonceStr, timeStamp, sign);
+                                }
+                            }
+                        }
+
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+            });
 
         } else if (binding.aliPayView.isSelected()) {
             SendRequest.aliPayment(orderId, new GenericsCallback<String>(new JsonGenericsSerializator()) {
