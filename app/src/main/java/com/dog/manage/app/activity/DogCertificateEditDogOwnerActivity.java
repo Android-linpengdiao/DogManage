@@ -791,7 +791,8 @@ public class DogCertificateEditDogOwnerActivity extends BaseActivity {
                 }
 
                 //居住地址（全）例：012/02/31
-                binding.addressView.binding.itemContent.setText(dogUser.getAddress());
+//                binding.addressView.binding.itemContent.setText(dogUser.getAddress());
+                updateAddressView(binding.addressView.binding.itemContent,dogUser.getAddress());
                 //所属小区
                 binding.communityAddressView.binding.itemContent.setText(dogUser.getVillageName());
                 //详细地址（全）
@@ -853,7 +854,8 @@ public class DogCertificateEditDogOwnerActivity extends BaseActivity {
                 }
 
                 //居住地址（全）例：012/02/31
-                binding.addressView.binding.itemContent.setText(dogUser.getAddress());
+//                binding.addressView.binding.itemContent.setText(dogUser.getAddress());
+                updateAddressView(binding.addressView.binding.itemContent,dogUser.getAddress());
                 //所属小区
                 binding.communityAddressView.binding.itemContent.setText(dogUser.getVillageName());
                 //详细地址（全）

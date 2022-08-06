@@ -60,6 +60,7 @@ import com.dog.manage.app.R;
 //import com.liulishuo.filedownloader.FileDownloadListener;
 //import com.liulishuo.filedownloader.FileDownloader;
 //import com.liulishuo.filedownloader.util.FileDownloadUtils;
+import com.dog.manage.app.model.AddressBean;
 import com.dog.manage.app.model.Dog;
 import com.okhttp.Pager;
 import com.okhttp.ResultClient;
@@ -183,6 +184,34 @@ public class BaseActivity extends AppCompatActivity {
         textView.setTypeface(typeface);
     }
 
+    public void updateAddressView(TextView addressView, String addressId) {
+        //省110000 、市110100
+        SendRequest.getAddressAreas(3, 110100, 1, 100,
+                new GenericsCallback<Pager<AddressBean>>(new JsonGenericsSerializator()) {
+
+                    @Override
+                    public void onAfter(int id) {
+                        super.onAfter(id);
+                    }
+
+                    @Override
+                    public void onError(Call call, Exception e, int id) {
+                    }
+
+                    @Override
+                    public void onResponse(Pager<AddressBean> response, int id) {
+                        if (response != null && response.getRows() != null && response.getRows().size() > 0) {
+                            for (AddressBean bean : response.getRows()) {
+                                if (addressId != null && addressId.indexOf(bean.getId() + "") != -1) {
+                                    addressView.setText(bean.getAreaName());
+                                    return;
+                                }
+                            }
+                        }
+                    }
+                });
+    }
+
     public void getAccessToken(Activity activity) {
         SendRequest.getAccessToken(Config.yueBaoAccessKey, Config.yueBaoSecretKey,
                 new StringCallback() {
@@ -276,19 +305,18 @@ public class BaseActivity extends AppCompatActivity {
     }
 
     public void onClickDogCertificate(Activity activity, List<Dog> list, int index, OnClickListener listener) {
-        onClickDogCertificate(activity,0,list,index,listener);
+        onClickDogCertificate(activity, 0, list, index, listener);
     }
 
     /**
-     *
      * @param activity
-     * @param type 0-犬证 1-免疫证
+     * @param type     0-犬证 1-免疫证
      * @param list
      * @param index
      * @param listener
      */
     public void onClickDogCertificate(Activity activity, int type, List<Dog> list, int index, OnClickListener listener) {
-        DogDialogManager.getInstance().showDogListDialog(activity,type, list, index,
+        DogDialogManager.getInstance().showDogListDialog(activity, type, list, index,
                 new DogDialogManager.OnClickListener() {
                     @Override
                     public void onClick(View view, Object object) {
