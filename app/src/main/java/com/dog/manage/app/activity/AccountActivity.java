@@ -96,7 +96,7 @@ public class AccountActivity extends BaseActivity {
 
             @Override
             public void onResponse(BaseData response, int id) {
-                if (response.isSuccess()) {
+                if (response.getCode() == 0) {
                     Observable.intervalRange(1, 60, 1, 1, TimeUnit.SECONDS).subscribe(new Consumer<Long>() {
                         @Override
                         public void accept(final Long time) {
