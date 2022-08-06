@@ -249,8 +249,8 @@ public class DogCertificateEditDogOwnerActivity extends BaseActivity {
                     public void onClick(View view) {
                         if (areaSelectAdapter.getList().size() > 0) {
                             addressBean = areaSelectAdapter.getList().get(areaSelectAdapter.getSelect());
+                            dogUser.setAddress("110000/110100/" + addressBean.getId());
                             String address = addressBean.getAreaName();
-                            dogUser.setAddress(address);
                             binding.addressView.binding.itemContent.setText(address);
                             bottomSheetDialog.cancel();
                         }
