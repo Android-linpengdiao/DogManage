@@ -943,55 +943,58 @@ public class DogCertificateEditDogActivity extends BaseActivity {
      * @param filePath
      */
     private void uploadFile(int requestCode, String filePath) {
-        LoadingManager.showLoadingDialog(DogCertificateEditDogActivity.this, "上传中...");
-        Log.i(TAG, "uploadFile: filePath = " + filePath);
-        String fileName = filePath.substring(filePath.lastIndexOf("/") + 1);
-        Log.i(TAG, "uploadFile: fileName = " + fileName);
-        PutObjectRequest request = new PutObjectRequest();
-        request.setBucketName(Config.huaweiBucketName);
-        request.setObjectKey(fileName);
-        request.setFile(new File(filePath));
-        request.setProgressListener(new ProgressListener() {
-            @Override
-            public void progressChanged(ProgressStatus status) {
-                // 获取上传平均速率
-                Log.i(TAG, "uploadFile: AverageSpeed:" + status.getAverageSpeed());
-                // 获取上传进度百分比
-                Log.i(TAG, "uploadFile: TransferPercentage:" + status.getTransferPercentage());
-            }
-        });
-        //每上传1MB数据反馈上传进度
-        request.setProgressInterval(1024 * 1024L);
-        PutObjectResult result = UploadFileManager.getInstance().getObsClient().putObject(request);
-        Log.i(TAG, "uploadFile: getObjectUrl = " + result.getObjectUrl());
-        String url = "http://" + Config.huaweiBucketName + "." + Config.huaweiCloudEndPoint + "/" + fileName;
-        Log.i(TAG, "uploadFile: url = " + url);
-        LoadingManager.hideLoadingDialog(DogCertificateEditDogActivity.this);
-        runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
+        try {
+            LoadingManager.showLoadingDialog(DogCertificateEditDogActivity.this, "上传中...");
+            Log.i(TAG, "uploadFile: filePath = " + filePath);
+            String fileName = filePath.substring(filePath.lastIndexOf("/") + 1);
+            Log.i(TAG, "uploadFile: fileName = " + fileName);
+            PutObjectRequest request = new PutObjectRequest();
+            request.setBucketName(Config.huaweiBucketName);
+            request.setObjectKey(fileName);
+            request.setFile(new File(filePath));
+            request.setProgressListener(new ProgressListener() {
+                @Override
+                public void progressChanged(ProgressStatus status) {
+                    // 获取上传平均速率
+                    Log.i(TAG, "uploadFile: AverageSpeed:" + status.getAverageSpeed());
+                    // 获取上传进度百分比
+                    Log.i(TAG, "uploadFile: TransferPercentage:" + status.getTransferPercentage());
+                }
+            });
+            //每上传1MB数据反馈上传进度
+            request.setProgressInterval(1024 * 1024L);
+            PutObjectResult result = UploadFileManager.getInstance().getObsClient().putObject(request);
+            Log.i(TAG, "uploadFile: getObjectUrl = " + result.getObjectUrl());
+            String url = "http://" + Config.huaweiBucketName + "." + Config.huaweiCloudEndPoint + "/" + fileName;
+            Log.i(TAG, "uploadFile: url = " + url);
+            LoadingManager.hideLoadingDialog(DogCertificateEditDogActivity.this);
+            runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
 
-                if (requestCode == request_Testify) {
-                    dog.setSterilizationProve(url);
-                    GlideLoader.LoderImage(DogCertificateEditDogActivity.this, dog.getSterilizationProve(), binding.testifyView, 6);
+                    if (requestCode == request_Testify) {
+                        dog.setSterilizationProve(url);
+                        GlideLoader.LoderImage(DogCertificateEditDogActivity.this, dog.getSterilizationProve(), binding.testifyView, 6);
 
-                } else if (requestCode == request_LeftFace) {
-                    leftFace = url;
-                    GlideLoader.LoderImage(DogCertificateEditDogActivity.this, leftFace, binding.leftFaceView, 6);
+                    } else if (requestCode == request_LeftFace) {
+                        leftFace = url;
+                        GlideLoader.LoderImage(DogCertificateEditDogActivity.this, leftFace, binding.leftFaceView, 6);
 
-                } else if (requestCode == request_CenterFace) {
-                    centerFace = url;
-                    GlideLoader.LoderImage(DogCertificateEditDogActivity.this, centerFace, binding.centerFaceView, 6);
+                    } else if (requestCode == request_CenterFace) {
+                        centerFace = url;
+                        GlideLoader.LoderImage(DogCertificateEditDogActivity.this, centerFace, binding.centerFaceView, 6);
 
-                } else if (requestCode == request_RightFace) {
-                    rightFace = url;
-                    GlideLoader.LoderImage(DogCertificateEditDogActivity.this, rightFace, binding.rightFaceView, 6);
+                    } else if (requestCode == request_RightFace) {
+                        rightFace = url;
+                        GlideLoader.LoderImage(DogCertificateEditDogActivity.this, rightFace, binding.rightFaceView, 6);
+
+                    }
 
                 }
-
-            }
-        });
-
+            });
+        } catch (Exception e) {
+            ToastUtils.showShort(getApplication(), "上传失败");
+        }
 
     }
 }

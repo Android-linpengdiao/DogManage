@@ -28,7 +28,6 @@ import com.base.utils.ToastUtils;
 import com.base.view.BaseBottomSheetDialog;
 import com.base.view.OnClickListener;
 import com.base.view.RecycleViewDivider;
-import com.cjt2325.camera.CameraActivity;
 import com.cjt2325.camera.JCameraView;
 import com.dog.manage.app.Config;
 import com.dog.manage.app.R;
@@ -48,6 +47,7 @@ import com.dog.manage.app.model.DogUser;
 import com.dog.manage.app.model.IdCard;
 import com.dog.manage.app.utils.UploadFileManager;
 import com.dog.manage.app.view.GridItemDecoration;
+import com.gamerole.orcameralib.CameraActivity;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.obs.services.model.ProgressListener;
@@ -792,7 +792,7 @@ public class DogCertificateEditDogOwnerActivity extends BaseActivity {
 
                 //居住地址（全）例：012/02/31
 //                binding.addressView.binding.itemContent.setText(dogUser.getAddress());
-                updateAddressView(binding.addressView.binding.itemContent,dogUser.getAddress());
+                updateAddressView(binding.addressView.binding.itemContent, dogUser.getAddress());
                 //所属小区
                 binding.communityAddressView.binding.itemContent.setText(dogUser.getVillageName());
                 //详细地址（全）
@@ -855,7 +855,7 @@ public class DogCertificateEditDogOwnerActivity extends BaseActivity {
 
                 //居住地址（全）例：012/02/31
 //                binding.addressView.binding.itemContent.setText(dogUser.getAddress());
-                updateAddressView(binding.addressView.binding.itemContent,dogUser.getAddress());
+                updateAddressView(binding.addressView.binding.itemContent, dogUser.getAddress());
                 //所属小区
                 binding.communityAddressView.binding.itemContent.setText(dogUser.getVillageName());
                 //详细地址（全）
@@ -1471,10 +1471,16 @@ public class DogCertificateEditDogOwnerActivity extends BaseActivity {
         }
         if (type == type_userInfo) {
             if (checkPermissions(PermissionUtils.CAMERA, request_IDCardFront)) {
-                int type = JCameraView.BUTTON_STATE_ONLY_CAPTURE;
-                int minTime = 0;
-                int maxTime = 60;
-                CameraActivity.startCameraActivity(DogCertificateEditDogOwnerActivity.this, minTime, maxTime, "#44bf19", type, request_IDCardFront);
+
+                Intent intent = new Intent(this, CameraActivity.class);
+                intent.putExtra(CameraActivity.KEY_OUTPUT_FILE_PATH, FileUtils.createTempFile(System.currentTimeMillis() + ".jpg").getAbsolutePath());
+                intent.putExtra(CameraActivity.KEY_CONTENT_TYPE, CameraActivity.CONTENT_TYPE_ID_CARD_FRONT);
+                startActivityForResult(intent, request_IDCardFront);
+
+//                int type = JCameraView.BUTTON_STATE_ONLY_CAPTURE;
+//                int minTime = 0;
+//                int maxTime = 60;
+//                CameraActivity.startCameraActivity(DogCertificateEditDogOwnerActivity.this, minTime, maxTime, "#44bf19", type, request_IDCardFront);
 
             }
         }
@@ -1500,10 +1506,16 @@ public class DogCertificateEditDogOwnerActivity extends BaseActivity {
         if (type == type_userInfo) {
             if (type == type_userInfo) {
                 if (checkPermissions(PermissionUtils.CAMERA, request_IDCardBack)) {
-                    int type = JCameraView.BUTTON_STATE_ONLY_CAPTURE;
-                    int minTime = 0;
-                    int maxTime = 60;
-                    CameraActivity.startCameraActivity(DogCertificateEditDogOwnerActivity.this, minTime, maxTime, "#44bf19", type, request_IDCardBack);
+
+                    Intent intent = new Intent(this, CameraActivity.class);
+                    intent.putExtra(CameraActivity.KEY_OUTPUT_FILE_PATH, FileUtils.createTempFile(System.currentTimeMillis() + ".jpg").getAbsolutePath());
+                    intent.putExtra(CameraActivity.KEY_CONTENT_TYPE, CameraActivity.CONTENT_TYPE_ID_CARD_BACK);
+                    startActivityForResult(intent, request_IDCardBack);
+
+//                    int type = JCameraView.BUTTON_STATE_ONLY_CAPTURE;
+//                    int minTime = 0;
+//                    int maxTime = 60;
+//                    CameraActivity.startCameraActivity(DogCertificateEditDogOwnerActivity.this, minTime, maxTime, "#44bf19", type, request_IDCardBack);
 
                 }
             }
@@ -1528,10 +1540,16 @@ public class DogCertificateEditDogOwnerActivity extends BaseActivity {
         }
 
         if (checkPermissions(PermissionUtils.CAMERA, request_LegalPersonIDCardFront)) {
-            int type = JCameraView.BUTTON_STATE_ONLY_CAPTURE;
-            int minTime = 0;
-            int maxTime = 60;
-            CameraActivity.startCameraActivity(DogCertificateEditDogOwnerActivity.this, minTime, maxTime, "#44bf19", type, request_LegalPersonIDCardFront);
+
+            Intent intent = new Intent(this, CameraActivity.class);
+            intent.putExtra(CameraActivity.KEY_OUTPUT_FILE_PATH, FileUtils.createTempFile(System.currentTimeMillis() + ".jpg").getAbsolutePath());
+            intent.putExtra(CameraActivity.KEY_CONTENT_TYPE, CameraActivity.CONTENT_TYPE_ID_CARD_FRONT);
+            startActivityForResult(intent, request_LegalPersonIDCardFront);
+
+//            int type = JCameraView.BUTTON_STATE_ONLY_CAPTURE;
+//            int minTime = 0;
+//            int maxTime = 60;
+//            CameraActivity.startCameraActivity(DogCertificateEditDogOwnerActivity.this, minTime, maxTime, "#44bf19", type, request_LegalPersonIDCardFront);
 
         }
 
@@ -1554,10 +1572,16 @@ public class DogCertificateEditDogOwnerActivity extends BaseActivity {
         }
 
         if (checkPermissions(PermissionUtils.CAMERA, request_LegalPersonIDCardBack)) {
-            int type = JCameraView.BUTTON_STATE_ONLY_CAPTURE;
-            int minTime = 0;
-            int maxTime = 60;
-            CameraActivity.startCameraActivity(DogCertificateEditDogOwnerActivity.this, minTime, maxTime, "#44bf19", type, request_LegalPersonIDCardBack);
+
+            Intent intent = new Intent(this, CameraActivity.class);
+            intent.putExtra(CameraActivity.KEY_OUTPUT_FILE_PATH, FileUtils.createTempFile(System.currentTimeMillis() + ".jpg").getAbsolutePath());
+            intent.putExtra(CameraActivity.KEY_CONTENT_TYPE, CameraActivity.CONTENT_TYPE_ID_CARD_BACK);
+            startActivityForResult(intent, request_LegalPersonIDCardBack);
+
+//            int type = JCameraView.BUTTON_STATE_ONLY_CAPTURE;
+//            int minTime = 0;
+//            int maxTime = 60;
+//            CameraActivity.startCameraActivity(DogCertificateEditDogOwnerActivity.this, minTime, maxTime, "#44bf19", type, request_LegalPersonIDCardBack);
 
         }
 
@@ -1863,88 +1887,91 @@ public class DogCertificateEditDogOwnerActivity extends BaseActivity {
      * @param filePath
      */
     private void uploadFile(int requestCode, String filePath) {
-        LoadingManager.showLoadingDialog(DogCertificateEditDogOwnerActivity.this, "上传中...");
-        Log.i(TAG, "uploadFile: filePath = " + filePath);
-        String fileName = filePath.substring(filePath.lastIndexOf("/") + 1);
-        Log.i(TAG, "uploadFile: fileName = " + fileName);
-        PutObjectRequest request = new PutObjectRequest();
-        request.setBucketName(Config.huaweiBucketName);
-        request.setObjectKey(fileName);
-        request.setFile(new File(filePath));
-        request.setProgressListener(new ProgressListener() {
-            @Override
-            public void progressChanged(ProgressStatus status) {
-                // 获取上传平均速率
-                Log.i(TAG, "uploadFile: AverageSpeed:" + status.getAverageSpeed());
-                // 获取上传进度百分比
-                Log.i(TAG, "uploadFile: TransferPercentage:" + status.getTransferPercentage());
-            }
-        });
-        //每上传1MB数据反馈上传进度
-        request.setProgressInterval(1024 * 1024L);
-        PutObjectResult result = UploadFileManager.getInstance().getObsClient().putObject(request);
-        Log.i(TAG, "uploadFile: getObjectUrl = " + result.getObjectUrl());
-        String url = "http://" + Config.huaweiBucketName + "." + Config.huaweiCloudEndPoint + "/" + fileName;
-        Log.i(TAG, "uploadFile: url = " + url);
-        LoadingManager.hideLoadingDialog(DogCertificateEditDogOwnerActivity.this);
-        runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
+        try {
+            LoadingManager.showLoadingDialog(DogCertificateEditDogOwnerActivity.this, "上传中...");
+            Log.i(TAG, "uploadFile: filePath = " + filePath);
+            String fileName = filePath.substring(filePath.lastIndexOf("/") + 1);
+            Log.i(TAG, "uploadFile: fileName = " + fileName);
+            PutObjectRequest request = new PutObjectRequest();
+            request.setBucketName(Config.huaweiBucketName);
+            request.setObjectKey(fileName);
+            request.setFile(new File(filePath));
+            request.setProgressListener(new ProgressListener() {
+                @Override
+                public void progressChanged(ProgressStatus status) {
+                    // 获取上传平均速率
+                    Log.i(TAG, "uploadFile: AverageSpeed:" + status.getAverageSpeed());
+                    // 获取上传进度百分比
+                    Log.i(TAG, "uploadFile: TransferPercentage:" + status.getTransferPercentage());
+                }
+            });
+            //每上传1MB数据反馈上传进度
+            request.setProgressInterval(1024 * 1024L);
+            PutObjectResult result = UploadFileManager.getInstance().getObsClient().putObject(request);
+            Log.i(TAG, "uploadFile: getObjectUrl = " + result.getObjectUrl());
+            String url = "http://" + Config.huaweiBucketName + "." + Config.huaweiCloudEndPoint + "/" + fileName;
+            Log.i(TAG, "uploadFile: url = " + url);
+            LoadingManager.hideLoadingDialog(DogCertificateEditDogOwnerActivity.this);
+            runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
 
-                if (requestCode == request_IDCardFront) {
-                    personalIDCardFront = url;
-                    GlideLoader.LoderImage(DogCertificateEditDogOwnerActivity.this, personalIDCardFront, binding.IDCardFrontView, 6);
+                    if (requestCode == request_IDCardFront) {
+                        personalIDCardFront = url;
+                        GlideLoader.LoderImage(DogCertificateEditDogOwnerActivity.this, personalIDCardFront, binding.IDCardFrontView, 6);
 
-                } else if (requestCode == request_IDCardBack) {
-                    personalIDCardBack = url;
-                    GlideLoader.LoderImage(DogCertificateEditDogOwnerActivity.this, personalIDCardBack, binding.IDCardBackView, 6);
+                    } else if (requestCode == request_IDCardBack) {
+                        personalIDCardBack = url;
+                        GlideLoader.LoderImage(DogCertificateEditDogOwnerActivity.this, personalIDCardBack, binding.IDCardBackView, 6);
 
-                } else if (requestCode == request_LegalPersonIDCardFront) {
-                    legalPersonIDCardFront = url;
-                    GlideLoader.LoderImage(DogCertificateEditDogOwnerActivity.this, legalPersonIDCardFront, binding.legalPersonIDCardFrontView, 6);
+                    } else if (requestCode == request_LegalPersonIDCardFront) {
+                        legalPersonIDCardFront = url;
+                        GlideLoader.LoderImage(DogCertificateEditDogOwnerActivity.this, legalPersonIDCardFront, binding.legalPersonIDCardFrontView, 6);
 
-                } else if (requestCode == request_LegalPersonIDCardBack) {
-                    legalPersonIDCardBack = url;
-                    GlideLoader.LoderImage(DogCertificateEditDogOwnerActivity.this, legalPersonIDCardBack, binding.legalPersonIDCardBackView, 6);
+                    } else if (requestCode == request_LegalPersonIDCardBack) {
+                        legalPersonIDCardBack = url;
+                        GlideLoader.LoderImage(DogCertificateEditDogOwnerActivity.this, legalPersonIDCardBack, binding.legalPersonIDCardBackView, 6);
 
-                } else if (requestCode == request_BusinessLicense) {
-                    String businessLicense = url;
-                    dogUser.setBizLicense(businessLicense);
-                    GlideLoader.LoderImage(DogCertificateEditDogOwnerActivity.this, businessLicense, binding.businessLicenseView, 6);
+                    } else if (requestCode == request_BusinessLicense) {
+                        String businessLicense = url;
+                        dogUser.setBizLicense(businessLicense);
+                        GlideLoader.LoderImage(DogCertificateEditDogOwnerActivity.this, businessLicense, binding.businessLicenseView, 6);
 
-                } else if (requestCode == request_OldManOrDisabledCertificate) {
-                    oldManOrDisabledCertificate = url;
+                    } else if (requestCode == request_OldManOrDisabledCertificate) {
+                        oldManOrDisabledCertificate = url;
 //                    dogUser.setAgedProve(oldManOrDisabledCertificate);
-                    GlideLoader.LoderImage(DogCertificateEditDogOwnerActivity.this, oldManOrDisabledCertificate, binding.oldManOrDisabledCertificateView, 6);
+                        GlideLoader.LoderImage(DogCertificateEditDogOwnerActivity.this, oldManOrDisabledCertificate, binding.oldManOrDisabledCertificateView, 6);
 
-                } else if (requestCode == request_OldManOrDisabledCertificateContent) {
-                    oldManOrDisabledCertificateContent = url;
+                    } else if (requestCode == request_OldManOrDisabledCertificateContent) {
+                        oldManOrDisabledCertificateContent = url;
 //                    dogUser.setAgedProve(oldManOrDisabledCertificate);
-                    GlideLoader.LoderImage(DogCertificateEditDogOwnerActivity.this, oldManOrDisabledCertificateContent, binding.oldManOrDisabledCertificateContentView, 6);
+                        GlideLoader.LoderImage(DogCertificateEditDogOwnerActivity.this, oldManOrDisabledCertificateContent, binding.oldManOrDisabledCertificateContentView, 6);
 
-                } else if (requestCode == request_HouseProprietaryCertificate) {
+                    } else if (requestCode == request_HouseProprietaryCertificate) {
 //                    String personaHouseProprietaryCertificate = url;
 //                    dogUser.setHousePhoto(personaHouseProprietaryCertificate);
 //                    GlideLoader.LoderImage(DogCertificateEditDogOwnerActivity.this, personaHouseProprietaryCertificate, binding.houseProprietaryCertificateView, 6);
 
-                } else if (requestCode == request_ManagementSystem) {
-                    String legalManagementSystem = url;
-                    dogUser.setDogManagement(legalManagementSystem);
-                    GlideLoader.LoderImage(DogCertificateEditDogOwnerActivity.this, legalManagementSystem, binding.managementSystemView, 6);
+                    } else if (requestCode == request_ManagementSystem) {
+                        String legalManagementSystem = url;
+                        dogUser.setDogManagement(legalManagementSystem);
+                        GlideLoader.LoderImage(DogCertificateEditDogOwnerActivity.this, legalManagementSystem, binding.managementSystemView, 6);
 
-                } else if (requestCode == request_Facility1) {
-                    legalFacility1 = url;
-                    GlideLoader.LoderImage(DogCertificateEditDogOwnerActivity.this, legalFacility1, binding.facility1View, 6);
+                    } else if (requestCode == request_Facility1) {
+                        legalFacility1 = url;
+                        GlideLoader.LoderImage(DogCertificateEditDogOwnerActivity.this, legalFacility1, binding.facility1View, 6);
 
-                } else if (requestCode == request_Facility2) {
-                    legalFacility2 = url;
-                    GlideLoader.LoderImage(DogCertificateEditDogOwnerActivity.this, legalFacility2, binding.facility2View, 6);
+                    } else if (requestCode == request_Facility2) {
+                        legalFacility2 = url;
+                        GlideLoader.LoderImage(DogCertificateEditDogOwnerActivity.this, legalFacility2, binding.facility2View, 6);
+
+                    }
 
                 }
-
-            }
-        });
-
+            });
+        } catch (Exception e) {
+            ToastUtils.showShort(getApplication(), "上传失败");
+        }
 
     }
 
@@ -2005,33 +2032,37 @@ public class DogCertificateEditDogOwnerActivity extends BaseActivity {
      * @param mediaFileList
      */
     private void uploadFileMulti(List<String> mediaFileList) {
-        LoadingManager.showLoadingDialog(DogCertificateEditDogOwnerActivity.this, "上传中...");
-        for (int i = 0; i < mediaFileList.size(); i++) {
-            String filePath = mediaFileList.get(i);
-            Log.i(TAG, "uploadFile: filePath = " + filePath);
-            String fileName = filePath.substring(filePath.lastIndexOf("/") + 1);
-            PutObjectRequest request = new PutObjectRequest();
-            request.setBucketName(Config.huaweiBucketName);
-            request.setObjectKey(fileName);
-            request.setFile(new File(filePath));
-            request.setProgressListener(new ProgressListener() {
-                @Override
-                public void progressChanged(ProgressStatus status) {
-                }
-            });
-            //每上传1MB数据反馈上传进度
-            request.setProgressInterval(1024 * 1024L);
-            PutObjectResult result = UploadFileManager.getInstance().getObsClient().putObject(request);
-            String url = "http://" + Config.huaweiBucketName + "." + Config.huaweiCloudEndPoint + "/" + fileName;
-            Log.i(TAG, "uploadFile: url = " + url);
-            imageList.add(imageAdapter.getList().size() - 1, url);
-            LoadingManager.hideLoadingDialog(DogCertificateEditDogOwnerActivity.this);
-            runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-                    imageAdapter.notifyDataSetChanged();
-                }
-            });
+        try {
+            LoadingManager.showLoadingDialog(DogCertificateEditDogOwnerActivity.this, "上传中...");
+            for (int i = 0; i < mediaFileList.size(); i++) {
+                String filePath = mediaFileList.get(i);
+                Log.i(TAG, "uploadFile: filePath = " + filePath);
+                String fileName = filePath.substring(filePath.lastIndexOf("/") + 1);
+                PutObjectRequest request = new PutObjectRequest();
+                request.setBucketName(Config.huaweiBucketName);
+                request.setObjectKey(fileName);
+                request.setFile(new File(filePath));
+                request.setProgressListener(new ProgressListener() {
+                    @Override
+                    public void progressChanged(ProgressStatus status) {
+                    }
+                });
+                //每上传1MB数据反馈上传进度
+                request.setProgressInterval(1024 * 1024L);
+                PutObjectResult result = UploadFileManager.getInstance().getObsClient().putObject(request);
+                String url = "http://" + Config.huaweiBucketName + "." + Config.huaweiCloudEndPoint + "/" + fileName;
+                Log.i(TAG, "uploadFile: url = " + url);
+                imageList.add(imageAdapter.getList().size() - 1, url);
+                LoadingManager.hideLoadingDialog(DogCertificateEditDogOwnerActivity.this);
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        imageAdapter.notifyDataSetChanged();
+                    }
+                });
+            }
+        } catch (Exception e) {
+            ToastUtils.showShort(getApplication(), "上传失败");
         }
     }
 

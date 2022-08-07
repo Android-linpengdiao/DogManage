@@ -521,7 +521,9 @@ public class CameraInterface implements Camera.PreviewCallback {
                     matrix.setRotate(360 - nowAngle);
                     matrix.postScale(-1, 1);
                 }
-
+                if (nowAngle == 90 || nowAngle == 270) {
+                    matrix.setRotate(270 + nowAngle);
+                }
                 bitmap = createBitmap(bitmap, 0, 0, bitmap.getWidth(), bitmap.getHeight(), matrix, true);
                 if (callback != null) {
                     if (nowAngle == 90 || nowAngle == 270) {

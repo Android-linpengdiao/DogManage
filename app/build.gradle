@@ -89,6 +89,7 @@ dependencies {
     implementation project(':okhttp')
     implementation project(':banner')
     implementation project(':camera')
+    implementation project(':orcameralib')
 
     implementation smartrefresh
     implementation smartrefreshHeaderClassics

@@ -512,6 +512,8 @@ public class JCameraView extends FrameLayout implements CameraInterface.CameraOp
         } else {
             mPhoto.setScaleType(ImageView.ScaleType.FIT_CENTER);
         }
+        //身份证识别处理
+        mPhoto.setScaleType(ImageView.ScaleType.FIT_CENTER);
         captureBitmap = bitmap;
         mPhoto.setImageBitmap(bitmap);
         mPhoto.setVisibility(VISIBLE);

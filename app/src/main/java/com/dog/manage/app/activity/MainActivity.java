@@ -9,11 +9,14 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.GridLayoutManager;
 
 import com.base.utils.CommonUtil;
+import com.base.utils.PermissionUtils;
 import com.base.utils.ToastUtils;
 import com.base.view.OnClickListener;
 import com.chuanglan.shanyan_sdk.OneKeyLoginManager;
 import com.chuanglan.shanyan_sdk.listener.OneKeyLoginListener;
 import com.chuanglan.shanyan_sdk.listener.OpenLoginAuthListener;
+import com.cjt2325.camera.CameraActivity;
+import com.cjt2325.camera.JCameraView;
 import com.dog.manage.app.R;
 import com.dog.manage.app.adapter.FrameItemAdapter;
 import com.dog.manage.app.databinding.ActivityMainBinding;
@@ -238,12 +241,6 @@ public class MainActivity extends BaseActivity {
         if (checkUserRank(getApplicationContext(), true)) {
             openActivity(MessageActivity.class);
 
-//            openActivity(UpdateDogOwnerInfoActivity.class);
-//            if (checkPermissions(PermissionUtils.CAMERA, 100)) {
-//                Bundle bundle = new Bundle();
-//                bundle.putInt("type", CameraActivity.type_petArchives);
-//                openActivity(CameraActivity.class, bundle);
-//            }
         }
     }
 

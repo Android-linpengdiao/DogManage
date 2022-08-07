@@ -1,3 +1,4 @@
+include ':orcameralib'
 include ':camera'
 include ':banner'
 include ':okhttp'

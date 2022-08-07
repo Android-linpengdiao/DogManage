@@ -455,46 +455,49 @@ public class DogLogoutDetailsActivity extends BaseActivity {
      * @param filePath
      */
     private void uploadFile(int requestCode, String filePath) {
-        String fileName = filePath.substring(filePath.lastIndexOf("/") + 1);
-        PutObjectRequest request = new PutObjectRequest();
-        request.setBucketName(Config.huaweiBucketName);
-        request.setObjectKey(fileName);
-        request.setFile(new File(filePath));
-        request.setProgressListener(new ProgressListener() {
-            @Override
-            public void progressChanged(ProgressStatus status) {
-                // 获取上传平均速率
-                Log.i(TAG, "uploadFile: AverageSpeed:" + status.getAverageSpeed());
-                // 获取上传进度百分比
-                Log.i(TAG, "uploadFile: TransferPercentage:" + status.getTransferPercentage());
-            }
-        });
-        //每上传1MB数据反馈上传进度
-        request.setProgressInterval(1024 * 1024L);
-        PutObjectResult result = UploadFileManager.getInstance().getObsClient().putObject(request);
-        String url = "http://" + Config.huaweiBucketName + "." + Config.huaweiCloudEndPoint + "/" + fileName;
+        try {
+            String fileName = filePath.substring(filePath.lastIndexOf("/") + 1);
+            PutObjectRequest request = new PutObjectRequest();
+            request.setBucketName(Config.huaweiBucketName);
+            request.setObjectKey(fileName);
+            request.setFile(new File(filePath));
+            request.setProgressListener(new ProgressListener() {
+                @Override
+                public void progressChanged(ProgressStatus status) {
+                    // 获取上传平均速率
+                    Log.i(TAG, "uploadFile: AverageSpeed:" + status.getAverageSpeed());
+                    // 获取上传进度百分比
+                    Log.i(TAG, "uploadFile: TransferPercentage:" + status.getTransferPercentage());
+                }
+            });
+            //每上传1MB数据反馈上传进度
+            request.setProgressInterval(1024 * 1024L);
+            PutObjectResult result = UploadFileManager.getInstance().getObsClient().putObject(request);
+            String url = "http://" + Config.huaweiBucketName + "." + Config.huaweiCloudEndPoint + "/" + fileName;
 
-        runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
+            runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
 
-                if (requestCode == request_Image1) {
-                    picture1 = url;
-                    GlideLoader.LoderImage(DogLogoutDetailsActivity.this, picture1, binding.pictureView1, 6);
+                    if (requestCode == request_Image1) {
+                        picture1 = url;
+                        GlideLoader.LoderImage(DogLogoutDetailsActivity.this, picture1, binding.pictureView1, 6);
 
-                } else if (requestCode == request_Image2) {
-                    picture2 = url;
-                    GlideLoader.LoderImage(DogLogoutDetailsActivity.this, picture2, binding.pictureView2, 6);
+                    } else if (requestCode == request_Image2) {
+                        picture2 = url;
+                        GlideLoader.LoderImage(DogLogoutDetailsActivity.this, picture2, binding.pictureView2, 6);
 
-                } else if (requestCode == request_Image3) {
-                    picture3 = url;
-                    GlideLoader.LoderImage(DogLogoutDetailsActivity.this, picture3, binding.pictureView3, 6);
+                    } else if (requestCode == request_Image3) {
+                        picture3 = url;
+                        GlideLoader.LoderImage(DogLogoutDetailsActivity.this, picture3, binding.pictureView3, 6);
+
+                    }
 
                 }
-
-            }
-        });
-
+            });
+        } catch (Exception e) {
+            ToastUtils.showShort(getApplication(), "上传失败");
+        }
 
     }
 
