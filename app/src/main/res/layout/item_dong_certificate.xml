@@ -52,7 +52,7 @@
                     android:layout_width="@dimen/dp_84"
                     android:layout_height="@dimen/dp_78"
                     android:layout_alignParentRight="true"
-                    android:layout_marginRight="@dimen/dp_30"
+                    android:layout_marginRight="@dimen/dp_20"
                     android:background="@drawable/image_8" />
 
                 <TextView

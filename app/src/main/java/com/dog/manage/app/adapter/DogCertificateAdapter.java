@@ -10,6 +10,10 @@ import com.dog.manage.app.R;
 import com.dog.manage.app.databinding.ItemAdoptionRecordBinding;
 import com.dog.manage.app.databinding.ItemDongCertificateBinding;
 import com.dog.manage.app.model.LicenceBean;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+
+import java.util.List;
 
 public class DogCertificateAdapter extends BaseRecyclerAdapter<LicenceBean, ItemDongCertificateBinding> {
 
@@ -48,7 +52,14 @@ public class DogCertificateAdapter extends BaseRecyclerAdapter<LicenceBean, Item
         binding.orgNameView.setText(licenceBean.getOrgName());
         binding.awardTimeView.setText(licenceBean.getAwardTime());
         binding.detailedAddressView.setText(licenceBean.getDetailedAddress());
-        GlideLoader.LoderImage(mContext, "https://pics7.baidu.com/feed/6c224f4a20a446236fb6db0ac3bf5d040df3d785.jpeg", binding.certificateCoverView, 5);
+        try {
+            List<String> dogPhotos = new Gson().fromJson(licenceBean.getDogPhoto(), new TypeToken<List<String>>() {
+            }.getType());
+            if (dogPhotos != null && dogPhotos.size() > 0)
+                GlideLoader.LoderImage(mContext, dogPhotos.get(0), binding.certificateCoverView, 5);
+        } catch (Exception e) {
+            e.getMessage();
+        }
 
         binding.selectedView.setSelected(select == licenceBean.getLincenceId() ? true : false);
         binding.selectedView.setOnClickListener(new View.OnClickListener() {
