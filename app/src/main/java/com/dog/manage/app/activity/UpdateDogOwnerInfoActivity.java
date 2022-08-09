@@ -5,8 +5,10 @@ import android.app.AlertDialog;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.text.Editable;
 import android.text.InputFilter;
 import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -131,6 +133,7 @@ public class UpdateDogOwnerInfoActivity extends BaseActivity {
             });
             imageList.add("add");
             imageAdapter.refreshData(imageList);
+            getDogUser();
 
         } else if (type == type_submit) {
             binding.secondStepView.setSelected(true);
@@ -195,9 +198,10 @@ public class UpdateDogOwnerInfoActivity extends BaseActivity {
             }
         });
 
-        binding.detailedAddressView.binding.itemContent.setOnClickListener(new View.OnClickListener() {
+        binding.communityAddressView.binding.itemContent.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
                 View contentView = LayoutInflater.from(UpdateDogOwnerInfoActivity.this).inflate(R.layout.dialog_community, null);
                 communityBinding = DataBindingUtil.bind(contentView);
                 BaseBottomSheetDialog bottomSheetDialog = new BaseBottomSheetDialog(UpdateDogOwnerInfoActivity.this) {
@@ -228,6 +232,35 @@ public class UpdateDogOwnerInfoActivity extends BaseActivity {
                 });
                 getAddressList(true, "");
 
+                communityBinding.detailedAddressView.addTextChangedListener(new TextWatcher() {
+                    @Override
+                    public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+                    }
+
+                    @Override
+                    public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                        if (CommonUtil.isBlank(charSequence.toString())) {
+                            getAddressList(true, "");
+                        }
+                    }
+
+                    @Override
+                    public void afterTextChanged(Editable editable) {
+
+                    }
+                });
+                communityBinding.searchView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        String content = communityBinding.detailedAddressView.getText().toString();
+                        if (CommonUtil.isBlank(content)) {
+                            ToastUtils.showShort(getApplication(), "请输入小区名称");
+                        } else {
+                            getAddressList(true, content);
+                        }
+                    }
+                });
                 communityBinding.confirmView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
@@ -237,9 +270,9 @@ public class UpdateDogOwnerInfoActivity extends BaseActivity {
                                 dogUser.setVillageId(communityBean.getId());
                                 dogUser.setCommunityDept(communityBean.getCommunityDept());
                             }
-                            String detailedAddress = communityBean.getCommunityName();
-                            dogUser.setDetailedAddress(detailedAddress);
-                            binding.detailedAddressView.binding.itemContent.setText(detailedAddress);
+                            String communityAddress = communityBean.getCommunityName();
+//                            dogUser.setDetailedAddress(detailedAddress);
+                            binding.communityAddressView.binding.itemContent.setText(communityAddress);
                             bottomSheetDialog.cancel();
                         }
                     }
@@ -434,6 +467,33 @@ public class UpdateDogOwnerInfoActivity extends BaseActivity {
                 });
     }
 
+    private void getDogUser() {
+        SendRequest.getDogUser(new GenericsCallback<ResultClient<DogUser>>(new JsonGenericsSerializator()) {
+            @Override
+            public void onError(Call call, Exception e, int id) {
+
+            }
+
+            @Override
+            public void onResponse(ResultClient<DogUser> response, int id) {
+                if (response.isSuccess() && response.getData() != null) {
+                    if (response.getData().getUserType() != null &&
+                            (response.getData().getUserType() == DogUser.userType_personal || response.getData().getUserType() == DogUser.userType_organ)) {
+                        if (response.getData().getUserType() == DogUser.userType_personal) {
+                            binding.houseNumberView.setVisibility(View.VISIBLE);
+                            binding.houseContainer.setVisibility(View.VISIBLE);
+
+                        } else if (response.getData().getUserType() == DogUser.userType_organ) {
+
+                        }
+                    }
+                } else {
+                    ToastUtils.showShort(getApplicationContext(), response.getMsg());
+                }
+            }
+        });
+    }
+
 
     //===============================  获取价格、手里单位信息接口  ===================================
 
@@ -484,9 +544,18 @@ public class UpdateDogOwnerInfoActivity extends BaseActivity {
                 return;
             }
 
-            if (CommonUtil.isBlank(dogUser.getDetailedAddress())) {
+            String communityAddress = binding.communityAddressView.binding.itemContent.getText().toString();
+            if (CommonUtil.isBlank(communityAddress)) {
+                ToastUtils.showShort(getApplicationContext(), "请选择所属小区");
+                return;
+            }
+
+            String detailedAddress = binding.detailedAddressView.getText().toString();
+            if (CommonUtil.isBlank(detailedAddress)) {
                 ToastUtils.showShort(getApplicationContext(), "请输入详细地址");
                 return;
+            } else {
+                dogUser.setDetailedAddress(detailedAddress);
             }
 
             String houseNum = binding.houseNumberView.binding.itemEdit.getText().toString();
@@ -708,33 +777,37 @@ public class UpdateDogOwnerInfoActivity extends BaseActivity {
      * @param mediaFileList
      */
     private void uploadFileMulti(List<String> mediaFileList) {
-        LoadingManager.showLoadingDialog(UpdateDogOwnerInfoActivity.this, "上传中...");
-        for (int i = 0; i < mediaFileList.size(); i++) {
-            String filePath = mediaFileList.get(i);
-            Log.i(TAG, "uploadFile: filePath = " + filePath);
-            String fileName = filePath.substring(filePath.lastIndexOf("/") + 1);
-            PutObjectRequest request = new PutObjectRequest();
-            request.setBucketName(Config.huaweiBucketName);
-            request.setObjectKey(fileName);
-            request.setFile(new File(filePath));
-            request.setProgressListener(new ProgressListener() {
-                @Override
-                public void progressChanged(ProgressStatus status) {
-                }
-            });
-            //每上传1MB数据反馈上传进度
-            request.setProgressInterval(1024 * 1024L);
-            PutObjectResult result = UploadFileManager.getInstance().getObsClient().putObject(request);
-            String url = "http://" + Config.huaweiBucketName + "." + Config.huaweiCloudEndPoint + "/" + fileName;
-            Log.i(TAG, "uploadFile: url = " + url);
-            imageList.add(imageAdapter.getList().size() - 1, url);
-            LoadingManager.hideLoadingDialog(UpdateDogOwnerInfoActivity.this);
-            runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-                    imageAdapter.notifyDataSetChanged();
-                }
-            });
+        try {
+            LoadingManager.showLoadingDialog(UpdateDogOwnerInfoActivity.this, "上传中...");
+            for (int i = 0; i < mediaFileList.size(); i++) {
+                String filePath = mediaFileList.get(i);
+                Log.i(TAG, "uploadFile: filePath = " + filePath);
+                String fileName = filePath.substring(filePath.lastIndexOf("/") + 1);
+                PutObjectRequest request = new PutObjectRequest();
+                request.setBucketName(Config.huaweiBucketName);
+                request.setObjectKey(fileName);
+                request.setFile(new File(filePath));
+                request.setProgressListener(new ProgressListener() {
+                    @Override
+                    public void progressChanged(ProgressStatus status) {
+                    }
+                });
+                //每上传1MB数据反馈上传进度
+                request.setProgressInterval(1024 * 1024L);
+                PutObjectResult result = UploadFileManager.getInstance().getObsClient().putObject(request);
+                String url = "http://" + Config.huaweiBucketName + "." + Config.huaweiCloudEndPoint + "/" + fileName;
+                Log.i(TAG, "uploadFile: url = " + url);
+                imageList.add(imageAdapter.getList().size() - 1, url);
+                LoadingManager.hideLoadingDialog(UpdateDogOwnerInfoActivity.this);
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        imageAdapter.notifyDataSetChanged();
+                    }
+                });
+            }
+        } catch (Exception e) {
+            ToastUtils.showShort(getApplication(), "上传失败");
         }
     }
 
@@ -756,7 +829,7 @@ public class UpdateDogOwnerInfoActivity extends BaseActivity {
         window.setContentView(R.layout.house_image_view);
         ImageView back = window.findViewById(R.id.back);
         ImageView imageView = window.findViewById(R.id.imageView);
-        GlideLoader.LoaderHouse(UpdateDogOwnerInfoActivity.this,imageView);
+        GlideLoader.LoaderHouse(UpdateDogOwnerInfoActivity.this, imageView);
         back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
