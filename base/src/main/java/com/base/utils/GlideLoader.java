@@ -49,6 +49,20 @@ public class GlideLoader {
         }
     }
 
+    public static void LoaderHouse(Context context, ImageView view) {
+        try {
+            Glide.with(context)
+                    .load(R.drawable.house)
+                    .centerInside()
+                    .placeholder(R.drawable.placeholder)
+                    .error(R.drawable.placeholder)
+                    .diskCacheStrategy(DiskCacheStrategy.ALL)
+                    .into(view);
+        } catch (Exception e) {
+            e.getMessage();
+        }
+    }
+
     public static void LoderUploadImage(Context context, String url, ImageView view, int round) {
         try {
             Glide.with(context)

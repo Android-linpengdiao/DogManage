@@ -1,6 +1,8 @@
 package com.dog.manage.app.activity;
 
 
+import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -11,11 +13,16 @@ import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
+import android.widget.ImageView;
 import android.widget.RadioGroup;
+import android.widget.TextView;
 
 import androidx.databinding.DataBindingUtil;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.viewpager.widget.ViewPager;
 
 import com.base.manager.DialogManager;
 import com.base.manager.LoadingManager;
@@ -2074,4 +2081,32 @@ public class DogCertificateEditDogOwnerActivity extends BaseActivity {
             return true;
         }
     }
+
+    public void onClickShowHouse(View view) {
+        showHouseImageView();
+    }
+
+    public void showHouseImageView() {
+        AlertDialog dialog = new AlertDialog.Builder(DogCertificateEditDogOwnerActivity.this, AlertDialog.THEME_HOLO_DARK).create();
+        dialog.setCancelable(true);
+        dialog.show();
+        Window window = dialog.getWindow();
+        window.clearFlags(WindowManager.LayoutParams.FLAG_ALT_FOCUSABLE_IM);
+        WindowManager.LayoutParams lp = window.getAttributes();
+        lp.width = WindowManager.LayoutParams.MATCH_PARENT;
+        lp.height = WindowManager.LayoutParams.MATCH_PARENT;
+        window.getDecorView().setBackgroundColor(getResources().getColor(R.color.transparent));
+        window.setAttributes(lp);
+        window.setContentView(R.layout.house_image_view);
+        ImageView back = window.findViewById(R.id.back);
+        ImageView imageView = window.findViewById(R.id.imageView);
+        GlideLoader.LoaderHouse(DogCertificateEditDogOwnerActivity.this,imageView);
+        back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.cancel();
+            }
+        });
+    }
+
 }

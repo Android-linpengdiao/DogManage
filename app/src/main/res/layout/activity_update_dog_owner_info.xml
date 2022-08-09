@@ -179,15 +179,32 @@
                         android:paddingLeft="@dimen/viewPadding"
                         android:paddingRight="@dimen/viewPadding">
 
-                        <com.dog.manage.app.view.TextBoldView
-                            android:id="@+id/houseHintView"
-                            android:layout_width="wrap_content"
+                        <LinearLayout
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="@dimen/dp_20"
                             android:layout_marginBottom="@dimen/dp_17"
-                            android:text="房产证或房屋租赁合同 "
-                            android:textColor="#333333"
-                            android:textSize="@dimen/sp_14" />
+                            android:orientation="horizontal">
+
+                            <com.dog.manage.app.view.TextBoldView
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:text="房产证或房屋租赁合同 "
+                                android:textColor="#333333"
+                                android:textSize="@dimen/sp_14" />
+
+                            <com.dog.manage.app.view.TextBoldView
+                                android:id="@+id/showHouseView"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:gravity="center"
+                                android:onClick="onClickShowHouse"
+                                android:text="拍照示例 "
+                                android:textColor="@color/red"
+                                android:textSize="@dimen/sp_14" />
+                        </LinearLayout>
 
                         <androidx.recyclerview.widget.RecyclerView
                             android:id="@+id/imageRecyclerView"
