@@ -230,6 +230,8 @@ public class APIUrls {
     public final static String project_id = "4d30ef8e43634e9fba859bd0c805188f";
     public final static String huaweiCloudIdCard = "https://" + endpoint + "/v2/" + project_id + "/ocr/id-card";
     public final static String huaweiCloudAuthTokens = "https://iam.cn-north-4.myhuaweicloud.com/v3/auth/tokens";
+    //APP一键登入_初始化接口
+    public final static String accountInit = "https://attestation.apistore.huaweicloud.com/flash/accountInit/v3";
 
     //
     public final static String payment = URL_DOMAIN + "/user/dog/licence/payment";

@@ -915,30 +915,31 @@ public class SendRequest {
 
     /**
      * side 否 String
-     *
+     * <p>
      * front：身份证人像面
      * back：身份证国徽面
      * 如果参数值为空或无该参数，系统自动识别，建议填写，准确率更高。
-     *
+     * <p>
      * return_verification 否 Boolean
-     *
+     * <p>
      * 返回校验身份证号等信息的开关，默认false，可选值如下所示：
-     *
+     * <p>
      * true：返回校验信息
      * false：不返回校验信息
-     *
+     * <p>
      * return_text_location 否 Boolean
-     *
+     * <p>
      * 识别到的文字块的区域位置信息。可选值包括：
-     *
+     * <p>
      * true：返回各个文字块区域
      * false：不返回各个文字块区域
-     *
+     * <p>
      * 如果无该参数，系统默认不返回文字块区域。如果输入参数不是Boolean类型，则会报非法参数错误。
+     *
      * @param image
      * @param call
      */
-    public static void huaweiCloudIdCard(String image,Callback call) {
+    public static void huaweiCloudIdCard(String image, Callback call) {
         Map<String, String> headers = new HashMap<>();
         headers.put("X-Auth-Token", SharedPreferencesUtils.getInstance().getAuthToken());
         headers.put("Content-Type", "application/json");
@@ -947,6 +948,13 @@ public class SendRequest {
         map.put("image", image);
 //        map.put("return_verification", true);
         OkHttpUtils.post().headers(headers).params(map).url(APIUrls.huaweiCloudIdCard).build().execute(call);
+
+    }
+
+    public static void accountInit(Map<String, String> map, Callback call) {
+        Map<String, String> headers = new HashMap<>();
+        headers.put("Content-Type", "application/json");
+        OkHttpUtils.post().headers(headers).params(map).url(APIUrls.accountInit).build().execute(call);
 
     }
 
@@ -1006,6 +1014,7 @@ public class SendRequest {
     public static void createPetArchives(String token, String filePath, Callback call) {
         Map<String, String> map = new HashMap<>();
         map.put("token", token);
+        map.put("recogType", String.valueOf(0));
         String filename = filePath.substring(filePath.lastIndexOf("/") + 1);
         OkHttpUtils.pet().addFile("file", filename, new File(filePath)).params(map).url(APIUrls.createPetArchives).build().execute(call);
 

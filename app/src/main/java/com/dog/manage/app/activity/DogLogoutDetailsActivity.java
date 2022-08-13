@@ -289,7 +289,9 @@ public class DogLogoutDetailsActivity extends BaseActivity {
 
         } else if (checkedRadioButtonId == R.id.radioButton1) {//犬只丢失
 
-            paramsMap.put("cancelImageUrl", GsonUtils.toJson(Arrays.asList(picture1)));
+            if (!CommonUtil.isBlank(picture1)) {
+                paramsMap.put("cancelImageUrl", GsonUtils.toJson(Arrays.asList(picture1)));
+            }
 
             String description = binding.descriptionView.getText().toString();
             if (CommonUtil.isBlank(description)) {

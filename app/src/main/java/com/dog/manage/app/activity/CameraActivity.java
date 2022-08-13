@@ -273,9 +273,9 @@ public class CameraActivity extends BaseActivity {
     private void createPetArchives(String filePath, int requestCode) {
         //recogType	int	识别种类：0（鼻子）、1（正脸），不传默认为0（鼻子）
         int recogType = 0;
-        if (CommonUtil.isBlank(leftFace) || CommonUtil.isBlank(centerFace) || CommonUtil.isBlank(rightFace)) {
+        if (requestCode == request_LeftFace || requestCode == request_CenterFace || requestCode == request_RightFace) {
             recogType = 1;
-        } else if (CommonUtil.isBlank(archivesOne) || CommonUtil.isBlank(archivesTwo) || CommonUtil.isBlank(archivesThree)) {
+        } else if (requestCode == request_ArchivesOne || requestCode == request_ArchivesTwo || requestCode == request_ArchivesThree) {
             recogType = 0;
         }
         SendRequest.createPetArchives(getUserInfo().getAccessToken(), recogType, filePath,

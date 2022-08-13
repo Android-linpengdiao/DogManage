@@ -2,6 +2,7 @@ package com.dog.manage.app.activity;
 
 
 import android.graphics.Color;
+import android.os.Build;
 import android.os.Bundle;
 import android.text.SpannableString;
 import android.text.Spanned;
@@ -19,11 +20,16 @@ import com.base.utils.ToastUtils;
 import com.dog.manage.app.MyClickableSpan;
 import com.dog.manage.app.R;
 import com.dog.manage.app.databinding.ActivityLoginBinding;
+import com.dog.manage.app.utils.AppSigning;
+import com.dog.manage.app.utils.DeviceUtils;
 import com.okhttp.ResultClient;
 import com.okhttp.SendRequest;
 import com.okhttp.callbacks.GenericsCallback;
 import com.okhttp.sample_okhttp.JsonGenericsSerializator;
 
+import java.util.HashMap;
+import java.util.Map;
+import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 
 import cn.jpush.android.api.JPushInterface;
@@ -68,6 +74,40 @@ public class LoginActivity extends BaseActivity {
         binding.privacyView.setText(spannableString);
         binding.privacyView.setMovementMethod(LinkMovementMethod.getInstance());//不设置 没有点击事件
 
+
+        /**
+         * appId	STRING	是	应用的APPID，由控制台创建应用时生成
+         * bundleId	STRING	否	bundleId，IOS必传。iOS项目Bundle Identifier
+         * client	STRING	是	客户端类型，客户端类型，iOS：1，Android：2
+         * device	STRING	是	设备型号
+         * packageName	STRING	否	包名，安卓必传，Android applicationId对应的包名
+         * packageSign	STRING	是	包签名，安卓必传，签名文件MD5值去冒号转小写
+         * randoms	STRING	是	随机串，UUID去除”-”
+         * sign	STRING	是	签名 hmacsha1
+         * version	STRING	是	SDK版本，SDK完整版本号，如2.3.1.0
+         */
+        Map<String, String> paramsMap = new HashMap<>();
+        paramsMap.put("appId", String.valueOf(""));
+        paramsMap.put("client", String.valueOf(2));
+        paramsMap.put("device", Build.DEVICE);
+        paramsMap.put("packageName", getPackageName());
+        paramsMap.put("packageSign", AppSigning.getMD5(this));
+        paramsMap.put("randoms", String.valueOf(UUID.randomUUID().hashCode()).replace("-",""));
+        paramsMap.put("sign", AppSigning.getSha1(this));
+        paramsMap.put("version", Build.VERSION.RELEASE);
+        Log.i(TAG, "onCreate: paramsMap = " + paramsMap.toString());
+        SendRequest.accountInit(paramsMap, new GenericsCallback(new JsonGenericsSerializator()) {
+            @Override
+            public void onError(Call call, Exception e, int id) {
+
+            }
+
+            @Override
+            public void onResponse(Object response, int id) {
+
+            }
+        });
+
     }
 
     public void onClickLogin(View view) {
@@ -111,7 +151,7 @@ public class LoginActivity extends BaseActivity {
                         BaseApplication.getInstance().setUserInfo(response.getData());
                         finishActivity(LoginActivity.class);
                         finish();
-                    }else {
+                    } else {
                         ToastUtils.showShort(getApplicationContext(), "获取用户信息失败");
                     }
                 } else {
@@ -181,4 +221,5 @@ public class LoginActivity extends BaseActivity {
         });
 
     }
+
 }
