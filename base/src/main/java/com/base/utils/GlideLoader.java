@@ -34,6 +34,19 @@ public class GlideLoader {
         }
     }
 
+    public static void LoderImageDefault(Context context, String url, ImageView view, int round) {
+        try {
+            Glide.with(context)
+                    .load(url)
+                    .centerCrop()
+                    .transform(new GlideRoundTransform(context, round))
+                    .diskCacheStrategy(DiskCacheStrategy.ALL)
+                    .into(view);
+        } catch (Exception e) {
+            e.getMessage();
+        }
+    }
+
     public static void LoaderDogCover(Context context, String url, ImageView view, int round) {
         try {
             Glide.with(context)

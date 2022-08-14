@@ -148,11 +148,16 @@ public class DogCertificateEditDogActivity extends BaseActivity {
                                         } else {
                                             getDogById(dog.getDogId());
                                         }
+                                    } else {
+                                        intiView(null, null);
                                     }
 
                                 } else if (type == type_immune) {
-                                    if (dog.getDogId() != 0)
+                                    if (dog.getDogId() != 0) {
                                         getDogById(dog.getDogId());
+                                    } else {
+                                        intiView(null, null);
+                                    }
 
                                 }
                             }
@@ -535,62 +540,147 @@ public class DogCertificateEditDogActivity extends BaseActivity {
     }
 
     private void intiView(Dog data, String adoptNum) {
-        dog = data;
+        if (data!=null) {
+            dog = data;
 
-        //领养状态 0 正常 1 领养
-        dog.setAdoptStatus(CommonUtil.isBlank(adoptNum) ? 0 : 1);
-        dog.setAdoptNum(adoptNum);
+            //领养状态 0 正常 1 领养
+            dog.setAdoptStatus(CommonUtil.isBlank(adoptNum) ? 0 : 1);
+            dog.setAdoptNum(adoptNum);
 
-        //犬只姓名
-        binding.dogNameView.binding.itemEdit.setText(dog.getDogName());
-        //犬只颜色
-        binding.dogColorView.binding.itemContent.setText(dog.getDogColor());
-        //犬只年龄
-        binding.dogAgeView.binding.itemContent.setText(TimeUtils.getTimeDogAgeEdit(dog.getDogAge()));
+            //犬只姓名
+            binding.dogNameView.binding.itemEdit.setText(dog.getDogName());
+            //犬只颜色
+            binding.dogColorView.binding.itemContent.setText(dog.getDogColor());
+            binding.dogColorView.binding.itemArrow.setVisibility(View.GONE);
+            //犬只年龄
+            binding.dogAgeView.binding.itemContent.setText(TimeUtils.getTimeDogAgeEdit(dog.getDogAge()));
+            binding.dogAgeView.binding.itemArrow.setVisibility(View.GONE);
 //        binding.dogAgeView.binding.itemContent.setText(CommonUtil.getDogAge(dog.getDogAge()));
 
-        //犬只性别;0:雌性， 1：雄性
-        if (dog.getDogGender() == 1) {
-            binding.radioButtonMale.setChecked(true);
-        }
-
-        //是否绝育;0：否 1：是
-        if (dog.getSterilization() == 1) {
-            binding.radioButtonSterilization1.setChecked(true);
-            binding.sterilizationProveContainer.setVisibility(View.VISIBLE);
-            GlideLoader.LoderImage(DogCertificateEditDogActivity.this, dog.getSterilizationProve(), binding.testifyView, 6);
-        }
-
-        if (!CommonUtil.isBlank(dog.getDogType())) {
-            binding.petTypeView.binding.itemContent.setText(dog.getDogType());
-        }
-
-        binding.petTypeView.binding.itemContent.setText(dog.getDogType());//犬只品种
-        if (!CommonUtil.isBlank(dog.getNoseprint()))
-            binding.createPetArchivesView.binding.itemContent.setText("已完成采集");//鼻纹信息
-
-        try {
-            //犬只照片
-            List<String> idPhotos = new Gson().fromJson(dog.getDogPhoto(), new TypeToken<List<String>>() {
-            }.getType());
-            if (idPhotos.size() > 0) {
-                GlideLoader.LoderImage(DogCertificateEditDogActivity.this,
-                        idPhotos.size() > 0 ? idPhotos.get(0) : "", binding.leftFaceView, 6);
-                leftFace = idPhotos.get(0);
+            //犬只性别;0:雌性， 1：雄性
+            if (dog.getDogGender() == 1) {
+                binding.radioButtonMale.setChecked(true);
+            }else {
+                binding.radioButtonFemale.setChecked(true);
             }
-            if (idPhotos.size() > 1) {
-                GlideLoader.LoderImage(DogCertificateEditDogActivity.this,
-                        idPhotos.size() > 1 ? idPhotos.get(1) : "", binding.centerFaceView, 6);
-                centerFace = idPhotos.get(1);
+
+            //是否绝育;0：否 1：是
+            if (dog.getSterilization() == 1) {
+                binding.radioButtonSterilization1.setChecked(true);
+                binding.sterilizationProveContainer.setVisibility(View.VISIBLE);
+                GlideLoader.LoderImage(DogCertificateEditDogActivity.this, dog.getSterilizationProve(), binding.testifyView, 6);
+            }else {
+                binding.radioButtonSterilization0.setChecked(true);
+                binding.sterilizationProveContainer.setVisibility(View.GONE);
+                GlideLoader.LoderImageDefault(DogCertificateEditDogActivity.this, null, binding.testifyView, 6);
             }
-            if (idPhotos.size() > 2) {
-                GlideLoader.LoderImage(DogCertificateEditDogActivity.this,
-                        idPhotos.size() > 2 ? idPhotos.get(2) : "", binding.rightFaceView, 6);
-                rightFace = idPhotos.get(2);
+
+            if (!CommonUtil.isBlank(dog.getDogType())) {
+                binding.petTypeView.binding.itemContent.setText(dog.getDogType());
             }
-        } catch (Exception e) {
-            e.getMessage();
+
+            binding.petTypeView.binding.itemContent.setText(dog.getDogType());//犬只品种
+            if (!CommonUtil.isBlank(dog.getNoseprint()))
+                binding.createPetArchivesView.binding.itemContent.setText("已完成采集");//鼻纹信息
+
+            try {
+                //犬只照片
+                List<String> idPhotos = new Gson().fromJson(dog.getDogPhoto(), new TypeToken<List<String>>() {
+                }.getType());
+                if (idPhotos.size() > 0) {
+                    GlideLoader.LoderImage(DogCertificateEditDogActivity.this,
+                            idPhotos.size() > 0 ? idPhotos.get(0) : "", binding.leftFaceView, 6);
+                    leftFace = idPhotos.get(0);
+                }
+                if (idPhotos.size() > 1) {
+                    GlideLoader.LoderImage(DogCertificateEditDogActivity.this,
+                            idPhotos.size() > 1 ? idPhotos.get(1) : "", binding.centerFaceView, 6);
+                    centerFace = idPhotos.get(1);
+                }
+                if (idPhotos.size() > 2) {
+                    GlideLoader.LoderImage(DogCertificateEditDogActivity.this,
+                            idPhotos.size() > 2 ? idPhotos.get(2) : "", binding.rightFaceView, 6);
+                    rightFace = idPhotos.get(2);
+                }
+            } catch (Exception e) {
+                e.getMessage();
+            }
+
+
+            binding.dogNameView.binding.itemEdit.setEnabled(false);
+            binding.dogColorView.binding.itemContent.setEnabled(false);
+            binding.dogAgeView.binding.itemContent.setEnabled(false);
+
+            binding.radioButtonMale.setEnabled(false);
+            binding.radioButtonFemale.setEnabled(false);
+            binding.radioButtonSterilization1.setEnabled(false);
+            binding.radioButtonSterilization0.setEnabled(false);
+            binding.testifyView.setEnabled(false);
+
+            binding.leftFaceView.setEnabled(false);
+            binding.centerFaceView.setEnabled(false);
+            binding.rightFaceView.setEnabled(false);
+
+            binding.petTypeView.binding.itemInfo.setEnabled(false);
+            binding.createPetArchivesView.binding.itemInfo.setEnabled(false);
+
+        }else {
+            dog = new Dog();
+
+            //领养状态 0 正常 1 领养
+            dog.setAdoptStatus(CommonUtil.isBlank(adoptNum) ? 0 : 1);
+            dog.setAdoptNum(adoptNum);
+
+            //犬只姓名
+            binding.dogNameView.binding.itemEdit.setText("");
+            //犬只颜色
+            binding.dogColorView.binding.itemContent.setText("选择犬只毛色");
+            binding.dogColorView.binding.itemArrow.setVisibility(View.VISIBLE);
+            //犬只年龄
+            binding.dogAgeView.binding.itemContent.setText("选择犬只年龄");
+            binding.dogAgeView.binding.itemArrow.setVisibility(View.VISIBLE);
+//        binding.dogAgeView.binding.itemContent.setText(CommonUtil.getDogAge(dog.getDogAge()));
+
+            //犬只性别;0:雌性， 1：雄性
+            binding.radioButtonFemale.setChecked(true);
+
+            //是否绝育;0：否 1：是
+            binding.radioButtonSterilization0.setChecked(true);
+            binding.sterilizationProveContainer.setVisibility(View.GONE);
+            GlideLoader.LoderImageDefault(DogCertificateEditDogActivity.this, null, binding.testifyView, 6);
+
+
+            binding.petTypeView.binding.itemContent.setText("");//犬只品种
+            binding.createPetArchivesView.binding.itemContent.setText("");//鼻纹信息
+
+            leftFace = null;
+            centerFace = null;
+            rightFace = null;
+            GlideLoader.LoderImageDefault(DogCertificateEditDogActivity.this,leftFace, binding.leftFaceView, 6);
+            GlideLoader.LoderImageDefault(DogCertificateEditDogActivity.this,leftFace, binding.centerFaceView, 6);
+            GlideLoader.LoderImageDefault(DogCertificateEditDogActivity.this,leftFace, binding.rightFaceView, 6);
+
+
+            binding.dogNameView.binding.itemEdit.setEnabled(true);
+            binding.dogColorView.binding.itemContent.setEnabled(true);
+            binding.dogAgeView.binding.itemContent.setEnabled(true);
+
+            binding.radioButtonMale.setEnabled(true);
+            binding.radioButtonFemale.setEnabled(true);
+            binding.radioButtonSterilization1.setEnabled(true);
+            binding.radioButtonSterilization0.setEnabled(true);
+            binding.testifyView.setEnabled(true);
+
+            binding.leftFaceView.setEnabled(true);
+            binding.centerFaceView.setEnabled(true);
+            binding.rightFaceView.setEnabled(true);
+
+            binding.petTypeView.binding.itemInfo.setEnabled(true);
+            binding.createPetArchivesView.binding.itemInfo.setEnabled(true);
+
         }
+
+
 
     }
 
