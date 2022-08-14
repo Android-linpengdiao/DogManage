@@ -704,8 +704,27 @@ public class DogCertificateEditDogActivity extends BaseActivity {
         map.put("dogType", dog.getDogType());//犬只品种
         map.put("noseprint", dog.getNoseprint());//鼻纹信息
 
-        if (dog.getId() > 0)
+        if (dog.getId() > 0) {
             map.put("id", dog.getId() + "");//
+            if (type == type_immune) {
+                Bundle bundle = new Bundle();
+                bundle.putInt("dogId", dog.getId());
+                bundle.putInt("addressId", addressId);
+                openActivity(DogImmuneHospitalActivity.class, bundle);
+                return;
+
+            } else if (type == type_certificate) {
+                Bundle bundle = new Bundle();
+                bundle.putInt("type", type);
+                bundle.putInt("dogId", dog.getId());
+                bundle.putInt("addressId", addressId);
+                bundle.putString("dogType", dog.getDogType());
+                bundle.putString("immunePhoto", centerFace);
+                openActivity(DogCertificateEditSubmitActivity.class, bundle);
+                return;
+
+            }
+        }
 
         map.put("adoptStatus", dog.getAdoptStatus() + "");//领养状态 0 正常 1 领养
         if (dog.getAdoptNum() != null)
