@@ -606,23 +606,43 @@ public class DogCertificateEditDogActivity extends BaseActivity {
                 e.getMessage();
             }
 
+            if (CommonUtil.isBlank(adoptNum)) {
+                binding.dogNameView.binding.itemEdit.setEnabled(false);
+                binding.dogColorView.binding.itemContent.setEnabled(false);
+                binding.dogAgeView.binding.itemContent.setEnabled(false);
 
-            binding.dogNameView.binding.itemEdit.setEnabled(false);
-            binding.dogColorView.binding.itemContent.setEnabled(false);
-            binding.dogAgeView.binding.itemContent.setEnabled(false);
+                binding.radioButtonMale.setEnabled(false);
+                binding.radioButtonFemale.setEnabled(false);
+                binding.radioButtonSterilization1.setEnabled(false);
+                binding.radioButtonSterilization0.setEnabled(false);
+                binding.testifyView.setEnabled(false);
 
-            binding.radioButtonMale.setEnabled(false);
-            binding.radioButtonFemale.setEnabled(false);
-            binding.radioButtonSterilization1.setEnabled(false);
-            binding.radioButtonSterilization0.setEnabled(false);
-            binding.testifyView.setEnabled(false);
+                binding.leftFaceView.setEnabled(false);
+                binding.centerFaceView.setEnabled(false);
+                binding.rightFaceView.setEnabled(false);
 
-            binding.leftFaceView.setEnabled(false);
-            binding.centerFaceView.setEnabled(false);
-            binding.rightFaceView.setEnabled(false);
+                binding.petTypeView.binding.itemInfo.setEnabled(false);
+                binding.createPetArchivesView.binding.itemInfo.setEnabled(false);
 
-            binding.petTypeView.binding.itemInfo.setEnabled(false);
-            binding.createPetArchivesView.binding.itemInfo.setEnabled(false);
+            }else {
+                binding.dogNameView.binding.itemEdit.setEnabled(true);
+                binding.dogColorView.binding.itemContent.setEnabled(false);
+                binding.dogAgeView.binding.itemContent.setEnabled(false);
+
+                binding.radioButtonMale.setEnabled(false);
+                binding.radioButtonFemale.setEnabled(false);
+                binding.radioButtonSterilization1.setEnabled(false);
+                binding.radioButtonSterilization0.setEnabled(false);
+                binding.testifyView.setEnabled(false);
+
+                binding.leftFaceView.setEnabled(true);
+                binding.centerFaceView.setEnabled(true);
+                binding.rightFaceView.setEnabled(true);
+
+                binding.petTypeView.binding.itemInfo.setEnabled(true);
+                binding.createPetArchivesView.binding.itemInfo.setEnabled(true);
+
+            }
 
         }else {
             dog = new Dog();

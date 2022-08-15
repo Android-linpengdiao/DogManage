@@ -104,7 +104,11 @@ public class DogDetailsThemeActivity extends BaseActivity {
                     binding.dogGenderView.setText("犬只性别：" + (dogDetail.getDogGender() == 0 ? "雌性" : "雄性"));
                     binding.dogShapeView.setText("犬只体型：" + (dogDetail.getDogShape() == 0 ? "小型" : "中型"));
                     if (dogDetail.getImmuneStatus() == 1) {
-                        binding.immuneStatus.setText("免疫情况：已免疫" + "，" + dogDetail.getImmuneExprie() + "到期");
+                        if (!CommonUtil.isBlank(dogDetail.getImmuneExprie())) {
+                            binding.immuneStatus.setText("免疫情况：已免疫" + "，" + dogDetail.getImmuneExprie() + "到期");
+                        }else {
+                            binding.immuneStatus.setText("免疫情况：已免疫");
+                        }
                     } else {
                         binding.immuneStatus.setText("免疫情况：未免疫");
                     }
