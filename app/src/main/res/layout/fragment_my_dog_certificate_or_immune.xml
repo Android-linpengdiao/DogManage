@@ -450,6 +450,17 @@
                                 android:textColor="@color/black"
                                 android:textSize="@dimen/sp_12" />
 
+                            <TextView
+                                android:id="@+id/immuneAdoptStatusView"
+                                android:layout_width="wrap_content"
+                                android:layout_height="match_parent"
+                                android:gravity="center_vertical"
+                                android:text="(领养)"
+                                android:textColor="#F14343"
+                                android:textSize="@dimen/certificateSize"
+                                android:visibility="gone"
+                                tools:visibility="visible" />
+
                         </LinearLayout>
 
                         <LinearLayout

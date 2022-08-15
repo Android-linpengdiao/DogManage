@@ -770,9 +770,11 @@ public class DogCertificateEditDogActivity extends BaseActivity {
             dog.setSterilization(0);
         } else if (sterilizationCheckedRadioButtonId == R.id.radioButtonSterilization1) {//已绝育
             dog.setSterilization(1);
-            if (CommonUtil.isBlank(dog.getSterilizationProve())) {
-                ToastUtils.showShort(getApplicationContext(), "请上传绝育证明");
-                return;
+            if (dog.getAdoptNum() == null) {
+                if (CommonUtil.isBlank(dog.getSterilizationProve())) {
+                    ToastUtils.showShort(getApplicationContext(), "请上传绝育证明");
+                    return;
+                }
             }
 
         }
@@ -814,6 +816,10 @@ public class DogCertificateEditDogActivity extends BaseActivity {
         map.put("dogType", dog.getDogType());//犬只品种
         map.put("noseprint", dog.getNoseprint());//鼻纹信息
 
+        map.put("adoptStatus", dog.getAdoptStatus() + "");//领养状态 0 正常 1 领养
+        if (dog.getAdoptNum() != null)
+            map.put("adoptNum", dog.getAdoptNum());//领养犬只编号
+
         if (dog.getId() > 0) {
             map.put("id", dog.getId() + "");//
             if (type == type_immune) {
@@ -823,7 +829,7 @@ public class DogCertificateEditDogActivity extends BaseActivity {
                 openActivity(DogImmuneHospitalActivity.class, bundle);
                 return;
 
-            } else if (type == type_certificate) {
+            } else if (type == type_certificate && dog.getAdoptNum() == null) {
                 Bundle bundle = new Bundle();
                 bundle.putInt("type", type);
                 bundle.putInt("dogId", dog.getId());
@@ -835,10 +841,6 @@ public class DogCertificateEditDogActivity extends BaseActivity {
 
             }
         }
-
-        map.put("adoptStatus", dog.getAdoptStatus() + "");//领养状态 0 正常 1 领养
-        if (dog.getAdoptNum() != null)
-            map.put("adoptNum", dog.getAdoptNum());//领养犬只编号
 
         if (type == type_examined) {
             map.put("paperLicence", paperLicence);//犬证图片地址
