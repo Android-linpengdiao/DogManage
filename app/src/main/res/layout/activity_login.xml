@@ -135,9 +135,11 @@
         </LinearLayout>
 
         <TextView
+            android:id="@+id/switch_login"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/dp_91"
+            android:onClick="onClickBackSwitchLogin"
             android:gravity="center"
             android:text="本机号码一键登录"
             android:textColor="#273154"

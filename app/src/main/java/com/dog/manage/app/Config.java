@@ -17,5 +17,5 @@ public class Config {
     public final static String BuglyAppID = "e8dedca0d5";
 
     //闪验
-    public final static String ShanyanAppID = "bCACikkm";
+    public final static String ShanyanAppID = "fkUfi2zj";
 }

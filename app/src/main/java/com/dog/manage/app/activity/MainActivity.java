@@ -56,7 +56,7 @@ public class MainActivity extends BaseActivity {
         setStatusBarHeight();
         addActivity(this);
         String registrationID = JPushInterface.getRegistrationID(this);
-        Log.i(TAG, "onClickLogin: registrationID = "+registrationID);
+        Log.i(TAG, "onClickLogin: registrationID = " + registrationID);
         if (checkUserRank(getApplicationContext())) {
             JPushInterface.setAlias(this, getUserInfo().getId(), String.valueOf(getUserInfo().getId()));
         }
@@ -106,11 +106,14 @@ public class MainActivity extends BaseActivity {
                 } else if (position == 8) {
                     openActivity(PoliciesActivity.class);
                 } else {
-                    if (checkUserRank(getApplicationContext(), true)) {
+                    if (checkUserRank(getApplicationContext(), false)) {
                         Bundle bundle = new Bundle();
                         bundle.putInt("type", position);
                         bundle.putString("title", frameItemAdapter.getList().get(position));
                         openActivity(DogManageWorkflowActivity.class, bundle);
+                    } else {
+                        permissionsManager();
+
                     }
                 }
 
@@ -195,8 +198,8 @@ public class MainActivity extends BaseActivity {
                         @Override
                         public void OnBannerClick(int position) {
                             Bundle bundle = new Bundle();
-                            bundle.putSerializable("policiesBean",response.getData());
-                            openActivity(AdvertiseActivity.class,bundle);
+                            bundle.putSerializable("policiesBean", response.getData());
+                            openActivity(AdvertiseActivity.class, bundle);
                         }
                     });
                     List<String> imageList = new ArrayList<>();
@@ -238,15 +241,21 @@ public class MainActivity extends BaseActivity {
     }
 
     public void onClickMessage(View view) {
-        if (checkUserRank(getApplicationContext(), true)) {
+        if (checkUserRank(getApplicationContext(), false)) {
             openActivity(MessageActivity.class);
+
+        } else {
+            permissionsManager();
 
         }
     }
 
     public void onClickUser(View view) {
-        if (checkUserRank(getApplicationContext(), true)) {
+        if (checkUserRank(getApplicationContext(), false)) {
             openActivity(UserHomeActivity.class);
+        } else {
+            permissionsManager();
+
         }
 
     }
@@ -313,6 +322,8 @@ public class MainActivity extends BaseActivity {
                     try {
                         JSONObject jsonObject = new JSONObject(result);
                         if (!CommonUtil.isBlank(jsonObject.optString("token"))) {
+                            Log.i(TAG, "getOneKeyLoginStatus: " + jsonObject.optString("token"));
+
                         }
                     } catch (JSONException e) {
                         e.printStackTrace();

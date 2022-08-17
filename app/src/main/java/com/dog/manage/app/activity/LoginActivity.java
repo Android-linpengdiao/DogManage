@@ -1,6 +1,7 @@
 package com.dog.manage.app.activity;
 
 
+import android.Manifest;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
@@ -11,21 +12,30 @@ import android.text.style.ForegroundColorSpan;
 import android.util.Log;
 import android.view.View;
 
+import androidx.annotation.NonNull;
+
 import com.base.BaseApplication;
 import com.base.BaseData;
 import com.base.UserInfo;
 import com.base.manager.LoadingManager;
 import com.base.utils.CommonUtil;
 import com.base.utils.ToastUtils;
+import com.chuanglan.shanyan_sdk.OneKeyLoginManager;
+import com.chuanglan.shanyan_sdk.listener.OneKeyLoginListener;
+import com.chuanglan.shanyan_sdk.listener.OpenLoginAuthListener;
 import com.dog.manage.app.MyClickableSpan;
 import com.dog.manage.app.R;
 import com.dog.manage.app.databinding.ActivityLoginBinding;
+import com.dog.manage.app.login.ConfigUtils;
 import com.dog.manage.app.utils.AppSigning;
 import com.dog.manage.app.utils.DeviceUtils;
 import com.okhttp.ResultClient;
 import com.okhttp.SendRequest;
 import com.okhttp.callbacks.GenericsCallback;
 import com.okhttp.sample_okhttp.JsonGenericsSerializator;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -37,6 +47,8 @@ import io.reactivex.rxjava3.core.Observable;
 import io.reactivex.rxjava3.functions.Consumer;
 import okhttp3.Call;
 import okhttp3.Request;
+import pub.devrel.easypermissions.AfterPermissionGranted;
+import pub.devrel.easypermissions.EasyPermissions;
 
 public class LoginActivity extends BaseActivity {
 
@@ -220,6 +232,82 @@ public class LoginActivity extends BaseActivity {
             }
         });
 
+    }
+
+    public void onClickBackSwitchLogin(View view) {
+        permissionsManager();
+    }
+
+
+    private static final int requestCode = 1100;
+    private String[] permissions = {
+            Manifest.permission.READ_PHONE_STATE,
+            Manifest.permission.WRITE_EXTERNAL_STORAGE,
+            Manifest.permission.READ_EXTERNAL_STORAGE
+    };
+
+    @AfterPermissionGranted(requestCode)
+    private void permissionsManager() {
+        if (EasyPermissions.hasPermissions(getApplicationContext(), permissions)) {
+            OneKeyLoginManager.getInstance().setAuthThemeConfig(ConfigUtils.getCJSConfig(getApplicationContext()), ConfigUtils.getCJSConfig(getApplicationContext()));
+            openLoginActivity(true);
+
+        } else {
+            EasyPermissions.requestPermissions(this, "请同意下面的权限", requestCode, permissions);
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        EasyPermissions.onRequestPermissionsResult(requestCode, permissions, grantResults, this);
+    }
+
+
+    /**
+     * ***************************** 一键登录 **********************************
+     */
+
+    private void openLoginActivity(boolean show) {
+        //拉取授权页方法
+        OneKeyLoginManager.getInstance().openLoginAuth(false, new OpenLoginAuthListener() {
+            @Override
+            public void getOpenLoginAuthStatus(int code, String result) {
+                Log.i(TAG, "getOpenLoginAuthStatus: " + result);
+                if (1000 == code) {
+                    //拉起授权页成功
+                } else {
+                    //拉起授权页失败
+                    try {
+                        JSONObject object = new JSONObject(result);
+                        if (show) {
+                            ToastUtils.showShort(LoginActivity.this, object.optString("innerDesc"));
+                        }
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        }, new OneKeyLoginListener() {
+            @Override
+            public void getOneKeyLoginStatus(int code, String result) {
+                if (1011 == code) {
+
+                    return;
+                } else if (1000 == code) {
+                    OneKeyLoginManager.getInstance().finishAuthActivity();
+                    try {
+                        JSONObject jsonObject = new JSONObject(result);
+                        if (!CommonUtil.isBlank(jsonObject.optString("token"))) {
+                            Log.i(TAG, "getOneKeyLoginStatus: "+jsonObject.optString("token"));
+
+                        }
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        });
     }
 
 }

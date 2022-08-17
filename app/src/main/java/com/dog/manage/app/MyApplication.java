@@ -49,7 +49,7 @@ public class MyApplication extends BaseApplication {
         //初始化城市
         CityManager.getInstance().setMapData();
 
-        if (getSharedPreferences("sp_data", Context.MODE_PRIVATE).getBoolean("appService", false)) {
+        if (getSharedPreferences("sp_data", Context.MODE_PRIVATE).getBoolean("appService", true)) {
             initShanyanSDK();
             JPushInterface.setDebugMode(false);
             JPushInterface.init(this);
