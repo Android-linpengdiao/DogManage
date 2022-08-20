@@ -340,6 +340,8 @@ public class UpdateDogOwnerInfoActivity extends BaseActivity {
                             if (communitySelectAdapter.getList().size() == response.getTotal()) {
                                 communityBinding.refreshLayout.setNoMoreData(true);
                             }
+                            communityBinding.emptyView.setVisibility(communitySelectAdapter.getList().size() > 0 ? View.GONE : View.VISIBLE);
+                            communityBinding.emptyView.setText("暂无数据～");
 
                         } else {
                             ToastUtils.showShort(getApplicationContext(), response.getMessage());
@@ -394,9 +396,12 @@ public class UpdateDogOwnerInfoActivity extends BaseActivity {
                             if (areaSelectAdapter.getList().size() == response.getTotal()) {
                                 addressBinding.refreshLayout.setNoMoreData(true);
                             }
+                            addressBinding.emptyView.setVisibility(areaSelectAdapter.getList().size() > 0 ? View.GONE : View.VISIBLE);
+                            addressBinding.emptyView.setText("暂无数据～");
 
                         } else {
                             ToastUtils.showShort(getApplicationContext(), response.getMessage());
+
                         }
                     }
                 });
