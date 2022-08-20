@@ -99,6 +99,7 @@ public class DogDetail implements Serializable {
 
     private Integer addressId;//地址id
     private Integer leaveId;//领养犬只id
+//    private Integer dogLeaveNum;//领养犬只编号
 
     @NoArgsConstructor
     @Data

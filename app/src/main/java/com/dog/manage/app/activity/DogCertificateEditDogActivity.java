@@ -821,7 +821,9 @@ public class DogCertificateEditDogActivity extends BaseActivity {
             map.put("adoptNum", dog.getAdoptNum());//领养犬只编号
 
         if (dog.getId() > 0) {
-            map.put("id", dog.getId() + "");//
+            if (dog.getAdoptNum() == null) {
+                map.put("id", dog.getId() + "");//犬只Id
+            }
             if (type == type_immune) {
                 Bundle bundle = new Bundle();
                 bundle.putInt("dogId", dog.getId());

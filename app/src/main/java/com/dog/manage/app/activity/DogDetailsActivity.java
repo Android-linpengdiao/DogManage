@@ -98,16 +98,20 @@ public class DogDetailsActivity extends BaseActivity {
                     binding.idNumView.setText("犬只编号：" + dogDetail.getIdNum());
                     binding.dogGenderView.setText("犬只性别：" + (dogDetail.getDogGender() == 0 ? "雌性" : "雄性"));
                     binding.dogShapeView.setText("犬只体型：" + (dogDetail.getDogShape() == 0 ? "小型" : "中型"));
-                    if (dogDetail.getImmuneStatus() == 1) {
-                        if (!CommonUtil.isBlank(dogDetail.getImmuneExprie())) {
-                            binding.immuneStatus.setText("免疫情况：已免疫" + "，" + dogDetail.getImmuneExprie() + "到期");
-                        }else {
-                            binding.immuneStatus.setText("免疫情况：已免疫");
-                        }
-                    } else {
-                        binding.immuneStatus.setText("免疫情况：未免疫");
-                    }
-                    binding.sterilizationView.setText("绝育情况：" + (dogDetail.getSterilization() == 0 ? "未绝育" : "已绝育"));
+
+                    binding.immuneStatus.setText("免疫情况：已免疫");
+                    binding.sterilizationView.setText("绝育情况：" + "已绝育");
+
+//                    if (dogDetail.getImmuneStatus() == 1) {
+//                        if (!CommonUtil.isBlank(dogDetail.getImmuneExprie())) {
+//                            binding.immuneStatus.setText("免疫情况：已免疫" + "，" + dogDetail.getImmuneExprie() + "到期");
+//                        }else {
+//                            binding.immuneStatus.setText("免疫情况：已免疫");
+//                        }
+//                    } else {
+//                        binding.immuneStatus.setText("免疫情况：未免疫");
+//                    }
+//                    binding.sterilizationView.setText("绝育情况：" + (dogDetail.getSterilization() == 0 ? "未绝育" : "已绝育"));
 //                    GlideLoader.LoderImage(DogDetailsActivity.this, dogDetail.getDogPhoto(), binding.coverView);
                     try {
                         List<String> imageList = new Gson().fromJson(dogDetail.getDogPhoto(), new TypeToken<List<String>>() {
