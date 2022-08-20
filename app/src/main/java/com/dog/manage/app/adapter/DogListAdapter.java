@@ -39,15 +39,27 @@ public class DogListAdapter extends BaseRecyclerAdapter<Dog, ItemTextBinding> {
 
     @Override
     protected void onBindItem(ItemTextBinding binding, Dog dataBean, int position) {
+
         if (type == 1) {
             if (dataBean.getType() != null && dataBean.getType() == 2) {
-                binding.titleView.setText(dataBean.getDogType() + (dataBean.getDogNum() != null ? "  " + "领养编号" + ":" + dataBean.getDogNum() : ""));
+                binding.titleView.setText(dataBean.getDogType() + (dataBean.getIdNum() != null ? "  " + "领养编号" + ":" + dataBean.getIdNum() : ""));
             } else {
-                binding.titleView.setText(dataBean.getDogType() + (dataBean.getIdNum() != null ? "  " + "免疫证号" + ":" + dataBean.getIdNum() : ""));
+                binding.titleView.setText(dataBean.getDogType());
             }
         } else {
-            binding.titleView.setText(dataBean.getDogType() + (dataBean.getIdNum() != null ? "  " + "犬证号" + ":" + dataBean.getIdNum() : ""));
+            binding.titleView.setText(dataBean.getDogType());
         }
+
+//        if (type == 1) {
+//            if (dataBean.getType() != null && dataBean.getType() == 2) {
+//                binding.titleView.setText(dataBean.getDogType() + (dataBean.getDogNum() != null ? "  " + "领养编号" + ":" + dataBean.getDogNum() : ""));
+//            } else {
+//                binding.titleView.setText(dataBean.getDogType() + (dataBean.getIdNum() != null ? "  " + "免疫证号" + ":" + dataBean.getIdNum() : ""));
+//            }
+//        } else {
+//            binding.titleView.setText(dataBean.getDogType() + (dataBean.getIdNum() != null ? "  " + "犬证号" + ":" + dataBean.getIdNum() : ""));
+//        }
+
 //        binding.titleView.setText(dataBean.getDogType() + (dataBean.getIdNum() != null ? "  " + (type == 1 ? "免疫证号" : "犬证号") + "-" + dataBean.getIdNum() : ""));
         binding.titleView.setTypeface(position == done ? Typeface.defaultFromStyle(Typeface.BOLD) : Typeface.defaultFromStyle(Typeface.NORMAL));
 //        binding.doneView.setVisibility(position == done ? View.VISIBLE : View.GONE);

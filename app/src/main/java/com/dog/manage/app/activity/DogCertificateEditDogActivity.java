@@ -540,7 +540,7 @@ public class DogCertificateEditDogActivity extends BaseActivity {
     }
 
     private void intiView(Dog data, String adoptNum) {
-        if (data!=null) {
+        if (data != null) {
             dog = data;
 
             //领养状态 0 正常 1 领养
@@ -560,7 +560,7 @@ public class DogCertificateEditDogActivity extends BaseActivity {
             //犬只性别;0:雌性， 1：雄性
             if (dog.getDogGender() == 1) {
                 binding.radioButtonMale.setChecked(true);
-            }else {
+            } else {
                 binding.radioButtonFemale.setChecked(true);
             }
 
@@ -569,7 +569,7 @@ public class DogCertificateEditDogActivity extends BaseActivity {
                 binding.radioButtonSterilization1.setChecked(true);
                 binding.sterilizationProveContainer.setVisibility(View.VISIBLE);
                 GlideLoader.LoderImage(DogCertificateEditDogActivity.this, dog.getSterilizationProve(), binding.testifyView, 6);
-            }else {
+            } else {
                 binding.radioButtonSterilization0.setChecked(true);
                 binding.sterilizationProveContainer.setVisibility(View.GONE);
                 GlideLoader.LoderImageDefault(DogCertificateEditDogActivity.this, null, binding.testifyView, 6);
@@ -624,7 +624,12 @@ public class DogCertificateEditDogActivity extends BaseActivity {
                 binding.petTypeView.binding.itemInfo.setEnabled(false);
                 binding.createPetArchivesView.binding.itemInfo.setEnabled(false);
 
-            }else {
+            } else {
+
+                //领养默认已免疫、已绝育
+                binding.radioButtonSterilization1.setChecked(true);
+                binding.sterilizationProveContainer.setVisibility(View.GONE);
+
                 binding.dogNameView.binding.itemEdit.setEnabled(true);
                 binding.dogColorView.binding.itemContent.setEnabled(false);
                 binding.dogAgeView.binding.itemContent.setEnabled(false);
@@ -644,7 +649,7 @@ public class DogCertificateEditDogActivity extends BaseActivity {
 
             }
 
-        }else {
+        } else {
             dog = new Dog();
 
             //领养状态 0 正常 1 领养
@@ -676,9 +681,9 @@ public class DogCertificateEditDogActivity extends BaseActivity {
             leftFace = null;
             centerFace = null;
             rightFace = null;
-            GlideLoader.LoderImageDefault(DogCertificateEditDogActivity.this,leftFace, binding.leftFaceView, 6);
-            GlideLoader.LoderImageDefault(DogCertificateEditDogActivity.this,leftFace, binding.centerFaceView, 6);
-            GlideLoader.LoderImageDefault(DogCertificateEditDogActivity.this,leftFace, binding.rightFaceView, 6);
+            GlideLoader.LoderImageDefault(DogCertificateEditDogActivity.this, leftFace, binding.leftFaceView, 6);
+            GlideLoader.LoderImageDefault(DogCertificateEditDogActivity.this, leftFace, binding.centerFaceView, 6);
+            GlideLoader.LoderImageDefault(DogCertificateEditDogActivity.this, leftFace, binding.rightFaceView, 6);
 
 
             binding.dogNameView.binding.itemEdit.setEnabled(true);
@@ -699,7 +704,6 @@ public class DogCertificateEditDogActivity extends BaseActivity {
             binding.createPetArchivesView.binding.itemInfo.setEnabled(true);
 
         }
-
 
 
     }

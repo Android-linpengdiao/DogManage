@@ -106,6 +106,10 @@ public class CameraActivity extends AppCompatActivity {
         initParams();
     }
 
+    public void onClickBack(View view) {
+        finish();
+    }
+
     @Override
     protected void onStart() {
         super.onStart();

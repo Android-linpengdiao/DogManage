@@ -99,7 +99,7 @@ public class DogDetailsActivity extends BaseActivity {
                     binding.leaveCenterView.setText(dogDetail.getLeaveCenter());
                     binding.centerAddressView.setText(dogDetail.getCenterAddress());
                     binding.phoneView.setText(dogDetail.getPhone());
-                    binding.idNumView.setText("犬只编号：" + dogDetail.getIdNum());
+                    binding.idNumView.setText("犬只编号：" + dogDetail.getDogLeaveNum());
                     binding.dogGenderView.setText("犬只性别：" + (dogDetail.getDogGender() == 0 ? "雌性" : "雄性"));
                     binding.dogShapeView.setText("犬只体型：" + (dogDetail.getDogShape() == 0 ? "小型" : "中型"));
 

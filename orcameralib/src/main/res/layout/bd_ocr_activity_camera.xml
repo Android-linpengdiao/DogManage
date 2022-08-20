@@ -3,7 +3,8 @@
   -->
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <include
         android:id="@+id/take_picture_container"
@@ -24,5 +25,16 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:visibility="gone" />
+
+    <ImageView
+        android:id="@+id/item_icon_left"
+        android:layout_width="@dimen/dp_42"
+        android:layout_height="@dimen/dp_42"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="@dimen/dp_6"
+        android:onClick="onClickBack"
+        android:padding="@dimen/dp_10"
+        android:src="@drawable/arrow_right_right_m"
+        app:tint="@color/white" />
 
 </RelativeLayout>

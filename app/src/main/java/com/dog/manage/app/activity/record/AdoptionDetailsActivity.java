@@ -86,7 +86,11 @@ public class AdoptionDetailsActivity extends BaseActivity {
         binding.container.setVisibility(View.VISIBLE);
         binding.bottomView.setVisibility(View.VISIBLE);
         recordAdoption = dataBean;
-        binding.dogNameView.setText(dataBean.getDogName() + "|" + dataBean.getDogColor() + "|" + CommonUtil.getDogAge(dataBean.getDogAge()));
+        binding.dogNameView.setText((!CommonUtil.isBlank(dataBean.getDogName()) ? dataBean.getDogName() : "--")
+                + "|"
+                + (!CommonUtil.isBlank(dataBean.getDogColor()) ? dataBean.getDogColor() : "--")
+                + "|"
+                + CommonUtil.getDogAge(dataBean.getDogAge()));
         binding.acceptUnitView.setText(dataBean.getAcceptUnit());
         binding.acceptUnitAddressView.setText(dataBean.getAcceptUnitAddress());
         try {
