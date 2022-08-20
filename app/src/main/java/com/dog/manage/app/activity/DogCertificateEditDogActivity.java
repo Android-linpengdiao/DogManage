@@ -144,7 +144,7 @@ public class DogCertificateEditDogActivity extends BaseActivity {
                                 if (type == type_certificate) {
                                     if (dog.getDogId() != 0) {
                                         if (dog.getType() != null && dog.getType() == 2) {
-                                            getAdoptNumDetail(dog.getIdNum());
+                                            getAdoptNumDetail(dog.getDogNum());
                                         } else {
                                             getDogById(dog.getDogId());
                                         }

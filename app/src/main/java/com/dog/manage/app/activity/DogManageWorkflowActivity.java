@@ -82,56 +82,6 @@ public class DogManageWorkflowActivity extends BaseActivity {
             bundle.putInt("type", DogCertificateEditDogOwnerActivity.type_certificate);
             openActivity(DogCertificateEditDogOwnerActivity.class, bundle);
 
-//            JSONObject jsonObject = new JSONObject();
-//            try {
-//                JSONObject identity = new JSONObject();
-//
-//                JSONArray methods = new JSONArray();
-//                methods.put("password");
-//                identity.put("methods", methods);
-//
-//                JSONObject password = new JSONObject();
-//
-//                JSONObject user = new JSONObject();
-//                user.put("name", "xingchongwangguo");
-//                user.put("password", "xingchongwangguo123456");
-//
-//                JSONObject domain = new JSONObject();
-//                domain.put("name", "xingchongwangguo");
-//
-//                user.put("domain", domain);
-//
-//                password.put("user", user);
-//
-//                identity.put("password", password);
-//                jsonObject.put("identity",identity);
-//
-//
-//
-//                JSONObject scope = new JSONObject();
-//
-//                JSONObject project = new JSONObject();
-//                project.put("name","cn-north-4");
-//                scope.put("project",project);
-//
-//                jsonObject.put("scope",scope);
-//
-//
-//            } catch (JSONException e) {
-//                e.printStackTrace();
-//            }
-//            SendRequest.huaweiCloudAuthTokens(jsonObject.toString(), new GenericsCallback(new JsonGenericsSerializator()) {
-//                @Override
-//                public void onError(Call call, Exception e, int id) {
-//
-//                }
-//
-//                @Override
-//                public void onResponse(Object response, int id) {
-//
-//                }
-//            });
-
         } else if (type == 1) {
             Bundle bundle = new Bundle();
             bundle.putInt("type", DogCertificateEditDogOwnerActivity.type_immune);

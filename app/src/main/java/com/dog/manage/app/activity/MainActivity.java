@@ -8,6 +8,9 @@ import android.view.View;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.GridLayoutManager;
 
+import com.base.BaseApplication;
+import com.base.UserInfo;
+import com.base.manager.LoadingManager;
 import com.base.utils.CommonUtil;
 import com.base.utils.PermissionUtils;
 import com.base.utils.ToastUtils;
@@ -17,6 +20,7 @@ import com.chuanglan.shanyan_sdk.listener.OneKeyLoginListener;
 import com.chuanglan.shanyan_sdk.listener.OpenLoginAuthListener;
 import com.cjt2325.camera.CameraActivity;
 import com.cjt2325.camera.JCameraView;
+import com.dog.manage.app.Config;
 import com.dog.manage.app.R;
 import com.dog.manage.app.adapter.FrameItemAdapter;
 import com.dog.manage.app.databinding.ActivityMainBinding;
@@ -42,6 +46,7 @@ import java.util.List;
 
 import cn.jpush.android.api.JPushInterface;
 import okhttp3.Call;
+import okhttp3.Request;
 import pub.devrel.easypermissions.AfterPermissionGranted;
 import pub.devrel.easypermissions.EasyPermissions;
 
@@ -323,7 +328,40 @@ public class MainActivity extends BaseActivity {
                         JSONObject jsonObject = new JSONObject(result);
                         if (!CommonUtil.isBlank(jsonObject.optString("token"))) {
                             Log.i(TAG, "getOneKeyLoginStatus: " + jsonObject.optString("token"));
+                            String registrationID = JPushInterface.getRegistrationID(getApplicationContext());
+                            SendRequest.loginFacade(jsonObject.optString("token"), Config.ShanyanAppID, Config.ShanyanAppKey, registrationID,
+                                    new GenericsCallback<ResultClient<UserInfo>>(new JsonGenericsSerializator()) {
 
+                                        @Override
+                                        public void onBefore(Request request, int id) {
+                                            super.onBefore(request, id);
+                                            LoadingManager.showLoadingDialog(MainActivity.this);
+                                        }
+
+                                        @Override
+                                        public void onAfter(int id) {
+                                            super.onAfter(id);
+                                            LoadingManager.hideLoadingDialog(MainActivity.this);
+                                        }
+
+                                        @Override
+                                        public void onError(Call call, Exception e, int id) {
+
+                                        }
+
+                                        @Override
+                                        public void onResponse(ResultClient<UserInfo> response, int id) {
+                                            if (response.isSuccess()) {
+                                                if (response.getData() != null) {
+                                                    BaseApplication.getInstance().setUserInfo(response.getData());
+                                                } else {
+                                                    ToastUtils.showShort(getApplicationContext(), "获取用户信息失败");
+                                                }
+                                            } else {
+                                                ToastUtils.showShort(getApplicationContext(), !CommonUtil.isBlank(response.getMsg()) ? response.getMsg() : "获取用户信息失败");
+                                            }
+                                        }
+                                    });
                         }
                     } catch (JSONException e) {
                         e.printStackTrace();

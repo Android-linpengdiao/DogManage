@@ -32,6 +32,18 @@ public class SendRequest {
 
     }
 
+    public static void loginFacade(String token, String clAppId, String appKey, String registrationID, Callback call) {
+        Map<String, String> map = new HashMap<>();
+        map.put("token", token);
+        map.put("clAppId", clAppId);
+        map.put("appKey", appKey);
+        map.put("tremType", "2");
+        if (!CommonUtil.isBlank(registrationID))
+            map.put("registId", registrationID);
+        OkHttpUtils.post().params(map).url(APIUrls.loginFacade).build().execute(call);
+
+    }
+
     /**
      * 发送短信验证
      *

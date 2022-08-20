@@ -20,4 +20,5 @@ public class ImmuneBean implements Serializable {
     private Integer immuneId;
     private String dogType;
     private Integer dogId;
+    private Integer type;
 }

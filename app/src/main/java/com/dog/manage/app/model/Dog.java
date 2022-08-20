@@ -24,6 +24,7 @@ public class Dog implements Serializable {
 
     private String idNum;
     private String immuneId;
+    private String dogNum;
     private String dogName;
     private String dogColor;
     private Integer dogGender;//0-雌性 1-雄性

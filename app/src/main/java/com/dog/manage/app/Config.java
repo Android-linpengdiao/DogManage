@@ -18,4 +18,5 @@ public class Config {
 
     //闪验
     public final static String ShanyanAppID = "fkUfi2zj";
+    public final static String ShanyanAppKey = "LhDDxvBc";
 }

@@ -23,6 +23,7 @@ import com.base.utils.ToastUtils;
 import com.chuanglan.shanyan_sdk.OneKeyLoginManager;
 import com.chuanglan.shanyan_sdk.listener.OneKeyLoginListener;
 import com.chuanglan.shanyan_sdk.listener.OpenLoginAuthListener;
+import com.dog.manage.app.Config;
 import com.dog.manage.app.MyClickableSpan;
 import com.dog.manage.app.R;
 import com.dog.manage.app.databinding.ActivityLoginBinding;
@@ -299,7 +300,42 @@ public class LoginActivity extends BaseActivity {
                     try {
                         JSONObject jsonObject = new JSONObject(result);
                         if (!CommonUtil.isBlank(jsonObject.optString("token"))) {
-                            Log.i(TAG, "getOneKeyLoginStatus: "+jsonObject.optString("token"));
+                            String registrationID = JPushInterface.getRegistrationID(getApplicationContext());
+                            SendRequest.loginFacade(jsonObject.optString("token"), Config.ShanyanAppID, Config.ShanyanAppKey, registrationID,
+                                    new GenericsCallback<ResultClient<UserInfo>>(new JsonGenericsSerializator()) {
+
+                                        @Override
+                                        public void onBefore(Request request, int id) {
+                                            super.onBefore(request, id);
+                                            LoadingManager.showLoadingDialog(LoginActivity.this);
+                                        }
+
+                                        @Override
+                                        public void onAfter(int id) {
+                                            super.onAfter(id);
+                                            LoadingManager.hideLoadingDialog(LoginActivity.this);
+                                        }
+
+                                        @Override
+                                        public void onError(Call call, Exception e, int id) {
+
+                                        }
+
+                                        @Override
+                                        public void onResponse(ResultClient<UserInfo> response, int id) {
+                                            if (response.isSuccess()) {
+                                                if (response.getData() != null) {
+                                                    BaseApplication.getInstance().setUserInfo(response.getData());
+                                                    finishActivity(LoginActivity.class);
+                                                    finish();
+                                                } else {
+                                                    ToastUtils.showShort(getApplicationContext(), "获取用户信息失败");
+                                                }
+                                            } else {
+                                                ToastUtils.showShort(getApplicationContext(), !CommonUtil.isBlank(response.getMsg()) ? response.getMsg() : "获取用户信息失败");
+                                            }
+                                        }
+                                    });
 
                         }
                     } catch (JSONException e) {

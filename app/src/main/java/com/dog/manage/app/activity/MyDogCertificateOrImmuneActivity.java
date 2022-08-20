@@ -175,7 +175,9 @@ public class MyDogCertificateOrImmuneActivity extends BaseActivity {
         CustomPagerAdapter customPagerAdapter = new CustomPagerAdapter(getSupportFragmentManager());
 
         for (ImmuneBean immuneBean : data) {
-            customPagerAdapter.addFragment(immuneBean.getDogType(), MyDogCertificateOrImmuneFragment.getInstanceImmune(type, immuneBean));
+            if (immuneBean.getType() != 2 ) {
+                customPagerAdapter.addFragment(immuneBean.getDogType(), MyDogCertificateOrImmuneFragment.getInstanceImmune(type, immuneBean));
+            }
         }
         binding.viewPager.setAdapter(customPagerAdapter);
         binding.viewPager.setOffscreenPageLimit(10);

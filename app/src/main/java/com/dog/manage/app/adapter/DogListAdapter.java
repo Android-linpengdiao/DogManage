@@ -41,7 +41,7 @@ public class DogListAdapter extends BaseRecyclerAdapter<Dog, ItemTextBinding> {
     protected void onBindItem(ItemTextBinding binding, Dog dataBean, int position) {
         if (type == 1) {
             if (dataBean.getType() != null && dataBean.getType() == 2) {
-                binding.titleView.setText(dataBean.getDogType() + (dataBean.getIdNum() != null ? "  " + "领养编号" + ":" + dataBean.getIdNum() : ""));
+                binding.titleView.setText(dataBean.getDogType() + (dataBean.getDogNum() != null ? "  " + "领养编号" + ":" + dataBean.getDogNum() : ""));
             } else {
                 binding.titleView.setText(dataBean.getDogType() + (dataBean.getIdNum() != null ? "  " + "免疫证号" + ":" + dataBean.getIdNum() : ""));
             }

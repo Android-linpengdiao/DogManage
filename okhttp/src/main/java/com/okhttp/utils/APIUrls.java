@@ -10,6 +10,8 @@ public class APIUrls {
 
     //APP登录
     public final static String userLogin = URL_DOMAIN + "/user/toLogin";
+    //闪验登录
+    public final static String loginFacade = URL_DOMAIN + "/user/dog/loginFacade";
     //发送短信验证
     public final static String sendMessageUser = URL_DOMAIN + "/user/sendMessageUser";
     //获得游客身份
