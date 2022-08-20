@@ -97,7 +97,7 @@ public class AdoptionDetailsActivity extends BaseActivity {
             List<String> dogPhotos = new Gson().fromJson(dataBean.getDogPhoto(), new TypeToken<List<String>>() {
             }.getType());
             if (dogPhotos != null && dogPhotos.size() > 0)
-                GlideLoader.LoderImage(this, dogPhotos.get(0), binding.coverView,8);
+                GlideLoader.LoderImage(this, dogPhotos.get(0), binding.coverView, 8);
         } catch (Exception e) {
             e.getMessage();
         }
@@ -125,6 +125,7 @@ public class AdoptionDetailsActivity extends BaseActivity {
                 binding.statusView.setText("完成领养");
                 binding.priceView.setVisibility(View.VISIBLE);
                 binding.payTypeView.setVisibility(View.VISIBLE);
+                binding.payTypeView.binding.itemContent.setText(dataBean.getPayType() == 1 ? "微信" : "支付宝");
 
             } else if (dataBean.getStatus() == 3) {
                 binding.statusView.setText("审核拒绝");

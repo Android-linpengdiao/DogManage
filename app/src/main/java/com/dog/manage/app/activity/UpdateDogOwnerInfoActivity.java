@@ -103,7 +103,6 @@ public class UpdateDogOwnerInfoActivity extends BaseActivity {
         if (type == type_details) {
             binding.firstStepView.setSelected(true);
             licenceBean = (LicenceBean) getIntent().getSerializableExtra("LicenceBean");
-//                getDogUserById();
             imageAdapter = new ImageAdapter(this);
             GridItemDecoration.Builder builder = new GridItemDecoration.Builder(this);
             builder.color(R.color.transparent);
@@ -284,75 +283,6 @@ public class UpdateDogOwnerInfoActivity extends BaseActivity {
 
     }
 
-//    /**
-//     * 犬证 获取犬主信息
-//     */
-//    private void getDogUserById() {
-//        SendRequest.getUserById(getUserInfo().getId(), licenceBean.getDogId(), new GenericsCallback<ResultClient<DogUser>>(new JsonGenericsSerializator()) {
-//            @Override
-//            public void onError(Call call, Exception e, int id) {
-//
-//            }
-//
-//            @Override
-//            public void onResponse(ResultClient<DogUser> response, int id) {
-//                if (response.isSuccess() && response.getData() != null) {
-//                    dogUser = response.getData();
-//                    initDogUserView(dogUser);
-//                    if (dogUser.getUserType() == null) {
-//                        ToastUtils.showShort(getApplicationContext(), "获取信息失败");
-//                    }
-//                } else {
-//                    ToastUtils.showShort(getApplicationContext(), "获取信息失败");
-//                }
-//            }
-//        });
-//    }
-
-//    private void initDogUserView(DogUser dogUser) {
-//        if (dogUser.getUserType() != null && (dogUser.getUserType() == DogUser.userType_personal || dogUser.getUserType() == DogUser.userType_organ)) {
-//            if (dogUser.getUserType() == DogUser.userType_personal) {
-//                //居住地址（全）例：012/02/31
-//                binding.addressView.binding.itemContent.setText(dogUser.getAddress());
-//                //详细地址（全）
-//                binding.detailedAddressView.binding.itemContent.setText(dogUser.getDetailedAddress());
-//
-//                binding.houseNumberView.binding.itemEdit.setText(dogUser.getHouseNum());
-//                GlideLoader.LoderUploadImage(UpdateDogOwnerInfoActivity.this, dogUser.getHousePhoto(), binding.houseProprietaryCertificateView, 6);
-//
-//            } else if (dogUser.getUserType() == DogUser.userType_organ) {
-//
-//
-////                //居住地址（全）例：012/02/31
-////                binding.addressView.binding.itemContent.setText(dogUser.getAddress());
-////                //详细地址（全）
-////                binding.detailedAddressView.binding.itemContent.setText(dogUser.getDetailedAddress());
-////
-////                //养犬管理制度（单位）
-////                GlideLoader.LoderUploadImage(UpdateDogOwnerInfoActivity.this, dogUser.getDogManagement(), binding.managementSystemView, 6);
-////                try {
-////                    //养犬设施图片（单位）
-////                    List<String> idPhotos = new Gson().fromJson(dogUser.getDogDevice(), new TypeToken<List<String>>() {
-////                    }.getType());
-////                    if (idPhotos.size() > 0) {
-////                        GlideLoader.LoderImage(UpdateDogOwnerInfoActivity.this,
-////                                idPhotos.size() > 0 ? idPhotos.get(0) : "", binding.facility1View, 6);
-////                        legalFacility1 = idPhotos.get(0);
-////                    }
-////                    if (idPhotos.size() > 1) {
-////                        GlideLoader.LoderImage(UpdateDogOwnerInfoActivity.this,
-////                                idPhotos.size() > 1 ? idPhotos.get(1) : "", binding.facility2View, 6);
-////                        legalFacility2 = idPhotos.get(1);
-////                    }
-////                } catch (Exception e) {
-////                    e.getMessage();
-////                }
-//
-//            }
-//        }
-//    }
-
-    //===============================  选择地址  ===================================
 
     private DialogCommunityBinding communityBinding;
     private CommunitySelectAdapter communitySelectAdapter;
@@ -403,8 +333,7 @@ public class UpdateDogOwnerInfoActivity extends BaseActivity {
                             if (communitySelectAdapter.getList().size() == response.getTotal()) {
                                 communityBinding.refreshLayout.setNoMoreData(true);
                             }
-//                            binding.emptyView.setVisibility(adapter.getList().size() > 0 ? View.GONE : View.VISIBLE);
-//                            binding.emptyView.setText("暂无犬只～");
+
                         } else {
                             ToastUtils.showShort(getApplicationContext(), response.getMessage());
                         }
@@ -458,8 +387,7 @@ public class UpdateDogOwnerInfoActivity extends BaseActivity {
                             if (areaSelectAdapter.getList().size() == response.getTotal()) {
                                 addressBinding.refreshLayout.setNoMoreData(true);
                             }
-//                            binding.emptyView.setVisibility(adapter.getList().size() > 0 ? View.GONE : View.VISIBLE);
-//                            binding.emptyView.setText("暂无犬只～");
+
                         } else {
                             ToastUtils.showShort(getApplicationContext(), response.getMessage());
                         }
@@ -494,43 +422,6 @@ public class UpdateDogOwnerInfoActivity extends BaseActivity {
         });
     }
 
-
-    //===============================  获取价格、手里单位信息接口  ===================================
-
-//    private HandleInfo handleInfo;
-//
-//    private void getHandleInfo() {
-//        if (saveAddress == null) {
-//            ToastUtils.showShort(getApplicationContext(), "获取信息失败");
-//        }
-//        /**
-//         * dogId
-//         * integer
-//         * 犬只id
-//         * addressId
-//         * integer
-//         * 地址id
-//         */
-//        Map<String, String> map = new HashMap<>();
-//        map.put("dogId", String.valueOf(licenceBean.getDogId()));
-//        map.put("addressId", String.valueOf(saveAddress.getAddressId()));
-//        SendRequest.getHandleInfo(map, new GenericsCallback<ResultClient<HandleInfo>>(new JsonGenericsSerializator()) {
-//            @Override
-//            public void onError(Call call, Exception e, int id) {
-//
-//            }
-//
-//            @Override
-//            public void onResponse(ResultClient<HandleInfo> response, int id) {
-//                if (response.isSuccess() && response.getData() != null) {
-//                    handleInfo = response.getData();
-//                    binding.handleUnitAddressView.setText(response.getData().getHandleUnitAddress());
-//                } else {
-//                    ToastUtils.showShort(getApplicationContext(), response.getMessage());
-//                }
-//            }
-//        });
-//    }
 
     public void onClickConfirm(View view) {
         if (type == type_details) {
@@ -574,10 +465,6 @@ public class UpdateDogOwnerInfoActivity extends BaseActivity {
                 imageList.remove("add");
             }
 
-//            if (CommonUtil.isBlank(dogUser.getHousePhoto())) {
-//                ToastUtils.showShort(getApplicationContext(), "请上传房产证或房屋租赁合同");
-//                return;
-//            }
 
             /**
              * lincenceId
@@ -605,7 +492,6 @@ public class UpdateDogOwnerInfoActivity extends BaseActivity {
             paramsMap.put("detailedAddress", dogUser.getDetailedAddress());
             paramsMap.put("houseNum", dogUser.getHouseNum());
             paramsMap.put("housePhoto", GsonUtils.toJson(imageList));
-//            paramsMap.put("housePhoto", dogUser.getHousePhoto());
             paramsMap.put("addressArea", dogUser.getCommunityDept() + "");//社区所属机构（新增）
             paramsMap.put("villageId", dogUser.getVillageId() + "");//社区id
 

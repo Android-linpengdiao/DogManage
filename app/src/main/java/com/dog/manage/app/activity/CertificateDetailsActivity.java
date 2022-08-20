@@ -145,5 +145,6 @@ public class CertificateDetailsActivity extends BaseActivity {
         binding.acceptUnitView.setText(data.getAcceptUnit());
         binding.priceView.binding.itemContent.setText("￥" + data.getPrice());
         binding.auditReasonView.binding.itemDesc.setText(data.getRejectionReason());
+        binding.payTypeView.binding.itemContent.setText(data.getPayType() == 1 ? "微信" : "支付宝");
     }
 }

@@ -30,7 +30,6 @@
         android:id="@+id/item_icon_left"
         android:layout_width="@dimen/dp_42"
         android:layout_height="@dimen/dp_42"
-        android:layout_centerVertical="true"
         android:layout_marginLeft="@dimen/dp_6"
         android:onClick="onClickBack"
         android:padding="@dimen/dp_10"
