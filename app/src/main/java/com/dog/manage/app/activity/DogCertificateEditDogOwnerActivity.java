@@ -259,6 +259,12 @@ public class DogCertificateEditDogOwnerActivity extends BaseActivity {
                             dogUser.setAddress("110000/110100/" + addressBean.getId());
                             String address = addressBean.getAreaName();
                             binding.addressView.binding.itemContent.setText(address);
+
+                            //重新选择小区
+                            dogUser.setVillageId(0);
+                            dogUser.setCommunityDept(0);
+                            binding.communityAddressView.binding.itemContent.setText(null);
+
                             bottomSheetDialog.cancel();
                         }
                     }

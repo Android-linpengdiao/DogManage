@@ -132,7 +132,8 @@ public class UpdateDogOwnerInfoActivity extends BaseActivity {
             });
             imageList.add("add");
             imageAdapter.refreshData(imageList);
-            getDogUser();
+//            getDogUser();
+            getDogUserById();
 
         } else if (type == type_submit) {
             binding.secondStepView.setSelected(true);
@@ -188,6 +189,12 @@ public class UpdateDogOwnerInfoActivity extends BaseActivity {
                             dogUser.setAddress("110000/110100/" + addressBean.getId());
                             String address = addressBean.getAreaName();
                             binding.addressView.binding.itemContent.setText(address);
+
+                            //重新选择小区
+                            dogUser.setVillageId(0);
+                            dogUser.setCommunityDept(0);
+                            binding.communityAddressView.binding.itemContent.setText(null);
+
                             bottomSheetDialog.cancel();
                         }
                     }
@@ -393,6 +400,80 @@ public class UpdateDogOwnerInfoActivity extends BaseActivity {
                         }
                     }
                 });
+    }
+
+    private void getDogUserById() {
+        SendRequest.getUserById(licenceBean.getUserId(), licenceBean.getDogId(), 0,
+                new GenericsCallback<ResultClient<DogUser>>(new JsonGenericsSerializator()) {
+                    @Override
+                    public void onError(Call call, Exception e, int id) {
+
+                    }
+
+                    @Override
+                    public void onResponse(ResultClient<DogUser> response, int id) {
+                        if (response.isSuccess() && response.getData() != null) {
+                            dogUser = response.getData();
+                            initDogUserView(dogUser);
+                            if (response.getData().getUserType() != null &&
+                                    (response.getData().getUserType() == DogUser.userType_personal || response.getData().getUserType() == DogUser.userType_organ)) {
+                                if (response.getData().getUserType() == DogUser.userType_personal) {
+                                    binding.houseNumberView.setVisibility(View.VISIBLE);
+                                    binding.houseContainer.setVisibility(View.VISIBLE);
+
+                                } else if (response.getData().getUserType() == DogUser.userType_organ) {
+
+                                }
+                            }
+
+                        }
+                    }
+                });
+    }
+
+    private void initDogUserView(DogUser dogUser) {
+        if (dogUser.getUserType() != null &&
+                (dogUser.getUserType() == DogUser.userType_personal || dogUser.getUserType() == DogUser.userType_organ)) {
+            if (dogUser.getUserType() == DogUser.userType_personal) {
+
+                //个人办理
+
+                //居住地址（全）例：012/02/31
+                updateAddressView(binding.addressView.binding.itemContent, dogUser.getAddress());
+                //所属小区
+                binding.communityAddressView.binding.itemContent.setText(dogUser.getVillageName());
+                //详细地址（全）
+                binding.detailedAddressView.setText(dogUser.getDetailedAddress());
+
+                binding.houseNumberView.binding.itemEdit.setText(dogUser.getHouseNum());
+                try {
+                    //房产证或房屋租赁合同
+                    List<String> housePhotos = new Gson().fromJson(dogUser.getHousePhoto(), new TypeToken<List<String>>() {
+                    }.getType());
+                    if (housePhotos != null) {
+                        if (imageAdapter.getList().size() > 0) {
+                            imageList.addAll(imageAdapter.getList().size() - 1, housePhotos);
+                        } else {
+                            imageList.addAll(housePhotos);
+                        }
+                    }
+                    imageAdapter.refreshData(imageList);
+                } catch (Exception e) {
+                    e.getMessage();
+                }
+
+
+            } else if (dogUser.getUserType() == DogUser.userType_organ) {
+
+                //居住地址（全）例：012/02/31
+                updateAddressView(binding.addressView.binding.itemContent, dogUser.getAddress());
+                //所属小区
+                binding.communityAddressView.binding.itemContent.setText(dogUser.getVillageName());
+                //详细地址（全）
+                binding.detailedAddressView.setText(dogUser.getDetailedAddress());
+
+            }
+        }
     }
 
     private void getDogUser() {
