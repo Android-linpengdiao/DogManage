@@ -91,7 +91,11 @@ public class DogDetailsActivity extends BaseActivity {
                 if (response.isSuccess() && response.getData() != null) {
                     binding.container.setVisibility(View.VISIBLE);
                     DogDetail dogDetail = response.getData();
-                    binding.dogNameView.setText(dogDetail.getDogName() + "|" + dogDetail.getDogColor() + "|" + CommonUtil.getDogAge(dogDetail.getDogAge()));
+                    binding.dogNameView.setText((!CommonUtil.isBlank(dogDetail.getDogName()) ? dogDetail.getDogName() : "--")
+                            + "|"
+                            + (!CommonUtil.isBlank(dogDetail.getDogColor()) ? dogDetail.getDogColor() : "--")
+                            + "|"
+                            + CommonUtil.getDogAge(dogDetail.getDogAge()));
                     binding.leaveCenterView.setText(dogDetail.getLeaveCenter());
                     binding.centerAddressView.setText(dogDetail.getCenterAddress());
                     binding.phoneView.setText(dogDetail.getPhone());

@@ -62,12 +62,16 @@ public class DogAdapter extends BaseRecyclerAdapter<Dog, ItemDogBinding> {
             e.getMessage();
         }
 
-        String dogAge = "0个月";
-        if (dataBean.getDogAge()!=null){
-            dogAge = CommonUtil.getDogAge(dataBean.getDogAge());
-        }
-        binding.titleView.setText(dataBean.getDogName() + "|" + dataBean.getDogColor() + "|" + dogAge);
-        binding.contentView.setText(dataBean.getDogName() + "|" + dataBean.getDogColor() + "|" + dogAge);
+        binding.titleView.setText((!CommonUtil.isBlank(dataBean.getDogName()) ? dataBean.getDogName() : "--")
+                + "|"
+                + (!CommonUtil.isBlank(dataBean.getDogColor()) ? dataBean.getDogColor() : "--")
+                + "|"
+                + CommonUtil.getDogAge(dataBean.getDogAge()));
+        binding.contentView.setText((!CommonUtil.isBlank(dataBean.getDogName()) ? dataBean.getDogName() : "--")
+                + "|"
+                + (!CommonUtil.isBlank(dataBean.getDogColor()) ? dataBean.getDogColor() : "--")
+                + "|"
+                + CommonUtil.getDogAge(dataBean.getDogAge()));
 
         binding.getRoot().setOnClickListener(new View.OnClickListener() {
             @Override

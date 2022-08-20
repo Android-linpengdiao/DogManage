@@ -51,7 +51,11 @@ public class AdoptionRecordAdapter extends BaseRecyclerAdapter<RecordAdoption, I
 
     @Override
     protected void onBindItem(ItemAdoptionRecordBinding binding, RecordAdoption dataBean, int position) {
-        binding.dogNameView.setText(dataBean.getDogName() + "|" + dataBean.getDogColor() + "|" + CommonUtil.getDogAge(dataBean.getDogAge()));
+        binding.dogNameView.setText((!CommonUtil.isBlank(dataBean.getDogName()) ? dataBean.getDogName() : "--")
+                + "|"
+                + (!CommonUtil.isBlank(dataBean.getDogColor()) ? dataBean.getDogColor() : "--")
+                + "|"
+                + CommonUtil.getDogAge(dataBean.getDogAge()));
         binding.acceptUnitView.setText(dataBean.getAcceptUnit());
         binding.acceptUnitAddressView.setText(dataBean.getAcceptUnitAddress());
         try {

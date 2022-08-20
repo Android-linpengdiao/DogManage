@@ -11,7 +11,7 @@ import java.util.Locale;
 
 public class TimeUtils {
 
-    public static String getTimeVip(long time) {
+    public static String getTimeAge(long time) {
         Date date = new Date(time);
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy年MM月dd日", Locale.getDefault());
         return formatter.format(date);
@@ -46,31 +46,34 @@ public class TimeUtils {
 
     }
 
-    public static long getTimeDogAge(String time) {
+    public static String getTimeDogAge(String time) {
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyyMMdd");
         Date date;
         try {
             date = dateFormat.parse(time);
             long dateTime = date.getTime();
-            return dateTime;
-        } catch (ParseException e) {
+//            return dateTime;
+            return TimeUtils.getTimeAge(dateTime);
+        } catch (Exception e) {
             e.printStackTrace();
+            return "--";
         }
-        return 0;
     }
 
     public static String getTimeDogAgeEdit(String time) {
+        if (CommonUtil.isBlank(time)){
+            return "";
+        }
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyyMMdd");
         Date date;
         try {
             date = dateFormat.parse(time);
             SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
-
             return simpleDateFormat.format(date);
-        } catch (ParseException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
-        return "0";
+        return "";
     }
 
     public static String getMessageTime(long time) {

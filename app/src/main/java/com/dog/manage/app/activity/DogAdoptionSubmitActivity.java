@@ -42,7 +42,11 @@ public class DogAdoptionSubmitActivity extends BaseActivity {
         dogDetail = (DogDetail) getIntent().getSerializableExtra("dogDetail");
 
         if (dogDetail != null) {
-            binding.dogNameView.setText(dogDetail.getDogName() + "|" + dogDetail.getDogColor() + "|" + CommonUtil.getDogAge(dogDetail.getDogAge()));
+            binding.dogNameView.setText((!CommonUtil.isBlank(dogDetail.getDogName()) ? dogDetail.getDogName() : "--")
+                    + "|"
+                    + (!CommonUtil.isBlank(dogDetail.getDogColor()) ? dogDetail.getDogColor() : "--")
+                    + "|"
+                    + CommonUtil.getDogAge(dogDetail.getDogAge()));
             binding.leaveCenterView.setText(dogDetail.getLeaveCenter());
             binding.centerAddressView.setText(dogDetail.getCenterAddress());
             try {
