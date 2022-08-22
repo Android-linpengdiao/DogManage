@@ -56,8 +56,8 @@ public class AdoptionRecordAdapter extends BaseRecyclerAdapter<RecordAdoption, I
                 + (!CommonUtil.isBlank(dataBean.getDogColor()) ? dataBean.getDogColor() : "--")
                 + "|"
                 + CommonUtil.getDogAge(dataBean.getDogAge()));
-        binding.acceptUnitView.setText(dataBean.getAcceptUnit());
-        binding.acceptUnitAddressView.setText(dataBean.getAcceptUnitAddress());
+        binding.acceptUnitView.setText(dataBean.getLeaveUnit());
+        binding.acceptUnitAddressView.setText(dataBean.getAcceptUnit());
         try {
             List<String> dogPhotos = new Gson().fromJson(dataBean.getDogPhoto(), new TypeToken<List<String>>() {
             }.getType());

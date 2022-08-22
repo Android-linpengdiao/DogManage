@@ -92,11 +92,11 @@
                                     app:tint="@color/blue" />
 
                                 <TextView
-                                    android:id="@+id/acceptUnitView"
+                                    android:id="@+id/leaveUnitView"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:gravity="center"
-                                    android:text="北京市公安局犬类留检所"
+                                    tools:text="北京市公安局犬类留检所"
                                     android:textColor="#999999"
                                     android:textSize="@dimen/sp_13" />
                             </LinearLayout>
@@ -121,7 +121,7 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:gravity="center"
-                                    android:text="北京市昌平区七里渠甲1号"
+                                    tools:text="北京市昌平区七里渠甲1号"
                                     android:textColor="#999999"
                                     android:textSize="@dimen/sp_13" />
                             </LinearLayout>
@@ -231,7 +231,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="@dimen/dp_5"
                             android:gravity="center_vertical"
-                            android:text="北京市西城区天桥街道派出所"
+                            android:text=""
                             android:textColor="#333333"
                             android:textSize="@dimen/sp_14"
                             tools:text="北京市西城区天桥街道派出所" />

@@ -91,8 +91,8 @@ public class AdoptionDetailsActivity extends BaseActivity {
                 + (!CommonUtil.isBlank(dataBean.getDogColor()) ? dataBean.getDogColor() : "--")
                 + "|"
                 + CommonUtil.getDogAge(dataBean.getDogAge()));
-        binding.acceptUnitView.setText(dataBean.getAcceptUnit());
-        binding.acceptUnitAddressView.setText(dataBean.getAcceptUnitAddress());
+        binding.leaveUnitView.setText(dataBean.getLeaveUnit());
+        binding.acceptUnitAddressView.setText(dataBean.getAcceptUnit());
         try {
             List<String> dogPhotos = new Gson().fromJson(dataBean.getDogPhoto(), new TypeToken<List<String>>() {
             }.getType());

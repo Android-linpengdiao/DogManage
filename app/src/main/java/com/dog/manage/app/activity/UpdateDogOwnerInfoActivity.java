@@ -418,8 +418,8 @@ public class UpdateDogOwnerInfoActivity extends BaseActivity {
                     @Override
                     public void onResponse(ResultClient<DogUser> response, int id) {
                         if (response.isSuccess() && response.getData() != null) {
-                            dogUser = response.getData();
-                            initDogUserView(dogUser);
+//                            dogUser = response.getData();
+//                            initDogUserView(dogUser);
                             if (response.getData().getUserType() != null &&
                                     (response.getData().getUserType() == DogUser.userType_personal || response.getData().getUserType() == DogUser.userType_organ)) {
                                 if (response.getData().getUserType() == DogUser.userType_personal) {
@@ -547,8 +547,14 @@ public class UpdateDogOwnerInfoActivity extends BaseActivity {
                 ToastUtils.showShort(getApplicationContext(), "请上传房产证或房屋租赁合同");
                 return;
             }
-            if (imageList.size() > 0 && imageList.indexOf("add") != -1) {
-                imageList.remove("add");
+//            if (imageList.size() > 0 && imageList.indexOf("add") != -1) {
+//                imageList.remove("add");
+//            }
+            List<String> housePhotos = new ArrayList<>();
+            for (String url : imageList) {
+                if (!CommonUtil.isBlank(url) && !url.equals("add")) {
+                    housePhotos.add(url);
+                }
             }
 
 
@@ -577,7 +583,7 @@ public class UpdateDogOwnerInfoActivity extends BaseActivity {
             paramsMap.put("address", dogUser.getAddress());
             paramsMap.put("detailedAddress", dogUser.getDetailedAddress());
             paramsMap.put("houseNum", dogUser.getHouseNum());
-            paramsMap.put("housePhoto", GsonUtils.toJson(imageList));
+            paramsMap.put("housePhoto", GsonUtils.toJson(housePhotos));
             paramsMap.put("addressArea", dogUser.getCommunityDept() + "");//社区所属机构（新增）
             paramsMap.put("villageId", dogUser.getVillageId() + "");//社区id
 

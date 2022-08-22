@@ -33,6 +33,7 @@ public class RecordAdoption {
     private Integer useId = 0;
     private Integer dogId = 0;
     private Integer orderId;
+    private String leaveUnit;
     private String acceptUnit;
     private Integer status;
     private String rejectionReason;

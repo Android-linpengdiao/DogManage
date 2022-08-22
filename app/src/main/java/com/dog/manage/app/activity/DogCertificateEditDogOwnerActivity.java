@@ -1304,6 +1304,7 @@ public class DogCertificateEditDogOwnerActivity extends BaseActivity {
                     dogUser.setDetailedAddress(detailedAddress);
                 }
 
+                List<String> housePhotos = new ArrayList<>();
                 if (type != type_immune) {
                     String personaHouseNumber = binding.houseNumberView.binding.itemEdit.getText().toString();
                     if (CommonUtil.isBlank(personaHouseNumber)) {
@@ -1317,8 +1318,14 @@ public class DogCertificateEditDogOwnerActivity extends BaseActivity {
                         ToastUtils.showShort(getApplicationContext(), "请上传房产证或房屋租赁合同");
                         return;
                     }
-                    if (imageList.size() > 0 && imageList.indexOf("add") != -1) {
-                        imageList.remove("add");
+//                    if (imageList.size() > 0 && imageList.indexOf("add") != -1) {
+//                        imageList.remove("add");
+//                    }
+
+                    for (String url : imageList) {
+                        if (!CommonUtil.isBlank(url) && !url.equals("add")) {
+                            housePhotos.add(url);
+                        }
                     }
 
 //                    if (CommonUtil.isBlank(dogUser.getHousePhoto())) {
@@ -1348,7 +1355,7 @@ public class DogCertificateEditDogOwnerActivity extends BaseActivity {
                 map.put("detailedAddress", dogUser.getDetailedAddress());//详细地址
                 if (type != type_immune) {
                     map.put("houseNum", dogUser.getHouseNum());//房本编号
-                    map.put("housePhoto", GsonUtils.toJson(imageList));//房产证或租赁合同照片
+                    map.put("housePhoto", GsonUtils.toJson(housePhotos));//房产证或租赁合同照片
 //                    map.put("housePhoto", dogUser.getHousePhoto());//房产证或租赁合同照片
                 }
 
