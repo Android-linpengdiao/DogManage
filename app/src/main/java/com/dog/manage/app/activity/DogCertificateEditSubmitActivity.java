@@ -43,6 +43,7 @@ public class DogCertificateEditSubmitActivity extends BaseActivity implements AM
     private int addressId;
     private String dogType = null;
     private String immunePhoto = null;
+    private boolean isAdopt = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,6 +51,7 @@ public class DogCertificateEditSubmitActivity extends BaseActivity implements AM
         binding = getViewData(R.layout.activity_dog_certificate_edit_submit);
         addActivity(this);
 
+        isAdopt = getIntent().getBooleanExtra("isAdopt", false);
         dogId = getIntent().getIntExtra("dogId", 0);
         addressId = getIntent().getIntExtra("addressId", 0);
         dogType = getIntent().getStringExtra("dogType");
@@ -96,6 +98,7 @@ public class DogCertificateEditSubmitActivity extends BaseActivity implements AM
                     handleInfo = response.getData();
                     binding.handleUnitAddressView.setText(response.getData().getSuperiorUnitName() + response.getData().getHandleUnitName());
                     binding.costValueView.binding.itemContent.setText("￥" + response.getData().getCostValue());
+                    binding.costValueView.setVisibility(isAdopt ? View.GONE : View.VISIBLE);
                 } else {
                     ToastUtils.showShort(getApplicationContext(), response.getMessage());
                 }

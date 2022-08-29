@@ -45,7 +45,6 @@
                         android:id="@+id/dogNameView"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:gravity="center"
                         tools:text="柯基犬|白色|1岁2个月"
                         android:textColor="@color/black"
                         android:textSize="@dimen/sp_15" />

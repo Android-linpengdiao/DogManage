@@ -179,7 +179,9 @@
                     app:item_title="办理费用"
                     app:item_title_bold="true"
                     app:item_content_bold="true"
-                    app:item_title_size="@dimen/sp_14" />
+                    app:item_title_size="@dimen/sp_14"
+                    android:visibility="gone"
+                    tools:visibility="visible"/>
 
 
                 <View

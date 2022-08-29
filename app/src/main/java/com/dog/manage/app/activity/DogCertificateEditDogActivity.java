@@ -887,6 +887,7 @@ public class DogCertificateEditDogActivity extends BaseActivity {
 
                         } else if (type == type_certificate || type == type_examined) {
                             Bundle bundle = new Bundle();
+                            bundle.putBoolean("isAdopt", dog.getAdoptNum() != null ? true : false);
                             bundle.putInt("type", type);
                             bundle.putInt("dogId", response.getData().getDogId());
                             bundle.putInt("addressId", addressId);

@@ -7,6 +7,7 @@ import android.view.View;
 
 import com.base.BaseRecyclerAdapter;
 import com.base.databinding.ItemTextBinding;
+import com.base.utils.CommonUtil;
 import com.base.view.OnClickListener;
 import com.dog.manage.app.model.Dog;
 
@@ -42,9 +43,9 @@ public class DogListAdapter extends BaseRecyclerAdapter<Dog, ItemTextBinding> {
 
         if (type == 1) {
             if (dataBean.getType() != null && dataBean.getType() == 2) {
-                binding.titleView.setText(dataBean.getDogType() + (dataBean.getIdNum() != null ? "  " + "领养编号" + ":" + dataBean.getIdNum() : ""));
+                binding.titleView.setText((!CommonUtil.isBlank(dataBean.getDogType()) ? dataBean.getDogType() : "--") + (dataBean.getIdNum() != null ? "  " + "领养编号" + ":" + dataBean.getIdNum() : ""));
             } else {
-                binding.titleView.setText(dataBean.getDogType());
+                binding.titleView.setText(!CommonUtil.isBlank(dataBean.getDogType()) ? dataBean.getDogType() : "--");
             }
         } else {
             binding.titleView.setText(dataBean.getDogType());
