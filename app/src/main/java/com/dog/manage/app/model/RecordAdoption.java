@@ -47,7 +47,7 @@ public class RecordAdoption {
     private String dogPhoto;
     private Integer leaveId;
     private String price;
-    private Integer payType;
+    private Integer payType = 0;
     private String acceptUnitAddress;
 
 }

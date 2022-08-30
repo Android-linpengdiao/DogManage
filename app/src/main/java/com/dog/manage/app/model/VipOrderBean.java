@@ -26,7 +26,7 @@ public class VipOrderBean implements Serializable {
     private Integer payModel;
     private Integer payPrice;
     private Long payTime;
-    private Integer payType;
+    private Integer payType = 0;
     private Integer pid;
     private Integer price;
     private Long refundDayTime;

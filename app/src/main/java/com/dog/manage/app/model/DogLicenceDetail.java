@@ -20,5 +20,5 @@ public class DogLicenceDetail {
     private Integer price;
     private String rejectionReason;
     private Integer payTypeId;
-    private Integer payType;
+    private Integer payType = 0;
 }
