@@ -144,6 +144,7 @@ public class UpdateDogOwnerInfoActivity extends BaseActivity {
 
             saveAddress = (SaveAddress) getIntent().getSerializableExtra("saveAddress");
             binding.handleUnitAddressView.setText(saveAddress.getAcceptUnit());
+            binding.dogTypeView.binding.itemContent.setText(saveAddress.getDogType());
 //            getHandleInfo();
         }
 

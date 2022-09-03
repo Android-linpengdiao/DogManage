@@ -265,13 +265,14 @@
                     android:visibility="gone">
 
                     <com.dog.manage.app.view.ViewItemLayout
+                        android:id="@+id/dogTypeView"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:background="@color/app_background"
                         android:paddingLeft="@dimen/viewPadding"
                         android:paddingRight="@dimen/viewPadding"
                         app:item_container_height="@dimen/dp_50"
-                        app:item_content="柴犬"
+                        app:item_content=""
                         app:item_content_color="#333333"
                         app:item_content_size="@dimen/sp_14"
                         app:item_title="犬只品种"

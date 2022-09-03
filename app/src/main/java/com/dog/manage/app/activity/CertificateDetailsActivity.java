@@ -132,7 +132,8 @@ public class CertificateDetailsActivity extends BaseActivity {
         //办理状态 0 全部 1：待审核 2：代缴费 3：审核驳回 4：已办结 5：已过期 6：已注销
         Integer licenceStatus = data.getLicenceStatus();
         binding.auditStatusView.setText(licenceStatus == 1 ? "审核中" : licenceStatus == 2 ? "审核通过" : licenceStatus == 3 ? "审核拒绝" : licenceStatus == 4 ? "已办结" : licenceStatus == 5 ? "已过期" : licenceStatus == 6 ? "已注销" : "审核中");
-        binding.payTypeView.setVisibility(licenceStatus == 4 ? View.VISIBLE : View.GONE);
+        binding.payTypeView.setVisibility(licenceStatus == 4 && data.getAdoptStatus() != 1 ? View.VISIBLE : View.GONE);
+        binding.priceView.setVisibility(data.getAdoptStatus() == 1 ? View.GONE : View.VISIBLE);
         binding.auditReasonView.setVisibility(licenceStatus == 3 ? View.VISIBLE : View.GONE);
         binding.confirmView.setText(licenceStatus == 2 ? "在线支付" : licenceStatus == 3 ? "重新提交" : licenceStatus == 4 ? "查看犬证" : licenceStatus == 5 ? "犬证年审" : "在线支付");
         binding.confirmView.setVisibility(licenceStatus == 1 ? View.GONE : View.VISIBLE);

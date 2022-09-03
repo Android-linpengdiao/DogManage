@@ -17,8 +17,9 @@ public class DogLicenceDetail {
     private Integer dogId;
     private String userName;
     private String acceptUnit;
-    private Integer price;
+    private Integer price = 0;
     private String rejectionReason;
     private Integer payTypeId;
     private Integer payType = 0;
+    private Integer adoptStatus = 0;//1-领养
 }
